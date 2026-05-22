@@ -19,7 +19,7 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 body {
   font-family: var(--font-body);
   background: var(--paper-warm);
@@ -30,6 +30,23 @@ body {
 }
 a { color: inherit; text-decoration: none; }
 img { display: block; max-width: 100%; }
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ink);
+  color: var(--paper);
+  padding: 12px 24px;
+  border-radius: 0 0 8px 8px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 9999;
+  transition: top 0.2s;
+  white-space: nowrap;
+}
+.skip-link:focus { top: 0; }
 
 body::before {
   content: '';
@@ -114,6 +131,26 @@ nav.scrolled { border-bottom-color: var(--line); }
   transition: background 0.2s, transform 0.2s;
 }
 .nav-cta:hover { background: var(--ink-2); transform: translateY(-1px); }
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  color: var(--ink);
+  border-radius: 6px;
+}
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--ink);
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
 
 /* === HERO === */
 .hero {
@@ -323,6 +360,47 @@ h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
   color: var(--ink-3);
   max-width: 620px;
   line-height: 1.55;
+}
+
+/* === INTEGRATIONS STRIP === */
+.integrations {
+  padding: 22px 0;
+  background: var(--paper);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.integrations-inner {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.integrations-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.integrations-logos {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.integration-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--muted);
+  padding: 4px 10px;
+}
+.integration-sep {
+  color: var(--line);
+  font-size: 18px;
+  line-height: 1;
 }
 
 /* === PROBLEM === */
@@ -615,6 +693,12 @@ h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
   font-size: 15px;
   margin-bottom: 38px;
 }
+.price-sub-link {
+  color: var(--accent-soft);
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.price-sub-link:hover { color: var(--accent); }
 .price-features {
   list-style: none;
   display: grid;
@@ -741,7 +825,7 @@ h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
   line-height: 1.65;
 }
 .faq-item.open .faq-a {
-  max-height: 400px;
+  max-height: 800px;
   padding: 0 0 28px 0;
 }
 
@@ -828,7 +912,33 @@ footer a:hover { color: var(--paper); }
   .price-features { grid-template-columns: 1fr; }
   .price-amount { font-size: 64px; }
   .price-amount .currency { font-size: 36px; }
+  .nav-hamburger { display: flex; }
   .nav-links { display: none; }
+  nav.nav-mobile-open .nav-links {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 64px;
+    left: 0; right: 0;
+    background: rgba(251, 249, 244, 0.98);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 16px 24px 24px;
+    gap: 0;
+    border-bottom: 1px solid var(--line);
+    z-index: 99;
+  }
+  nav.nav-mobile-open .nav-links a {
+    font-size: 17px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+    width: 100%;
+    color: var(--ink-3);
+  }
+  nav.nav-mobile-open .nav-links a:last-child { border-bottom: none; }
+  nav.nav-mobile-open .nav-hamburger span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  nav.nav-mobile-open .nav-hamburger span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  nav.nav-mobile-open .nav-hamburger span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
   section { padding: 70px 0; }
   .hero { padding: 110px 0 70px; }
   .container { padding: 0 24px; }

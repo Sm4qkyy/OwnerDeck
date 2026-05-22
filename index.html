@@ -8,6 +8,14 @@
 <meta property="og:title" content="OwnerDeck — Automated owner reports for STR managers" />
 <meta property="og:description" content="Stop building owner reports manually. Branded PDFs delivered automatically every month." />
 <meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.ownerdeck.com/" />
+<meta property="og:image" content="https://www.ownerdeck.com/report_page_1.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="OwnerDeck — Automated owner reports for STR managers" />
+<meta name="twitter:description" content="Stop building owner reports manually. Branded PDFs delivered automatically every month." />
+<meta name="twitter:image" content="https://www.ownerdeck.com/report_page_1.png" />
+<meta name="theme-color" content="#0F172A" />
+<link rel="canonical" href="https://www.ownerdeck.com/" />
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F172A'/%3E%3Ctext x='50%25' y='50%25' font-family='Georgia' font-size='20' fill='%23F4A261' text-anchor='middle' dominant-baseline='central' font-weight='700'%3EO%3C/text%3E%3C/svg%3E" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,15 +23,31 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="styles.css" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "OwnerDeck",
+  "url": "https://www.ownerdeck.com",
+  "email": "ownerdeck@outlook.com",
+  "description": "Automated monthly owner reports and guest communication for short-term rental managers in Cyprus and Greece.",
+  "founder": { "@type": "Person", "name": "Mark Saade" },
+  "areaServed": ["Cyprus", "Greece"],
+  "address": { "@type": "PostalAddress", "addressLocality": "Larnaca", "addressCountry": "CY" }
+}
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
 <body>
+<a href="#main" class="skip-link">Skip to main content</a>
 
 <nav id="nav">
   <div class="container nav-inner">
     <a href="#" class="logo">
       <span class="logo-mark">O</span>OwnerDeck
     </a>
-    <div class="nav-links">
+    <div class="nav-links" id="nav-links">
       <a href="#how">How it works</a>
       <a href="#features">Features</a>
       <a href="#reports">Reports</a>
@@ -31,10 +55,13 @@
       <a href="#faq">FAQ</a>
     </div>
     <a href="https://calendly.com/ownerdeck/new-meeting" class="nav-cta">Book demo</a>
+    <button id="nav-hamburger" class="nav-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
 
-<section class="hero">
+<section class="hero" id="main">
   <div class="container hero-grid">
     <div class="reveal visible">
       <div class="eyebrow"><span class="dot"></span>Now onboarding · Cyprus &amp; Greece</div>
@@ -66,6 +93,29 @@
       <div class="hero-badge">
         <strong>Auto-sent</strong>
         Generated &amp; delivered to every owner on the 1st.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="integrations">
+  <div class="container">
+    <div class="integrations-inner">
+      <span class="integrations-label">Pulls data from</span>
+      <div class="integrations-logos">
+        <span class="integration-name">Airbnb</span>
+        <span class="integration-sep">·</span>
+        <span class="integration-name">Booking.com</span>
+        <span class="integration-sep">·</span>
+        <span class="integration-name">Vrbo</span>
+        <span class="integration-sep">·</span>
+        <span class="integration-name">Hospitable</span>
+        <span class="integration-sep">·</span>
+        <span class="integration-name">Guesty</span>
+        <span class="integration-sep">·</span>
+        <span class="integration-name">Lodgify</span>
+        <span class="integration-sep">·</span>
+        <span class="integration-name">Hostaway</span>
       </div>
     </div>
   </div>
@@ -146,7 +196,7 @@
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>
         </div>
         <h3>We brand it as you</h3>
-        <p>Your logo, your colours, your tone of voice on every report and guest message. Owners think you upgraded your software.</p>
+        <p>Your logo, your colors, your tone of voice on every report and guest message. Owners think you upgraded your software.</p>
       </div>
       <div class="step reveal">
         <div class="step-num">03 · Automate</div>
@@ -243,7 +293,7 @@
           <div class="price-amount">
             <span class="currency">€</span>250<span class="period"> /month</span>
           </div>
-          <p class="price-sub">For portfolios of up to 20 properties. Larger portfolios from €500/mo.</p>
+          <p class="price-sub">For portfolios of up to 20 properties. Larger portfolio? <a href="mailto:ownerdeck@outlook.com?subject=Large%20portfolio%20enquiry" class="price-sub-link">Get in touch →</a></p>
 
           <ul class="price-features">
             <li>Branded monthly owner reports (PDF)</li>
@@ -337,7 +387,7 @@
         Book a 15-min demo
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
       </a>
-      <a href="mailto:ownerdeck@outlook.com" class="btn-secondary">Email instead</a>
+      <a href="mailto:ownerdeck@outlook.com?subject=OwnerDeck%20demo%20enquiry" class="btn-secondary">Email instead</a>
     </div>
   </div>
 </section>
@@ -365,13 +415,14 @@
         <ul>
           <li><a href="#about">About</a></li>
           <li><a href="#faq">FAQ</a></li>
-          <li><a href="mailto:ownerdeck@outlook.com">Contact</a></li>
+          <li><a href="mailto:ownerdeck@outlook.com?subject=OwnerDeck%20enquiry">Contact</a></li>
+          <li><a href="/privacy.html">Privacy Policy</a></li>
         </ul>
       </div>
       <div>
         <h4>Get in touch</h4>
         <ul>
-          <li><a href="mailto:ownerdeck@outlook.com">ownerdeck@outlook.com</a></li>
+          <li><a href="mailto:ownerdeck@outlook.com?subject=OwnerDeck%20enquiry">ownerdeck@outlook.com</a></li>
           <li><a href="https://calendly.com/ownerdeck/new-meeting">Book a demo →</a></li>
           <li>Larnaca, Cyprus</li>
         </ul>
