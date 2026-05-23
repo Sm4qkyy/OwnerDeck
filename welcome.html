@@ -15,6 +15,9 @@
 <link rel="stylesheet" href="styles.css" />
 <script defer src="/_vercel/insights/script.js"></script>
 <style>
+  /* Hidden until JS validates the session token */
+  body { visibility: hidden; }
+
   main { padding-top: 100px; min-height: 80vh; }
 
   .welcome-wrap {
@@ -66,6 +69,32 @@
     color: var(--ink-3);
     line-height: 1.6;
     margin-bottom: 56px;
+  }
+
+  /* Trial badge */
+  .trial-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-3);
+    margin-bottom: 36px;
+  }
+  .trial-badge .dot {
+    width: 7px; height: 7px;
+    background: var(--green);
+    border-radius: 50%;
+    flex-shrink: 0;
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
   }
 
   /* What happens next card */
@@ -147,6 +176,29 @@
     margin-bottom: 32px;
   }
 
+  /* Manage subscription strip */
+  .manage-strip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin-bottom: 32px;
+    font-size: 14px;
+    color: var(--ink-3);
+  }
+  .manage-strip svg { color: var(--muted); flex-shrink: 0; }
+  .manage-strip a {
+    color: var(--accent);
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .manage-strip a:hover { color: var(--ink); }
+
   .welcome-footnote {
     font-size: 14px;
     color: var(--muted);
@@ -154,35 +206,33 @@
   }
   .welcome-footnote a { color: var(--accent); }
 
-  /* Trial badge */
-  .trial-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--paper);
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    padding: 8px 16px;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--ink-3);
-    margin-bottom: 36px;
-  }
-  .trial-badge .dot {
-    width: 7px; height: 7px;
-    background: var(--green);
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
   @media (max-width: 600px) {
     .next-card { padding: 32px 24px; }
     .welcome-actions .btn-primary,
     .welcome-actions .btn-secondary { width: 100%; justify-content: center; }
+    .manage-strip { flex-direction: column; text-align: center; gap: 6px; }
   }
 </style>
 </head>
 <body>
+
+<!-- ============================================================
+     GUARD — runs before anything renders.
+     Stripe appends ?session_id=cs_live_xxx to the success URL.
+     Anyone who navigates here directly gets sent home.
+============================================================ -->
+<script>
+(function () {
+  var s = new URLSearchParams(window.location.search).get('session_id');
+  if (s && (s.indexOf('cs_live_') === 0 || s.indexOf('cs_test_') === 0)) {
+    // Valid Stripe session — show the page
+    document.documentElement.style.visibility = 'visible';
+  } else {
+    // No valid token — redirect home silently
+    window.location.replace('/');
+  }
+})();
+</script>
 
 <nav id="nav">
   <div class="container nav-inner">
@@ -217,7 +267,7 @@
           <span class="step-num">01</span>
           <div class="step-body">
             <strong>Email us your setup details</strong>
-            <p>Send an email to <a href="mailto:ownerdeck@outlook.com?subject=OwnerDeck%20setup%20—%20new%20trial" style="color:var(--accent-soft)">ownerdeck@outlook.com</a> with: your company name, brand color (hex code), logo if you have one, and a list of your properties with their Airbnb/Booking.com URLs. The more you send, the faster we move.</p>
+            <p>Send an email to <a href="mailto:ownerdeck@outlook.com?subject=OwnerDeck%20setup%20—%20new%20trial" style="color:var(--accent-soft)">ownerdeck@outlook.com</a> with: your company name, brand color (hex code), logo if you have one, and your property URLs on Airbnb or Booking.com. The more you send, the faster we move.</p>
           </div>
         </li>
         <li class="next-step">
@@ -238,22 +288,28 @@
           <span class="step-num">04</span>
           <div class="step-body">
             <strong>Your trial ends on day 15</strong>
-            <p>If you're happy, your card is charged automatically at the plan rate. If you're not, cancel any time before day 15 in the Stripe customer portal — no questions asked.</p>
+            <p>If you're happy, your card is charged automatically at the plan rate. If not, cancel any time before day 15 in your billing portal — no questions asked.</p>
           </div>
         </li>
       </ol>
     </div>
 
     <div class="welcome-actions">
-      <a href="mailto:ownerdeck@outlook.com?subject=OwnerDeck%20setup%20—%20new%20trial&body=Hi%20Mark%2C%0A%0AHere%20are%20my%20setup%20details%3A%0A%0ACompany%20name%3A%20%0ABrand%20color%20(hex)%3A%20%0AProperties%3A%20%0A%0AURL(s)%3A%20" class="btn-primary">
+      <a href="mailto:ownerdeck@outlook.com?subject=OwnerDeck%20setup%20—%20new%20trial&body=Hi%2C%0A%0AHere%20are%20my%20setup%20details%3A%0A%0ACompany%20name%3A%20%0ABrand%20color%20(hex)%3A%20%0AProperty%20URL(s)%3A%20%0A%0AAnything%20else%3A%20" class="btn-primary">
         Email your setup details now
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
       </a>
-      <a href="/" class="btn-secondary">Back to home</a>
+    </div>
+
+    <!-- Manage subscription -->
+    <div class="manage-strip">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg>
+      Need to cancel, update your card, or view invoices?
+      <a href="https://billing.stripe.com/p/login/aFa14g3oC3pD4JZ2eZ9Zm00" target="_blank" rel="noopener noreferrer">Manage your subscription →</a>
     </div>
 
     <p class="welcome-footnote">
-      Questions? Reply directly to your Stripe receipt email or reach us at
+      Questions? Reply to your Stripe receipt email or reach us at
       <a href="mailto:ownerdeck@outlook.com">ownerdeck@outlook.com</a>.
       We respond within one business day.
     </p>
