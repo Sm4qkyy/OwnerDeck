@@ -4,12 +4,38 @@
 
 :root {
   --user-color: #C97B3F;
+  --user-text: #fff;
 }
 
 main#main { padding-top: 100px; min-height: 80vh; }
 
 .preview-step { display: none; padding: 60px 0 120px; }
 .preview-step.active { display: block; animation: fadeUp 0.5s ease; }
+
+/* Step progress indicator */
+.step-progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+.step-progress--wide { max-width: none; }
+.step-pip {
+  width: 28px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--line);
+  transition: background 0.3s;
+}
+.step-pip.active { background: var(--accent); }
+.step-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--muted);
+  margin-left: 6px;
+}
 
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(12px); }
@@ -61,6 +87,7 @@ main#main { padding-top: 100px; min-height: 80vh; }
 .field input[type="text"],
 .field input[type="email"],
 .field input[type="url"],
+.field select,
 .field textarea {
   font-family: var(--font-body);
   font-size: 16px;
@@ -72,7 +99,17 @@ main#main { padding-top: 100px; min-height: 80vh; }
   transition: border-color 0.2s, box-shadow 0.2s;
   outline: none;
 }
+.field select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 44px;
+  cursor: pointer;
+}
 .field input:focus,
+.field select:focus,
 .field textarea:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(244,162,97,0.18);
@@ -203,8 +240,8 @@ main#main { padding-top: 100px; min-height: 80vh; }
   align-items: center;
   gap: 12px;
   padding: 0 6%;
-  color: #fff;
-  transition: background 0.3s ease;
+  color: var(--user-text, #fff);
+  transition: background 0.3s ease, color 0.3s ease;
 }
 .cover-brand-mark {
   width: 22px;
@@ -218,7 +255,7 @@ main#main { padding-top: 100px; min-height: 80vh; }
   font-weight: 600;
   font-size: clamp(13px, 1.6vw, 18px);
   letter-spacing: -0.3px;
-  color: #fff;
+  color: var(--user-text, #fff);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -295,7 +332,7 @@ main#main { padding-top: 100px; min-height: 80vh; }
   align-items: center;
   justify-content: space-between;
   padding: 8px 14px;
-  color: #fff;
+  color: var(--user-text, #fff);
   font-family: var(--font-display);
   font-weight: 600;
   font-size: clamp(11px, 1.3vw, 14px);
@@ -345,6 +382,17 @@ main#main { padding-top: 100px; min-height: 80vh; }
   font-size: 18px;
   font-weight: 500;
   letter-spacing: -0.3px;
+  text-align: center;
+  padding: 0 16px;
+}
+.lock-hint {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: rgba(255,255,255,0.65);
+  text-align: center;
+  padding: 0 16px;
 }
 
 /* ===========================================================
@@ -410,6 +458,31 @@ main#main { padding-top: 100px; min-height: 80vh; }
   flex-shrink: 0;
 }
 
+.unlock-platforms {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+.platforms-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+}
+.platform-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  color: var(--muted-2);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 6px;
+  padding: 3px 10px;
+}
+
 .unlock-form {
   background: var(--ink-2);
   border: 1px solid var(--ink-3);
@@ -420,14 +493,20 @@ main#main { padding-top: 100px; min-height: 80vh; }
 }
 .unlock-form .field label { color: var(--muted-2); }
 .unlock-form .field input,
+.unlock-form .field select,
 .unlock-form .field textarea {
   background: var(--ink);
   border: 1px solid var(--ink-3);
   color: var(--paper);
 }
+.unlock-form .field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+}
 .unlock-form .field input::placeholder,
 .unlock-form .field textarea::placeholder { color: var(--muted); }
+.unlock-form .field select option { background: var(--ink); color: var(--paper); }
 .unlock-form .field input:focus,
+.unlock-form .field select:focus,
 .unlock-form .field textarea:focus {
   border-color: var(--accent-soft);
   box-shadow: 0 0 0 3px rgba(244,162,97,0.18);

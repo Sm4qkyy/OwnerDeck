@@ -30,13 +30,26 @@ function fillDynamic(field, value) {
   $$('.dynamic-' + field).forEach(el => { el.textContent = value; });
 }
 
+/**
+ * Returns '#0F172A' (dark) or '#ffffff' (light) based on perceived
+ * luminance — so text on the brand-colour band is always legible.
+ */
+function getContrastColor(hex) {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+  return luminance > 0.55 ? '#0F172A' : '#ffffff';
+}
+
 function applyBranding(data) {
-  const company = (data.company || 'Your Company').trim();
-  const color   = data.color || '#C97B3F';
+  const company  = (data.company  || 'Your Company').trim();
+  const color    = data.color || '#C97B3F';
   const property = (data.property || 'Villa Aphrodite').trim();
   const owner    = (data.owner    || 'Maria Constantinou').trim();
 
   document.documentElement.style.setProperty('--user-color', color);
+  document.documentElement.style.setProperty('--user-text', getContrastColor(color));
   fillDynamic('company',  company);
   fillDynamic('property', property);
   fillDynamic('owner',    owner);
@@ -53,7 +66,11 @@ const colorInput = $('#color');
 const colorHex   = $('#color-hex');
 if (colorInput && colorHex) {
   colorInput.addEventListener('input', () => {
-    colorHex.textContent = colorInput.value.toUpperCase();
+    const hex = colorInput.value.toUpperCase();
+    colorHex.textContent = hex;
+    // Live preview of brand-color + contrast text while still on Step 1
+    document.documentElement.style.setProperty('--user-color', colorInput.value);
+    document.documentElement.style.setProperty('--user-text', getContrastColor(colorInput.value));
   });
 }
 
@@ -116,9 +133,3 @@ if (restartBtn) {
   });
 }
 
-// ---- Hide the Stripe button if the placeholder hasn't been filled
-// -----------------------------------------------------------------
-const stripeBtn = $('#stripe-subscribe');
-if (stripeBtn && stripeBtn.href.includes('STRIPE_PAYMENT_LINK_HERE')) {
-  stripeBtn.style.display = 'none';
-}

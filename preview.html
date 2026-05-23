@@ -52,6 +52,12 @@
   ============================================================ -->
   <section id="step-1" class="preview-step active">
     <div class="container preview-intro">
+      <div class="step-progress">
+        <span class="step-pip active"></span>
+        <span class="step-pip"></span>
+        <span class="step-pip"></span>
+        <span class="step-label">Step 1 of 3 · Your branding</span>
+      </div>
       <div class="eyebrow"><span class="dot"></span>Free preview · No call required</div>
       <h1>See your owner report. <em>In 30 seconds.</em></h1>
       <p class="preview-lede">Type in your company name and pick a brand color. We'll instantly render the first two pages of your owner report — exactly as your owners will see it.</p>
@@ -95,10 +101,16 @@
   ============================================================ -->
   <section id="step-2" class="preview-step">
     <div class="container">
+      <div class="step-progress step-progress--wide">
+        <span class="step-pip active"></span>
+        <span class="step-pip active"></span>
+        <span class="step-pip"></span>
+        <span class="step-label">Step 2 of 3 · Your preview</span>
+      </div>
       <div class="preview-header">
         <div class="section-eyebrow">Your preview</div>
         <h2>Here's <em>your</em> report, <span class="dynamic-company"></span>.</h2>
-        <p class="preview-subhead">Pages 1 and 2 are personalized with your branding right now. Pages 3 and 4 unlock when you submit your real property — we'll email the full 4-page PDF within 24 hours.</p>
+        <p class="preview-subhead">Pages 1 and 2 are personalized with your branding right now. Pages 3 and 4 unlock when you submit your listing — we'll personally build and email you the full 4-page PDF within 2 business days.</p>
       </div>
 
       <div class="preview-gallery">
@@ -158,7 +170,8 @@
               <div class="lock-icon">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
               </div>
-              <div class="lock-text">Unlock with your real data</div>
+              <div class="lock-text">Your May payout breakdown</div>
+              <div class="lock-hint">Net revenue · occupancy · fees · ADR</div>
             </div>
           </div>
         </div>
@@ -176,7 +189,8 @@
               <div class="lock-icon">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
               </div>
-              <div class="lock-text">Unlock with your real data</div>
+              <div class="lock-text">Forecast &amp; owner action items</div>
+              <div class="lock-hint">Next month's projected revenue</div>
             </div>
           </div>
         </div>
@@ -189,13 +203,21 @@
           <div class="unlock-copy">
             <div class="section-eyebrow">Unlock the full preview</div>
             <h2>See what it looks like with <em>your real numbers.</em></h2>
-            <p>Drop your email and (optionally) one of your live listings. Within 24 hours, we'll email you the full 4-page report — branded as your company, populated with your actual data.</p>
+            <p>Drop your email and one of your live listings. We'll personally build your preview using your property's public info and realistic revenue benchmarks for your area — and email you the full 4-page PDF within 2 business days.</p>
             <ul class="unlock-list">
-              <li><span class="check">✓</span> Real revenue, occupancy and ADR from your listing</li>
-              <li><span class="check">✓</span> Real booking history and reviews</li>
+              <li><span class="check">✓</span> Your property's branding, name, and location</li>
+              <li><span class="check">✓</span> Realistic revenue benchmarks for comparable properties in your market</li>
               <li><span class="check">✓</span> Fully designed PDF, identical to what your owners would receive</li>
-              <li><span class="check">✓</span> No commitment. No card required at this stage.</li>
+              <li><span class="check">✓</span> No commitment. No card required.</li>
             </ul>
+            <div class="unlock-platforms">
+              <span class="platforms-label">Works with</span>
+              <span class="platform-tag">Airbnb</span>
+              <span class="platform-tag">Booking.com</span>
+              <span class="platform-tag">Vrbo</span>
+              <span class="platform-tag">Hospitable</span>
+              <span class="platform-tag">Guesty</span>
+            </div>
           </div>
 
           <form id="unlock-form" class="unlock-form">
@@ -209,8 +231,19 @@
               <span class="field-help">Airbnb, Booking.com, or Vrbo. We use it to pull real data.</span>
             </div>
             <div class="field">
+              <label for="property_count">How many properties do you manage? <span class="req">*</span></label>
+              <select id="property_count" name="property_count" required>
+                <option value="" disabled selected>Select a range</option>
+                <option value="1-4">1–4 properties</option>
+                <option value="5-10">5–10 properties</option>
+                <option value="11-20">11–20 properties</option>
+                <option value="21-50">21–50 properties</option>
+                <option value="50+">50+ properties</option>
+              </select>
+            </div>
+            <div class="field">
               <label for="notes">Anything else?</label>
-              <textarea id="notes" name="notes" rows="3" placeholder="Number of properties, PMS you use, anything that helps us prepare a great preview..."></textarea>
+              <textarea id="notes" name="notes" rows="3" placeholder="PMS you use, specific pages you'd like to see, anything that helps us prepare a great preview..."></textarea>
             </div>
 
             <!-- Hidden fields populated by JS -->
@@ -240,31 +273,36 @@
   ============================================================ -->
   <section id="step-3" class="preview-step">
     <div class="container preview-confirmation">
+      <div class="step-progress">
+        <span class="step-pip active"></span>
+        <span class="step-pip active"></span>
+        <span class="step-pip active"></span>
+        <span class="step-label">Step 3 of 3 · Done</span>
+      </div>
       <div class="confirm-check">
         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
       </div>
       <div class="section-eyebrow">Preview on the way</div>
       <h2>Your full preview is being prepared.</h2>
-      <p class="confirm-lede">Within the next 24 hours, you'll receive the full 4-page owner report — branded as <strong class="dynamic-company"></strong>, populated with real data from your listing.</p>
+      <p class="confirm-lede">Within 2 business days, you'll receive the full 4-page owner report — branded as <strong class="dynamic-company"></strong>, built using your property's public data and realistic area benchmarks.</p>
 
       <div class="confirm-next">
         <h3>What happens next?</h3>
         <ol>
-          <li><strong>We build your preview.</strong> Mark personally reviews every preview to make sure the branding and data look right.</li>
+          <li><strong>We build your preview.</strong> Our team reviews every preview to make sure the branding looks sharp and the numbers are realistic for your market.</li>
           <li><strong>You receive the PDF by email.</strong> The same format your owners would receive every month.</li>
-          <li><strong>If you love it</strong>, subscribe at €250/month and we'll set up automatic monthly delivery for your whole portfolio. Cancel anytime.</li>
+          <li><strong>If you love it</strong>, subscribe and we'll set up automatic monthly delivery for your whole portfolio. Cancel anytime.</li>
         </ol>
       </div>
 
       <div class="confirm-cta-row">
-        <a href="https://buy.stripe.com/6oU28kcZc0dr2BRaLv9Zm01" target="_blank" rel="noopener noreferrer" class="btn-primary" id="stripe-subscribe">
-          Skip the wait — subscribe now
+        <a href="https://calendly.com/ownerdeck/new-meeting" target="_blank" rel="noopener noreferrer" class="btn-primary">
+          Book a 15-min call instead
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
         </a>
-        <a href="/" class="btn-secondary">Back to home</a>
       </div>
 
-      <p class="confirm-footnote">Questions? Email <a href="mailto:ownerdeck@outlook.com?subject=OwnerDeck%20preview%20question">ownerdeck@outlook.com</a> or <a href="https://calendly.com/ownerdeck/new-meeting" target="_blank" rel="noopener noreferrer">book a 15-min call</a>.</p>
+      <p class="confirm-footnote">Have questions? Reply to the confirmation email or reach us at <a href="mailto:ownerdeck@outlook.com?subject=OwnerDeck%20preview%20question">ownerdeck@outlook.com</a>.</p>
     </div>
   </section>
 
