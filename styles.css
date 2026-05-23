@@ -732,6 +732,18 @@ h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
   transition: transform 0.2s;
 }
 .price-cta:hover { transform: translateY(-2px); }
+.price-cta-secondary {
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--muted-2);
+}
+.price-cta-secondary a {
+  color: var(--accent-soft);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 500;
+}
+.price-cta-secondary a:hover { color: var(--accent); }
 .price-footnote {
   text-align: center;
   margin-top: 28px;
