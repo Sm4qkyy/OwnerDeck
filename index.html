@@ -282,39 +282,79 @@
   <div class="container">
     <div class="reveal center">
       <div class="section-eyebrow">Pricing</div>
-      <h2 class="center-h2">One plan. <em>Boring, predictable, monthly.</em></h2>
-      <p class="section-lede center-p">No tiered confusion. No per-property surprises. You pay one flat fee per portfolio.</p>
+      <h2 class="center-h2">Three plans. <em>Pick what fits.</em></h2>
+      <p class="section-lede center-p">Simple, predictable, monthly. Upgrade or downgrade as your portfolio grows. Free preview before you commit. Cancel anytime.</p>
     </div>
 
-    <div class="price-card-wrap reveal">
-      <div class="price-card">
-        <div class="price-card-inner">
-          <div class="price-label">OwnerDeck — Portfolio plan</div>
-          <div class="price-amount">
-            <span class="currency">€</span>250<span class="period"> /month</span>
-          </div>
-          <p class="price-sub">For portfolios of up to 20 properties. Larger portfolio? <a href="mailto:ownerdeck@outlook.com?subject=Large%20portfolio%20enquiry" class="price-sub-link">Get in touch →</a></p>
+    <div class="price-grid reveal">
 
-          <ul class="price-features">
-            <li>Branded monthly owner reports (PDF)</li>
-            <li>Auto-delivery to every owner</li>
-            <li>Pre-arrival guest messaging</li>
-            <li>Mid-stay check-ins</li>
-            <li>Auto review-request flow</li>
-            <li>Manager dashboard</li>
-            <li>Airbnb + Booking + PMS integration</li>
-            <li>Monthly support &amp; updates</li>
-          </ul>
-
-          <a href="/preview.html" class="price-cta">
-            Try a free preview
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-          </a>
-          <p class="price-cta-secondary">Or <a href="STRIPE_PAYMENT_LINK_HERE" target="_blank" rel="noopener noreferrer" id="stripe-direct">subscribe now → €250/mo</a></p>
+      <!-- STARTER -->
+      <div class="price-card-tier">
+        <div class="tier-name">Starter</div>
+        <div class="tier-price">
+          <span class="currency">€</span><span class="amount">99</span><span class="period"> /mo</span>
         </div>
+        <div class="tier-limit">For portfolios up to 5 properties</div>
+        <ul class="tier-features">
+          <li>Branded monthly PDF reports</li>
+          <li>Auto-delivery to every owner</li>
+          <li>Airbnb + Booking integration</li>
+          <li>Manager dashboard</li>
+          <li>Email support</li>
+        </ul>
+        <a href="/preview.html" class="tier-cta">
+          Try a free preview
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <p class="tier-subscribe">Or <a href="STRIPE_PAYMENT_LINK_STARTER" target="_blank" rel="noopener noreferrer" class="stripe-subscribe-link">subscribe now</a></p>
       </div>
-      <p class="price-footnote">See your branded report first. Subscribe only if it's a fit. Cancel anytime.</p>
+
+      <!-- PORTFOLIO (featured) -->
+      <div class="price-card-tier featured">
+        <div class="tier-name">Portfolio</div>
+        <div class="tier-price">
+          <span class="currency">€</span><span class="amount">250</span><span class="period"> /mo</span>
+        </div>
+        <div class="tier-limit">For portfolios up to 20 properties</div>
+        <ul class="tier-features">
+          <li><strong>Everything in Starter, plus:</strong></li>
+          <li>Pre-arrival guest messaging</li>
+          <li>Mid-stay check-ins</li>
+          <li>Auto review-request flow</li>
+          <li>Full PMS integration (Hospitable, Guesty, Lodgify, Hostaway)</li>
+          <li>Priority support</li>
+        </ul>
+        <a href="/preview.html" class="tier-cta">
+          Try a free preview
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <p class="tier-subscribe">Or <a href="STRIPE_PAYMENT_LINK_PORTFOLIO" target="_blank" rel="noopener noreferrer" class="stripe-subscribe-link">subscribe now</a></p>
+      </div>
+
+      <!-- SCALE -->
+      <div class="price-card-tier">
+        <div class="tier-name">Scale</div>
+        <div class="tier-price">
+          <span class="currency">€</span><span class="amount">500</span><span class="period"> /mo</span>
+        </div>
+        <div class="tier-limit">For portfolios up to 50 properties</div>
+        <ul class="tier-features">
+          <li><strong>Everything in Portfolio, plus:</strong></li>
+          <li>Custom report layouts</li>
+          <li>Owner-specific personalization</li>
+          <li>Dedicated success contact</li>
+          <li>Quarterly strategy calls</li>
+        </ul>
+        <a href="/preview.html" class="tier-cta">
+          Try a free preview
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <p class="tier-subscribe">Or <a href="STRIPE_PAYMENT_LINK_SCALE" target="_blank" rel="noopener noreferrer" class="stripe-subscribe-link">subscribe now</a></p>
+      </div>
+
     </div>
+
+    <p class="price-footnote">Need more than 50 properties? <a href="mailto:ownerdeck@outlook.com?subject=Enterprise%20enquiry">Let's talk</a> — we'll build something custom. Free preview first, cancel anytime, no card required for the preview.</p>
   </div>
 </section>
 
@@ -360,8 +400,8 @@
         <div class="faq-a">No. OwnerDeck sits on top of your existing PMS. You keep what you've already got — we just automate the parts your PMS doesn't do well (owner reporting and proactive guest comms).</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q">What if I only have 3 properties?</button>
-        <div class="faq-a">We're optimized for portfolios of 5+ properties. If you have fewer, message us — we sometimes take smaller portfolios at a reduced rate during our onboarding period.</div>
+        <button class="faq-q">What if I only have a few properties?</button>
+        <div class="faq-a">Our Starter plan (€99/mo) covers up to 5 properties — perfect for boutique portfolios. If you have just 1-2 properties, message us and we'll figure out something fair during our launch period.</div>
       </div>
       <div class="faq-item">
         <button class="faq-q">Can I customize the report layout?</button>

@@ -41,12 +41,14 @@ document.querySelectorAll('.faq-q').forEach(q => {
   });
 });
 
-// Hide Stripe direct-subscribe link if the placeholder hasn't been filled
-const stripeDirect = document.getElementById('stripe-direct');
-if (stripeDirect && stripeDirect.href.includes('STRIPE_PAYMENT_LINK_HERE')) {
-  const parent = stripeDirect.closest('.price-cta-secondary');
-  if (parent) parent.style.display = 'none';
-}
+// Hide any Stripe subscribe links that still have a placeholder URL
+document.querySelectorAll('.stripe-subscribe-link').forEach(link => {
+  if (link.href.includes('STRIPE_PAYMENT_LINK')) {
+    const container = link.closest('.tier-subscribe, .price-cta-secondary');
+    if (container) container.style.display = 'none';
+    else link.style.display = 'none';
+  }
+});
 
 // Reveal-on-scroll animation
 const io = new IntersectionObserver(entries => {
