@@ -906,6 +906,17 @@ h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
 }
 .price-card-tier.featured .tier-cta:hover { background: var(--paper-warm); }
 
+/* Scale tier — outline CTA variant */
+.tier-cta-outline {
+  background: transparent;
+  color: var(--ink);
+  border: 1.5px solid var(--line);
+}
+.tier-cta-outline:hover {
+  background: var(--paper-warm-2);
+  border-color: var(--ink-3);
+}
+
 .tier-subscribe {
   text-align: center;
   margin-top: 12px;
