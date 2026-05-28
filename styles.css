@@ -1071,7 +1071,7 @@ footer a:hover { color: var(--paper); }
   /* ── Nav ─────────────────────────────────────────────── */
   nav { background: rgba(11, 17, 32, 0.90); }
   nav.scrolled { border-bottom-color: #1C2D42; }
-  .logo-img { filter: brightness(0) invert(1); }
+  /* No filter needed — logo's teal colours read fine on the dark nav */
   .nav-links a { color: #94A3B8; }
   .nav-links a:hover { color: #F1F5F9; }
   .nav-hamburger { color: #F1F5F9; }
