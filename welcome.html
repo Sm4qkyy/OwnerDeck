@@ -4,9 +4,9 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex" />
-<title>Request received — OwnerDeck</title>
+<title>We'll be in touch — OwnerDeck</title>
 <meta name="theme-color" content="#0F172A" />
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F172A'/%3E%3Ctext x='50%25' y='50%25' font-family='Georgia' font-size='20' fill='%23F4A261' text-anchor='middle' dominant-baseline='central' font-weight='700'%3EO%3C/text%3E%3C/svg%3E" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F172A'/%3E%3Ctext x='50%25' y='50%25' font-family='Georgia' font-size='20' fill='%235EEAD4' text-anchor='middle' dominant-baseline='central' font-weight='700'%3EO%3C/text%3E%3C/svg%3E" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,14 +17,14 @@
 <style>
   main { padding-top: 100px; min-height: 80vh; }
 
-  .welcome-wrap {
-    max-width: 680px;
+  .confirm-wrap {
+    max-width: 660px;
     margin: 0 auto;
     padding: 60px 32px 120px;
     text-align: center;
   }
 
-  .welcome-check {
+  .confirm-check {
     width: 96px;
     height: 96px;
     background: var(--accent);
@@ -33,7 +33,7 @@
     display: grid;
     place-items: center;
     margin: 0 auto 40px;
-    box-shadow: 0 24px 48px -20px rgba(201,123,63,0.55);
+    box-shadow: 0 24px 48px -20px rgba(13,148,136,0.5);
     animation: pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
   }
   @keyframes pop {
@@ -41,7 +41,7 @@
     to   { transform: scale(1);   opacity: 1; }
   }
 
-  .welcome-eyebrow {
+  .confirm-eyebrow {
     font-family: var(--font-mono);
     font-size: 12px;
     text-transform: uppercase;
@@ -50,25 +50,24 @@
     margin-bottom: 18px;
   }
 
-  .welcome-h1 {
+  .confirm-h1 {
     font-family: var(--font-display);
     font-weight: 500;
-    font-size: clamp(36px, 5vw, 56px);
+    font-size: clamp(36px, 5vw, 52px);
     line-height: 1.05;
     letter-spacing: -2px;
     color: var(--ink);
     margin-bottom: 20px;
   }
-  .welcome-h1 em { font-style: italic; font-weight: 400; color: var(--accent); }
+  .confirm-h1 em { font-style: italic; font-weight: 400; color: var(--accent); }
 
-  .welcome-lede {
+  .confirm-lede {
     font-size: 19px;
     color: var(--ink-3);
     line-height: 1.6;
-    margin-bottom: 56px;
+    margin-bottom: 52px;
   }
 
-  /* What happens next card */
   .next-card {
     background: var(--ink);
     color: var(--paper);
@@ -84,7 +83,7 @@
     position: absolute;
     top: -80px; right: -80px;
     width: 300px; height: 300px;
-    background: radial-gradient(circle, rgba(244,162,97,0.18), transparent 70%);
+    background: radial-gradient(circle, rgba(94,234,212,0.14), transparent 70%);
     border-radius: 50%;
     pointer-events: none;
   }
@@ -138,8 +137,7 @@
     margin: 0;
   }
 
-  /* Action row */
-  .welcome-actions {
+  .confirm-actions {
     display: flex;
     gap: 14px;
     justify-content: center;
@@ -147,17 +145,17 @@
     margin-bottom: 32px;
   }
 
-  .welcome-footnote {
+  .confirm-footnote {
     font-size: 14px;
     color: var(--muted);
     line-height: 1.6;
   }
-  .welcome-footnote a { color: var(--accent); }
+  .confirm-footnote a { color: var(--accent); }
 
   @media (max-width: 600px) {
     .next-card { padding: 32px 24px; }
-    .welcome-actions .btn-primary,
-    .welcome-actions .btn-secondary { width: 100%; justify-content: center; }
+    .confirm-actions .btn-primary,
+    .confirm-actions .btn-secondary { width: 100%; justify-content: center; }
   }
 </style>
 </head>
@@ -173,16 +171,16 @@
 </nav>
 
 <main id="main">
-  <div class="welcome-wrap">
+  <div class="confirm-wrap">
 
-    <div class="welcome-check">
+    <div class="confirm-check">
       <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
     </div>
 
-    <div class="welcome-eyebrow">Request received</div>
-    <h1 class="welcome-h1">Got it. <em>We'll be in touch.</em></h1>
+    <div class="confirm-eyebrow">Request received</div>
+    <h1 class="confirm-h1">Got it. <em>We'll be in touch.</em></h1>
 
-    <p class="welcome-lede">We've got your details. Here's exactly what happens next — no chasing required on your end.</p>
+    <p class="confirm-lede">We've got your details. Expect a message from us within 24 hours — by email or WhatsApp, whichever works for you. No sales call, no long process.</p>
 
     <div class="next-card">
       <div class="next-card-eyebrow">What happens next</div>
@@ -190,34 +188,34 @@
         <li class="next-step">
           <span class="step-num">01</span>
           <div class="step-body">
-            <strong>We review your request</strong>
-            <p>We look at what you submitted — your business type, volume, and any notes — so when we reach out we already understand your setup and can give you a straight answer.</p>
+            <strong>We review your details</strong>
+            <p>We look at your business type, location, and any notes you left — so when we reach out we already understand your setup and can give you a straight answer about fit and timing.</p>
           </div>
         </li>
         <li class="next-step">
           <span class="step-num">02</span>
           <div class="step-body">
             <strong>We contact you within 24 hours</strong>
-            <p>Expect a message from us on WhatsApp or by email — whichever you prefer. We'll confirm the details, answer any questions, and agree on a start date. No long calls, no sales process.</p>
+            <p>A quick message — by email or WhatsApp — to confirm the details, answer any questions, and agree on a start date. No long calls, no sales deck.</p>
           </div>
         </li>
         <li class="next-step">
           <span class="step-num">03</span>
           <div class="step-body">
             <strong>Your assistant goes live within 48 hours</strong>
-            <p>Once we have everything we need, we set up and train your assistant. We'll message you to confirm it's live and show you how to hand off a conversation if you ever need to step in.</p>
+            <p>Once we have what we need, we build, train, and test your assistant. You review it before anything goes live. Then it starts answering — while you get on with running your business.</p>
           </div>
         </li>
       </ol>
     </div>
 
-    <div class="welcome-actions">
+    <div class="confirm-actions">
       <a href="/" class="btn-secondary">Back to home</a>
     </div>
 
-    <p class="welcome-footnote">
-      Questions in the meantime? Message us at
-      <a href="mailto:ownerdeck@outlook.com">ownerdeck@outlook.com</a>.
+    <p class="confirm-footnote">
+      Questions in the meantime? Email
+      <a href="mailto:mark@ownerdeck.com">mark@ownerdeck.com</a>.
       We respond within one business day.
     </p>
 

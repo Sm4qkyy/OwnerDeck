@@ -3,20 +3,16 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>OwnerDeck — Owner reports your owners will actually read</title>
-<meta name="description" content="Automated monthly owner reports and guest communication for short-term rental managers in Cyprus & Greece. Branded PDFs generated from Airbnb, Booking.com and your PMS." />
-<meta property="og:title" content="OwnerDeck — Automated owner reports for STR managers" />
-<meta property="og:description" content="Stop building owner reports manually. Branded PDFs delivered automatically every month." />
+<title>OwnerDeck — Never lose a booking to a slow reply</title>
+<meta name="description" content="AI-powered WhatsApp booking assistant for boat charters, watersports, day tours and car rentals in Cyprus. Instant replies, 24/7, in any language. Live in 48 hours." />
+<meta property="og:title" content="OwnerDeck — Never lose a booking to a slow reply" />
+<meta property="og:description" content="Your WhatsApp assistant answers every tourist inquiry in seconds — 24/7, in their language. Live in 48 hours." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://www.ownerdeck.com/" />
-<meta property="og:image" content="https://www.ownerdeck.com/report_page_1.png" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="OwnerDeck — Automated owner reports for STR managers" />
-<meta name="twitter:description" content="Stop building owner reports manually. Branded PDFs delivered automatically every month." />
-<meta name="twitter:image" content="https://www.ownerdeck.com/report_page_1.png" />
 <meta name="theme-color" content="#0F172A" />
 <link rel="canonical" href="https://www.ownerdeck.com/" />
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F172A'/%3E%3Ctext x='50%25' y='50%25' font-family='Georgia' font-size='20' fill='%23F4A261' text-anchor='middle' dominant-baseline='central' font-weight='700'%3EO%3C/text%3E%3C/svg%3E" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F172A'/%3E%3Ctext x='50%25' y='50%25' font-family='Georgia' font-size='20' fill='%235EEAD4' text-anchor='middle' dominant-baseline='central' font-weight='700'%3EO%3C/text%3E%3C/svg%3E" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,10 +25,10 @@
   "@type": "Organization",
   "name": "OwnerDeck",
   "url": "https://www.ownerdeck.com",
-  "email": "ownerdeck@outlook.com",
-  "description": "Automated monthly owner reports and guest communication for short-term rental managers in Cyprus and Greece.",
-  "areaServed": ["Cyprus", "Greece"],
-  "address": { "@type": "PostalAddress", "addressCountry": "CY" }
+  "email": "mark@ownerdeck.com",
+  "description": "AI-powered WhatsApp booking assistant for tourist businesses in Cyprus.",
+  "areaServed": "Cyprus",
+  "address": { "@type": "PostalAddress", "addressLocality": "Larnaca", "addressCountry": "CY" }
 }
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
@@ -49,335 +45,316 @@
     <div class="nav-links" id="nav-links">
       <a href="#how">How it works</a>
       <a href="#features">Features</a>
-      <a href="#reports">Reports</a>
       <a href="#pricing">Pricing</a>
       <a href="#faq">FAQ</a>
     </div>
-    <a href="/start.html?plan=growth" class="nav-cta">Start free trial</a>
+    <a href="#contact" class="nav-cta">Get started</a>
     <button id="nav-hamburger" class="nav-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
       <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
 
+<!-- ================================================================
+     HERO
+================================================================ -->
 <section class="hero" id="main">
   <div class="container hero-grid">
     <div class="reveal visible">
-      <div class="eyebrow"><span class="dot"></span>Now onboarding · Cyprus &amp; Greece</div>
-      <h1>Owner reports your owners will <em>actually read.</em></h1>
+      <div class="eyebrow"><span class="dot"></span>Now live in Cyprus</div>
+      <h1>Never lose a booking to <em>a slow reply.</em></h1>
       <p class="hero-lede">
-        Stop spending 6–10 hours a month building owner reports by hand. OwnerDeck automatically generates a fully-branded monthly PDF for every property — pulled from Airbnb, Booking.com, and your PMS.
+        Your WhatsApp assistant answers every tourist inquiry in seconds — 24/7, in the customer's language. While you're on the water, on the road, or off the clock.
+      </p>
+      <p style="font-size:15px; color:var(--muted); margin-bottom:28px; margin-top:-12px;">
+        Built for boat charters · watersports kiosks · day tours · car rentals
       </p>
       <div class="cta-row">
-        <a href="/start.html?plan=growth" class="btn-primary">
-          Start free trial
+        <a href="#contact" class="btn-primary">
+          Get started
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
         </a>
-        <a href="#reports" class="btn-secondary">See a sample report</a>
+        <a href="#how" class="btn-secondary">See how it works</a>
       </div>
     </div>
 
-    <div class="hero-visual reveal visible">
-      <div class="report-stack">
-        <div class="report-page report-page-3">
-          <img src="report_page_3.png" alt="OwnerDeck report — bookings &amp; financials" />
+    <!-- WhatsApp chat mockup -->
+    <div class="chat-mockup reveal visible" aria-hidden="true">
+      <div class="chat-shell">
+        <div class="chat-header">
+          <div class="chat-avatar">⛵</div>
+          <div class="chat-contact">
+            <div class="chat-name">Sunset Watersports</div>
+            <div class="chat-status">● Online</div>
+          </div>
         </div>
-        <div class="report-page report-page-2">
-          <img src="report_page_2.png" alt="OwnerDeck report — monthly performance" />
+        <div class="chat-messages">
+          <div class="msg msg-in">
+            <div class="msg-bubble">Hi! Do you have a jet ski tomorrow at 10am for 2 people?</div>
+            <div class="msg-time">09:47</div>
+          </div>
+          <div class="msg msg-out">
+            <div class="msg-bubble">Hi! Yes, we have slots at 10:00 and 11:30 🎉 Which works better for you?</div>
+            <div class="msg-time">09:47 ✓✓</div>
+          </div>
+          <div class="msg msg-in">
+            <div class="msg-bubble">10:00 please! How much for 30 min?</div>
+            <div class="msg-time">09:48</div>
+          </div>
+          <div class="msg msg-out">
+            <div class="msg-bubble">€80 for 2 people, 30 min 🏄 Can I get your name to hold the slot?</div>
+            <div class="msg-time">09:48 ✓✓</div>
+          </div>
         </div>
-        <div class="report-page report-page-1">
-          <img src="report_page_1.png" alt="OwnerDeck report cover" />
+        <div class="chat-footer-strip">
+          <div class="chat-speed-badge">⚡ Replied in 4 seconds</div>
         </div>
-      </div>
-      <div class="hero-badge">
-        <strong>Auto-sent</strong>
-        Generated &amp; delivered to every owner on the 1st.
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="integrations">
-  <div class="container">
-    <div class="integrations-inner">
-      <span class="integrations-label">Pulls data from</span>
-      <div class="integrations-logos">
-        <span class="integration-name">Airbnb</span>
-        <span class="integration-sep">·</span>
-        <span class="integration-name">Booking.com</span>
-        <span class="integration-sep">·</span>
-        <span class="integration-name">Vrbo</span>
-        <span class="integration-sep">·</span>
-        <span class="integration-name">Hospitable</span>
-        <span class="integration-sep">·</span>
-        <span class="integration-name">Guesty</span>
-        <span class="integration-sep">·</span>
-        <span class="integration-name">Lodgify</span>
-        <span class="integration-sep">·</span>
-        <span class="integration-name">Hostaway</span>
       </div>
     </div>
   </div>
 </section>
 
+<!-- ================================================================
+     PROBLEM
+================================================================ -->
 <section class="problem">
   <div class="container">
     <div class="reveal">
       <div class="section-eyebrow">The problem</div>
-      <h2>Reporting is the part of the job <em>no one signed up for.</em></h2>
-      <p class="section-lede" style="color: var(--muted-2);">
-        You started managing properties because you're good with owners and good with guests. Not because you wanted to spend half of every month exporting CSVs and copy-pasting numbers into Excel.
+      <h2>Tourists don't wait. <em>They move on.</em></h2>
+      <p class="section-lede">
+        In peak summer, a tourist sends the same message to three operators and books with whoever answers first. Speed isn't a nice-to-have — it's the whole game.
       </p>
     </div>
 
-    <div class="problem-grid">
-      <ul class="pain-list reveal">
-        <li class="pain-item">
-          <div>
-            <h3>The 1st-of-the-month panic</h3>
-            <p>Screenshotting Airbnb dashboards, exporting Booking CSVs, formatting another spreadsheet that looks slightly different from last month's.</p>
-          </div>
-        </li>
-        <li class="pain-item">
-          <div>
-            <h3>Owners asking the same questions</h3>
-            <p>"How did we do last month?" "Why was the payout lower?" "When are my next bookings?" — answered manually, twelve times over.</p>
-          </div>
-        </li>
-        <li class="pain-item">
-          <div>
-            <h3>Guests messaging at 11pm</h3>
-            <p>WiFi password, check-in code, parking, restaurant recommendations. Repeated every single booking. Forever.</p>
-          </div>
-        </li>
-        <li class="pain-item">
-          <div>
-            <h3>Reviews that never get asked for</h3>
-            <p>You meant to message them after checkout. You didn't. Your rating stagnates while competitors automate the ask.</p>
-          </div>
-        </li>
-      </ul>
-
-      <div class="reveal">
-        <div class="stat-card">
-          <div class="stat-number">6–10h</div>
-          <div class="stat-label">Hours per month the average STR manager spends building owner reports manually.</div>
+    <div class="problem-cards">
+      <div class="problem-card reveal">
+        <div class="problem-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
         </div>
-        <div class="stat-card">
-          <div class="stat-number">€720</div>
-          <div class="stat-label">Approximate hidden cost per month at €15/hr labour — for one portfolio.</div>
+        <h3>They message everyone at once</h3>
+        <p>Tourists open WhatsApp, fire off the same inquiry to three or four operators, and hand their money to whoever replies fastest. You're not competing on price — you're competing on speed.</p>
+      </div>
+      <div class="problem-card reveal">
+        <div class="problem-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         </div>
+        <h3>Peak season means you're never free</h3>
+        <p>You're mid-charter, loading the van, or just trying to have lunch. Your phone is full of inquiries and you can't physically respond to all of them in time — so you lose bookings you never knew you had.</p>
+      </div>
+      <div class="problem-card reveal">
+        <div class="problem-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <h3>Every slow reply costs real money</h3>
+        <p>A missed inquiry in July or August isn't a minor inconvenience — it's €200–€500 gone to a faster competitor. Multiply that across a season and the cost of not automating becomes obvious.</p>
       </div>
     </div>
   </div>
 </section>
 
+<!-- ================================================================
+     HOW IT WORKS
+================================================================ -->
 <section class="how-it-works" id="how">
   <div class="container">
     <div class="reveal">
       <div class="section-eyebrow">How it works</div>
-      <h2>Three things. One setup. <em>That's it.</em></h2>
-      <p class="section-lede">No new platform to learn. No staff retraining. We plug into the tools you already use and handle the rest in the background.</p>
+      <h2>Three steps. <em>Zero missed inquiries.</em></h2>
+      <p class="section-lede">No new app for your customers. No new platform for you to learn. It plugs straight into WhatsApp and runs in the background.</p>
     </div>
 
     <div class="steps">
       <div class="step reveal">
-        <div class="step-num">01 · Connect</div>
+        <div class="step-num">01 · Inquiry</div>
         <div class="step-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11V7a3 3 0 0 1 6 0v4"/><rect width="18" height="11" x="3" y="11" rx="2"/></svg>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
         </div>
-        <h3>We connect to your tools</h3>
-        <p>Airbnb, Booking.com, Vrbo, plus your PMS (Hospitable, Guesty, Lodgify, others). One-time setup. We do the integration work.</p>
+        <h3>Arrives on WhatsApp</h3>
+        <p>A tourist messages your WhatsApp number asking about availability, price, or how to book. Exactly as they do today — nothing changes on their end.</p>
       </div>
       <div class="step reveal">
-        <div class="step-num">02 · Brand</div>
+        <div class="step-num">02 · Reply</div>
         <div class="step-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
         </div>
-        <h3>We brand it as you</h3>
-        <p>Your logo, your colors, your tone of voice on every report and guest message. Owners think you upgraded your software.</p>
+        <h3>Instant reply in their language</h3>
+        <p>Your assistant responds within seconds — in English, Russian, Hebrew, Polish, German, or Greek, automatically detected. It answers availability, price, and policy questions from your playbook.</p>
       </div>
       <div class="step reveal">
-        <div class="step-num">03 · Automate</div>
+        <div class="step-num">03 · Capture</div>
         <div class="step-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         </div>
-        <h3>It runs on autopilot</h3>
-        <p>1st of every month, owners get their report. Guests get pre-arrival messages, mid-stay check-ins, and review requests automatically. You don't touch it.</p>
+        <h3>Booking captured, you're pinged</h3>
+        <p>Date, time, party size, and activity are captured and logged. Your calendar updates automatically. You get pinged only when something needs a personal touch — anything outside the script comes straight to you.</p>
       </div>
     </div>
   </div>
 </section>
 
+<!-- ================================================================
+     FEATURES
+================================================================ -->
 <section class="features" id="features">
   <div class="container">
     <div class="reveal">
       <div class="section-eyebrow">What you get</div>
-      <h2>Built specifically for short-term rental managers.</h2>
-      <p class="section-lede">Not a generic "all-in-one" platform that does ten things badly. Two things, done seriously.</p>
+      <h2>Built for busy operators.</h2>
+      <p class="section-lede">Not a generic chatbot. Trained on your business, your prices, your policies — and available around the clock so you don't have to be.</p>
     </div>
 
     <div class="feature-grid">
       <div class="feature reveal">
-        <div class="feature-tag">Owner reporting</div>
-        <h3>Branded monthly PDF for every owner</h3>
-        <p>Revenue, occupancy, ADR, guest rating, full booking list, financial breakdown ending in net payout, guest reviews, next-month forecast, and your recommendations needing their approval. Delivered to inbox on the 1st.</p>
+        <div class="feature-tag">Always on</div>
+        <h3>Instant replies, 24/7</h3>
+        <p>Every inquiry gets answered in seconds — 2am or 2pm, Sunday or August bank holiday. No more "sorry for the late reply" messages. No more bookings lost while you sleep.</p>
       </div>
       <div class="feature reveal">
-        <div class="feature-tag">Guest communication</div>
-        <h3>Pre-arrival, mid-stay, post-checkout</h3>
-        <p>WiFi, check-in instructions, parking, house rules — sent automatically 24h before arrival. Mid-stay check-in. Review request the morning after checkout. Multilingual.</p>
+        <div class="feature-tag">Multilingual</div>
+        <h3>Speaks your customers' language</h3>
+        <p>English, Russian, Hebrew, Polish, German, and Greek — detected automatically from the first message. No setup per language. Your assistant handles the conversation natively regardless of where the tourist is from.</p>
       </div>
       <div class="feature reveal">
-        <div class="feature-tag">Manager dashboard</div>
-        <h3>One screen, all properties, real numbers</h3>
-        <p>Live occupancy, projected month-end revenue, payouts due, properties needing your attention. Replaces the four browser tabs you currently jump between.</p>
+        <div class="feature-tag">Booking capture</div>
+        <h3>Details logged, calendar updated</h3>
+        <p>Date, time, party size, and activity captured from the conversation and dropped into your calendar. Booking summaries sent to you as soon as a slot is confirmed — no manual entry needed.</p>
       </div>
       <div class="feature reveal">
-        <div class="feature-tag">Multi-platform</div>
-        <h3>Works with Airbnb, Booking, Vrbo &amp; direct</h3>
-        <p>Whichever channels your properties are listed on, we pull from. No "Airbnb-only" limitations. We support Hospitable, Guesty Lite, Lodgify, Hostaway and direct booking sources.</p>
+        <div class="feature-tag">Owner in control</div>
+        <h3>Pinged for anything unusual</h3>
+        <p>Group of 20? Unusual request? Complaint? Anything outside the trained script is flagged immediately and handed to you. You stay in control of every edge case without watching the chat 24/7.</p>
+        <p class="feature-secondary">Also handles Instagram DMs</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="showcase" id="reports">
+<!-- ================================================================
+     PRICING
+================================================================ -->
+<section class="pricing center" id="pricing">
   <div class="container">
     <div class="reveal">
-      <div class="section-eyebrow">The deliverable</div>
-      <h2>The report your owners receive every month.</h2>
-      <p class="section-lede">Four pages. Branded to your company. Auto-generated from your data. This is the actual mockup we send to prospects.</p>
+      <div class="section-eyebrow">Pricing</div>
+      <h2 class="center-h2">Simple pricing. <em>No surprises.</em></h2>
+      <p class="section-lede center-p">One setup fee, one monthly rate. Cancel any time. Your assistant is live within 48 hours of signing up.</p>
     </div>
 
-    <div class="showcase-grid">
-      <div class="reveal">
-        <div class="report-gallery">
-          <img src="report_page_1.png" alt="Cover page" />
-          <img src="report_page_2.png" alt="Monthly performance" />
-          <img src="report_page_3.png" alt="Bookings &amp; financials" />
-          <img src="report_page_4.png" alt="Reviews &amp; forecast" />
+    <div class="pricing-card reveal">
+      <div class="pricing-eyebrow">Full service · everything included</div>
+      <div class="pricing-main">
+        <div class="pricing-chunk">
+          <div class="pricing-amount">€400</div>
+          <div class="pricing-period">one-time setup</div>
+        </div>
+        <div class="pricing-plus">+</div>
+        <div class="pricing-chunk">
+          <div class="pricing-amount teal">€150</div>
+          <div class="pricing-period">per month</div>
         </div>
       </div>
-      <div class="reveal">
-        <h3 class="showcase-h3">Every page does a specific job.</h3>
-        <p class="showcase-p">Most owners read the first two pages. The next two justify your management fee.</p>
-        <ul class="showcase-list">
-          <li><span><strong>Page 1 — Cover.</strong> Your branding, your colors, property name, owner name. Premium first impression.</span></li>
-          <li><span><strong>Page 2 — Headline metrics.</strong> Revenue, occupancy, ADR, rating, plus a plain-English summary of the month.</span></li>
-          <li><span><strong>Page 3 — Bookings &amp; financial breakdown.</strong> Every reservation, every fee, every cost, ending in net payout.</span></li>
-          <li><span><strong>Page 4 — Reviews &amp; forecast.</strong> Guest reviews, next-month bookings &amp; revenue projection, your recommendations.</span></li>
-        </ul>
-        <a href="/preview.html" class="btn-primary showcase-cta">
-          Generate yours now
+      <p class="pricing-terms">Cancel anytime · No lock-in · Live in 48 hours</p>
+      <ul class="pricing-features">
+        <li>Full assistant setup &amp; training</li>
+        <li>Multilingual (6 languages)</li>
+        <li>Automatic booking capture</li>
+        <li>Calendar integration</li>
+        <li>Owner notifications</li>
+        <li>Ongoing support &amp; updates</li>
+        <li>WhatsApp Business integration</li>
+        <li>48-hour go-live</li>
+      </ul>
+      <div class="pricing-cta">
+        <a href="#contact" class="btn-primary">
+          Get started
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
         </a>
       </div>
+      <p class="pricing-footnote">No commitment at this stage — tell us about your business and we'll be in touch within 24 hours.</p>
     </div>
   </div>
 </section>
 
-<section class="pricing" id="pricing">
+<!-- ================================================================
+     LEAD CAPTURE FORM
+================================================================ -->
+<section class="contact" id="contact">
   <div class="container">
-    <div class="reveal center">
-      <div class="section-eyebrow">Pricing</div>
-      <h2 class="center-h2">Simple plans. <em>Free to try.</em></h2>
-      <p class="section-lede center-p">14 days free on every plan. Self-serve checkout for Starter and Growth. Scale includes a personalised async walkthrough — no live calls required at any tier.</p>
+    <div class="reveal">
+      <div class="section-eyebrow">Get started</div>
+      <h2>Ready to stop missing bookings?</h2>
+      <p class="section-lede">Tell us about your business. We'll reach out within 24 hours to get you set up — no commitment, no sales call.</p>
     </div>
 
-    <div class="price-grid reveal">
+    <div class="contact-wrap">
+      <!--
+        Web3Forms: set your access key at web3forms.com (free).
+        Replace [PLACEHOLDER-FORM-ENDPOINT] with your actual access_key value.
+        The redirect field sends users to /welcome.html on success.
+      -->
+      <form
+        class="contact-form reveal"
+        action="https://api.web3forms.com/submit"
+        method="POST"
+      >
+        <input type="hidden" name="access_key" value="[PLACEHOLDER-FORM-ENDPOINT]" />
+        <input type="hidden" name="redirect" value="https://www.ownerdeck.com/welcome.html" />
+        <input type="hidden" name="subject" value="New OwnerDeck enquiry" />
+        <input type="hidden" name="from_name" value="OwnerDeck Website" />
+        <!-- Honeypot spam filter -->
+        <input type="checkbox" name="botcheck" style="display:none" />
 
-      <!-- STARTER -->
-      <div class="price-card-tier">
-        <div class="tier-name">Starter</div>
-        <div class="tier-price">
-          <span class="currency">€</span><span class="amount">59</span><span class="period"> /mo</span>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="f-name">Your name <span class="req">*</span></label>
+            <input id="f-name" name="name" type="text" placeholder="Nikos Papadopoulos" required maxlength="60" />
+          </div>
+          <div class="form-field">
+            <label for="f-business">Business name <span class="req">*</span></label>
+            <input id="f-business" name="business_name" type="text" placeholder="Sunset Watersports" required maxlength="80" />
+          </div>
         </div>
-        <div class="tier-limit">1–5 properties</div>
-        <ul class="tier-features">
-          <li>Branded monthly owner reports (PDF)</li>
-          <li>Pre-arrival guest messaging</li>
-          <li>Standard report template</li>
-          <li>Email support</li>
-          <li>14-day free trial</li>
-          <li>Self-serve checkout</li>
-        </ul>
-        <a href="/start.html?plan=starter" class="tier-cta">
-          Start free trial
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-        </a>
-      </div>
 
-      <!-- GROWTH (featured) -->
-      <div class="price-card-tier featured">
-        <div class="tier-name">Growth</div>
-        <div class="tier-price">
-          <span class="currency">€</span><span class="amount">149</span><span class="period"> /mo</span>
+        <div class="form-field">
+          <label for="f-whatsapp">WhatsApp number <span class="req">*</span></label>
+          <input id="f-whatsapp" name="whatsapp_number" type="tel" placeholder="+357 99 123 456" required maxlength="30" />
         </div>
-        <div class="tier-limit">6–20 properties</div>
-        <ul class="tier-features">
-          <li><strong>Everything in Starter, plus:</strong></li>
-          <li>Mid-stay check-ins + auto review requests</li>
-          <li>Custom branding (logo + colors)</li>
-          <li>Multi-language reports</li>
-          <li>Priority email support</li>
-          <li>14-day free trial</li>
-          <li>Self-serve checkout</li>
-        </ul>
-        <a href="/start.html?plan=growth" class="tier-cta">
-          Start free trial
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-        </a>
-      </div>
 
-      <!-- SCALE -->
-      <div class="price-card-tier">
-        <div class="tier-name">Scale</div>
-        <div class="tier-price">
-          <span class="currency">€</span><span class="amount">349</span><span class="period"> /mo</span>
+        <div class="form-field">
+          <label for="f-type">What do you operate? <span class="req">*</span></label>
+          <select id="f-type" name="business_type" required>
+            <option value="" disabled selected>Select your business type</option>
+            <option value="Boat charter">Boat charter</option>
+            <option value="Watersports kiosk">Watersports kiosk (jet ski, parasail, banana boat…)</option>
+            <option value="Day tours">Day tours</option>
+            <option value="Car rental">Car rental</option>
+            <option value="Other">Other</option>
+          </select>
         </div>
-        <div class="tier-limit">21–75 properties</div>
-        <ul class="tier-features">
-          <li><strong>Everything in Growth, plus:</strong></li>
-          <li>Custom report sections + per-property variations</li>
-          <li>Priority WhatsApp support</li>
-          <li>Free white-glove onboarding (async)</li>
-          <li>Personalised Loom walkthrough before signup</li>
-          <li>14-day free trial</li>
-        </ul>
-        <a href="/scale-request.html" class="tier-cta tier-cta-outline">
-          Request Scale access
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-        </a>
-      </div>
 
-    </div>
-
-    <p class="price-footnote">All plans include a 14-day free trial. Card required upfront. Cancel anytime.</p>
-  </div>
-</section>
-
-<section class="about" id="about">
-  <div class="container">
-    <div class="about-grid">
-      <div class="reveal">
-        <div class="section-eyebrow">About</div>
-        <h2>Built in Cyprus, for the people running the buildings.</h2>
-      </div>
-      <div class="about-text reveal">
-        <p>OwnerDeck started because every property manager I spoke with described the same week-long ritual at the end of each month: copy-paste, screenshot, format, send, repeat.</p>
-        <p>The big PMS platforms either don't solve it or do it badly — generic templates that look nothing like the manager's brand, with the wrong data fields, in the wrong order.</p>
-        <p>So we built something narrow on purpose. Two jobs, done seriously: owner reports that look like they came from a Fortune 500 hotel chain, and guest communication that runs in the background.</p>
-        <p>We're based in Cyprus, we work with managers across the island and Greece, and we keep the scope small so the product stays sharp.</p>
-        <div class="about-sig">
-          <div class="about-sig-name">Mark</div>
-          <div class="about-sig-title">Founder, OwnerDeck</div>
+        <div class="form-field">
+          <label for="f-notes">Anything else? <span style="color:var(--muted); font-weight:400;">(optional)</span></label>
+          <textarea id="f-notes" name="notes" placeholder="How many inquiries do you get per day? Any specific languages? Anything that would help us prepare…"></textarea>
         </div>
-      </div>
+
+        <button type="submit" class="btn-primary form-submit">
+          Send my details
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </button>
+
+        <p class="form-footnote">
+          No commitment. We'll reply within 24 hours.
+          <a href="/privacy.html">Privacy policy</a>.
+        </p>
+      </form>
     </div>
   </div>
 </section>
 
+<!-- ================================================================
+     FAQ
+================================================================ -->
 <section class="faq" id="faq">
   <div class="container">
     <div class="reveal center">
@@ -387,55 +364,54 @@
 
     <div class="faq-list reveal">
       <div class="faq-item">
-        <button class="faq-q">Which booking platforms do you support?</button>
-        <div class="faq-a">Airbnb, Booking.com, Vrbo, and direct bookings via most major PMS platforms (Hospitable, Guesty, Lodgify, Hostaway, and others). If your stack is unusual, we'll build the integration during onboarding.</div>
+        <button class="faq-q">Does my customer need to download anything?</button>
+        <div class="faq-a">No. Your customers message your existing WhatsApp number exactly as they do today. Nothing changes on their end — they don't need a new app, account, or link. The assistant just makes you reply faster.</div>
       </div>
       <div class="faq-item">
         <button class="faq-q">How long does setup take?</button>
-        <div class="faq-a">Typically 5–10 working days from contract signing. We do the integration work, brand customization, and a test report on one of your real properties so you can review it before the first batch goes out.</div>
+        <div class="faq-a">48 hours from when we have your details. We train the assistant on your business — your services, prices, availability, policies — and connect it to your WhatsApp Business number. You review and approve before it goes live.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q">Do you replace my PMS?</button>
-        <div class="faq-a">No. OwnerDeck sits on top of your existing PMS. You keep what you've already got — we just automate the parts your PMS doesn't do well (owner reporting and proactive guest comms).</div>
+        <button class="faq-q">What languages does it support?</button>
+        <div class="faq-a">English, Russian, Hebrew, Polish, German, and Greek — detected automatically from the customer's message. If a tourist writes in Russian, the assistant replies in Russian. You don't configure anything per conversation.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q">What if I only have a few properties?</button>
-        <div class="faq-a">Our Starter plan (€59/mo) covers 1–5 properties — perfect for boutique portfolios. 14-day free trial included. Self-serve checkout, no conversation required.</div>
+        <button class="faq-q">What happens if it gets a question it can't answer?</button>
+        <div class="faq-a">Anything outside the trained script gets flagged to you immediately. You'll receive a notification with the conversation so you can step in with a personal reply. The customer is told someone will follow up shortly — no dead ends.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q">Do I need to talk to anyone to sign up?</button>
-        <div class="faq-a">No. Starter and Growth are pure self-serve — sign up, connect your tools, done. Scale includes a personalised async walkthrough via Loom video before you commit, but there are no live calls required at any tier, ever.</div>
+        <button class="faq-q">Can I still reply to customers myself?</button>
+        <div class="faq-a">Yes. You can take over any conversation at any time. The assistant handles the first response and the routine questions — you stay in charge of anything you want to handle personally.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q">What if I have more than 75 properties?</button>
-        <div class="faq-a">Email <a href="mailto:ownerdeck@outlook.com?subject=Custom%20plan%20enquiry" style="color:var(--accent)">ownerdeck@outlook.com</a> — we'll set up a custom plan async. No call required for that either.</div>
+        <button class="faq-q">What does the €400 setup cover?</button>
+        <div class="faq-a">Everything: building and training the assistant on your specific business, connecting it to your WhatsApp Business account, calendar integration, testing, and a review call before go-live. There are no hidden fees — the setup is a one-time cost.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q">Can I customize the report layout?</button>
-        <div class="faq-a">Yes. Your branding (logo, colors, voice) is included by default. Section ordering, additional KPIs, custom appendices, and owner-specific personalization are available for larger portfolios.</div>
+        <button class="faq-q">Can I cancel?</button>
+        <div class="faq-a">Yes, anytime. Month-to-month, no contracts, no cancellation fees. If you cancel, the assistant is deactivated and your WhatsApp returns to normal. We'd obviously prefer you stay — but there's no lock-in.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q">What's the contract length?</button>
-        <div class="faq-a">Month-to-month. Cancel anytime. We earn your business every month — no annual lock-ins, no early-termination fees.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q">Why should I trust a new company with my owner data?</button>
-        <div class="faq-a">Fair question. During launch, we're working with a small number of partners and offering the first month free in exchange for honest feedback. You see the actual report before any owner does. You control what gets sent. Nothing leaves your portfolio without your sign-off during onboarding.</div>
+        <button class="faq-q">Does it work for my type of business?</button>
+        <div class="faq-a">If you take tourist bookings via WhatsApp — boat charters, jet ski, parasailing, banana boat, day tours, car rentals, similar — yes. If you're not sure, send us a message and we'll tell you honestly whether it's a good fit.</div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- ================================================================
+     FINAL CTA
+================================================================ -->
 <section class="cta-final">
   <div class="container">
-    <h2 class="reveal">14 days free. <em>No call required.</em></h2>
-    <p class="reveal">Start a free trial today — self-serve, takes minutes. Your first automated owner report goes out before you pay a cent. Cancel anytime, no questions asked.</p>
+    <h2 class="reveal">Stop losing bookings. <em>Start today.</em></h2>
+    <p class="reveal">Takes 2 minutes to fill in the form. We'll be in touch within 24 hours and your assistant can be live in 48.</p>
     <div class="cta-row reveal">
-      <a href="/start.html?plan=growth" class="btn-primary">
-        Start free trial
+      <a href="#contact" class="btn-primary">
+        Get started
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
       </a>
-      <a href="/preview.html" class="btn-secondary">See a branded preview first</a>
+      <a href="#how" class="btn-secondary">See how it works</a>
     </div>
   </div>
 </section>
@@ -447,37 +423,34 @@
         <div class="logo">
           <span class="logo-mark">O</span>OwnerDeck
         </div>
-        <p>Automated owner reports and guest communication for short-term rental managers in Cyprus &amp; Greece.</p>
+        <p>AI-powered WhatsApp booking assistant for tourist businesses in Cyprus.</p>
       </div>
       <div>
         <h4>Product</h4>
         <ul>
           <li><a href="#how">How it works</a></li>
           <li><a href="#features">Features</a></li>
-          <li><a href="#reports">Reports</a></li>
           <li><a href="#pricing">Pricing</a></li>
         </ul>
       </div>
       <div>
         <h4>Company</h4>
         <ul>
-          <li><a href="#about">About</a></li>
           <li><a href="#faq">FAQ</a></li>
-          <li><a href="mailto:ownerdeck@outlook.com?subject=OwnerDeck%20enquiry">Contact</a></li>
           <li><a href="/privacy.html">Privacy Policy</a></li>
         </ul>
       </div>
       <div>
         <h4>Get in touch</h4>
         <ul>
-          <li><a href="mailto:ownerdeck@outlook.com?subject=OwnerDeck%20enquiry">ownerdeck@outlook.com</a></li>
-          <li><a href="/preview.html">Free preview →</a></li>
-          <li>Cyprus</li>
+          <li><a href="mailto:mark@ownerdeck.com">mark@ownerdeck.com</a></li>
+          <li>Larnaca, Cyprus</li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <div>© 2026 OwnerDeck. Built in Cyprus.</div>
+      <div><a href="/privacy.html">Privacy Policy</a></div>
     </div>
   </div>
 </footer>
