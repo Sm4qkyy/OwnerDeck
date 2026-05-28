@@ -90,29 +90,27 @@ nav.scrolled { border-bottom-color: var(--line); }
   align-items: center;
   justify-content: space-between;
 }
-.logo {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 22px;
-  letter-spacing: -0.5px;
-  color: var(--ink);
+.logo-link {
   display: flex;
   align-items: center;
-  gap: 10px;
+  flex-shrink: 0;
 }
-.logo-mark {
-  width: 28px;
-  height: 28px;
-  border-radius: 7px;
-  background: var(--ink);
-  color: var(--accent-soft);
-  display: grid;
-  place-items: center;
+.logo-img {
+  height: 44px;
+  width: auto;
+  display: block;
+}
+/* Footer text wordmark (dark bg — image logo won't show) */
+.footer-logo {
   font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 17px;
-  letter-spacing: -1px;
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: -0.5px;
+  color: var(--paper);
+  display: inline-block;
+  margin-bottom: 2px;
 }
+.footer-logo:hover { color: var(--accent-soft); }
 .nav-links {
   display: flex;
   gap: 36px;
