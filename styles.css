@@ -96,10 +96,12 @@ nav.scrolled { border-bottom-color: var(--line); }
   flex-shrink: 0;
 }
 .logo-img {
-  height: 44px;
+  height: 56px;
   width: auto;
   display: block;
 }
+/* Mobile-only CTA inside the nav panel — hidden on desktop */
+.nav-mobile-cta { display: none; }
 /* Footer text wordmark (dark bg — image logo won't show) */
 .footer-logo {
   font-family: var(--font-display);
@@ -966,30 +968,69 @@ footer a:hover { color: var(--paper); }
   }
   .pricing-card { padding: 44px 32px; }
   .pricing-features { grid-template-columns: 1fr; max-width: 320px; }
+  /* Hide top-bar CTA on mobile — lives inside the menu panel instead */
+  .nav-cta { display: none; }
   .nav-hamburger { display: flex; }
   .nav-links { display: none; }
   nav.nav-mobile-open .nav-links {
     display: flex;
     flex-direction: column;
     position: fixed;
-    top: 64px;
+    top: 72px;
     left: 0; right: 0;
     background: rgba(251, 249, 244, 0.98);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    padding: 16px 24px 24px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 8px 24px 28px;
     gap: 0;
     border-bottom: 1px solid var(--line);
+    box-shadow: 0 16px 40px -10px rgba(15,23,42,0.12);
     z-index: 99;
   }
   nav.nav-mobile-open .nav-links a {
-    font-size: 17px;
-    padding: 14px 0;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    padding: 16px 0;
     border-bottom: 1px solid var(--line);
     width: 100%;
-    color: var(--ink-3);
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: color 0.2s;
   }
-  nav.nav-mobile-open .nav-links a:last-child { border-bottom: none; }
+  nav.nav-mobile-open .nav-links a::after {
+    content: '→';
+    font-size: 16px;
+    color: var(--muted);
+    transition: transform 0.2s, color 0.2s;
+  }
+  nav.nav-mobile-open .nav-links a:hover { color: var(--accent); }
+  nav.nav-mobile-open .nav-links a:hover::after { color: var(--accent); transform: translateX(4px); }
+  /* Full-width CTA button at the bottom of the mobile menu */
+  nav.nav-mobile-open .nav-links a.nav-mobile-cta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 14px;
+    border-bottom: none;
+    padding: 17px 24px;
+    margin-top: 16px;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    transition: background 0.2s, transform 0.15s;
+  }
+  nav.nav-mobile-open .nav-links a.nav-mobile-cta::after { display: none; }
+  nav.nav-mobile-open .nav-links a.nav-mobile-cta:hover {
+    background: var(--accent-dark);
+    color: #fff;
+    transform: translateY(-1px);
+  }
   nav.nav-mobile-open .nav-hamburger span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
   nav.nav-mobile-open .nav-hamburger span:nth-child(2) { opacity: 0; transform: scaleX(0); }
   nav.nav-mobile-open .nav-hamburger span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
@@ -1042,9 +1083,17 @@ footer a:hover { color: var(--paper); }
     border-bottom-color: #1C2D42;
   }
   nav.nav-mobile-open .nav-links a {
-    color: #94A3B8;
+    color: #E2E8F0;
     border-bottom-color: #1C2D42;
   }
+  nav.nav-mobile-open .nav-links a::after { color: #475569; }
+  nav.nav-mobile-open .nav-links a:hover { color: var(--accent-soft); }
+  nav.nav-mobile-open .nav-links a:hover::after { color: var(--accent-soft); }
+  nav.nav-mobile-open .nav-links a.nav-mobile-cta {
+    background: var(--accent);
+    color: #fff;
+  }
+  nav.nav-mobile-open .nav-links a.nav-mobile-cta:hover { background: var(--accent-dark); }
 
   /* ── Global headings on light-bg sections ─────────────
      Dark sections (.problem, .features, .contact, .cta-final)
