@@ -1122,7 +1122,7 @@ footer a:hover { color: var(--paper); }
   .how-it-works { background: #0B1120; }
   .step { background: #111B2D; border-color: #1C2D42; }
   .step h3 { color: #F1F5F9; }
-  .step p { color: #64748B; }
+  .step p { color: #94A3B8; }
   .step-icon { background: #1A2840; }
 
   /* ── Pricing ─────────────────────────────────────────── */
@@ -1138,14 +1138,17 @@ footer a:hover { color: var(--paper); }
   /* ── About ───────────────────────────────────────────── */
   .about { background: #0B1120; border-top-color: #1C2D42; }
   .about-text p:first-of-type { color: #CBD5E1; }
-  .about-text p { color: #64748B; }
+  .about-text p { color: #94A3B8; }
   .about-sig { border-top-color: #1C2D42; }
   .about-sig-name { color: #F1F5F9; }
 
-  /* ── FAQ ─────────────────────────────────────────────── */
-  .faq { background: #0E1929; }
+  /* ── FAQ ─────────────────────────────────────────────────
+     Unified to the base #0B1120 so dark mode alternates cleanly:
+     base #0B1120 (hero/how/pricing/faq) ↔ raised #0F172A
+     (problem/features/contact/cta/footer).                     */
+  .faq { background: #0B1120; }
   .faq-item { border-bottom-color: #1C2D42; }
   .faq-q { color: #F1F5F9; }
-  .faq-a { color: #64748B; }
+  .faq-a { color: #94A3B8; }
 
 }
