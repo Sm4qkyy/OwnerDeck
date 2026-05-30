@@ -968,6 +968,9 @@ footer a:hover { color: var(--paper); }
   }
   .pricing-card { padding: 44px 32px; }
   .pricing-features { grid-template-columns: 1fr; max-width: 320px; }
+  /* Compact nav height on mobile */
+  nav { padding: 10px 0; }
+  .logo-img { height: 48px; }
   /* Hide top-bar CTA on mobile — lives inside the menu panel instead */
   .nav-cta { display: none; }
   .nav-hamburger { display: flex; }
