@@ -14,8 +14,10 @@
   --green: #059669;
   --red: #B91C1C;
 
-  /* Bold gradients */
-  --grad-text: linear-gradient(115deg, #0D9488 0%, #2DD4BF 52%, #5EEAD4 100%);
+  /* Bold gradients. --grad-text stays deep enough to read on the cream
+     background in light mode; the dark-mode block swaps in a brighter
+     version that pops on navy. */
+  --grad-text: linear-gradient(115deg, #0F766E 0%, #0D9488 100%);
   --grad-btn: linear-gradient(135deg, #0D9488 0%, #0F766E 100%);
 
   --font-display: 'Plus Jakarta Sans', -apple-system, system-ui, sans-serif;
@@ -1111,6 +1113,9 @@ footer a:hover { color: var(--paper); }
    DARK MODE  (follows OS preference via prefers-color-scheme)
 ================================================================ */
 @media (prefers-color-scheme: dark) {
+
+  /* Brighter gradient accent — pops on the dark background */
+  :root { --grad-text: linear-gradient(115deg, #2DD4BF 0%, #5EEAD4 100%); }
 
   /* Body & noise texture */
   body { background: #0B1120; color: #CBD5E1; }
