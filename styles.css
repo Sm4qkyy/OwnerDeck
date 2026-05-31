@@ -203,6 +203,8 @@ nav.scrolled { border-bottom-color: var(--line); }
   position: relative;
   z-index: 1;
 }
+/* Let grid tracks shrink instead of overflowing the container */
+.hero-grid > * { min-width: 0; }
 .eyebrow {
   display: inline-flex;
   align-items: center;
@@ -999,6 +1001,17 @@ footer a:hover { color: var(--paper); }
 /* ================================================================
    RESPONSIVE
 ================================================================ */
+/* Stack the hero earlier than other sections — the big headline + chat
+   mockup need more room side-by-side, and were getting cramped / cut off
+   between 900px and 1180px. Below 1024px the chat sits below the text. */
+@media (max-width: 1024px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 52px;
+  }
+  .chat-mockup { max-width: 360px; margin: 0 auto; }
+}
+
 @media (max-width: 900px) {
   .hero-grid, .about-grid {
     grid-template-columns: 1fr;
