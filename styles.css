@@ -73,7 +73,7 @@ body::before {
 }
 
 .center { text-align: center; }
-.center-h2 { margin-left: auto; margin-right: auto; }
+.center-h2 { margin-left: auto; margin-right: auto; padding-left: 0.3em; }
 .center-p { margin-left: auto; margin-right: auto; }
 
 /* ================================================================
@@ -240,6 +240,9 @@ h1 {
   letter-spacing: -2.5px;
   color: var(--ink);
   margin-bottom: 28px;
+  /* Buffer for italic glyph overhang so the last letter isn't clipped
+     by the section's overflow:hidden / body overflow-x:hidden */
+  padding-right: 0.3em;
 }
 h1 em {
   font-style: italic;
@@ -434,6 +437,9 @@ h2 {
   color: var(--ink);
   margin-bottom: 24px;
   max-width: 800px;
+  /* Buffer for italic glyph overhang (gradient em) so the last letter
+     on a line isn't shaved by overflow:hidden ancestors */
+  padding-right: 0.3em;
 }
 h2 em {
   font-style: italic;
@@ -942,7 +948,7 @@ h2 em {
   background: radial-gradient(ellipse at center, rgba(13,148,136,0.18), transparent 70%);
   pointer-events: none;
 }
-.cta-final h2 { color: var(--paper); margin: 0 auto 24px; text-align: center; }
+.cta-final h2 { color: var(--paper); margin: 0 auto 24px; text-align: center; padding-left: 0.3em; }
 .cta-final p {
   color: var(--muted-2);
   font-size: 19px;
