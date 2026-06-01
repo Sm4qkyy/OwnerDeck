@@ -235,11 +235,14 @@ nav.scrolled { border-bottom-color: var(--line); }
 h1 {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(36px, 5.2vw, 64px);
-  line-height: 1.04;
-  letter-spacing: -2px;
+  font-size: clamp(40px, 6.2vw, 76px);
+  line-height: 1.03;
+  letter-spacing: -2.2px;
   color: var(--ink);
   margin-bottom: 28px;
+  /* Balance line lengths so the headline doesn't leave an awkward
+     short orphan line */
+  text-wrap: balance;
   /* Buffer for italic glyph overhang so the last letter isn't clipped
      by the section's overflow:hidden / body overflow-x:hidden */
   padding-right: 0.3em;
