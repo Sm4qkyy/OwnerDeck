@@ -235,9 +235,9 @@ nav.scrolled { border-bottom-color: var(--line); }
 h1 {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(44px, 6.8vw, 82px);
-  line-height: 1.0;
-  letter-spacing: -2.5px;
+  font-size: clamp(36px, 5.2vw, 64px);
+  line-height: 1.04;
+  letter-spacing: -2px;
   color: var(--ink);
   margin-bottom: 28px;
   /* Buffer for italic glyph overhang so the last letter isn't clipped
@@ -431,9 +431,9 @@ section { padding: 100px 0; position: relative; }
 h2 {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(32px, 4.4vw, 54px);
-  line-height: 1.06;
-  letter-spacing: -1.5px;
+  font-size: clamp(28px, 3.7vw, 44px);
+  line-height: 1.08;
+  letter-spacing: -1.2px;
   color: var(--ink);
   margin-bottom: 24px;
   max-width: 800px;
