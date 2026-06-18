@@ -140,6 +140,33 @@ nav.scrolled { border-bottom-color: var(--line); }
   transition: background 0.2s, transform 0.2s;
 }
 .nav-cta:hover { background: var(--accent-dark); transform: translateY(-1px); }
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+/* Language switcher */
+.lang-select {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  border: 1px solid var(--line);
+  color: var(--ink-3);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  padding: 9px 28px 9px 13px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2394A3B8' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 11px center;
+}
+.lang-select:hover { border-color: var(--ink-3); color: var(--ink); }
+.lang-select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(13,148,136,0.18); }
+.lang-select option { background: var(--paper); color: var(--ink); }
 .nav-hamburger {
   display: none;
   flex-direction: column;
@@ -243,6 +270,8 @@ h1 {
   /* Balance line lengths so the headline doesn't leave an awkward
      short orphan line */
   text-wrap: balance;
+  /* Safety net for long words in other languages (el/ru) */
+  overflow-wrap: break-word;
   /* Buffer for italic glyph overhang so the last letter isn't clipped
      by the section's overflow:hidden / body overflow-x:hidden */
   padding-right: 0.3em;
@@ -1158,6 +1187,9 @@ footer a:hover { color: var(--paper); }
   .nav-links a:hover { color: #F1F5F9; }
   .nav-hamburger { color: #F1F5F9; }
   .nav-hamburger span { background: #F1F5F9; }
+  .lang-select { border-color: #1C2D42; color: #94A3B8; }
+  .lang-select:hover { border-color: #475569; color: #F1F5F9; }
+  .lang-select option { background: #111B2D; color: #E2E8F0; }
 
   /* Mobile nav panel */
   nav.nav-mobile-open .nav-links {

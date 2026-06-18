@@ -23,7 +23,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="styles.css?v=20260601b" />
+<link rel="stylesheet" href="styles.css?v=20260601c" />
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -48,13 +48,20 @@
       <img src="Logo.png" alt="OwnerDeck" class="logo-img" />
     </a>
     <div class="nav-links" id="nav-links">
-      <a href="#how">How it works</a>
-      <a href="#features">Features</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#faq">FAQ</a>
-      <a href="#contact" class="nav-mobile-cta">Get started →</a>
+      <a href="#how" data-i18n="nav.how">How it works</a>
+      <a href="#features" data-i18n="nav.features">Features</a>
+      <a href="#pricing" data-i18n="nav.pricing">Pricing</a>
+      <a href="#faq" data-i18n="nav.faq">FAQ</a>
+      <a href="#contact" class="nav-mobile-cta"><span data-i18n="cta.getStarted">Get started</span> →</a>
     </div>
-    <a href="#contact" class="nav-cta">Get started</a>
+    <div class="nav-actions">
+      <select class="lang-select" aria-label="Select language">
+        <option value="en">EN</option>
+        <option value="el">ΕΛ</option>
+        <option value="ru">RU</option>
+      </select>
+      <a href="#contact" class="nav-cta" data-i18n="cta.getStarted">Get started</a>
+    </div>
     <button id="nav-hamburger" class="nav-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
       <span></span><span></span><span></span>
     </button>
@@ -67,20 +74,20 @@
 <section class="hero" id="main">
   <div class="container hero-grid">
     <div class="reveal visible">
-      <div class="eyebrow"><span class="dot"></span>Now live in Cyprus</div>
-      <h1>Never lose a booking to <em>a&nbsp;slow reply.</em></h1>
-      <p class="hero-lede">
+      <div class="eyebrow"><span class="dot"></span><span data-i18n="hero.eyebrow">Now live in Cyprus</span></div>
+      <h1 data-i18n-html="hero.title">Never lose a booking to <em>a&nbsp;slow reply.</em></h1>
+      <p class="hero-lede" data-i18n="hero.lede">
         Your WhatsApp assistant answers every tourist inquiry in seconds — 24/7, in the customer's language. While you're on the water, on the road, or off the clock.
       </p>
-      <p style="font-size:15px; color:var(--muted); margin-bottom:28px; margin-top:-12px;">
+      <p style="font-size:15px; color:var(--muted); margin-bottom:28px; margin-top:-12px;" data-i18n="hero.builtFor">
         Built for boat charters · watersports kiosks · day tours · car rentals
       </p>
       <div class="cta-row">
         <a href="#contact" class="btn-primary">
-          Get started
+          <span data-i18n="cta.getStarted">Get started</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
         </a>
-        <a href="#how" class="btn-secondary">See how it works</a>
+        <a href="#how" class="btn-secondary" data-i18n="cta.seeHow">See how it works</a>
       </div>
     </div>
 
@@ -91,7 +98,7 @@
           <div class="chat-avatar">⛵</div>
           <div class="chat-contact">
             <div class="chat-name">Sunset Watersports</div>
-            <div class="chat-status">● Online</div>
+            <div class="chat-status">● <span data-i18n="chat.online">Online</span></div>
           </div>
         </div>
         <div class="chat-messages">
@@ -113,7 +120,7 @@
           </div>
         </div>
         <div class="chat-footer-strip">
-          <div class="chat-speed-badge">⚡ Replied in 4 seconds</div>
+          <div class="chat-speed-badge">⚡ <span data-i18n="chat.speed">Replied in 4 seconds</span></div>
         </div>
       </div>
     </div>
@@ -126,9 +133,9 @@
 <section class="problem">
   <div class="container">
     <div class="reveal">
-      <div class="section-eyebrow">The problem</div>
-      <h2>Tourists don't wait. <em>They move on.</em></h2>
-      <p class="section-lede">
+      <div class="section-eyebrow" data-i18n="problem.eyebrow">The problem</div>
+      <h2 data-i18n-html="problem.title">Tourists don't wait. <em>They move on.</em></h2>
+      <p class="section-lede" data-i18n="problem.lede">
         In peak summer, a tourist sends the same message to three operators and books with whoever answers first. Speed isn't a nice-to-have — it's the whole game.
       </p>
     </div>
@@ -138,22 +145,22 @@
         <div class="problem-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
         </div>
-        <h3>They message everyone at once</h3>
-        <p>Tourists open WhatsApp, fire off the same inquiry to three or four operators, and hand their money to whoever replies fastest. You're not competing on price — you're competing on speed.</p>
+        <h3 data-i18n="problem.c1.title">They message everyone at once</h3>
+        <p data-i18n="problem.c1.body">Tourists open WhatsApp, fire off the same inquiry to three or four operators, and hand their money to whoever replies fastest. You're not competing on price — you're competing on speed.</p>
       </div>
       <div class="problem-card reveal">
         <div class="problem-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         </div>
-        <h3>Peak season means you're never free</h3>
-        <p>You're mid-charter, loading the van, or just trying to have lunch. Your phone is full of inquiries and you can't physically respond to all of them in time — so you lose bookings you never knew you had.</p>
+        <h3 data-i18n="problem.c2.title">Peak season means you're never free</h3>
+        <p data-i18n="problem.c2.body">You're mid-charter, loading the van, or just trying to have lunch. Your phone is full of inquiries and you can't physically respond to all of them in time — so you lose bookings you never knew you had.</p>
       </div>
       <div class="problem-card reveal">
         <div class="problem-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
         </div>
-        <h3>Every slow reply costs real money</h3>
-        <p>A missed inquiry in July or August isn't a minor inconvenience — it's €200–€500 gone to a faster competitor. Multiply that across a season and the cost of not automating becomes obvious.</p>
+        <h3 data-i18n="problem.c3.title">Every slow reply costs real money</h3>
+        <p data-i18n="problem.c3.body">A missed inquiry in July or August isn't a minor inconvenience — it's €200–€500 gone to a faster competitor. Multiply that across a season and the cost of not automating becomes obvious.</p>
       </div>
     </div>
   </div>
@@ -165,35 +172,35 @@
 <section class="how-it-works" id="how">
   <div class="container">
     <div class="reveal">
-      <div class="section-eyebrow">How it works</div>
-      <h2>Three steps. <em>Zero missed inquiries.</em></h2>
-      <p class="section-lede">No new app for your customers. No new platform for you to learn. It plugs straight into WhatsApp and runs in the background.</p>
+      <div class="section-eyebrow" data-i18n="how.eyebrow">How it works</div>
+      <h2 data-i18n-html="how.title">Three steps. <em>Zero missed inquiries.</em></h2>
+      <p class="section-lede" data-i18n="how.lede">No new app for your customers. No new platform for you to learn. It plugs straight into WhatsApp and runs in the background.</p>
     </div>
 
     <div class="steps">
       <div class="step reveal">
-        <div class="step-num">01 · Inquiry</div>
+        <div class="step-num" data-i18n="how.s1.num">01 · Inquiry</div>
         <div class="step-icon">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
         </div>
-        <h3>Arrives on WhatsApp</h3>
-        <p>A tourist messages your WhatsApp number asking about availability, price, or how to book. Exactly as they do today — nothing changes on their end.</p>
+        <h3 data-i18n="how.s1.title">Arrives on WhatsApp</h3>
+        <p data-i18n="how.s1.body">A tourist messages your WhatsApp number asking about availability, price, or how to book. Exactly as they do today — nothing changes on their end.</p>
       </div>
       <div class="step reveal">
-        <div class="step-num">02 · Reply</div>
+        <div class="step-num" data-i18n="how.s2.num">02 · Reply</div>
         <div class="step-icon">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
         </div>
-        <h3>Instant reply in their language</h3>
-        <p>Your assistant responds within seconds — in English, Russian, Hebrew, Polish, German, or Greek, automatically detected. It answers availability, price, and policy questions from your playbook.</p>
+        <h3 data-i18n="how.s2.title">Instant reply in their language</h3>
+        <p data-i18n="how.s2.body">Your assistant responds within seconds — in English, Russian, Hebrew, Polish, German, or Greek, automatically detected. It answers availability, price, and policy questions from your playbook.</p>
       </div>
       <div class="step reveal">
-        <div class="step-num">03 · Capture</div>
+        <div class="step-num" data-i18n="how.s3.num">03 · Capture</div>
         <div class="step-icon">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         </div>
-        <h3>Booking captured, you're pinged</h3>
-        <p>Date, time, party size, and activity are captured and logged. Your calendar updates automatically. You get pinged only when something needs a personal touch — anything outside the script comes straight to you.</p>
+        <h3 data-i18n="how.s3.title">Booking captured, you're pinged</h3>
+        <p data-i18n="how.s3.body">Date, time, party size, and activity are captured and logged. Your calendar updates automatically. You get pinged only when something needs a personal touch — anything outside the script comes straight to you.</p>
       </div>
     </div>
   </div>
@@ -205,32 +212,32 @@
 <section class="features" id="features">
   <div class="container">
     <div class="reveal">
-      <div class="section-eyebrow">What you get</div>
-      <h2>Built for busy operators.</h2>
-      <p class="section-lede">Not a generic chatbot. Trained on your business, your prices, your policies — and available around the clock so you don't have to be.</p>
+      <div class="section-eyebrow" data-i18n="feat.eyebrow">What you get</div>
+      <h2 data-i18n="feat.title">Built for busy operators.</h2>
+      <p class="section-lede" data-i18n="feat.lede">Not a generic chatbot. Trained on your business, your prices, your policies — and available around the clock so you don't have to be.</p>
     </div>
 
     <div class="feature-grid">
       <div class="feature reveal">
-        <div class="feature-tag">Always on</div>
-        <h3>Instant replies, 24/7</h3>
-        <p>Every inquiry gets answered in seconds — 2am or 2pm, Sunday or August bank holiday. No more "sorry for the late reply" messages. No more bookings lost while you sleep.</p>
+        <div class="feature-tag" data-i18n="feat.f1.tag">Always on</div>
+        <h3 data-i18n="feat.f1.title">Instant replies, 24/7</h3>
+        <p data-i18n="feat.f1.body">Every inquiry gets answered in seconds — 2am or 2pm, Sunday or August bank holiday. No more "sorry for the late reply" messages. No more bookings lost while you sleep.</p>
       </div>
       <div class="feature reveal">
-        <div class="feature-tag">Multilingual</div>
-        <h3>Speaks your customers' language</h3>
-        <p>English, Russian, Hebrew, Polish, German, and Greek — detected automatically from the first message. No setup per language. Your assistant handles the conversation natively regardless of where the tourist is from.</p>
+        <div class="feature-tag" data-i18n="feat.f2.tag">Multilingual</div>
+        <h3 data-i18n="feat.f2.title">Speaks your customers' language</h3>
+        <p data-i18n="feat.f2.body">English, Russian, Hebrew, Polish, German, and Greek — detected automatically from the first message. No setup per language. Your assistant handles the conversation natively regardless of where the tourist is from.</p>
       </div>
       <div class="feature reveal">
-        <div class="feature-tag">Booking capture</div>
-        <h3>Details logged, calendar updated</h3>
-        <p>Date, time, party size, and activity captured from the conversation and dropped into your calendar. Booking summaries sent to you as soon as a slot is confirmed — no manual entry needed.</p>
+        <div class="feature-tag" data-i18n="feat.f3.tag">Booking capture</div>
+        <h3 data-i18n="feat.f3.title">Details logged, calendar updated</h3>
+        <p data-i18n="feat.f3.body">Date, time, party size, and activity captured from the conversation and dropped into your calendar. Booking summaries sent to you as soon as a slot is confirmed — no manual entry needed.</p>
       </div>
       <div class="feature reveal">
-        <div class="feature-tag">Owner in control</div>
-        <h3>Pinged for anything unusual</h3>
-        <p>Group of 20? Unusual request? Complaint? Anything outside the trained script is flagged immediately and handed to you. You stay in control of every edge case without watching the chat 24/7.</p>
-        <p class="feature-secondary">Also handles Instagram DMs</p>
+        <div class="feature-tag" data-i18n="feat.f4.tag">Owner in control</div>
+        <h3 data-i18n="feat.f4.title">Pinged for anything unusual</h3>
+        <p data-i18n="feat.f4.body">Group of 20? Unusual request? Complaint? Anything outside the trained script is flagged immediately and handed to you. You stay in control of every edge case without watching the chat 24/7.</p>
+        <p class="feature-secondary" data-i18n="feat.f4.secondary">Also handles Instagram DMs</p>
       </div>
     </div>
   </div>
@@ -242,42 +249,42 @@
 <section class="pricing center" id="pricing">
   <div class="container">
     <div class="reveal">
-      <div class="section-eyebrow">Pricing</div>
-      <h2 class="center-h2">Simple pricing. <em>No surprises.</em></h2>
-      <p class="section-lede center-p">One setup fee, one monthly rate. Cancel any time. Your assistant is live within 48 hours of signing up.</p>
+      <div class="section-eyebrow" data-i18n="price.eyebrow">Pricing</div>
+      <h2 class="center-h2" data-i18n-html="price.title">Simple pricing. <em>No surprises.</em></h2>
+      <p class="section-lede center-p" data-i18n="price.lede">One setup fee, one monthly rate. Cancel any time. Your assistant is live within 48 hours of signing up.</p>
     </div>
 
     <div class="pricing-card reveal">
-      <div class="pricing-eyebrow">Full service · everything included</div>
+      <div class="pricing-eyebrow" data-i18n="price.cardEyebrow">Full service · everything included</div>
       <div class="pricing-main">
         <div class="pricing-chunk">
           <div class="pricing-amount">€400</div>
-          <div class="pricing-period">one-time setup</div>
+          <div class="pricing-period" data-i18n="price.setup">one-time setup</div>
         </div>
         <div class="pricing-plus">+</div>
         <div class="pricing-chunk">
           <div class="pricing-amount teal">€150</div>
-          <div class="pricing-period">per month</div>
+          <div class="pricing-period" data-i18n="price.month">per month</div>
         </div>
       </div>
-      <p class="pricing-terms">Cancel anytime · No lock-in · Live in 48 hours</p>
+      <p class="pricing-terms" data-i18n="price.terms">Cancel anytime · No lock-in · Live in 48 hours</p>
       <ul class="pricing-features">
-        <li>Full assistant setup &amp; training</li>
-        <li>Multilingual (6 languages)</li>
-        <li>Automatic booking capture</li>
-        <li>Calendar integration</li>
-        <li>Owner notifications</li>
-        <li>Ongoing support &amp; updates</li>
-        <li>WhatsApp Business integration</li>
-        <li>48-hour go-live</li>
+        <li data-i18n="price.f1">Full assistant setup &amp; training</li>
+        <li data-i18n="price.f2">Multilingual (6 languages)</li>
+        <li data-i18n="price.f3">Automatic booking capture</li>
+        <li data-i18n="price.f4">Calendar integration</li>
+        <li data-i18n="price.f5">Owner notifications</li>
+        <li data-i18n="price.f6">Ongoing support &amp; updates</li>
+        <li data-i18n="price.f7">WhatsApp Business integration</li>
+        <li data-i18n="price.f8">48-hour go-live</li>
       </ul>
       <div class="pricing-cta">
         <a href="#contact" class="btn-primary">
-          Get started
+          <span data-i18n="cta.getStarted">Get started</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
         </a>
       </div>
-      <p class="pricing-footnote">No commitment at this stage — tell us about your business and we'll be in touch within 24 hours.</p>
+      <p class="pricing-footnote" data-i18n="price.footnote">No commitment at this stage — tell us about your business and we'll be in touch within 24 hours.</p>
     </div>
   </div>
 </section>
@@ -288,17 +295,12 @@
 <section class="contact" id="contact">
   <div class="container">
     <div class="reveal">
-      <div class="section-eyebrow">Get started</div>
-      <h2>Ready to stop missing bookings?</h2>
-      <p class="section-lede">Tell us about your business. We'll reach out within 24 hours to get you set up — no commitment, no sales call.</p>
+      <div class="section-eyebrow" data-i18n="contact.eyebrow">Get started</div>
+      <h2 data-i18n="contact.title">Ready to stop missing bookings?</h2>
+      <p class="section-lede" data-i18n="contact.lede">Tell us about your business. We'll reach out within 24 hours to get you set up — no commitment, no sales call.</p>
     </div>
 
     <div class="contact-wrap">
-      <!--
-        Web3Forms: set your access key at web3forms.com (free).
-        Replace [PLACEHOLDER-FORM-ENDPOINT] with your actual access_key value.
-        The redirect field sends users to /welcome.html on success.
-      -->
       <form
         class="contact-form reveal"
         action="https://api.web3forms.com/submit"
@@ -313,43 +315,43 @@
 
         <div class="form-row">
           <div class="form-field">
-            <label for="f-name">Your name <span class="req">*</span></label>
+            <label for="f-name"><span data-i18n="form.name">Your name</span> <span class="req">*</span></label>
             <input id="f-name" name="name" type="text" placeholder="Nikos Papadopoulos" required maxlength="60" />
           </div>
           <div class="form-field">
-            <label for="f-business">Business name <span class="req">*</span></label>
+            <label for="f-business"><span data-i18n="form.business">Business name</span> <span class="req">*</span></label>
             <input id="f-business" name="business_name" type="text" placeholder="Sunset Watersports" required maxlength="80" />
           </div>
         </div>
 
         <div class="form-field">
-          <label for="f-whatsapp">WhatsApp number <span class="req">*</span></label>
+          <label for="f-whatsapp"><span data-i18n="form.whatsapp">WhatsApp number</span> <span class="req">*</span></label>
           <input id="f-whatsapp" name="whatsapp_number" type="tel" placeholder="+357 99 123 456" required maxlength="30" />
         </div>
 
         <div class="form-field">
-          <label for="f-type">What do you operate? <span class="req">*</span></label>
+          <label for="f-type"><span data-i18n="form.type">What do you operate?</span> <span class="req">*</span></label>
           <select id="f-type" name="business_type" required>
-            <option value="" disabled selected>Select your business type</option>
-            <option value="Boat charter">Boat charter</option>
-            <option value="Watersports kiosk">Watersports kiosk (jet ski, parasail, banana boat…)</option>
-            <option value="Day tours">Day tours</option>
-            <option value="Car rental">Car rental</option>
-            <option value="Other">Other</option>
+            <option value="" disabled selected data-i18n="form.typePlaceholder">Select your business type</option>
+            <option value="Boat charter" data-i18n="form.type.boat">Boat charter</option>
+            <option value="Watersports kiosk" data-i18n="form.type.watersports">Watersports kiosk (jet ski, parasail, banana boat…)</option>
+            <option value="Day tours" data-i18n="form.type.tours">Day tours</option>
+            <option value="Car rental" data-i18n="form.type.car">Car rental</option>
+            <option value="Other" data-i18n="form.type.other">Other</option>
           </select>
         </div>
 
         <div class="form-field">
-          <label for="f-notes">Anything else? <span style="color:var(--muted); font-weight:400;">(optional)</span></label>
-          <textarea id="f-notes" name="notes" placeholder="How many inquiries do you get per day? Any specific languages? Anything that would help us prepare…"></textarea>
+          <label for="f-notes"><span data-i18n="form.notes">Anything else?</span> <span style="color:var(--muted); font-weight:400;" data-i18n="form.optional">(optional)</span></label>
+          <textarea id="f-notes" name="notes" data-i18n-ph="form.notesPlaceholder" placeholder="How many inquiries do you get per day? Any specific languages? Anything that would help us prepare…"></textarea>
         </div>
 
         <button type="submit" class="btn-primary form-submit">
-          Send my details
+          <span data-i18n="form.submit">Send my details</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
         </button>
 
-        <p class="form-footnote">
+        <p class="form-footnote" data-i18n-html="form.footnote">
           No commitment. We'll reply within 24 hours.
           <a href="/privacy.html">Privacy policy</a>.
         </p>
@@ -364,42 +366,42 @@
 <section class="faq" id="faq">
   <div class="container">
     <div class="reveal center">
-      <div class="section-eyebrow">FAQ</div>
-      <h2 class="center-h2">Common questions, <em>honest answers.</em></h2>
+      <div class="section-eyebrow" data-i18n="faq.eyebrow">FAQ</div>
+      <h2 class="center-h2" data-i18n-html="faq.title">Common questions, <em>honest answers.</em></h2>
     </div>
 
     <div class="faq-list reveal">
       <div class="faq-item">
-        <button class="faq-q">Does my customer need to download anything?</button>
-        <div class="faq-a">No. Your customers message your existing WhatsApp number exactly as they do today. Nothing changes on their end — they don't need a new app, account, or link. The assistant just makes you reply faster.</div>
+        <button class="faq-q" data-i18n="faq.q1">Does my customer need to download anything?</button>
+        <div class="faq-a" data-i18n="faq.a1">No. Your customers message your existing WhatsApp number exactly as they do today. Nothing changes on their end — they don't need a new app, account, or link. The assistant just makes you reply faster.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q">How long does setup take?</button>
-        <div class="faq-a">48 hours from when we have your details. We train the assistant on your business — your services, prices, availability, policies — and connect it to your WhatsApp Business number. You review and approve before it goes live.</div>
+        <button class="faq-q" data-i18n="faq.q2">How long does setup take?</button>
+        <div class="faq-a" data-i18n="faq.a2">48 hours from when we have your details. We train the assistant on your business — your services, prices, availability, policies — and connect it to your WhatsApp Business number. You review and approve before it goes live.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q">What languages does it support?</button>
-        <div class="faq-a">English, Russian, Hebrew, Polish, German, and Greek — detected automatically from the customer's message. If a tourist writes in Russian, the assistant replies in Russian. You don't configure anything per conversation.</div>
+        <button class="faq-q" data-i18n="faq.q3">What languages does it support?</button>
+        <div class="faq-a" data-i18n="faq.a3">English, Russian, Hebrew, Polish, German, and Greek — detected automatically from the customer's message. If a tourist writes in Russian, the assistant replies in Russian. You don't configure anything per conversation.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q">What happens if it gets a question it can't answer?</button>
-        <div class="faq-a">Anything outside the trained script gets flagged to you immediately. You'll receive a notification with the conversation so you can step in with a personal reply. The customer is told someone will follow up shortly — no dead ends.</div>
+        <button class="faq-q" data-i18n="faq.q4">What happens if it gets a question it can't answer?</button>
+        <div class="faq-a" data-i18n="faq.a4">Anything outside the trained script gets flagged to you immediately. You'll receive a notification with the conversation so you can step in with a personal reply. The customer is told someone will follow up shortly — no dead ends.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q">Can I still reply to customers myself?</button>
-        <div class="faq-a">Yes. You can take over any conversation at any time. The assistant handles the first response and the routine questions — you stay in charge of anything you want to handle personally.</div>
+        <button class="faq-q" data-i18n="faq.q5">Can I still reply to customers myself?</button>
+        <div class="faq-a" data-i18n="faq.a5">Yes. You can take over any conversation at any time. The assistant handles the first response and the routine questions — you stay in charge of anything you want to handle personally.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q">What does the €400 setup cover?</button>
-        <div class="faq-a">Everything: building and training the assistant on your specific business, connecting it to your WhatsApp Business account, calendar integration, testing, and a review call before go-live. There are no hidden fees — the setup is a one-time cost.</div>
+        <button class="faq-q" data-i18n="faq.q6">What does the €400 setup cover?</button>
+        <div class="faq-a" data-i18n="faq.a6">Everything: building and training the assistant on your specific business, connecting it to your WhatsApp Business account, calendar integration, testing, and a review call before go-live. There are no hidden fees — the setup is a one-time cost.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q">Can I cancel?</button>
-        <div class="faq-a">Yes, anytime. Month-to-month, no contracts, no cancellation fees. If you cancel, the assistant is deactivated and your WhatsApp returns to normal. We'd obviously prefer you stay — but there's no lock-in.</div>
+        <button class="faq-q" data-i18n="faq.q7">Can I cancel?</button>
+        <div class="faq-a" data-i18n="faq.a7">Yes, anytime. Month-to-month, no contracts, no cancellation fees. If you cancel, the assistant is deactivated and your WhatsApp returns to normal. We'd obviously prefer you stay — but there's no lock-in.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q">Does it work for my type of business?</button>
-        <div class="faq-a">If you take tourist bookings via WhatsApp — boat charters, jet ski, parasailing, banana boat, day tours, car rentals, similar — yes. If you're not sure, send us a message and we'll tell you honestly whether it's a good fit.</div>
+        <button class="faq-q" data-i18n="faq.q8">Does it work for my type of business?</button>
+        <div class="faq-a" data-i18n="faq.a8">If you take tourist bookings via WhatsApp — boat charters, jet ski, parasailing, banana boat, day tours, car rentals, similar — yes. If you're not sure, send us a message and we'll tell you honestly whether it's a good fit.</div>
       </div>
     </div>
   </div>
@@ -410,14 +412,14 @@
 ================================================================ -->
 <section class="cta-final">
   <div class="container">
-    <h2 class="reveal">Stop losing bookings. <em>Start today.</em></h2>
-    <p class="reveal">Takes 2 minutes to fill in the form. We'll be in touch within 24 hours and your assistant can be live in 48.</p>
+    <h2 class="reveal" data-i18n-html="final.title">Stop losing bookings. <em>Start today.</em></h2>
+    <p class="reveal" data-i18n="final.lede">Takes 2 minutes to fill in the form. We'll be in touch within 24 hours and your assistant can be live in 48.</p>
     <div class="cta-row reveal">
       <a href="#contact" class="btn-primary">
-        Get started
+        <span data-i18n="cta.getStarted">Get started</span>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
       </a>
-      <a href="#how" class="btn-secondary">See how it works</a>
+      <a href="#how" class="btn-secondary" data-i18n="cta.seeHow">See how it works</a>
     </div>
   </div>
 </section>
@@ -427,39 +429,40 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <a href="/" class="footer-logo">OwnerDeck</a>
-        <p>AI-powered WhatsApp booking assistant for tourist businesses in Cyprus.</p>
+        <p data-i18n="footer.tagline">AI-powered WhatsApp booking assistant for tourist businesses in Cyprus.</p>
       </div>
       <div>
-        <h4>Product</h4>
+        <h4 data-i18n="footer.product">Product</h4>
         <ul>
-          <li><a href="#how">How it works</a></li>
-          <li><a href="#features">Features</a></li>
-          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#how" data-i18n="nav.how">How it works</a></li>
+          <li><a href="#features" data-i18n="nav.features">Features</a></li>
+          <li><a href="#pricing" data-i18n="nav.pricing">Pricing</a></li>
         </ul>
       </div>
       <div>
-        <h4>Company</h4>
+        <h4 data-i18n="footer.company">Company</h4>
         <ul>
-          <li><a href="#faq">FAQ</a></li>
-          <li><a href="/privacy.html">Privacy Policy</a></li>
+          <li><a href="#faq" data-i18n="nav.faq">FAQ</a></li>
+          <li><a href="/privacy.html" data-i18n="footer.privacy">Privacy Policy</a></li>
         </ul>
       </div>
       <div>
-        <h4>Get in touch</h4>
+        <h4 data-i18n="footer.getInTouch">Get in touch</h4>
         <ul>
           <li><a href="mailto:mark@ownerdeck.com">mark@ownerdeck.com</a></li>
-          <li>Larnaca, Cyprus</li>
+          <li data-i18n="footer.location">Larnaca, Cyprus</li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <div>© 2026 OwnerDeck. Built in Cyprus.</div>
-      <div><a href="/privacy.html">Privacy Policy</a></div>
+      <div data-i18n="footer.copyright">© 2026 OwnerDeck. Built in Cyprus.</div>
+      <div><a href="/privacy.html" data-i18n="footer.privacy">Privacy Policy</a></div>
     </div>
   </div>
 </footer>
 
-<script src="script.js?v=20260601b"></script>
+<script src="i18n.js?v=20260601c"></script>
+<script src="script.js?v=20260601c"></script>
 
 </body>
 </html>
