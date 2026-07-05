@@ -406,6 +406,11 @@ h1 em {
   gap: 4px;
   background: #E5DDD5;
 }
+/* Smooth fade when cycling through business examples */
+.chat-name, .chat-avatar, .chat-messages { transition: opacity 0.4s ease; }
+.chat-shell.is-swapping .chat-name,
+.chat-shell.is-swapping .chat-avatar,
+.chat-shell.is-swapping .chat-messages { opacity: 0; }
 .msg {
   display: flex;
   flex-direction: column;
