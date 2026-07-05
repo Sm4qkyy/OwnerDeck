@@ -337,6 +337,19 @@ h1 em {
   transform: translateY(-2px);
 }
 
+/* Trust badge (under hero CTAs) */
+.trust-badge {
+  margin-top: 22px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  line-height: 1.4;
+}
+.trust-bolt { color: var(--accent); font-size: 14px; flex-shrink: 0; }
+
 /* ================================================================
    WHATSAPP CHAT MOCKUP (hero visual)
 ================================================================ */
@@ -1224,6 +1237,8 @@ footer a:hover { color: var(--paper); }
   }
   .hero-lede { color: #94A3B8; }
   .section-lede { color: #94A3B8; }
+  .trust-badge { color: #94A3B8; }
+  .trust-bolt { color: var(--accent-soft); }
 
   /* ── Buttons ─────────────────────────────────────────── */
   .btn-secondary {
