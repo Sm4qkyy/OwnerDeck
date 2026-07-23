@@ -126,9 +126,16 @@
       "faq.a7": "Yes, anytime. Month-to-month, no contracts, no cancellation fees. If you cancel, the assistant is deactivated and your WhatsApp returns to normal. We'd obviously prefer you stay — but there's no lock-in.",
       "faq.q8": "Does it work for my type of business?",
       "faq.a8": "If you take bookings or repetitive customer questions via WhatsApp — salons, clinics, rentals, tours, restaurants, or similar service businesses — yes. If you're not sure, send us a message and we'll tell you honestly whether it's a good fit.",
+      "faq.q9": "Is my customers' data safe?",
+      "faq.a9": "Yes. Conversations stay on WhatsApp's own encrypted platform, and we use them only to run your assistant — never to sell or share. Your data belongs to you, and it's deleted if you cancel. Full details are in our privacy policy.",
 
       "final.title": "Stop losing bookings. <em>Start today.</em>",
       "final.lede": "Takes 2 minutes to fill in the form. We'll be in touch within 24 hours and your assistant can be live in 48.",
+
+      "trust.eyebrow": "Why OwnerDeck",
+      "trust.title": "Set up and supported by <em>a real person.</em>",
+      "trust.quote": "“I set up and support every assistant myself. If it doesn't fit your business, I'll tell you straight — no hard sell.”",
+      "trust.role": "Founder · Larnaca, Cyprus",
 
       "footer.tagline": "AI-powered WhatsApp booking assistant for businesses in Cyprus.",
       "footer.product": "Product",
@@ -253,9 +260,16 @@
       "faq.a7": "Ναι, όποτε θέλετε. Μηνιαία βάση, χωρίς συμβόλαια, χωρίς χρεώσεις ακύρωσης. Αν ακυρώσετε, ο βοηθός απενεργοποιείται και το WhatsApp σας επανέρχεται στο κανονικό. Φυσικά θα προτιμούσαμε να μείνετε — αλλά δεν υπάρχει δέσμευση.",
       "faq.q8": "Λειτουργεί για τον τύπο της δικής μου επιχείρησης;",
       "faq.a8": "Αν δέχεστε κρατήσεις ή επαναλαμβανόμενες ερωτήσεις πελατών μέσω WhatsApp — κομμωτήρια, κλινικές, ενοικιάσεις, εκδρομές, εστιατόρια ή παρόμοιες επιχειρήσεις υπηρεσιών — ναι. Αν δεν είστε σίγουροι, στείλτε μας μήνυμα και θα σας πούμε ειλικρινά αν ταιριάζει.",
+      "faq.q9": "Είναι ασφαλή τα δεδομένα των πελατών μου;",
+      "faq.a9": "Ναι. Οι συνομιλίες παραμένουν στην κρυπτογραφημένη πλατφόρμα του WhatsApp και τις χρησιμοποιούμε μόνο για τη λειτουργία του βοηθού σας — ποτέ για πώληση ή κοινοποίηση. Τα δεδομένα σας ανήκουν σε εσάς και διαγράφονται αν ακυρώσετε. Αναλυτικά στην πολιτική απορρήτου μας.",
 
       "final.title": "Σταματήστε να χάνετε κρατήσεις. <em>Ξεκινήστε σήμερα.</em>",
       "final.lede": "Χρειάζονται 2 λεπτά για να συμπληρώσετε τη φόρμα. Θα επικοινωνήσουμε εντός 24 ωρών και ο βοηθός σας μπορεί να είναι ενεργός σε 48.",
+
+      "trust.eyebrow": "Γιατί OwnerDeck",
+      "trust.title": "Ρύθμιση και υποστήριξη από <em>έναν πραγματικό άνθρωπο.</em>",
+      "trust.quote": "“Ρυθμίζω και υποστηρίζω κάθε βοηθό ο ίδιος. Αν δεν ταιριάζει στην επιχείρησή σας, θα σας το πω ειλικρινά — χωρίς πίεση.”",
+      "trust.role": "Ιδρυτής · Λάρνακα, Κύπρος",
 
       "footer.tagline": "Βοηθός κρατήσεων WhatsApp με τεχνητή νοημοσύνη για επιχειρήσεις στην Κύπρο.",
       "footer.product": "Προϊόν",
@@ -380,9 +394,16 @@
       "faq.a7": "Да, в любой момент. Помесячно, без договоров, без штрафов за отмену. Если вы отмените, ассистент отключается, и ваш WhatsApp возвращается к обычному режиму. Конечно, мы предпочли бы, чтобы вы остались — но никаких обязательств нет.",
       "faq.q8": "Подходит ли это для моего типа бизнеса?",
       "faq.a8": "Если вы принимаете брони или повторяющиеся вопросы клиентов через WhatsApp — салоны, клиники, аренда, экскурсии, рестораны или похожий сервисный бизнес — да. Если не уверены, напишите нам, и мы честно скажем, подойдёт ли это вам.",
+      "faq.q9": "Данные моих клиентов в безопасности?",
+      "faq.a9": "Да. Переписка остаётся в зашифрованной среде самого WhatsApp, и мы используем её только для работы вашего ассистента — никогда для продажи или передачи. Ваши данные принадлежат вам и удаляются при отмене. Подробности — в нашей политике конфиденциальности.",
 
       "final.title": "Перестаньте терять брони. <em>Начните сегодня.</em>",
       "final.lede": "Заполнить форму — 2 минуты. Мы свяжемся в течение 24 часов, и ваш ассистент может заработать за 48.",
+
+      "trust.eyebrow": "Почему OwnerDeck",
+      "trust.title": "Настройка и поддержка — <em>от живого человека.</em>",
+      "trust.quote": "“Я лично настраиваю и поддерживаю каждого ассистента. Если он не подойдёт вашему бизнесу — скажу честно, без навязывания.”",
+      "trust.role": "Основатель · Ларнака, Кипр",
 
       "footer.tagline": "ИИ-ассистент бронирования в WhatsApp для бизнеса на Кипре.",
       "footer.product": "Продукт",

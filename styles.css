@@ -981,6 +981,65 @@ h2 em {
 .faq-item.open .faq-a { max-height: 800px; padding: 0 0 28px 0; }
 
 /* ================================================================
+   TRUST / FOUNDER
+================================================================ */
+.trust { background: var(--ink); color: var(--paper); }
+.trust h2 { color: var(--paper); margin-left: auto; margin-right: auto; text-align: center; }
+.trust .section-eyebrow { color: var(--accent-soft); }
+.founder-card {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  background: var(--ink-2);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 22px;
+  padding: 34px 38px;
+  max-width: 720px;
+  margin: 52px auto 0;
+}
+.founder-avatar {
+  width: 72px; height: 72px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 12px 28px -10px rgba(13,148,136,0.55);
+}
+.founder-quote {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--paper);
+  margin-bottom: 16px;
+}
+.founder-meta { display: flex; flex-direction: column; gap: 2px; }
+.founder-name { font-weight: 700; color: var(--paper); letter-spacing: -0.2px; }
+.founder-role { font-family: var(--font-mono); font-size: 12.5px; color: var(--accent-soft); letter-spacing: 0.5px; }
+.testimonial {
+  max-width: 720px;
+  margin: 24px auto 0;
+  text-align: center;
+  padding: 28px 32px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 22px;
+  background: var(--ink-2);
+}
+.testimonial-quote { font-family: var(--font-display); font-size: 20px; font-style: italic; color: var(--paper); line-height: 1.5; margin-bottom: 14px; }
+.testimonial-author { font-family: var(--font-mono); font-size: 13px; color: var(--accent-soft); letter-spacing: 0.5px; }
+@media (max-width: 600px) {
+  .founder-card { flex-direction: column; text-align: center; gap: 20px; padding: 30px 24px; }
+  .founder-meta { align-items: center; }
+}
+
+/* ================================================================
    FINAL CTA
 ================================================================ */
 .cta-final {

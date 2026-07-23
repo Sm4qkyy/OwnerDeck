@@ -68,15 +68,6 @@
   var idx = 0;
   render(businesses[0]);
 
-  // Small hook for debugging/QA: OD_CHAT.show(i) renders example i.
-  window.OD_CHAT = {
-    count: businesses.length,
-    show: function (i) {
-      var n = ((i % businesses.length) + businesses.length) % businesses.length;
-      idx = n; render(businesses[n]);
-    }
-  };
-
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduce || businesses.length < 2) return;
 
