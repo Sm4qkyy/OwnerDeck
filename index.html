@@ -326,6 +326,68 @@
   </div>
 </div>
 
+<!-- CONTACT / DEMO FORM -->
+<section id="contact">
+  <div class="container">
+    <div class="rv">
+      <div class="kicker" data-i18n="contact.kicker">Get started</div>
+      <h2 data-i18n="contact.title">See it answer your own WhatsApp.</h2>
+      <p class="contact-lede" data-i18n="contact.lede">Book a 20-minute demo. We'll connect your number, your availability, and your policies — and show it handling a real enquiry live.</p>
+    </div>
+
+    <form class="contact-form rv" action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="cabc3ed5-e586-4a20-b4d6-9623dc724e2d" />
+      <input type="hidden" name="redirect" value="https://www.ownerdeck.com/welcome.html" />
+      <input type="hidden" name="subject" value="New Ownerdeck demo request" />
+      <input type="hidden" name="from_name" value="Ownerdeck Website" />
+      <input type="checkbox" name="botcheck" style="display:none" />
+
+      <div class="f-row">
+        <div class="f-field">
+          <label for="f-name"><span data-i18n="form.name">Your name</span> <span class="req">*</span></label>
+          <input id="f-name" name="name" type="text" placeholder="Nikos Papadopoulos" required maxlength="60" />
+        </div>
+        <div class="f-field">
+          <label for="f-business"><span data-i18n="form.business">Business name</span> <span class="req">*</span></label>
+          <input id="f-business" name="business_name" type="text" placeholder="Blue Bay Tours" required maxlength="80" />
+        </div>
+      </div>
+
+      <div class="f-row">
+        <div class="f-field">
+          <label for="f-whatsapp"><span data-i18n="form.whatsapp">WhatsApp number</span> <span class="req">*</span></label>
+          <input id="f-whatsapp" name="whatsapp_number" type="tel" placeholder="+357 99 123 456" required maxlength="30" />
+        </div>
+        <div class="f-field">
+          <label for="f-country"><span data-i18n="form.country">Country</span> <span class="req">*</span></label>
+          <input id="f-country" name="country" type="text" placeholder="Cyprus" required maxlength="56" />
+        </div>
+      </div>
+
+      <div class="f-field">
+        <label for="f-volume" data-i18n="form.volume">Enquiries / month</label>
+        <select id="f-volume" name="enquiries_per_month">
+          <option value="" disabled selected data-i18n="form.volumePh">Select…</option>
+          <option value="1-10">1-10</option>
+          <option value="11-50">11-50</option>
+          <option value="51-200">51-200</option>
+          <option value="200+">200+</option>
+        </select>
+      </div>
+
+      <div class="f-field">
+        <label for="f-notes" data-i18n="form.notes">Anything we should know?</label>
+        <textarea id="f-notes" name="notes" data-i18n-ph="form.notesPh" placeholder="Your booking system, busiest season, languages your customers speak…"></textarea>
+      </div>
+
+      <button type="submit" class="btn-primary f-submit"><span data-i18n="form.submit">Request my demo</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></button>
+
+      <p class="f-note" data-i18n-html="form.note">No commitment. We'll reply within 24 hours. <a href="/privacy.html">Privacy policy</a>.</p>
+    </form>
+  </div>
+</section>
+
 <!-- PROBLEM -->
 <section>
   <div class="container">
@@ -459,68 +521,6 @@
         <div class="founder-role" data-i18n="trust.role">Founder · Larnaca, Cyprus</div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- CONTACT / DEMO FORM -->
-<section id="contact">
-  <div class="container">
-    <div class="rv">
-      <div class="kicker" data-i18n="contact.kicker">Get started</div>
-      <h2 data-i18n="contact.title">See it answer your own WhatsApp.</h2>
-      <p class="contact-lede" data-i18n="contact.lede">Book a 20-minute demo. We'll connect your number, your availability, and your policies — and show it handling a real enquiry live.</p>
-    </div>
-
-    <form class="contact-form rv" action="https://api.web3forms.com/submit" method="POST">
-      <input type="hidden" name="access_key" value="cabc3ed5-e586-4a20-b4d6-9623dc724e2d" />
-      <input type="hidden" name="redirect" value="https://www.ownerdeck.com/welcome.html" />
-      <input type="hidden" name="subject" value="New Ownerdeck demo request" />
-      <input type="hidden" name="from_name" value="Ownerdeck Website" />
-      <input type="checkbox" name="botcheck" style="display:none" />
-
-      <div class="f-row">
-        <div class="f-field">
-          <label for="f-name"><span data-i18n="form.name">Your name</span> <span class="req">*</span></label>
-          <input id="f-name" name="name" type="text" placeholder="Nikos Papadopoulos" required maxlength="60" />
-        </div>
-        <div class="f-field">
-          <label for="f-business"><span data-i18n="form.business">Business name</span> <span class="req">*</span></label>
-          <input id="f-business" name="business_name" type="text" placeholder="Blue Bay Tours" required maxlength="80" />
-        </div>
-      </div>
-
-      <div class="f-row">
-        <div class="f-field">
-          <label for="f-whatsapp"><span data-i18n="form.whatsapp">WhatsApp number</span> <span class="req">*</span></label>
-          <input id="f-whatsapp" name="whatsapp_number" type="tel" placeholder="+357 99 123 456" required maxlength="30" />
-        </div>
-        <div class="f-field">
-          <label for="f-country"><span data-i18n="form.country">Country</span> <span class="req">*</span></label>
-          <input id="f-country" name="country" type="text" placeholder="Cyprus" required maxlength="56" />
-        </div>
-      </div>
-
-      <div class="f-field">
-        <label for="f-volume" data-i18n="form.volume">Enquiries / month</label>
-        <select id="f-volume" name="enquiries_per_month">
-          <option value="" disabled selected data-i18n="form.volumePh">Select…</option>
-          <option value="1-10">1-10</option>
-          <option value="11-50">11-50</option>
-          <option value="51-200">51-200</option>
-          <option value="200+">200+</option>
-        </select>
-      </div>
-
-      <div class="f-field">
-        <label for="f-notes" data-i18n="form.notes">Anything we should know?</label>
-        <textarea id="f-notes" name="notes" data-i18n-ph="form.notesPh" placeholder="Your booking system, busiest season, languages your customers speak…"></textarea>
-      </div>
-
-      <button type="submit" class="btn-primary f-submit"><span data-i18n="form.submit">Request my demo</span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></button>
-
-      <p class="f-note" data-i18n-html="form.note">No commitment. We'll reply within 24 hours. <a href="/privacy.html">Privacy policy</a>.</p>
-    </form>
   </div>
 </section>
 
