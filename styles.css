@@ -1040,6 +1040,44 @@ h2 em {
 }
 
 /* ================================================================
+   BEFORE / AFTER COMPARISON
+================================================================ */
+.compare { background: var(--ink); color: var(--paper); border-top: 1px solid var(--ink-3); }
+.compare h2 { color: var(--paper); }
+.compare .section-eyebrow { color: var(--accent-soft); }
+.compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 56px; }
+.compare-card { border-radius: 20px; padding: 32px 28px; border: 1px solid rgba(255,255,255,0.08); }
+.compare-card.without { background: linear-gradient(180deg, rgba(248,113,113,0.07), transparent); border-color: rgba(248,113,113,0.22); }
+.compare-card.with { background: linear-gradient(180deg, rgba(13,148,136,0.12), transparent); border-color: rgba(94,234,212,0.3); }
+.compare-card h3 { font-family: var(--font-mono); font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 22px; display: flex; align-items: center; gap: 9px; }
+.compare-card.without h3 { color: #F87171; }
+.compare-card.with h3 { color: var(--accent-soft); }
+.compare-list { list-style: none; display: grid; gap: 15px; }
+.compare-list li { display: flex; gap: 12px; font-size: 15px; color: var(--muted-2); line-height: 1.5; }
+.compare-list li::before { flex-shrink: 0; font-weight: 700; }
+.compare-card.without li::before { content: '✕'; color: #F87171; }
+.compare-card.with li::before { content: '✓'; color: var(--accent-soft); }
+
+/* ================================================================
+   GETTING STARTED — TIMELINE
+================================================================ */
+.getstarted { background: var(--ink); color: var(--paper); border-top: 1px solid var(--ink-3); }
+.getstarted h2 { color: var(--paper); }
+.getstarted .section-eyebrow { color: var(--accent-soft); }
+.timeline { margin-top: 56px; display: grid; gap: 0; max-width: 760px; }
+.tl-row { display: grid; grid-template-columns: 44px 1fr; gap: 22px; padding: 0 0 32px; position: relative; }
+.tl-row:last-child { padding-bottom: 0; }
+.tl-row::before { content: ''; position: absolute; left: 21px; top: 44px; bottom: -4px; width: 2px; background: var(--ink-3); }
+.tl-row:last-child::before { display: none; }
+.tl-mark { width: 44px; height: 44px; border-radius: 50%; background: var(--ink-2); border: 1px solid var(--ink-3); color: var(--accent-soft); display: grid; place-items: center; font-family: var(--font-mono); font-size: 14px; position: relative; z-index: 1; }
+.tl-row h4 { color: var(--paper); font-size: 18px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 5px; padding-top: 9px; }
+.tl-row p { font-size: 14.5px; color: var(--muted-2); line-height: 1.55; }
+
+/* Pricing ROI callout */
+.pricing-roi { background: rgba(13,148,136,0.12); border: 1px solid rgba(94,234,212,0.24); border-radius: 14px; padding: 15px 20px; font-size: 14px; color: var(--paper); max-width: 500px; margin: 0 auto 34px; position: relative; z-index: 1; line-height: 1.5; text-align: center; }
+.pricing-roi b { color: var(--accent-soft); }
+
+/* ================================================================
    FINAL CTA
 ================================================================ */
 .cta-final {
@@ -1132,6 +1170,7 @@ footer a:hover { color: var(--paper); }
     grid-template-columns: 1fr;
     gap: 60px;
   }
+  .compare-grid { grid-template-columns: 1fr; }
   .problem-cards {
     grid-template-columns: 1fr;
     max-width: 520px;
