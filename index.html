@@ -31,6 +31,7 @@
   "url": "https://www.ownerdeck.com",
   "email": "mark@ownerdeck.com",
   "description": "AI assistant that answers your business's WhatsApp and captures bookings — 24/7, in any language.",
+  "sameAs": ["https://www.instagram.com/ownerdeckcy/", "https://www.tiktok.com/@ownerdeckcy"],
   "areaServed": "Cyprus",
   "address": { "@type": "PostalAddress", "addressLocality": "Larnaca", "addressCountry": "CY" }
 }
@@ -48,7 +49,7 @@
     --mono:'JetBrains Mono',monospace;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
-  html{scroll-behavior:smooth;scroll-padding-top:84px;}
+  html{scroll-behavior:smooth;scroll-padding-top:96px;}
   body{font-family:var(--font);background:var(--bg);color:var(--ink);line-height:1.6;font-size:16px;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
   a{color:inherit;text-decoration:none;}
   img{display:block;max-width:100%;}
@@ -61,19 +62,28 @@
   /* ── Nav ── */
   nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(9,14,27,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid transparent;transition:border-color .3s;}
   nav.scrolled{border-bottom-color:var(--line-soft);}
-  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0;}
-  .logo-link{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;letter-spacing:-.4px;color:#fff;}
-  .logo-link img{height:44px;width:auto;}
-  .nav-links{display:flex;gap:32px;font-size:14px;font-weight:500;}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:10px 0;gap:18px;}
+  .logo-link{display:flex;align-items:center;flex-shrink:0;}
+  .logo-link img{height:64px;width:auto;}
+  .nav-links{display:flex;gap:30px;font-size:14px;font-weight:500;align-items:center;}
   .nav-links a{color:var(--body);transition:color .2s;}
   .nav-links a:hover{color:var(--ink);}
-  .nav-cta{background:var(--teal);color:#062018;font-weight:700;font-size:14px;padding:10px 20px;border-radius:999px;transition:filter .2s,transform .2s;}
+  .nav-actions{display:flex;align-items:center;gap:12px;flex-shrink:0;}
+  .soc{width:36px;height:36px;border-radius:10px;border:1px solid var(--line);color:var(--body);display:grid;place-items:center;transition:border-color .2s,color .2s,transform .2s;}
+  .soc:hover{border-color:var(--teal);color:var(--teal-soft);transform:translateY(-1px);}
+  .soc svg{width:17px;height:17px;}
+  .lang-select{-webkit-appearance:none;appearance:none;background-color:transparent;border:1px solid var(--line);color:var(--body);font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.5px;padding:9px 26px 9px 12px;border-radius:999px;cursor:pointer;transition:border-color .2s,color .2s;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2394A3B8' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;}
+  .lang-select:hover{border-color:var(--dim);color:var(--ink);}
+  .lang-select:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(32,197,181,.18);}
+  .lang-select option{background:var(--panel-2);color:var(--ink);}
+  .nav-cta{background:var(--teal);color:#062018;font-weight:700;font-size:14px;padding:10px 20px;border-radius:999px;transition:filter .2s,transform .2s;white-space:nowrap;}
   .nav-cta:hover{filter:brightness(1.1);transform:translateY(-1px);}
   .nav-burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;}
   .nav-burger span{display:block;width:22px;height:2px;background:var(--ink);border-radius:2px;transition:transform .3s,opacity .3s;}
+  .menu-socials{display:none;}
 
   /* ── Hero ── */
-  .hero{padding:158px 0 90px;overflow:hidden;}
+  .hero{padding:170px 0 90px;overflow:hidden;}
   .hero::before{content:'';position:absolute;top:-180px;right:-200px;width:720px;height:720px;background:radial-gradient(circle,rgba(32,197,181,.14),transparent 66%);border-radius:50%;pointer-events:none;}
   .hero::after{content:'';position:absolute;bottom:-260px;left:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(94,234,212,.07),transparent 70%);border-radius:50%;pointer-events:none;}
   .hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:64px;align-items:center;position:relative;z-index:1;}
@@ -114,7 +124,7 @@
   .stat-num{font-weight:700;font-size:clamp(28px,3.4vw,38px);letter-spacing:-1px;color:var(--ink);}
   .stat-label{font-size:13.5px;color:var(--body);margin-top:4px;}
 
-  /* ── Shared section headers ── */
+  /* ── Shared ── */
   .kicker{font-family:var(--mono);font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:2.5px;color:var(--teal);margin-bottom:18px;}
   h2{font-weight:700;font-size:clamp(28px,3.6vw,42px);line-height:1.1;letter-spacing:-1.2px;color:var(--ink);margin-bottom:18px;max-width:760px;padding-right:.2em;text-wrap:balance;}
   .lede{font-size:17px;color:var(--body);max-width:620px;}
@@ -157,6 +167,22 @@
   .price-list li::before{content:'✓';color:var(--teal);font-weight:700;flex-shrink:0;}
   .price-note{margin-top:16px;font-size:13px;color:var(--dim);text-align:center;}
 
+  /* ── FAQ ── */
+  .faq-list{margin-top:44px;max-width:820px;}
+  .faq-item{border-bottom:1px solid var(--line-soft);}
+  .faq-q{width:100%;background:none;border:none;padding:24px 0;text-align:left;font-family:var(--font);font-weight:600;font-size:18px;color:var(--ink);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:22px;letter-spacing:-.3px;line-height:1.35;}
+  .faq-q::after{content:'+';font-size:26px;color:var(--teal);transition:transform .3s;flex-shrink:0;font-weight:300;}
+  .faq-item.open .faq-q::after{transform:rotate(45deg);}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .4s;color:var(--body);font-size:15px;line-height:1.65;}
+  .faq-item.open .faq-a{max-height:600px;padding:0 0 24px 0;}
+
+  /* ── Trust / founder ── */
+  .founder-card{display:flex;align-items:center;gap:26px;background:var(--panel);border:1px solid var(--line-soft);border-radius:22px;padding:34px 38px;max-width:700px;margin:48px auto 0;}
+  .founder-av{width:72px;height:72px;flex-shrink:0;border-radius:50%;background:linear-gradient(135deg,var(--teal),#0F766E);color:#062018;display:grid;place-items:center;font-weight:800;font-size:24px;letter-spacing:.5px;box-shadow:0 12px 28px -10px rgba(32,197,181,.5);}
+  .founder-quote{font-size:18px;font-style:italic;line-height:1.55;color:var(--body-2);margin-bottom:14px;}
+  .founder-name{font-weight:700;color:var(--ink);letter-spacing:-.2px;}
+  .founder-role{font-family:var(--mono);font-size:12.5px;color:var(--teal-soft);letter-spacing:.5px;margin-top:2px;}
+
   /* ── Contact / form ── */
   .contact-lede{font-size:17px;color:var(--body);max-width:560px;margin-bottom:44px;}
   .contact-form{display:grid;gap:18px;max-width:640px;}
@@ -176,10 +202,11 @@
 
   /* ── Footer ── */
   footer{border-top:1px solid var(--line-soft);padding:40px 0;font-size:13.5px;color:var(--dim);}
-  .foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;}
+  .foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
   .foot a{color:var(--body);}
   .foot a:hover{color:var(--ink);}
-  .foot-links{display:flex;gap:22px;}
+  .foot-links{display:flex;gap:22px;align-items:center;}
+  .foot-socs{display:flex;gap:10px;}
 
   /* ── Reveal ── */
   .rv{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease;}
@@ -187,20 +214,29 @@
   @media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none;}}
 
   /* ── Responsive ── */
+  @media (max-width:1060px){
+    .nav-links{gap:20px;}
+  }
   @media (max-width:960px){
     .hero-grid{grid-template-columns:1fr;gap:52px;}
     .problem-grid,.caps-grid{grid-template-columns:1fr;}
     .stats-grid{grid-template-columns:1fr 1fr;gap:36px 20px;}
     section{padding:72px 0;}
-    .hero{padding:128px 0 70px;}
+    .hero{padding:138px 0 70px;}
+    .logo-link img{height:52px;}
     .nav-links{display:none;}
+    .nav-actions .soc{display:none;}
+    .nav-actions .nav-cta{display:none;}
     .nav-burger{display:flex;}
     nav.open .nav-links{display:flex;flex-direction:column;position:fixed;top:73px;left:0;right:0;background:rgba(9,14,27,.98);backdrop-filter:blur(18px);padding:10px 28px 26px;border-bottom:1px solid var(--line-soft);z-index:99;gap:0;}
     nav.open .nav-links a{padding:15px 0;border-bottom:1px solid var(--line-soft);font-size:17px;font-weight:600;color:var(--ink);}
-    nav.open .nav-links a:last-child{border-bottom:none;}
+    nav.open .nav-links a.menu-cta{border-bottom:none;background:var(--teal);color:#062018;border-radius:13px;text-align:center;padding:15px 22px;margin-top:14px;font-weight:700;}
+    nav.open .menu-socials{display:flex;gap:12px;padding-top:16px;justify-content:center;}
+    nav.open .menu-socials .soc{display:grid;}
     nav.open .nav-burger span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
     nav.open .nav-burger span:nth-child(2){opacity:0;}
     nav.open .nav-burger span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+    .founder-card{flex-direction:column;text-align:center;gap:20px;padding:30px 24px;}
   }
   @media (max-width:560px){
     .f-row{grid-template-columns:1fr;}
@@ -217,12 +253,26 @@
   <div class="container nav-inner">
     <a href="/" class="logo-link"><img src="Logo.png" alt="Ownerdeck" /></a>
     <div class="nav-links" id="nav-links">
-      <a href="#how">How it works</a>
-      <a href="#features">Features</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#contact">Book a demo</a>
+      <a href="#how" data-i18n="nav.how">How it works</a>
+      <a href="#features" data-i18n="nav.features">Features</a>
+      <a href="#pricing" data-i18n="nav.pricing">Pricing</a>
+      <a href="#faq" data-i18n="nav.faq">FAQ</a>
+      <a href="#contact" class="menu-cta" data-i18n="cta.demo">Book a demo</a>
+      <div class="menu-socials">
+        <a class="soc" href="https://www.instagram.com/ownerdeckcy/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+        <a class="soc" href="https://www.tiktok.com/@ownerdeckcy" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 3c.4 1.9 1.7 3.4 3.9 3.7v3c-1.5 0-2.8-.5-3.9-1.3v6.4c0 3.4-2.4 5.9-5.7 5.9-3.2 0-5.6-2.3-5.6-5.4 0-3 2.3-5.3 5.4-5.3.3 0 .7 0 1 .1v3.1a2.5 2.5 0 0 0-1-.2 2.4 2.4 0 0 0-2.4 2.4c0 1.4 1 2.4 2.5 2.4 1.6 0 2.7-1.1 2.7-2.9V3h3.1z"/></svg></a>
+      </div>
     </div>
-    <a href="#contact" class="nav-cta">Book a demo</a>
+    <div class="nav-actions">
+      <a class="soc" href="https://www.instagram.com/ownerdeckcy/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+      <a class="soc" href="https://www.tiktok.com/@ownerdeckcy" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 3c.4 1.9 1.7 3.4 3.9 3.7v3c-1.5 0-2.8-.5-3.9-1.3v6.4c0 3.4-2.4 5.9-5.7 5.9-3.2 0-5.6-2.3-5.6-5.4 0-3 2.3-5.3 5.4-5.3.3 0 .7 0 1 .1v3.1a2.5 2.5 0 0 0-1-.2 2.4 2.4 0 0 0-2.4 2.4c0 1.4 1 2.4 2.5 2.4 1.6 0 2.7-1.1 2.7-2.9V3h3.1z"/></svg></a>
+      <select class="lang-select" aria-label="Select language">
+        <option value="en">EN</option>
+        <option value="el">ΕΛ</option>
+        <option value="ru">RU</option>
+      </select>
+      <a href="#contact" class="nav-cta" data-i18n="cta.demo">Book a demo</a>
+    </div>
     <button id="nav-burger" class="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button>
   </div>
 </nav>
@@ -231,15 +281,15 @@
 <section class="hero" id="main">
   <div class="container hero-grid">
     <div>
-      <div class="live-pill"><span class="dot"></span>Live now · handling real bookings 24/7</div>
-      <h1>The AI that answers your business's <span class="accent">WhatsApp</span> — and takes the booking.</h1>
-      <p class="hero-lede">Ownerdeck lives on your own WhatsApp number. It replies in two seconds, in any language, quotes real availability and prices, and captures bookings — while you sleep.</p>
+      <div class="live-pill"><span class="dot"></span><span data-i18n="hero.pill">Live now · handling real bookings 24/7</span></div>
+      <h1 data-i18n-html="hero.title">The AI that answers your business's <span class="accent">WhatsApp</span> — and takes the booking.</h1>
+      <p class="hero-lede" data-i18n="hero.lede">Ownerdeck lives on your own WhatsApp number. It replies in two seconds, in any language, quotes real availability and prices, and captures bookings — while you sleep.</p>
       <div class="cta-row">
-        <a href="#contact" class="btn-primary">Book a demo
+        <a href="#contact" class="btn-primary"><span data-i18n="cta.demo">Book a demo</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
-        <a href="#how" class="btn-ghost">See how it works</a>
+        <a href="#how" class="btn-ghost" data-i18n="cta.seeHow">See how it works</a>
       </div>
-      <p class="hero-micro">No app to install · Set up in a day · You stay in control</p>
+      <p class="hero-micro" data-i18n="hero.micro">No app to install · Set up in a day · You stay in control</p>
     </div>
 
     <div class="chat-wrap" aria-hidden="true">
@@ -267,10 +317,10 @@
 <!-- STATS -->
 <div class="stats">
   <div class="container stats-grid">
-    <div><div class="stat-num">~200</div><div class="stat-label">Conversations handled / month</div></div>
-    <div><div class="stat-num">2 sec</div><div class="stat-label">Average reply time, any hour</div></div>
-    <div><div class="stat-num">5+</div><div class="stat-label">Languages auto-detected &amp; mirrored</div></div>
-    <div><div class="stat-num">24/7</div><div class="stat-label">Never misses an enquiry</div></div>
+    <div><div class="stat-num">~200</div><div class="stat-label" data-i18n="stats.s1">Conversations handled / month</div></div>
+    <div><div class="stat-num">2 sec</div><div class="stat-label" data-i18n="stats.s2">Average reply time, any hour</div></div>
+    <div><div class="stat-num">5+</div><div class="stat-label" data-i18n="stats.s3">Languages auto-detected &amp; mirrored</div></div>
+    <div><div class="stat-num">24/7</div><div class="stat-label" data-i18n="stats.s4">Never misses an enquiry</div></div>
   </div>
 </div>
 
@@ -278,29 +328,29 @@
 <section>
   <div class="container">
     <div class="rv">
-      <div class="kicker">The problem</div>
-      <h2>Every missed message is a booking you'll never get back.</h2>
+      <div class="kicker" data-i18n="problem.kicker">The problem</div>
+      <h2 data-i18n="problem.title">Every missed message is a booking you'll never get back.</h2>
     </div>
     <div class="problem-grid">
       <div class="p-card rv">
         <div class="p-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0-6 6c0 7-3 9-3 9h18s-3-2-3-9a6 6 0 0 0-6-6zM10.3 21a2 2 0 0 0 3.4 0"/></svg></div>
-        <h3>Enquiries at 2am go unanswered</h3>
-        <p>Most messages arrive after hours. By morning, the customer went elsewhere.</p>
+        <h3 data-i18n="problem.c1.t">Enquiries at 2am go unanswered</h3>
+        <p data-i18n="problem.c1.b">Most messages arrive after hours. By morning, the customer went elsewhere.</p>
       </div>
       <div class="p-card rv">
         <div class="p-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-        <h3>Repetitive questions eat your day</h3>
-        <p>Price, availability, what's included — the same questions, every single day.</p>
+        <h3 data-i18n="problem.c2.t">Repetitive questions eat your day</h3>
+        <p data-i18n="problem.c2.b">Price, availability, what's included — the same questions, every single day.</p>
       </div>
       <div class="p-card rv">
         <div class="p-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
-        <h3>You can't be on the phone all day</h3>
-        <p>Every call you miss while you work is a booking that walks to a competitor.</p>
+        <h3 data-i18n="problem.c3.t">You can't be on the phone all day</h3>
+        <p data-i18n="problem.c3.b">Every call you miss while you work is a booking that walks to a competitor.</p>
       </div>
       <div class="p-card rv">
         <div class="p-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14M12 4v4M8 20l4-8 4 8M9 17h6"/></svg></div>
-        <h3>Language barriers lose customers</h3>
-        <p>Russian, German, Greek speakers give up when no one replies in their language.</p>
+        <h3 data-i18n="problem.c4.t">Language barriers lose customers</h3>
+        <p data-i18n="problem.c4.b">Russian, German, Greek speakers give up when no one replies in their language.</p>
       </div>
     </div>
   </div>
@@ -310,15 +360,15 @@
 <section id="how" class="caps">
   <div class="container">
     <div class="rv">
-      <div class="kicker">How it works</div>
-      <h2>One conversation, start to confirmed booking — no human in the loop.</h2>
+      <div class="kicker" data-i18n="how.kicker">How it works</div>
+      <h2 data-i18n="how.title">One conversation, start to confirmed booking — no human in the loop.</h2>
     </div>
     <div class="steps">
-      <div class="step rv"><div class="step-n">1</div><div><h3>Customer messages your WhatsApp</h3><p>Same number they already use. No new app, no form, no waiting till morning.</p></div></div>
-      <div class="step rv"><div class="step-n">2</div><div><h3>AI detects language &amp; replies</h3><p>English, Russian, German, Greek and more — auto-detected and mirrored, in ~2 seconds.</p></div></div>
-      <div class="step rv"><div class="step-n">3</div><div><h3>Checks your live availability</h3><p>Calls your real booking system. Only shows what's actually available on those dates, at that day's real price.</p></div></div>
-      <div class="step rv"><div class="step-n">4</div><div><h3>Builds the quote</h3><p>Duration × rate, plus add-ons and extras. Accurate, not guessed from memory.</p></div></div>
-      <div class="step rv"><div class="step-n">5</div><div><h3>Confirms &amp; notifies you</h3><p>Collects only what's missing, sends a booking reference, and pings you the moment it lands.</p></div></div>
+      <div class="step rv"><div class="step-n">1</div><div><h3 data-i18n="how.s1.t">Customer messages your WhatsApp</h3><p data-i18n="how.s1.b">Same number they already use. No new app, no form, no waiting till morning.</p></div></div>
+      <div class="step rv"><div class="step-n">2</div><div><h3 data-i18n="how.s2.t">AI detects language &amp; replies</h3><p data-i18n="how.s2.b">English, Russian, German, Greek and more — auto-detected and mirrored, in ~2 seconds.</p></div></div>
+      <div class="step rv"><div class="step-n">3</div><div><h3 data-i18n="how.s3.t">Checks your live availability</h3><p data-i18n="how.s3.b">Calls your real booking system. Only shows what's actually available on those dates, at that day's real price.</p></div></div>
+      <div class="step rv"><div class="step-n">4</div><div><h3 data-i18n="how.s4.t">Builds the quote</h3><p data-i18n="how.s4.b">Duration × rate, plus add-ons and extras. Accurate, not guessed from memory.</p></div></div>
+      <div class="step rv"><div class="step-n">5</div><div><h3 data-i18n="how.s5.t">Confirms &amp; notifies you</h3><p data-i18n="how.s5.b">Collects only what's missing, sends a booking reference, and pings you the moment it lands.</p></div></div>
     </div>
   </div>
 </section>
@@ -327,17 +377,17 @@
 <section id="features">
   <div class="container">
     <div class="rv">
-      <div class="kicker">Capabilities</div>
-      <h2>Trained on your services, your prices, your policies.</h2>
-      <p class="lede">It's not a generic chatbot with a company name swapped in. Each deployment learns your specific business.</p>
+      <div class="kicker" data-i18n="caps.kicker">Capabilities</div>
+      <h2 data-i18n="caps.title">Trained on your services, your prices, your policies.</h2>
+      <p class="lede" data-i18n="caps.lede">It's not a generic chatbot with a company name swapped in. Each deployment learns your specific business.</p>
     </div>
     <div class="caps-grid">
-      <div class="cap rv"><h3>Answers from your real terms</h3><p>Pricing, deposits, cancellation windows, what's included, requirements — trained on your actual policies, not guesses.</p></div>
-      <div class="cap rv"><h3>Live availability &amp; pricing</h3><p>Calls your real booking system. It never quotes from memory — only what's actually available, at that day's actual price.</p></div>
-      <div class="cap rv"><h3>Multilingual by default</h3><p>Auto-detects and mirrors the customer's language. A full booking completed start-to-finish in Russian, zero human involved.</p></div>
-      <div class="cap rv"><h3>Human handoff anytime</h3><p>Flip a conversation to manual and the bot steps back. Complaints and edge cases route to a human, never the bot.</p></div>
-      <div class="cap rv"><h3>Full conversation logs</h3><p>Every enquiry logged to a sheet you can read — a complete audit trail of what it handled and how.</p></div>
-      <div class="cap rv"><h3>Enforces your own rules</h3><p>Minimum notice windows? It routes short-notice requests to a phone call instead of confirming. Your guardrails, not ours.</p></div>
+      <div class="cap rv"><h3 data-i18n="caps.c1.t">Answers from your real terms</h3><p data-i18n="caps.c1.b">Pricing, deposits, cancellation windows, what's included, requirements — trained on your actual policies, not guesses.</p></div>
+      <div class="cap rv"><h3 data-i18n="caps.c2.t">Live availability &amp; pricing</h3><p data-i18n="caps.c2.b">Calls your real booking system. It never quotes from memory — only what's actually available, at that day's actual price.</p></div>
+      <div class="cap rv"><h3 data-i18n="caps.c3.t">Multilingual by default</h3><p data-i18n="caps.c3.b">Auto-detects and mirrors the customer's language. A full booking completed start-to-finish in Russian, zero human involved.</p></div>
+      <div class="cap rv"><h3 data-i18n="caps.c4.t">Human handoff anytime</h3><p data-i18n="caps.c4.b">Flip a conversation to manual and the bot steps back. Complaints and edge cases route to a human, never the bot.</p></div>
+      <div class="cap rv"><h3 data-i18n="caps.c5.t">Full conversation logs</h3><p data-i18n="caps.c5.b">Every enquiry logged to a sheet you can read — a complete audit trail of what it handled and how.</p></div>
+      <div class="cap rv"><h3 data-i18n="caps.c6.t">Enforces your own rules</h3><p data-i18n="caps.c6.b">Minimum notice windows? It routes short-notice requests to a phone call instead of confirming. Your guardrails, not ours.</p></div>
     </div>
   </div>
 </section>
@@ -346,27 +396,66 @@
 <section id="pricing" class="caps">
   <div class="container">
     <div class="rv" style="text-align:center;">
-      <div class="kicker">Pricing</div>
-      <h2 style="margin-left:auto;margin-right:auto;">One flat price. Every conversation covered.</h2>
+      <div class="kicker" data-i18n="price.kicker">Pricing</div>
+      <h2 style="margin-left:auto;margin-right:auto;" data-i18n="price.title">One flat price. Every conversation covered.</h2>
     </div>
     <div class="price-card rv">
       <div class="price-name">Ownerdeck</div>
-      <div class="price-sub">Full deployment, trained on your business.</div>
-      <div class="price-line"><span class="price-amt">€150</span><span class="price-per">/month</span></div>
-      <div class="price-once">+ €400 one-time installation</div>
+      <div class="price-sub" data-i18n="price.sub">Full deployment, trained on your business.</div>
+      <div class="price-line"><span class="price-amt">€150</span><span class="price-per" data-i18n="price.per">/month</span></div>
+      <div class="price-once" data-i18n="price.once">+ €400 one-time installation</div>
       <ul class="price-list">
-        <li>Your own WhatsApp number, fully managed</li>
-        <li>Unlimited conversations, 24/7</li>
-        <li>Live integration with your booking system</li>
-        <li>Multilingual — auto-detects any language</li>
-        <li>Answers from your real policies &amp; pricing</li>
-        <li>Human handoff anytime — you stay in control</li>
-        <li>Full conversation logging &amp; audit trail</li>
-        <li>Owner alerts the moment a booking lands</li>
+        <li data-i18n="price.f1">Your own WhatsApp number, fully managed</li>
+        <li data-i18n="price.f2">Unlimited conversations, 24/7</li>
+        <li data-i18n="price.f3">Live integration with your booking system</li>
+        <li data-i18n="price.f4">Multilingual — auto-detects any language</li>
+        <li data-i18n="price.f5">Answers from your real policies &amp; pricing</li>
+        <li data-i18n="price.f6">Human handoff anytime — you stay in control</li>
+        <li data-i18n="price.f7">Full conversation logging &amp; audit trail</li>
+        <li data-i18n="price.f8">Owner alerts the moment a booking lands</li>
       </ul>
-      <a href="#contact" class="btn-primary" style="width:100%;justify-content:center;">Book a demo
+      <a href="#contact" class="btn-primary" style="width:100%;justify-content:center;"><span data-i18n="cta.demo">Book a demo</span>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
-      <p class="price-note">No long-term contract. Cancel anytime.</p>
+      <p class="price-note" data-i18n="price.note">No long-term contract. Cancel anytime.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <div class="rv">
+      <div class="kicker" data-i18n="faq.kicker">FAQ</div>
+      <h2 data-i18n="faq.title">Common questions, honest answers.</h2>
+    </div>
+    <div class="faq-list rv">
+      <div class="faq-item"><button class="faq-q" data-i18n="faq.q1">Does my customer need to download anything?</button><div class="faq-a" data-i18n="faq.a1">No. Your customers message your existing WhatsApp number exactly as they do today. Nothing changes on their end — they don't need a new app, account, or link. The assistant just makes you reply faster.</div></div>
+      <div class="faq-item"><button class="faq-q" data-i18n="faq.q2">How long does setup take?</button><div class="faq-a" data-i18n="faq.a2">About a day from when we have your details. We train the assistant on your business — your services, prices, availability, policies — and connect it to your WhatsApp Business number. You review and approve before it goes live.</div></div>
+      <div class="faq-item"><button class="faq-q" data-i18n="faq.q3">What languages does it support?</button><div class="faq-a" data-i18n="faq.a3">English, Russian, German, Greek and more — detected automatically from the customer's message. If a customer writes in Russian, the assistant replies in Russian. You don't configure anything per conversation.</div></div>
+      <div class="faq-item"><button class="faq-q" data-i18n="faq.q4">What happens if it gets a question it can't answer?</button><div class="faq-a" data-i18n="faq.a4">Anything outside the trained script gets flagged to you immediately. You'll receive a notification with the conversation so you can step in with a personal reply. The customer is told someone will follow up shortly — no dead ends.</div></div>
+      <div class="faq-item"><button class="faq-q" data-i18n="faq.q5">Can I still reply to customers myself?</button><div class="faq-a" data-i18n="faq.a5">Yes. You can take over any conversation at any time. The assistant handles the first response and the routine questions — you stay in charge of anything you want to handle personally.</div></div>
+      <div class="faq-item"><button class="faq-q" data-i18n="faq.q6">What does the €400 installation cover?</button><div class="faq-a" data-i18n="faq.a6">Everything: building and training the assistant on your specific business, connecting it to your WhatsApp Business account, booking-system integration, testing, and a review before go-live. There are no hidden fees — it's a one-time cost.</div></div>
+      <div class="faq-item"><button class="faq-q" data-i18n="faq.q7">Can I cancel?</button><div class="faq-a" data-i18n="faq.a7">Yes, anytime. Month-to-month, no contracts, no cancellation fees. If you cancel, the assistant is deactivated and your WhatsApp returns to normal. We'd obviously prefer you stay — but there's no lock-in.</div></div>
+      <div class="faq-item"><button class="faq-q" data-i18n="faq.q8">Does it work for my type of business?</button><div class="faq-a" data-i18n="faq.a8">If you take bookings or repetitive customer questions via WhatsApp — tours, rentals, salons, clinics, restaurants, or similar service businesses — yes. If you're not sure, send us a message and we'll tell you honestly whether it's a good fit.</div></div>
+      <div class="faq-item"><button class="faq-q" data-i18n="faq.q9">Is my customers' data safe?</button><div class="faq-a" data-i18n="faq.a9">Yes. Conversations stay on WhatsApp's own encrypted platform, and we use them only to run your assistant — never to sell or share. Your data belongs to you, and it's deleted if you cancel. Full details are in our privacy policy.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST / FOUNDER -->
+<section class="caps">
+  <div class="container">
+    <div class="rv" style="text-align:center;">
+      <div class="kicker" data-i18n="trust.kicker">Why Ownerdeck</div>
+      <h2 style="margin-left:auto;margin-right:auto;" data-i18n="trust.title">Set up and supported by a real person.</h2>
+    </div>
+    <div class="founder-card rv">
+      <div class="founder-av">MS</div>
+      <div>
+        <p class="founder-quote" data-i18n="trust.quote">"I set up and support every assistant myself. If it doesn't fit your business, I'll tell you straight — no hard sell."</p>
+        <div class="founder-name">Mark Saade</div>
+        <div class="founder-role" data-i18n="trust.role">Founder · Larnaca, Cyprus</div>
+      </div>
     </div>
   </div>
 </section>
@@ -375,9 +464,9 @@
 <section id="contact">
   <div class="container">
     <div class="rv">
-      <div class="kicker">Get started</div>
-      <h2>See it answer your own WhatsApp.</h2>
-      <p class="contact-lede">Book a 20-minute demo. We'll connect your number, your availability, and your policies — and show it handling a real enquiry live.</p>
+      <div class="kicker" data-i18n="contact.kicker">Get started</div>
+      <h2 data-i18n="contact.title">See it answer your own WhatsApp.</h2>
+      <p class="contact-lede" data-i18n="contact.lede">Book a 20-minute demo. We'll connect your number, your availability, and your policies — and show it handling a real enquiry live.</p>
     </div>
 
     <form class="contact-form rv" action="https://api.web3forms.com/submit" method="POST">
@@ -389,30 +478,30 @@
 
       <div class="f-row">
         <div class="f-field">
-          <label for="f-name">Your name <span class="req">*</span></label>
+          <label for="f-name"><span data-i18n="form.name">Your name</span> <span class="req">*</span></label>
           <input id="f-name" name="name" type="text" placeholder="Nikos Papadopoulos" required maxlength="60" />
         </div>
         <div class="f-field">
-          <label for="f-business">Business name <span class="req">*</span></label>
+          <label for="f-business"><span data-i18n="form.business">Business name</span> <span class="req">*</span></label>
           <input id="f-business" name="business_name" type="text" placeholder="Blue Bay Tours" required maxlength="80" />
         </div>
       </div>
 
       <div class="f-row">
         <div class="f-field">
-          <label for="f-whatsapp">WhatsApp number <span class="req">*</span></label>
+          <label for="f-whatsapp"><span data-i18n="form.whatsapp">WhatsApp number</span> <span class="req">*</span></label>
           <input id="f-whatsapp" name="whatsapp_number" type="tel" placeholder="+357 99 123 456" required maxlength="30" />
         </div>
         <div class="f-field">
-          <label for="f-country">Country <span class="req">*</span></label>
+          <label for="f-country"><span data-i18n="form.country">Country</span> <span class="req">*</span></label>
           <input id="f-country" name="country" type="text" placeholder="Cyprus" required maxlength="56" />
         </div>
       </div>
 
       <div class="f-field">
-        <label for="f-volume">Enquiries / month</label>
+        <label for="f-volume" data-i18n="form.volume">Enquiries / month</label>
         <select id="f-volume" name="enquiries_per_month">
-          <option value="" disabled selected>Select…</option>
+          <option value="" disabled selected data-i18n="form.volumePh">Select…</option>
           <option value="1-10">1-10</option>
           <option value="11-50">11-50</option>
           <option value="51-200">51-200</option>
@@ -421,24 +510,28 @@
       </div>
 
       <div class="f-field">
-        <label for="f-notes">Anything we should know?</label>
-        <textarea id="f-notes" name="notes" placeholder="Your booking system, busiest season, languages your customers speak…"></textarea>
+        <label for="f-notes" data-i18n="form.notes">Anything we should know?</label>
+        <textarea id="f-notes" name="notes" data-i18n-ph="form.notesPh" placeholder="Your booking system, busiest season, languages your customers speak…"></textarea>
       </div>
 
-      <button type="submit" class="btn-primary f-submit">Request my demo
+      <button type="submit" class="btn-primary f-submit"><span data-i18n="form.submit">Request my demo</span>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></button>
 
-      <p class="f-note">No commitment. We'll reply within 24 hours. <a href="/privacy.html">Privacy policy</a>.</p>
+      <p class="f-note" data-i18n-html="form.note">No commitment. We'll reply within 24 hours. <a href="/privacy.html">Privacy policy</a>.</p>
     </form>
   </div>
 </section>
 
 <footer>
   <div class="container foot">
-    <div>© 2026 Ownerdeck. Built in Cyprus.</div>
+    <div data-i18n="footer.copyright">© 2026 Ownerdeck. Built in Cyprus.</div>
     <div class="foot-links">
+      <div class="foot-socs">
+        <a class="soc" href="https://www.instagram.com/ownerdeckcy/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+        <a class="soc" href="https://www.tiktok.com/@ownerdeckcy" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 3c.4 1.9 1.7 3.4 3.9 3.7v3c-1.5 0-2.8-.5-3.9-1.3v6.4c0 3.4-2.4 5.9-5.7 5.9-3.2 0-5.6-2.3-5.6-5.4 0-3 2.3-5.3 5.4-5.3.3 0 .7 0 1 .1v3.1a2.5 2.5 0 0 0-1-.2 2.4 2.4 0 0 0-2.4 2.4c0 1.4 1 2.4 2.5 2.4 1.6 0 2.7-1.1 2.7-2.9V3h3.1z"/></svg></a>
+      </div>
       <a href="mailto:mark@ownerdeck.com">mark@ownerdeck.com</a>
-      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/privacy.html" data-i18n="footer.privacy">Privacy Policy</a>
     </div>
   </div>
 </footer>
@@ -457,6 +550,17 @@
       a.addEventListener('click',function(){nav.classList.remove('open');burger.setAttribute('aria-expanded','false');});
     });
   })();
+  // FAQ accordion
+  (function(){
+    document.querySelectorAll('.faq-q').forEach(function(q){
+      q.addEventListener('click',function(){
+        var item=q.parentElement;
+        var wasOpen=item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(function(i){i.classList.remove('open');});
+        if(!wasOpen) item.classList.add('open');
+      });
+    });
+  })();
   // Reveal on scroll (with failsafe)
   (function(){
     var els=document.querySelectorAll('.rv');
@@ -466,8 +570,9 @@
     setTimeout(function(){els.forEach(function(e){e.classList.add('in');});},2500);
   })();
 </script>
-<script src="analytics-events.js?v=20260603"></script>
-<script src="whatsapp-cta.js?v=20260603"></script>
+<script src="i18n.js?v=20260604"></script>
+<script src="analytics-events.js?v=20260604"></script>
+<script src="whatsapp-cta.js?v=20260604"></script>
 
 </body>
 </html>
