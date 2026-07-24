@@ -1,18 +1,20 @@
 /* ================================================================
    Floating "Try it live" WhatsApp button (bottom-right, all pages).
 
-   >>> SET YOUR DEDICATED DEMO NUMBER BELOW <<<
-   Digits only, with country code, no "+" or spaces, e.g. "35799123456".
-   Leave it empty and the button stays hidden — so nothing broken ships.
+   Configured in config.js -> whatsappNumber / floatingButton.
+   Empty number = button stays hidden, so nothing broken ships.
 
-   IMPORTANT: use a dedicated OwnerDeck demo line, NEVER a live client's
+   IMPORTANT: use a dedicated Ownerdeck demo line, NEVER a live client's
    number (a real client's chat would fill up with demo traffic).
 ================================================================ */
 (function () {
   "use strict";
 
-  var DEMO_NUMBER = ""; // <-- put your demo WhatsApp number here
+  // Number and on/off switch both live in config.js
+  var CFG = window.OD_CONFIG || {};
+  var DEMO_NUMBER = CFG.whatsappNumber || "";
 
+  if (CFG.floatingButton === false) return;
   if (!/^\d{8,15}$/.test(DEMO_NUMBER)) return; // hidden until a valid number is set
 
   var lang = (function () {
