@@ -35,7 +35,10 @@ window.OD_CONFIG = {
 
   /* ---------------------------------------------------------------
      3) Floating "Try it live" button (bottom-right, all pages).
-        Uses whatsappNumber above. Set to false to hide it entirely.
+
+     OFF deliberately: the number should only appear at the final step
+     of the demo flow (demo.html step 3), so visitors watch and try it
+     before they get the contact details. Flip to true to bring it back.
   --------------------------------------------------------------- */
-  floatingButton: true
+  floatingButton: false
 };

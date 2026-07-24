@@ -45,6 +45,10 @@
       "demo.channelsTitle": "Like what you saw? Message me directly.",
       "demo.channelsSub": "Pick whichever you actually use — I reply personally.",
 
+      "final.kicker": "See it for yourself",
+      "final.title": "Watch it work, then try it yourself.",
+      "final.lede": "Two minutes, no form to fill in. Watch a real enquiry get answered, have a go yourself, then message me if it looks useful.",
+
       "stats.s1": "Conversations handled / month",
       "stats.s2": "Average reply time, any hour",
       "stats.s3": "Languages auto-detected & mirrored",
@@ -185,6 +189,10 @@
       "demo.channelsTitle": "Σας άρεσε; Στείλτε μου μήνυμα απευθείας.",
       "demo.channelsSub": "Διαλέξτε όποιο χρησιμοποιείτε — απαντώ προσωπικά.",
 
+      "final.kicker": "Δείτε το μόνοι σας",
+      "final.title": "Δείτε το να δουλεύει και δοκιμάστε το.",
+      "final.lede": "Δύο λεπτά, χωρίς φόρμα. Δείτε ένα πραγματικό αίτημα να απαντιέται, δοκιμάστε το εσείς και στείλτε μου μήνυμα αν σας φανεί χρήσιμο.",
+
       "stats.s1": "Συνομιλίες τον μήνα",
       "stats.s2": "Μέσος χρόνος απάντησης, κάθε ώρα",
       "stats.s3": "Γλώσσες με αυτόματη αναγνώριση",
@@ -324,6 +332,10 @@
       "demo.doneSub": "Это заготовленное демо. Настоящий ассистент использует ваши услуги, цены и доступность.",
       "demo.channelsTitle": "Понравилось? Напишите мне напрямую.",
       "demo.channelsSub": "Выберите удобный канал — отвечаю лично.",
+
+      "final.kicker": "Убедитесь сами",
+      "final.title": "Посмотрите, как он работает, и попробуйте сами.",
+      "final.lede": "Две минуты, никаких форм. Посмотрите, как обрабатывается реальный запрос, попробуйте сами — и напишите мне, если это вам подходит.",
 
       "stats.s1": "Диалогов в месяц",
       "stats.s2": "Среднее время ответа, в любой час",
