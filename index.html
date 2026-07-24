@@ -176,14 +176,7 @@
   .faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .4s;color:var(--body);font-size:15px;line-height:1.65;}
   .faq-item.open .faq-a{max-height:600px;padding:0 0 24px 0;}
 
-  /* ── Trust / founder ── */
-  .founder-card{display:flex;align-items:center;gap:26px;background:var(--panel);border:1px solid var(--line-soft);border-radius:22px;padding:34px 38px;max-width:700px;margin:48px auto 0;}
-  .founder-av{width:72px;height:72px;flex-shrink:0;border-radius:50%;background:linear-gradient(135deg,var(--teal),#0F766E);color:#062018;display:grid;place-items:center;font-weight:800;font-size:24px;letter-spacing:.5px;box-shadow:0 12px 28px -10px rgba(32,197,181,.5);}
-  .founder-quote{font-size:18px;font-style:italic;line-height:1.55;color:var(--body-2);margin-bottom:14px;}
-  .founder-name{font-weight:700;color:var(--ink);letter-spacing:-.2px;}
-  .founder-role{font-family:var(--mono);font-size:12.5px;color:var(--teal-soft);letter-spacing:.5px;margin-top:2px;}
-
-  /* ── Contact / form ── (centred block in the middle of the page) */
+  /* ── Contact / form ── (centred block) */
   #contact .kicker{text-align:center;}
   #contact h2{margin-left:auto;margin-right:auto;text-align:center;}
   .contact-lede{font-size:17px;color:var(--body);max-width:560px;margin:0 auto 44px;text-align:center;}
@@ -238,7 +231,6 @@
     nav.open .nav-burger span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
     nav.open .nav-burger span:nth-child(2){opacity:0;}
     nav.open .nav-burger span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
-    .founder-card{flex-direction:column;text-align:center;gap:20px;padding:30px 24px;}
   }
   @media (max-width:560px){
     .f-row{grid-template-columns:1fr;}
@@ -325,68 +317,6 @@
     <div><div class="stat-num">24/7</div><div class="stat-label" data-i18n="stats.s4">Never misses an enquiry</div></div>
   </div>
 </div>
-
-<!-- CONTACT / DEMO FORM -->
-<section id="contact">
-  <div class="container">
-    <div class="rv">
-      <div class="kicker" data-i18n="contact.kicker">Get started</div>
-      <h2 data-i18n="contact.title">See it answer your own WhatsApp.</h2>
-      <p class="contact-lede" data-i18n="contact.lede">Book a 20-minute demo. We'll connect your number, your availability, and your policies — and show it handling a real enquiry live.</p>
-    </div>
-
-    <form class="contact-form rv" action="https://api.web3forms.com/submit" method="POST">
-      <input type="hidden" name="access_key" value="cabc3ed5-e586-4a20-b4d6-9623dc724e2d" />
-      <input type="hidden" name="redirect" value="https://www.ownerdeck.com/welcome.html" />
-      <input type="hidden" name="subject" value="New Ownerdeck demo request" />
-      <input type="hidden" name="from_name" value="Ownerdeck Website" />
-      <input type="checkbox" name="botcheck" style="display:none" />
-
-      <div class="f-row">
-        <div class="f-field">
-          <label for="f-name"><span data-i18n="form.name">Your name</span> <span class="req">*</span></label>
-          <input id="f-name" name="name" type="text" placeholder="Nikos Papadopoulos" required maxlength="60" />
-        </div>
-        <div class="f-field">
-          <label for="f-business"><span data-i18n="form.business">Business name</span> <span class="req">*</span></label>
-          <input id="f-business" name="business_name" type="text" placeholder="Blue Bay Tours" required maxlength="80" />
-        </div>
-      </div>
-
-      <div class="f-row">
-        <div class="f-field">
-          <label for="f-whatsapp"><span data-i18n="form.whatsapp">WhatsApp number</span> <span class="req">*</span></label>
-          <input id="f-whatsapp" name="whatsapp_number" type="tel" placeholder="+357 99 123 456" required maxlength="30" />
-        </div>
-        <div class="f-field">
-          <label for="f-country"><span data-i18n="form.country">Country</span> <span class="req">*</span></label>
-          <input id="f-country" name="country" type="text" placeholder="Cyprus" required maxlength="56" />
-        </div>
-      </div>
-
-      <div class="f-field">
-        <label for="f-volume" data-i18n="form.volume">Enquiries / month</label>
-        <select id="f-volume" name="enquiries_per_month">
-          <option value="" disabled selected data-i18n="form.volumePh">Select…</option>
-          <option value="1-10">1-10</option>
-          <option value="11-50">11-50</option>
-          <option value="51-200">51-200</option>
-          <option value="200+">200+</option>
-        </select>
-      </div>
-
-      <div class="f-field">
-        <label for="f-notes" data-i18n="form.notes">Anything we should know?</label>
-        <textarea id="f-notes" name="notes" data-i18n-ph="form.notesPh" placeholder="Your booking system, busiest season, languages your customers speak…"></textarea>
-      </div>
-
-      <button type="submit" class="btn-primary f-submit"><span data-i18n="form.submit">Request my demo</span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></button>
-
-      <p class="f-note" data-i18n-html="form.note">No commitment. We'll reply within 24 hours. <a href="/privacy.html">Privacy policy</a>.</p>
-    </form>
-  </div>
-</section>
 
 <!-- PROBLEM -->
 <section>
@@ -485,6 +415,68 @@
   </div>
 </section>
 
+<!-- CONTACT / DEMO FORM -->
+<section id="contact">
+  <div class="container">
+    <div class="rv">
+      <div class="kicker" data-i18n="contact.kicker">Get started</div>
+      <h2 data-i18n="contact.title">See it answer your own WhatsApp.</h2>
+      <p class="contact-lede" data-i18n="contact.lede">Book a 20-minute demo. We'll connect your number, your availability, and your policies — and show it handling a real enquiry live.</p>
+    </div>
+
+    <form class="contact-form rv" action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="cabc3ed5-e586-4a20-b4d6-9623dc724e2d" />
+      <input type="hidden" name="redirect" value="https://www.ownerdeck.com/welcome.html" />
+      <input type="hidden" name="subject" value="New Ownerdeck demo request" />
+      <input type="hidden" name="from_name" value="Ownerdeck Website" />
+      <input type="checkbox" name="botcheck" style="display:none" />
+
+      <div class="f-row">
+        <div class="f-field">
+          <label for="f-name"><span data-i18n="form.name">Your name</span> <span class="req">*</span></label>
+          <input id="f-name" name="name" type="text" placeholder="Nikos Papadopoulos" required maxlength="60" />
+        </div>
+        <div class="f-field">
+          <label for="f-business"><span data-i18n="form.business">Business name</span> <span class="req">*</span></label>
+          <input id="f-business" name="business_name" type="text" placeholder="Blue Bay Tours" required maxlength="80" />
+        </div>
+      </div>
+
+      <div class="f-row">
+        <div class="f-field">
+          <label for="f-whatsapp"><span data-i18n="form.whatsapp">WhatsApp number</span> <span class="req">*</span></label>
+          <input id="f-whatsapp" name="whatsapp_number" type="tel" placeholder="+357 99 123 456" required maxlength="30" />
+        </div>
+        <div class="f-field">
+          <label for="f-country"><span data-i18n="form.country">Country</span> <span class="req">*</span></label>
+          <input id="f-country" name="country" type="text" placeholder="Cyprus" required maxlength="56" />
+        </div>
+      </div>
+
+      <div class="f-field">
+        <label for="f-volume" data-i18n="form.volume">Enquiries / month</label>
+        <select id="f-volume" name="enquiries_per_month">
+          <option value="" disabled selected data-i18n="form.volumePh">Select…</option>
+          <option value="1-10">1-10</option>
+          <option value="11-50">11-50</option>
+          <option value="51-200">51-200</option>
+          <option value="200+">200+</option>
+        </select>
+      </div>
+
+      <div class="f-field">
+        <label for="f-notes" data-i18n="form.notes">Anything we should know?</label>
+        <textarea id="f-notes" name="notes" data-i18n-ph="form.notesPh" placeholder="Your booking system, busiest season, languages your customers speak…"></textarea>
+      </div>
+
+      <button type="submit" class="btn-primary f-submit"><span data-i18n="form.submit">Request my demo</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></button>
+
+      <p class="f-note" data-i18n-html="form.note">No commitment. We'll reply within 24 hours. <a href="/privacy.html">Privacy policy</a>.</p>
+    </form>
+  </div>
+</section>
+
 <!-- FAQ -->
 <section id="faq">
   <div class="container">
@@ -502,24 +494,6 @@
       <div class="faq-item"><button class="faq-q" data-i18n="faq.q7">Can I cancel?</button><div class="faq-a" data-i18n="faq.a7">Yes, anytime. Month-to-month, no contracts, no cancellation fees. If you cancel, the assistant is deactivated and your WhatsApp returns to normal. We'd obviously prefer you stay — but there's no lock-in.</div></div>
       <div class="faq-item"><button class="faq-q" data-i18n="faq.q8">Does it work for my type of business?</button><div class="faq-a" data-i18n="faq.a8">If you take bookings or repetitive customer questions via WhatsApp — tours, rentals, salons, clinics, restaurants, or similar service businesses — yes. If you're not sure, send us a message and we'll tell you honestly whether it's a good fit.</div></div>
       <div class="faq-item"><button class="faq-q" data-i18n="faq.q9">Is my customers' data safe?</button><div class="faq-a" data-i18n="faq.a9">Yes. Conversations stay on WhatsApp's own encrypted platform, and we use them only to run your assistant — never to sell or share. Your data belongs to you, and it's deleted if you cancel. Full details are in our privacy policy.</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- TRUST / FOUNDER -->
-<section class="caps">
-  <div class="container">
-    <div class="rv" style="text-align:center;">
-      <div class="kicker" data-i18n="trust.kicker">Why Ownerdeck</div>
-      <h2 style="margin-left:auto;margin-right:auto;" data-i18n="trust.title">Set up and supported by a real person.</h2>
-    </div>
-    <div class="founder-card rv">
-      <div class="founder-av">MS</div>
-      <div>
-        <p class="founder-quote" data-i18n="trust.quote">"I set up and support every assistant myself. If it doesn't fit your business, I'll tell you straight — no hard sell."</p>
-        <div class="founder-name">Mark Saade</div>
-        <div class="founder-role" data-i18n="trust.role">Founder · Larnaca, Cyprus</div>
-      </div>
     </div>
   </div>
 </section>
