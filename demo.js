@@ -66,7 +66,9 @@
       options: [
         { text: "Any space on the sunset cruise Friday?", to: "availability" },
         { text: "How much for 2 people?", to: "price" },
-        { text: "Здравствуйте! Вы говорите по-русски?", to: "russian" }
+        // Label is English so it's clearly a deliberate language test,
+        // but the message actually sent is Russian.
+        { text: "🇷🇺 Try asking in Russian", send: "Здравствуйте! Вы говорите по-русски?", to: "russian" }
       ]
     },
     availability: {
@@ -80,7 +82,7 @@
       bot: ["€35 per person — so €70 for two.", "That covers hotel pickup, a welcome drink and the full 2-hour cruise."],
       options: [
         { text: "Great, Friday works", to: "hold" },
-        { text: "Вы говорите по-русски?", to: "russian" }
+        { text: "🇷🇺 Try asking in Russian", send: "Вы говорите по-русски?", to: "russian" }
       ]
     },
     russian: {
@@ -206,7 +208,8 @@
         b.addEventListener("click", function () {
           if (self.busy) return;
           self.opts.innerHTML = "";
-          self.add("bm-me", o.text);
+          // `send` lets the button label differ from the message sent
+          self.add("bm-me", o.send || o.text);
           self.run(o.to);
         });
         self.opts.appendChild(b);

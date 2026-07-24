@@ -27,7 +27,7 @@ window.OD_CONFIG = {
   /* ---------------------------------------------------------------
      2) CONTACT CHANNELS — buttons appear only when filled in.
   --------------------------------------------------------------- */
-  whatsappNumber: "",        // digits only, country code, no + or spaces: "35799123456"
+  whatsappNumber: "35796922259",   // Mark's personal line (+357 96 922259)
   telegramHandle: "",        // without the @, e.g. "ownerdeckcy"
   instagram: "https://www.instagram.com/ownerdeckcy/",
   tiktok: "https://www.tiktok.com/@ownerdeckcy",
