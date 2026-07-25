@@ -129,6 +129,50 @@ indigo, with a subtle indigo radial glow in the top-right corner. Minimal,
 lots of negative space, premium matte feel.
 ```
 
+### I. Social profile logo — 500×500
+```
+Square 500x500 profile logo for "Ownerdeck". Full-bleed background filled
+with a 135° linear gradient from indigo #6366F1 (top-left) to violet
+#8B5CF6 (bottom-right) — the gradient must reach all four edges, no border,
+no frame. Centred on top: the Ownerdeck mark in pure white — a rounded
+speech bubble drawn as an outline (stroke only, not filled) with a small
+tail at the bottom-left, and a bold lightning bolt filled solid white
+inside it. The mark occupies about 45% of the canvas width, generously
+centred with even padding on all sides.
+IMPORTANT: it will be cropped to a CIRCLE, so keep every important element
+well inside the central circle and put nothing in the corners.
+Flat vector, crisp edges, no shadow, no text, no gloss, no 3d.
+--no text, letters, wordmark, shadow, bevel, 3d, noise, border, frame
+```
+
+### J. LinkedIn banner — 1584×396 (4:1)
+```
+Wide banner 1584x396 (4:1) for an AI SaaS company called Ownerdeck.
+Background: very dark near-black plum #0B0B18, with soft diffuse radial
+glows — indigo #6366F1 in the upper right, violet #8B5CF6 in the lower
+left and far right. Subtle and atmospheric, never busy.
+
+CRITICAL LAYOUT RULE: the LEFT THIRD of the banner (roughly the first
+560 pixels) must stay completely EMPTY — just background and glow — because
+the circular profile picture overlaps there and would cover anything placed
+in it. ALL content sits in the right two-thirds, left-aligned starting at
+about x=580, and must end before x=1450 so nothing is lost when the banner
+is cropped on mobile. Keep content vertically centred.
+
+Content stack, in this order, left-aligned:
+1. Small rounded-square logo mark (indigo→violet gradient, white bolt) with
+   the wordmark "Ownerdeck" beside it in white ExtraBold geometric sans.
+2. A small spaced-out label in light indigo #A5B4FC:
+   "WHATSAPP · INSTAGRAM · WEBSITE CHAT"
+3. Large headline in off-white #F8FAFC, ExtraBold, tight letter-spacing:
+   "Every customer message, answered."
+4. One line of muted body text #A5A5C4:
+   "Replies in 2 seconds, in any language — and takes the booking."
+
+Flat vector, generous negative space, premium and calm.
+--ar 4:1 --no clutter, stock photo, people, robots, 3d render, busy pattern
+```
+
 ---
 
 ## 4. Non-negotiables for whoever builds these
