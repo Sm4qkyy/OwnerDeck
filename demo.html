@@ -6,10 +6,12 @@
 <title>See Ownerdeck in action</title>
 <meta name="description" content="Watch Ownerdeck handle a real enquiry, try it yourself, then get in touch — three quick steps." />
 <meta name="theme-color" content="#0B0B18" />
-<link rel="icon" type="image/png" href="favicon.png" />
+<link rel="icon" type="image/svg+xml" href="icon.svg" />
+<link rel="alternate icon" type="image/png" href="favicon.png" />
+<link rel="apple-touch-icon" href="favicon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script defer src="/_vercel/insights/script.js"></script>
 <style>
   :root{
@@ -36,7 +38,9 @@
   /* top bar */
   .top{border-bottom:1px solid var(--line-soft);background:rgba(11,11,24,.75);backdrop-filter:blur(14px);position:sticky;top:0;z-index:20;}
   .top .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:12px;padding-bottom:12px;gap:16px;}
-  .logo img{height:52px;width:auto;display:block;}
+  .logo{display:flex;align-items:center;gap:10px;}
+  .logo-mark{width:38px;height:38px;display:block;flex-shrink:0;}
+  .logo-word{font-family:'Outfit',var(--font);font-weight:800;font-size:23px;letter-spacing:-.035em;color:#F8FAFC;line-height:1;}
   .back{font-size:14px;color:var(--body);transition:color .2s;white-space:nowrap;}
   .back:hover{color:var(--ink);}
 
@@ -131,7 +135,8 @@
     .btn{width:100%;justify-content:center;}
     .ch{width:100%;justify-content:center;}
     .bot-opt{width:100%;text-align:center;}
-    .logo img{height:44px;}
+    .logo-mark{width:32px;height:32px;}
+    .logo-word{font-size:20px;}
   }
 </style>
 </head>
@@ -140,7 +145,15 @@
 
 <div class="top">
   <div class="wrap">
-    <a href="/" class="logo"><img src="Logo.png" alt="Ownerdeck" /></a>
+    <a href="/" class="logo" aria-label="Ownerdeck">
+      <svg class="logo-mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+        <defs><linearGradient id="dg" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#6366F1"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient></defs>
+        <rect width="100" height="100" rx="22" fill="url(#dg)"/>
+        <path d="M35 76.5V70H33.5C27.7 70 23 65.3 23 59.5V37.5C23 31.7 27.7 27 33.5 27H66.5C72.3 27 77 31.7 77 37.5V59.5C77 65.3 72.3 70 66.5 70H49L35 76.5Z" fill="none" stroke="#fff" stroke-width="5.5" stroke-linejoin="round"/>
+        <path d="M55.5 33.5L40 53.5H48.5L44.5 65.5L61 44.5H52L55.5 33.5Z" fill="#fff"/>
+      </svg>
+      <span class="logo-word">Ownerdeck</span>
+    </a>
     <a href="/" class="back">← Back to site</a>
   </div>
 </div>
@@ -201,8 +214,8 @@
 <footer>© 2026 Ownerdeck · Larnaca, Cyprus · <a href="/privacy.html" style="color:var(--body);">Privacy</a></footer>
 </div>
 
-<script src="config.js?v=20260608"></script>
-<script src="demo.js?v=20260608"></script>
+<script src="config.js?v=20260609"></script>
+<script src="demo.js?v=20260609"></script>
 <script>
   (function(){
     var step=1, MAX=3;
