@@ -1,0 +1,91 @@
+/* ============================================================
+   OwnerDeck — Color tokens
+   Dark, technical UI with one bright teal accent.
+   ============================================================ */
+
+:root {
+  /* ---- Brand accent (teal) ---- */
+  --teal-50:  #d6fbf7;
+  --teal-100: #a4f4ec;
+  --teal-200: #6fe9dd;
+  --teal-300: #38dccd;
+  --teal-400: #12cdbe;
+  --teal-500: #01c0b8;   /* core brand accent — sampled from logo */
+  --teal-600: #03a39c;
+  --teal-700: #097f7a;
+  --teal-800: #0b5f5c;
+  --teal-900: #0a4341;
+
+  /* ---- Ink / neutrals (cool, faintly teal-tinted) ---- */
+  --ink-950: #07090a;    /* deepest background */
+  --ink-900: #0a0e0f;    /* app background */
+  --ink-850: #0e1314;    /* raised background */
+  --ink-800: #121819;    /* surface / panel */
+  --ink-750: #161d1f;    /* card */
+  --ink-700: #1b2426;    /* card hover / elevated */
+  --ink-600: #243032;    /* border strong */
+  --ink-500: #2e3c3e;    /* divider on dark */
+  --ink-400: #415052;    /* muted lines */
+  --ink-300: #6b7b7d;    /* faint text */
+  --ink-200: #9fb0b2;    /* muted text */
+  --ink-100: #c8d4d4;    /* secondary text */
+  --ink-50:  #eef4f4;    /* primary text */
+  --white:   #ffffff;
+
+  /* ---- Semantic functional colors (restrained) ---- */
+  --green-400: #34d399;
+  --green-500: #10b981;
+  --amber-400: #fbbf24;
+  --amber-500: #f59e0b;
+  --red-400:   #f87171;
+  --red-500:   #ef4444;
+  --blue-400:  #60a5fa;
+  --blue-500:  #3b82f6;
+  --violet-400:#a78bfa;  /* used sparingly — echoes n8n node accents */
+
+  /* ============================================================
+     Semantic aliases — reference these in components
+     ============================================================ */
+
+  /* Surfaces */
+  --bg-app:        var(--ink-900);
+  --bg-raised:     var(--ink-850);
+  --surface:       var(--ink-800);
+  --surface-card:  var(--ink-750);
+  --surface-hover: var(--ink-700);
+  --surface-sunken:var(--ink-950);
+
+  /* Text */
+  --text-strong:   var(--ink-50);
+  --text-body:     var(--ink-100);
+  --text-muted:    var(--ink-200);
+  --text-faint:    var(--ink-300);
+  --text-on-accent:#04201f;     /* dark ink reads cleanly on bright teal */
+
+  /* Accent */
+  --accent:        var(--teal-500);
+  --accent-hover:  var(--teal-400);
+  --accent-press:  var(--teal-600);
+  --accent-soft:   color-mix(in srgb, var(--teal-500) 14%, transparent);
+  --accent-ring:   color-mix(in srgb, var(--teal-500) 45%, transparent);
+  --accent-text:   var(--teal-300);
+
+  /* Borders & lines */
+  --border:        var(--ink-600);
+  --border-soft:   var(--ink-500);
+  --border-strong: var(--ink-400);
+  --divider:       color-mix(in srgb, var(--ink-50) 8%, transparent);
+
+  /* Functional */
+  --success:       var(--green-500);
+  --success-text:  var(--green-400);
+  --warning:       var(--amber-500);
+  --warning-text:  var(--amber-400);
+  --danger:        var(--red-500);
+  --danger-text:   var(--red-400);
+  --info:          var(--blue-500);
+  --info-text:     var(--blue-400);
+
+  /* Focus */
+  --focus-ring:    var(--accent-ring);
+}

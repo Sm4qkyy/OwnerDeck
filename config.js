@@ -27,7 +27,13 @@ window.OD_CONFIG = {
   /* ---------------------------------------------------------------
      2) CONTACT CHANNELS — buttons appear only when filled in.
   --------------------------------------------------------------- */
-  whatsappNumber: "35796922259",   // Mark's personal line (+357 96 922259)
+  whatsappNumber: "35796922259",   // Mark's personal line (+357 96 922259) — "Talk to Mark"
+
+  /* The "Try the live demo" buttons (8 of them) point here.
+     This should be a SEPARATE line running the demo assistant, not Mark's
+     personal number. Until it's set, those buttons fall back to
+     whatsappNumber above with a pre-filled message, so nothing is broken. */
+  demoNumber: "",
   telegramHandle: "",        // without the @, e.g. "ownerdeckcy"
   instagram: "https://www.instagram.com/ownerdeckcy/",
   tiktok: "https://www.tiktok.com/@ownerdeckcy",
