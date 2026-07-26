@@ -17,8 +17,7 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="icon" type="image/svg+xml" href="icon.svg">
-<link rel="alternate icon" type="image/png" href="favicon.png">
+<link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="favicon.png">
 <meta name="theme-color" content="#ffffff">
 <link rel="stylesheet" href="ds/tokens/typography.css">
@@ -51,6 +50,12 @@
   --text-strong:#eef4f4; --text-body:#c8d4d4; --text-muted:#9fb0b2; --text-faint:#6b7b7d;
   --border:#243032; --border-soft:#1b2426; --border-strong:#415052; --accent-text:#38dccd;
 }
+/* ---- Logo: monochrome lockup, swapped per theme ---- */
+  .od-logo{display:block;width:auto;height:30px}
+  .od-logo--onDark{display:none}
+  :root[data-theme="dark"] .od-logo--onLight{display:none}
+  :root[data-theme="dark"] .od-logo--onDark{display:block}
+  @media (max-width:520px){ .od-logo{height:26px} }
 body{margin:0;background:var(--page);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased}
 h1,h2{margin:0;font-family:var(--font-display);font-weight:600;letter-spacing:-0.03em;color:var(--ink);text-wrap:balance}
 p,li{margin:0;text-wrap:pretty}
@@ -94,13 +99,7 @@ footer{border-top:1px solid var(--line);background:var(--paper)}
 <header>
   <div class="bar">
     <a href="/" class="brand" aria-label="Ownerdeck home">
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <rect x="4.4" y="14.2" width="15.2" height="5.4" rx="2" fill="none" stroke="var(--ink)" stroke-width="1.5" opacity="0.28"/>
-        <rect x="3" y="12.4" width="18" height="5.4" rx="2" fill="none" stroke="var(--ink)" stroke-width="1.5" opacity="0.55"/>
-        <rect x="1.6" y="10.6" width="20.8" height="5.6" rx="2" fill="var(--card)" stroke="var(--ink)" stroke-width="1.6"/>
-        <path d="M6.4 1.8h11.2a2.6 2.6 0 0 1 2.6 2.6v2.4a2.6 2.6 0 0 1-2.6 2.6h-5.2l-2.9 2.2V9.4H6.4A2.6 2.6 0 0 1 3.8 6.8V4.4A2.6 2.6 0 0 1 6.4 1.8Z" fill="var(--accent)"/>
-      </svg>
-      <span>owner<span class="t">deck</span></span>
+      <img class="od-logo od-logo--onLight" src="logo-lockup-dark.png" alt="OwnerDeck" width="667" height="120"><img class="od-logo od-logo--onDark" src="logo-lockup-light.png" alt="" aria-hidden="true" width="667" height="120">
     </a>
     <div class="spacer"></div>
     <button id="theme-toggle" type="button" class="od-theme-btn" aria-label="Switch to dark mode" aria-pressed="false" title="Toggle dark mode">

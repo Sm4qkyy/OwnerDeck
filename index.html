@@ -27,8 +27,7 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="icon" type="image/svg+xml" href="icon.svg">
-<link rel="alternate icon" type="image/png" href="favicon.png">
+<link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="favicon.png">
 <meta name="theme-color" content="#ffffff">
 <link rel="stylesheet" href="ds/tokens/typography.css">
@@ -122,6 +121,15 @@ html.od-js [data-reveal]{transition:opacity .55s cubic-bezier(.2,.7,.2,1), trans
      Chrome keeps painting the pre-transition value, so the page appeared
      stuck in dark. Instant swap is correct here. */
 
+
+  /* ---- Logo: monochrome lockup, swapped per theme ---- */
+  .od-logo{display:block;width:auto;height:30px}
+  .od-logo--onDark{display:none}
+  :root[data-theme="dark"] .od-logo--onLight{display:none}
+  :root[data-theme="dark"] .od-logo--onDark{display:block}
+  .od-logo--foot{height:26px}
+  @media (max-width:520px){ .od-logo{height:26px} .od-logo--foot{height:24px} }
+
   /* converted from the design's style-hover attributes */
   .hv-ink:hover{color:var(--ink)}
   .hv-teal:hover{background:#12cdbe}
@@ -170,13 +178,7 @@ html.od-js [data-reveal]{transition:opacity .55s cubic-bezier(.2,.7,.2,1), trans
 <header style="position:sticky;top:0;z-index:50;background:color-mix(in srgb, var(--page) 84%, transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)">
   <div style="max-width:1140px;margin:0 auto;padding:0 24px;height:68px;display:flex;align-items:center;gap:32px">
     <a href="#top" aria-label="Ownerdeck home" style="display:flex;align-items:center;gap:10px;flex:none">
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <rect x="4.4" y="14.2" width="15.2" height="5.4" rx="2" fill="none" stroke="var(--ink)" stroke-width="1.5" opacity="0.28"></rect>
-        <rect x="3" y="12.4" width="18" height="5.4" rx="2" fill="none" stroke="var(--ink)" stroke-width="1.5" opacity="0.55"></rect>
-        <rect x="1.6" y="10.6" width="20.8" height="5.6" rx="2" fill="#fff" stroke="var(--ink)" stroke-width="1.6"></rect>
-        <path d="M6.4 1.8h11.2a2.6 2.6 0 0 1 2.6 2.6v2.4a2.6 2.6 0 0 1-2.6 2.6h-5.2l-2.9 2.2V9.4H6.4A2.6 2.6 0 0 1 3.8 6.8V4.4A2.6 2.6 0 0 1 6.4 1.8Z" fill="var(--accent)"></path>
-      </svg>
-      <span style="font-family:var(--font-display);font-size:19px;font-weight:600;letter-spacing:-0.035em;color:var(--ink)">owner<span style="color:var(--accent-strong)">deck</span></span>
+      <img class="od-logo od-logo--onLight" src="logo-lockup-dark.png" alt="OwnerDeck" width="667" height="120"><img class="od-logo od-logo--onDark" src="logo-lockup-light.png" alt="" aria-hidden="true" width="667" height="120">
     </a>
     <nav aria-label="Main" style="display:flex;align-items:center;gap:28px;margin-left:auto;flex-wrap:wrap;justify-content:flex-end">
       <a href="#how" style="font-size:14.5px;font-weight:500;color:var(--ink-mute)" class="hv-ink">How it works</a>
@@ -692,13 +694,7 @@ html.od-js [data-reveal]{transition:opacity .55s cubic-bezier(.2,.7,.2,1), trans
   <div style="max-width:1140px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:clamp(28px,4vw,48px)">
     <div>
       <div style="display:flex;align-items:center;gap:10px">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <rect x="4.4" y="14.2" width="15.2" height="5.4" rx="2" fill="none" stroke="var(--ink)" stroke-width="1.5" opacity="0.28"></rect>
-          <rect x="3" y="12.4" width="18" height="5.4" rx="2" fill="none" stroke="var(--ink)" stroke-width="1.5" opacity="0.55"></rect>
-          <rect x="1.6" y="10.6" width="20.8" height="5.6" rx="2" fill="#fff" stroke="var(--ink)" stroke-width="1.6"></rect>
-          <path d="M6.4 1.8h11.2a2.6 2.6 0 0 1 2.6 2.6v2.4a2.6 2.6 0 0 1-2.6 2.6h-5.2l-2.9 2.2V9.4H6.4A2.6 2.6 0 0 1 3.8 6.8V4.4A2.6 2.6 0 0 1 6.4 1.8Z" fill="var(--accent)"></path>
-        </svg>
-        <span style="font-family:var(--font-display);font-size:17px;font-weight:600;letter-spacing:-0.035em;color:var(--ink)">owner<span style="color:var(--accent-strong)">deck</span></span>
+        <img class="od-logo od-logo--onLight od-logo--foot" src="logo-lockup-dark.png" alt="OwnerDeck" width="667" height="120"><img class="od-logo od-logo--onDark od-logo--foot" src="logo-lockup-light.png" alt="" aria-hidden="true" width="667" height="120">
       </div>
       <p style="margin-top:14px;font-size:14.5px;line-height:1.6;color:var(--ink-mute);max-width:30ch">A WhatsApp assistant for owner-run rental and tourism businesses. Built in Cyprus.</p>
     </div>
