@@ -1,205 +1,226 @@
-# Ownerdeck — Brand & Design Brief
+# Ownerdeck — Brand & Asset Brief
 
-Everything an AI image tool (Midjourney / DALL·E / Ideogram / Firefly) or a
-human designer needs to produce the full asset set. Copy the prompts verbatim.
+Everything needed to produce the full asset set, matched to the **live site**
+(teal on light, with a dark mode). Paste any block below straight into Claude,
+Midjourney, DALL·E, Ideogram or a designer's inbox.
+
+> Supersedes the earlier indigo/violet brief. The site now ships teal `#01c0b8`.
 
 ---
 
 ## 1. The brand in one paragraph
 
-**Ownerdeck** is an AI assistant that answers a small business's **WhatsApp,
-Instagram DMs and website chat** — replying in ~2 seconds, in any language,
-quoting real availability and prices, and capturing the booking. Customers are
-small service businesses in Cyprus: boat tours, car rental, salons, clinics,
-restaurants. The feeling should be **capable, modern, calm and trustworthy** —
-an intelligent operator quietly handling things in the background. Not a
-cartoon robot, not a cutesy chat bubble mascot, not corporate-stiff.
+**Ownerdeck** is an AI assistant that answers a business's customers on their
+own **WhatsApp** number — replying in about two seconds, in the customer's
+language, quoting **real prices and live availability**, then capturing the
+booking and notifying the owner. It runs today on a **Limassol car rental**
+company's WhatsApp; it suits anything with availability, a price and a booking
+(car and buggy rental, boat charters, transfers, villa changeovers).
 
-**Tone words:** intelligent · instant · effortless · dependable · modern
-**Avoid:** cartoon robots, speech-bubble clichés, generic "AI brain" imagery,
-stock gradients-on-white, anything that looks like a WhatsApp clone.
+The buyer is an **owner-operator in Cyprus** — practical, sceptical of software,
+reads on a phone, has been burned by things that "automate" and then break.
+
+**Tone:** calm · precise · technical-but-plain · quietly confident.
+Never hypey, never cute. It should feel like a well-built tool, not a startup pitch.
+
+**Avoid:** cartoon robots, generic "AI brain" imagery, speech-bubble clichés,
+purple gradient SaaS, stock photos of people at laptops, anything cluttered.
 
 ---
 
 ## 2. Locked brand values
 
-| Token | Hex | Use |
-|---|---|---|
-| Indigo (primary) | `#6366F1` | Buttons, logo mark, key accents |
-| Violet (secondary) | `#8B5CF6` | Gradient partner to indigo |
-| Light indigo | `#A5B4FC` | Small accent text on dark |
-| Near-black plum | `#0B0B18` | Primary background |
-| Panel | `#14142A` | Cards, raised surfaces |
-| Off-white | `#F8FAFC` | Headings on dark |
-| Body text | `#A5A5C4` | Paragraphs on dark |
+| Token | Light | Dark | Use |
+|---|---|---|---|
+| Accent (teal) | `#01c0b8` | `#01c0b8` | Buttons, the bubble in the logo, key marks |
+| Accent text | `#097f7a` | `#38dccd` | Teal used as *text* (darker on light, brighter on dark) |
+| Accent wash | `#e6faf8` | `rgba(1,192,184,.13)` | Tinted panels, quiet fills |
+| Page | `#ffffff` | `#0a0e0f` | Page background |
+| Card | `#ffffff` | `#121819` | Cards, chips, raised surfaces |
+| Alt section | `#f6f7f9` | `#0e1314` | Banded sections |
+| Ink (primary text) | `#0f1115` | `#eef4f4` | Headings, body |
+| Muted text | `#6b7478` | `#9fb0b2` | Secondary copy |
+| Line | `#e5e8ea` | `#243032` | Borders, dividers |
 
-**Signature gradient:** `linear-gradient(135deg, #6366F1 → #8B5CF6)` (135°)
-**Typeface:** Plus Jakarta Sans — Bold/ExtraBold for headings, Regular for body.
-Monospace accents: JetBrains Mono.
-**Shape language:** generous rounded corners (12–24px), pill-shaped buttons
-(999px), soft radial glows, no hard drop shadows.
+**Type:** `Space Grotesk` 600 for headings (tight, `-0.03em`) · `IBM Plex Sans`
+for body · `IBM Plex Mono` for labels, eyebrows and small caps (letterspaced,
+often prefixed with a teal `//`).
 
----
+**Shape:** 16px card radius, 10–12px controls, 999px pills. Hairline 1px borders.
+Soft shadows only — no heavy drop shadows, no glassmorphism, no bevels.
 
-## 3. Assets needed
-
-### A. Primary logo — wordmark + mark
-```
-Minimal modern logo for "Ownerdeck", a multi-channel AI messaging assistant
-for small businesses. Abstract geometric mark: a lightning bolt fused with a
-rounded message bubble, suggesting instant replies. Mark sits inside a
-squircle (superellipse) with 22% corner radius, filled with a 135° gradient
-from indigo #6366F1 to violet #8B5CF6, bolt knocked out in pure white.
-Wordmark "Ownerdeck" set to the right in a geometric sans-serif, ExtraBold,
-tight letter-spacing, pure white #F8FAFC. Flat vector, no bevels, no
-gradients on the type, no drop shadow. Transparent background.
-Style: Linear, Vercel, Stripe — precise, confident, contemporary.
---no 3d, bevel, gloss, cartoon, mascot, photorealism, clutter
-```
-
-### B. Icon / app mark only (square)
-```
-App icon for "Ownerdeck". Squircle tile with 22% corner radius filled with a
-135° gradient from #6366F1 to #8B5CF6. Centred inside: a single bold
-lightning bolt in pure white, geometric and slightly italic-leaning, with
-clean straight edges. Generous padding — the bolt occupies ~55% of the tile.
-Flat vector, crisp edges, no shadow, no texture, no text.
-Export square, centred, safe margins for rounding.
---no text, letters, shadow, 3d, gradient mesh, noise
-```
-**Sizes needed:** 1024×1024 master → 512, 256, 180 (Apple touch), 32, 16 (favicon).
-
-### C. Monochrome / one-colour variants
-```
-Same Ownerdeck lightning-bolt-in-bubble mark, rendered as a single flat solid
-shape with no gradient. Produce three versions: pure white on transparent;
-pure black on transparent; and #6366F1 indigo on transparent. Simplified so
-it stays legible at 16px. Flat vector, no detail smaller than 1/12 of the mark.
-```
-*(Needed for: invoices, dark/light backgrounds, stamps, embroidery, favicons.)*
-
-### D. Social profile picture (Instagram / TikTok / WhatsApp Business)
-```
-Social avatar for "Ownerdeck". Circular crop. Background: 135° gradient from
-#6366F1 indigo to #8B5CF6 violet with a subtle darker vignette at the edges.
-Centred: bold white lightning bolt mark, occupying ~50% of the circle so it
-stays clear at 40px. High contrast, no text, no fine detail.
-```
-
-### E. Social share / OG image (1200×630)
-```
-Wide banner 1200x630 for a modern AI SaaS called Ownerdeck. Background very
-dark near-black plum #0B0B18 with two soft radial glows: indigo #6366F1 in
-the top right, violet #8B5CF6 in the bottom left, both very diffuse and
-subtle. Left-aligned composition with generous negative space. Small squircle
-logo mark top-left. Large bold headline text area in off-white. Clean, calm,
-premium. Flat vector, no photos, no people, no 3d renders.
---ar 40:21 --no clutter, stock photo, people, robots
-```
-
-### F. Website hero visual (optional upgrade)
-```
-Abstract illustration for a multi-channel AI messaging assistant. Three
-stylised message streams — one green-tinted (WhatsApp), one magenta-tinted
-(Instagram), one blue-tinted (website chat) — flowing from the left and
-converging into a single glowing indigo-violet node on the right, which emits
-one clean outgoing reply. Dark near-black plum background #0B0B18, thin
-luminous lines, soft glow, generous negative space. Flat vector / subtle
-gradient. Elegant and minimal, not busy.
---no robots, faces, text, clutter, photorealism
-```
-
-### G. Channel icon set
-```
-Set of three matching line icons on transparent background: a WhatsApp-style
-phone-chat glyph, an Instagram-style rounded-square camera glyph, and a
-browser window with a chat bubble. Uniform 1.8px stroke weight, rounded caps
-and joins, 24x24 grid, geometric and consistent. Colour #A5B4FC light indigo.
-Flat, minimal, no fill, no shadow.
-```
-
-### H. Business card
-```
-Business card design 85x55mm for "Ownerdeck". FRONT: near-black plum #0B0B18
-background, centred squircle logo mark with indigo-violet gradient, wordmark
-"Ownerdeck" beneath in white ExtraBold geometric sans, and a single line of
-light indigo #A5B4FC micro-type reading "Every customer message, answered."
-BACK: same dark background, left-aligned contact block in white and light
-indigo, with a subtle indigo radial glow in the top-right corner. Minimal,
-lots of negative space, premium matte feel.
-```
-
-### I. Social profile logo — 500×500
-```
-Square 500x500 profile logo for "Ownerdeck". Full-bleed background filled
-with a 135° linear gradient from indigo #6366F1 (top-left) to violet
-#8B5CF6 (bottom-right) — the gradient must reach all four edges, no border,
-no frame. Centred on top: the Ownerdeck mark in pure white — a rounded
-speech bubble drawn as an outline (stroke only, not filled) with a small
-tail at the bottom-left, and a bold lightning bolt filled solid white
-inside it. The mark occupies about 45% of the canvas width, generously
-centred with even padding on all sides.
-IMPORTANT: it will be cropped to a CIRCLE, so keep every important element
-well inside the central circle and put nothing in the corners.
-Flat vector, crisp edges, no shadow, no text, no gloss, no 3d.
---no text, letters, wordmark, shadow, bevel, 3d, noise, border, frame
-```
-
-### J. LinkedIn banner — 1584×396 (4:1)
-```
-Wide banner 1584x396 (4:1) for an AI SaaS company called Ownerdeck.
-Background: very dark near-black plum #0B0B18, with soft diffuse radial
-glows — indigo #6366F1 in the upper right, violet #8B5CF6 in the lower
-left and far right. Subtle and atmospheric, never busy.
-
-CRITICAL LAYOUT RULE: the LEFT THIRD of the banner (roughly the first
-560 pixels) must stay completely EMPTY — just background and glow — because
-the circular profile picture overlaps there and would cover anything placed
-in it. ALL content sits in the right two-thirds, left-aligned starting at
-about x=580, and must end before x=1450 so nothing is lost when the banner
-is cropped on mobile. Keep content vertically centred.
-
-Content stack, in this order, left-aligned:
-1. Small rounded-square logo mark (indigo→violet gradient, white bolt) with
-   the wordmark "Ownerdeck" beside it in white ExtraBold geometric sans.
-2. A small spaced-out label in light indigo #A5B4FC:
-   "WHATSAPP · INSTAGRAM · WEBSITE CHAT"
-3. Large headline in off-white #F8FAFC, ExtraBold, tight letter-spacing:
-   "Every customer message, answered."
-4. One line of muted body text #A5A5C4:
-   "Replies in 2 seconds, in any language — and takes the booking."
-
-Flat vector, generous negative space, premium and calm.
---ar 4:1 --no clutter, stock photo, people, robots, 3d render, busy pattern
-```
+**Signature motifs:** the `//` mono prefix on eyebrows · a dotted-grid texture ·
+a single teal accent against otherwise strict monochrome.
 
 ---
 
-## 4. Non-negotiables for whoever builds these
+## 3. The logo
 
-1. **Keep the gradient direction consistent** — always 135°, indigo→violet.
-2. **The mark must survive 16px.** If a detail disappears at favicon size,
-   remove it from the master.
-3. **Always supply SVG** for the logo and icons, plus PNG exports with
-   transparency. Never deliver logo-on-a-white-rectangle only.
-4. **Never recolour the channel logos.** WhatsApp stays green, Instagram keeps
-   its gradient, Telegram stays blue — they must remain instantly
-   recognisable, even though the brand is indigo.
-5. **Clear space** around the logo = the height of the "O" on all sides.
-6. **Wordmark capitalisation is "Ownerdeck"** — capital O, lowercase d. Not
-   "OwnerDeck", not "ownerdeck".
+A **deck of stacked cards** (three rounded rectangles, receding) with a **teal
+chat bubble** rising from it — "owner" + "deck", messaging on top of a stack.
+
+Wordmark is lowercase **`ownerdeck`**, one word, with **`deck` in teal**.
+
+```
+Minimal flat vector logo for "ownerdeck". A mark made of three stacked rounded
+rectangles seen in slight perspective, like a small deck of cards — the front
+card solid with a crisp dark outline, the two behind it progressively fainter.
+Rising from the top card, a rounded rectangular chat bubble with a small tail,
+filled solid teal #01c0b8, no outline. Beside the mark, the lowercase wordmark
+"ownerdeck" set in a geometric grotesque, semibold, tight letter-spacing, with
+"owner" in near-black #0f1115 and "deck" in teal #01c0b8.
+Flat vector, 1.5px uniform stroke weight, transparent background, no gradient,
+no shadow, no 3d.
+--no 3d, bevel, gloss, gradient, cartoon, mascot, photorealism, clutter
+```
+
+**Variants needed:** horizontal lockup (primary) · mark only (square) ·
+stacked (mark above wordmark) · all-white knockout for dark backgrounds ·
+all-black single-colour for print.
 
 ---
 
-## 5. Where each asset lands on the site
+## 4. Asset checklist
+
+### A. Favicon / app icon
+```
+App icon for "ownerdeck", square with a 22% rounded-corner squircle. White
+background. Centred: the ownerdeck mark — three stacked rounded rectangles in
+near-black #0f1115 outline with a solid teal #01c0b8 chat bubble above them.
+The mark fills about 70% of the tile. Simplified for small sizes: drop the
+faintest back card if it muddies below 32px. Flat vector, no text, no shadow.
+```
+Sizes: 512, 256, 180 (apple-touch), 32, 16.
+
+### B. Social profile picture — 500×500
+```
+Square 500x500 profile image for "ownerdeck". Full-bleed near-black #0a0e0f
+background with a very subtle dotted grid texture. Centred: the ownerdeck mark
+— stacked cards outlined in #eef4f4 with a solid teal #01c0b8 chat bubble above.
+Mark occupies ~45% of the canvas, evenly centred.
+IMPORTANT: it gets cropped to a CIRCLE — keep everything well inside the centre
+circle, nothing in the corners. Flat vector, no text, no shadow.
+```
+
+### C. LinkedIn banner — 1584×396 (4:1)
+```
+Wide 1584x396 banner for "ownerdeck". Background near-black #0a0e0f with a
+faint dotted grid and one soft teal #01c0b8 glow in the upper right.
+
+CRITICAL: the LEFT THIRD (first ~560px) must stay EMPTY — the circular profile
+picture overlaps there. All content sits in the right two-thirds, left-aligned
+from about x=580, ending before x=1450 so mobile cropping doesn't cut it.
+Vertically centred.
+
+Content, stacked:
+1. Small mono label in teal: "// WHATSAPP BOOKING AUTOMATION · CYPRUS"
+2. Headline, off-white #eef4f4, semibold, tight: "Every customer message
+   answered — even at 2am."
+3. One muted line #9fb0b2: "Replies in about two seconds, in any language,
+   with your real prices. Live in 48 hours."
+
+Flat vector, generous negative space, calm and technical.
+--ar 4:1 --no clutter, stock photo, people, robots, 3d render
+```
+
+### D. Open Graph / share card — 1200×630
+```
+1200x630 social share card for "ownerdeck". White background with a faint
+dotted grid fading out toward the edges and a soft teal glow top-right.
+Top-left: the ownerdeck logo lockup. Left-aligned centre: large heading in
+near-black #0f1115, "Every customer message answered — even at 2am." with
+"even at 2am" in teal #097f7a. Below it one muted line: "An AI assistant on
+your own WhatsApp number. Live in 48 hours." Bottom-left: a small teal pill
+reading "ownerdeck.com". Generous margins, nothing within 60px of any edge.
+--ar 40:21 --no clutter, people, robots, photos
+```
+
+### E. Instagram post set — 1080×1080
+```
+Set of 4 square 1080x1080 social posts for "ownerdeck", one visual system.
+White background, faint dotted grid, one teal #01c0b8 accent each, thin
+hairline borders, generous margins. Mono eyebrow label prefixed with "//".
+Each post carries ONE short statement in large near-black type:
+ 1. "It's 11pm. They're asking about tomorrow."
+ 2. "Answered in 2 seconds. In their language."
+ 3. "Your real prices. Your live availability."
+ 4. "You wake up to the booking."
+Small ownerdeck logo bottom-left on each. Flat editorial layout, lots of
+whitespace, no photos, no people.
+--ar 1:1 --no clutter, stock photo, people, gradient mesh
+```
+
+### F. Instagram story / Reel cover — 1080×1920
+```
+Vertical 1080x1920 story template for "ownerdeck". Near-black #0a0e0f
+background, faint dotted grid, soft teal glow. Centre: one large statement in
+off-white semibold type with a single teal keyword. Bottom: small mono line
+"ownerdeck.com" in muted grey. Keep all content within the middle 80% —
+the top and bottom 15% are covered by platform UI. Flat, minimal.
+--ar 9:16 --no clutter, faces, photos
+```
+
+### G. WhatsApp Business profile — 640×640
+```
+Square 640x640 avatar for a WhatsApp Business profile, cropped to a circle.
+Solid teal #01c0b8 background. Centred: the ownerdeck stacked-cards mark in
+pure white, simplified and bold enough to read at 48px. No text, no detail
+smaller than 1/10 of the canvas. Flat vector.
+```
+
+### H. Section / feature icons
+```
+Set of 8 line icons on transparent background, one consistent family:
+a chat bubble with a lightning bolt; a clock at night with a moon; a globe
+with speech marks; a price tag; a calendar with a check; a car key; a phone
+with a notification dot; a handover arrow between two silhouettes.
+Uniform 1.6px stroke, rounded caps and joins, 24x24 grid, geometric and
+restrained. Colour #0f1115, with one optional teal #01c0b8 detail each.
+Flat, no fill, no shadow.
+```
+
+### I. Business card — 85×55mm
+```
+Business card for "ownerdeck". FRONT: near-black #0a0e0f, faint dotted grid,
+centred ownerdeck logo lockup in white with the teal bubble, and one mono line
+in muted grey: "// whatsapp booking automation · cyprus".
+BACK: white, left-aligned contact block in near-black with teal accents —
+name, "+357 96 922259", "mark@ownerdeck.com", "ownerdeck.com".
+Generous margins, matte, minimal.
+```
+
+---
+
+## 5. Non-negotiables
+
+1. **Teal is the only accent.** One accent colour against monochrome. Don't add
+   a second brand hue.
+2. **Teal as text must darken on light** (`#097f7a`) and **brighten on dark**
+   (`#38dccd`). Pure `#01c0b8` text on white fails contrast.
+3. **The wordmark is lowercase `ownerdeck`**, one word, `deck` in teal.
+   Not "OwnerDeck", not "Owner Deck".
+4. **Never recolour third-party logos.** WhatsApp stays green, Instagram keeps
+   its gradient. They must stay recognisable.
+5. **Everything must survive small.** If a detail vanishes at 32px, remove it
+   from the master rather than shipping mush.
+6. **Always deliver SVG** for logo and icons, plus transparent PNG exports.
+7. **Both themes.** Any asset that might sit on the site needs a light and a
+   dark treatment — the site now ships both.
+
+---
+
+## 6. Where each asset lands
 
 | Asset | File | Notes |
 |---|---|---|
-| Nav logo | `Logo.png` | Wordmark + mark, transparent, ~128px tall export |
-| Favicon | `favicon.png` | Icon only, 256×256 |
-| Social share | `og-image.png` | 1200×630, already auto-generated — replace if you want a designed one |
-| Profile pics | — | Upload to Instagram / TikTok / WhatsApp Business |
+| Favicon (vector) | `icon.svg` | Currently a hand-built version of the mark |
+| Favicon (raster) | `favicon.png` | 256×256, also used as apple-touch-icon |
+| Share card | `og-image.png` | 1200×630 — **currently still the old indigo card, needs replacing** |
+| Header logo | inline SVG in `index.html` | Mark + wordmark, adapts to theme |
+| Profile pictures | — | Instagram, TikTok, WhatsApp Business |
 
-> **Current gap:** `Logo.png` is still the old teal mark and reads
-> "ownerdeck" in lowercase. Replacing it with asset **A** above (indigo/violet,
-> capital O) is the last piece of the rebrand.
+### Still outstanding
+- `og-image.png` is the **old indigo** card and no longer matches the site.
+- No `terms.html` exists — the footer link was removed until it does.
+- Other pages (`demo.html`, `privacy.html`, `welcome.html`, `walkthrough.html`)
+  are still on the **old dark indigo** styling and don't match this design.
