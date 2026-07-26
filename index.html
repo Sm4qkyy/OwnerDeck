@@ -128,6 +128,11 @@ html.od-js [data-reveal]{transition:opacity .55s cubic-bezier(.2,.7,.2,1), trans
   :root[data-theme="dark"] .od-logo--onLight{display:none}
   :root[data-theme="dark"] .od-logo--onDark{display:block}
   .od-logo--foot{height:26px}
+  /* Safari <16 has no overflow:clip — fall back to clipping at the root so
+     the sticky header still anchors to the viewport, not to a wrapper. */
+  @supports not (overflow-x: clip){
+    html,body{overflow-x:hidden}
+  }
   @media (max-width:520px){ .od-logo{height:26px} .od-logo--foot{height:24px} }
 
   /* converted from the design's style-hover attributes */
@@ -173,7 +178,7 @@ html.od-js [data-reveal]{transition:opacity .55s cubic-bezier(.2,.7,.2,1), trans
 </script>
 </head>
 <body>
-<div style="background:var(--page);min-height:100vh;font-family:var(--font-sans);overflow-x:hidden">
+<div style="background:var(--page);min-height:100vh;font-family:var(--font-sans);overflow-x:clip">
 
 <header style="position:sticky;top:0;z-index:50;background:color-mix(in srgb, var(--page) 84%, transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)">
   <div style="max-width:1140px;margin:0 auto;padding:0 24px;height:68px;display:flex;align-items:center;gap:32px">
