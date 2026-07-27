@@ -164,15 +164,63 @@ html.od-js [data-reveal]{transition:opacity .55s cubic-bezier(.2,.7,.2,1), trans
   .hv-teal:hover{background:#12cdbe}
   .hv-dark:hover{border-color:#6b7b7d;color:#fff}
 
-  /* Header on small screens: the nav links wrap out of the fixed 68px bar and
-     collide with the hero, so drop them and keep the logo + primary CTA.
-     The page is a single scrolling narrative, so nothing becomes unreachable. */
-  @media (max-width: 860px){
-    nav[aria-label="Main"] a:not(.od-btn){display:none}
-    nav[aria-label="Main"]{gap:12px}
+  /* ---- Header on small screens ----
+     The four nav links plus the CTA can't fit the 68px bar, so below 940px the
+     bar keeps logo + theme toggle + burger, and the links and the CTA move into
+     a panel that drops from under the header. */
+  .od-burger{
+    display:none;align-items:center;justify-content:center;
+    width:38px;height:38px;flex:none;padding:0;cursor:pointer;
+    background:transparent;border:1px solid var(--line);border-radius:10px;
+    color:var(--ink-mute);transition:color .18s ease,border-color .18s ease,background .18s ease;
   }
-  @media (max-width: 420px){
-    nav[aria-label="Main"] .od-btn{height:38px;padding:0 16px;font-size:13.5px}
+  .od-burger:hover{color:var(--ink);border-color:var(--border-strong);background:var(--card)}
+  .od-burger:focus-visible{outline:none;box-shadow:var(--ring)}
+  .od-burger__box{position:relative;display:block;width:18px;height:12px}
+  .od-burger__box span{
+    position:absolute;left:0;width:100%;height:2px;border-radius:2px;background:currentColor;
+    transition:transform .24s ease,opacity .18s ease;
+  }
+  .od-burger__box span:nth-child(1){top:0}
+  .od-burger__box span:nth-child(2){top:5px}
+  .od-burger__box span:nth-child(3){top:10px}
+  /* three lines fold into an X while the panel is open */
+  .od-burger[aria-expanded="true"] .od-burger__box span:nth-child(1){transform:translateY(5px) rotate(45deg)}
+  .od-burger[aria-expanded="true"] .od-burger__box span:nth-child(2){opacity:0}
+  .od-burger[aria-expanded="true"] .od-burger__box span:nth-child(3){transform:translateY(-5px) rotate(-45deg)}
+
+  .od-mmenu{
+    position:absolute;top:100%;left:0;right:0;z-index:49;
+    background:var(--page);   /* solid: hero text ghosted through a translucent panel */
+    border-bottom:1px solid var(--line);box-shadow:0 12px 28px -18px rgba(0,0,0,.5);
+    opacity:0;visibility:hidden;transform:translateY(-8px);
+    transition:opacity .2s ease,transform .2s ease,visibility .2s;
+  }
+  .od-mmenu.is-open{opacity:1;visibility:visible;transform:translateY(0)}
+  .od-mmenu__inner{max-width:1140px;margin:0 auto;padding:4px 24px 18px;display:flex;flex-direction:column}
+  .od-mmenu__inner a:not(.od-btn){
+    padding:14px 2px;font-size:16px;font-weight:500;color:var(--ink-mute);
+    text-decoration:none;border-bottom:1px solid var(--line);
+  }
+  .od-mmenu__inner a:not(.od-btn):hover{color:var(--ink)}
+  .od-mmenu__cta{margin-top:16px;text-decoration:none}
+  /* visibility:hidden already keeps the panel out of the tab order */
+  @media (prefers-reduced-motion: reduce){
+    .od-burger__box span,.od-mmenu{transition:none}
+  }
+  /* gap and wrapping live here, not in the nav's style attribute — inline styles
+     outrank the media query below, which is why the old mobile gap never applied */
+  nav[aria-label="Main"]{gap:28px;flex-wrap:nowrap}
+  /* 940, not 860: the full link row needs ~875px, so the old breakpoint left a
+     band where the links were shown but wrapped out of the 68px bar */
+  @media (max-width: 940px){
+    nav[aria-label="Main"] a:not(.od-btn){display:none}
+    nav[aria-label="Main"] > .od-btn{display:none}
+    nav[aria-label="Main"]{gap:10px}
+    .od-burger{display:inline-flex}
+  }
+  @media (min-width: 941px){
+    .od-mmenu{display:none}
   }
 </style>
 <script>
@@ -209,7 +257,7 @@ html.od-js [data-reveal]{transition:opacity .55s cubic-bezier(.2,.7,.2,1), trans
     <a href="#top" aria-label="Ownerdeck home" style="display:flex;align-items:center;gap:10px;flex:none">
       <img class="od-logo od-logo--onLight" src="logo-lockup-dark.png" alt="OwnerDeck" width="667" height="120"><img class="od-logo od-logo--onDark" src="logo-lockup-light.png" alt="" aria-hidden="true" width="667" height="120">
     </a>
-    <nav aria-label="Main" style="display:flex;align-items:center;gap:28px;margin-left:auto;flex-wrap:wrap;justify-content:flex-end">
+    <nav aria-label="Main" style="display:flex;align-items:center;margin-left:auto;justify-content:flex-end">
       <a href="#how" style="font-size:14.5px;font-weight:500;color:var(--ink-mute)" class="hv-ink">How it works</a>
       <a href="#handles" style="font-size:14.5px;font-weight:500;color:var(--ink-mute)" class="hv-ink">What it handles</a>
       <a href="#pricing" style="font-size:14.5px;font-weight:500;color:var(--ink-mute)" class="hv-ink">Pricing</a>
@@ -219,6 +267,18 @@ html.od-js [data-reveal]{transition:opacity .55s cubic-bezier(.2,.7,.2,1), trans
         <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
       </button>
       <a href="demo.html" class="od-btn od-btn--primary" style="text-decoration:none;flex:none">Watch the demo</a>
+      <button id="od-burger" class="od-burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="od-mobile-menu">
+        <span class="od-burger__box" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
+    </nav>
+  </div>
+  <div id="od-mobile-menu" class="od-mmenu">
+    <nav aria-label="Mobile" class="od-mmenu__inner">
+      <a href="#how">How it works</a>
+      <a href="#handles">What it handles</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a href="demo.html" class="od-btn od-btn--primary od-btn--block od-mmenu__cta">Watch the demo</a>
     </nav>
   </div>
 </header>
@@ -825,6 +885,45 @@ html.od-js [data-reveal]{transition:opacity .55s cubic-bezier(.2,.7,.2,1), trans
     swap(next);
     try{ window.va&&window.va('event',{name:'theme_toggle',theme:next}); }catch(err){}
   });
+})();
+</script>
+<script>
+/* Mobile menu: the burger opens the section links that don't fit the 68px bar */
+(function(){
+  var burger=document.getElementById('od-burger');
+  var menu=document.getElementById('od-mobile-menu');
+  if(!burger||!menu) return;
+
+  function isOpen(){ return burger.getAttribute('aria-expanded')==='true'; }
+  function setOpen(open){
+    menu.classList.toggle('is-open',open);
+    burger.setAttribute('aria-expanded',open?'true':'false');
+    burger.setAttribute('aria-label',open?'Close menu':'Open menu');
+  }
+
+  burger.addEventListener('click',function(e){
+    e.stopPropagation();          /* keep the outside-click handler from firing */
+    setOpen(!isOpen());
+  });
+
+  /* tapping a link navigates, so drop the panel with it */
+  menu.addEventListener('click',function(e){
+    if(e.target.closest&&e.target.closest('a')) setOpen(false);
+  });
+
+  document.addEventListener('click',function(e){
+    if(!isOpen()) return;
+    if(menu.contains(e.target)||burger.contains(e.target)) return;
+    setOpen(false);
+  });
+
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&isOpen()){ setOpen(false); burger.focus(); }
+  });
+
+  /* dragging past the breakpoint restores the desktop bar */
+  var mq=window.matchMedia&&matchMedia('(min-width: 941px)');   /* keep in sync with the CSS breakpoint */
+  if(mq&&mq.addEventListener) mq.addEventListener('change',function(e){ if(e.matches) setOpen(false); });
 })();
 </script>
 <script src="config.js?v=20260701"></script>
