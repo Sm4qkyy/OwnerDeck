@@ -154,8 +154,28 @@ footer{border-top:1px solid var(--line);background:var(--paper);padding:26px 0;f
   .stepper{max-width:280px;margin-top:32px}
   .od-btn{width:100%;justify-content:center}
   .ch{width:100%;justify-content:center}
-  .bot-opt{width:100%;text-align:center}
   .od-logo{height:26px}
+
+  /* --- Bot on phones ---
+     The contact line wrapped and pushed the header to two rows, so the
+     text block is allowed to shrink and both lines truncate instead.
+     "Start over" collapses to an icon to buy back ~50px. */
+  .bot-head{padding:11px 12px;gap:10px}
+  .bot-av{width:34px;height:34px;font-size:14px}
+  .bot-head > div{min-width:0}
+  .bot-name,.bot-status{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bot-name{font-size:14px}
+  .bot-status{font-size:10.5px}
+  .bot-restart{width:34px;height:34px;padding:0;border-radius:50%;font-size:0;display:grid;place-items:center;flex:none}
+  .bot-restart::after{content:'↺';font-family:var(--font-sans);font-size:15px;line-height:1}
+
+  /* Taller transcript so the conversation isn't read through a slot */
+  .bot-msgs{min-height:0;max-height:none;height:clamp(250px,44vh,360px);padding:14px 12px}
+  .bm{max-width:88%;font-size:14px}
+
+  /* Replies: full width, comfortable tap targets */
+  .bot-opts{padding:12px;gap:7px}
+  .bot-opt{width:100%;text-align:center;padding:12px 14px;font-size:13.5px}
 }
 @media (prefers-reduced-motion: no-preference){
   header{transition:border-color .28s ease}

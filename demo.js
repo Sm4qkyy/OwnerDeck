@@ -158,7 +158,16 @@
       this.scroll();
     },
 
-    scroll: function () { this.msgs.scrollTop = this.msgs.scrollHeight; },
+    // Scroll after layout has flushed — reading scrollHeight in the same
+    // tick as the appendChild gives a stale value, which left the newest
+    // message off-screen once the transcript was long enough to scroll.
+    scroll: function () {
+      var m = this.msgs;
+      if (!m) return;
+      var go = function () { m.scrollTop = m.scrollHeight; };
+      go();
+      if (window.requestAnimationFrame) requestAnimationFrame(function(){ requestAnimationFrame(go); });
+    },
 
     typing: function () {
       var d = document.createElement("div");
