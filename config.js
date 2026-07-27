@@ -27,7 +27,11 @@ window.OD_CONFIG = {
   /* ---------------------------------------------------------------
      2) CONTACT CHANNELS — buttons appear only when filled in.
   --------------------------------------------------------------- */
-  whatsappNumber: "35796922259",   // Mark's personal line (+357 96 922259) — "Talk to Mark"
+  /* Used ONLY by the WhatsApp button on the final step of demo.html.
+     The number is never printed anywhere on the site — no "Talk to Mark"
+     CTAs, nothing in the footer, nothing in the schema. Blank this out and
+     that button disappears, leaving Instagram + email as the contact route. */
+  whatsappNumber: "35796922259",
 
   /* The "Try the live demo" buttons (8 of them) point here.
      This should be a SEPARATE line running the demo assistant, not Mark's
