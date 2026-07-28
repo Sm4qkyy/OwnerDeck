@@ -115,15 +115,15 @@ module.exports = async (req, res) => {
     return res.status(503).json({ error: 'disabled', reply: 'The live chat is off right now — email mark@ownerdeck.com and you will get a reply.' });
   }
 
-  if (!process.env.ANTHROPIC_API_KEY) {
-    return res.status(503).json({ error: 'not_configured' });
-  }
-
-  // 2. origin check — cheap filter against lazy scripted abuse
+  // 2. origin check — cheapest filter, so run it before anything else
   const allowed = process.env.ALLOWED_ORIGIN || 'https://www.ownerdeck.com';
   const origin = req.headers.origin || '';
   if (origin && !allowed.split(',').some(o => origin === o.trim())) {
     return res.status(403).json({ error: 'bad_origin' });
+  }
+
+  if (!process.env.ANTHROPIC_API_KEY) {
+    return res.status(503).json({ error: 'not_configured' });
   }
 
   let body = req.body;
