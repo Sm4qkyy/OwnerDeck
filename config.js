@@ -44,6 +44,23 @@ window.OD_CONFIG = {
   email: "mark@ownerdeck.com",
 
   /* ---------------------------------------------------------------
+     LIVE AI CHAT
+     The API key lives ONLY in Vercel env vars — never here, this file is
+     public. See SECURITY-CHAT.md for the full setup and the spend cap.
+
+       enabled          false to hide the chat everywhere
+       floating         false to keep it only inside the demo (step 4)
+       turnstileSiteKey Cloudflare Turnstile SITE key (public — safe here).
+                        The SECRET key goes in Vercel env vars.
+  --------------------------------------------------------------- */
+  liveChat: {
+    enabled: true,
+    floating: true,
+    endpoint: "/api/chat",
+    turnstileSiteKey: ""
+  },
+
+  /* ---------------------------------------------------------------
      3) Floating "Try it live" button (bottom-right, all pages).
 
      OFF deliberately: the number should only appear at the final step

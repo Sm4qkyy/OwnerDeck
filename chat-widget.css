@@ -1,0 +1,64 @@
+/* Ownerdeck live chat — floating launcher + inline panel.
+   Uses the site's design tokens so it themes automatically. */
+
+.odc{position:fixed;right:20px;bottom:20px;z-index:200;display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+
+.odc-launch{display:inline-flex;align-items:center;gap:9px;background:var(--accent,#01c0b8);color:#04201f;
+  border:none;border-radius:999px;padding:13px 20px;font-family:var(--font-sans,system-ui);font-size:15px;
+  font-weight:600;cursor:pointer;box-shadow:0 12px 30px -10px rgba(1,192,184,.6);
+  transition:transform .2s ease,filter .2s ease}
+.odc-launch:hover{filter:brightness(1.06);transform:translateY(-2px)}
+.odc-launch svg{width:19px;height:19px;flex:none}
+.odc.is-open .odc-launch{display:none}
+
+.odc-panel,.odc-inline{background:var(--card,#fff);border:1px solid var(--line,#e5e8ea);border-radius:16px;
+  overflow:hidden;display:flex;flex-direction:column;font-family:var(--font-sans,system-ui)}
+.odc-panel{width:min(380px,calc(100vw - 40px));height:min(520px,calc(100vh - 120px));
+  box-shadow:0 30px 70px -30px rgba(15,17,21,.45)}
+.odc-inline{max-width:540px;margin:0 auto;height:clamp(380px,52vh,520px)}
+
+.odc-head{display:flex;align-items:center;gap:9px;padding:13px 14px;background:var(--paper,#f6f7f9);
+  border-bottom:1px solid var(--line,#e5e8ea);flex:none}
+.odc-dot{width:8px;height:8px;border-radius:50%;background:var(--accent,#01c0b8);flex:none}
+.odc-title{font-family:var(--font-display,inherit);font-weight:600;font-size:14.5px;color:var(--ink,#0f1115);letter-spacing:-.02em}
+.odc-x{margin-left:auto;background:none;border:none;font-size:22px;line-height:1;color:var(--ink-mute,#6b7478);
+  cursor:pointer;padding:0 4px;border-radius:6px}
+.odc-x:hover{color:var(--ink,#0f1115)}
+
+.odc-log{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:9px;scroll-behavior:smooth}
+.odc-m{max-width:86%;padding:10px 13px;border-radius:14px;font-size:14.5px;line-height:1.45;
+  animation:odcIn .22s ease both;white-space:pre-wrap;word-wrap:break-word}
+@keyframes odcIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.odc-m--bot{align-self:flex-start;background:var(--paper,#f6f7f9);border:1px solid var(--line,#e5e8ea);
+  color:var(--ink,#0f1115);border-bottom-left-radius:5px}
+.odc-m--me{align-self:flex-end;background:var(--accent-wash,#e6faf8);border:1px solid var(--accent-line,#a4f4ec);
+  color:var(--ink,#0f1115);border-bottom-right-radius:5px}
+.odc-typing{display:flex;gap:4px;align-items:center;padding:13px}
+.odc-typing span{width:6px;height:6px;border-radius:50%;background:var(--ink-faint,#8b9497);animation:odcBlink 1.3s infinite}
+.odc-typing span:nth-child(2){animation-delay:.18s}
+.odc-typing span:nth-child(3){animation-delay:.36s}
+@keyframes odcBlink{0%,60%,100%{opacity:.28}30%{opacity:1}}
+
+.odc-form{display:flex;gap:8px;padding:11px;border-top:1px solid var(--line,#e5e8ea);background:var(--paper,#f6f7f9);flex:none}
+.odc-input{flex:1;min-width:0;background:var(--card,#fff);border:1px solid var(--line,#e5e8ea);border-radius:10px;
+  padding:11px 13px;font-family:inherit;font-size:14.5px;color:var(--ink,#0f1115)}
+.odc-input::placeholder{color:var(--ink-faint,#8b9497)}
+.odc-input:focus{outline:none;border-color:var(--accent,#01c0b8);box-shadow:0 0 0 3px rgba(1,192,184,.18)}
+.odc-send{flex:none;width:42px;border:none;border-radius:10px;background:var(--accent,#01c0b8);color:#04201f;cursor:pointer;
+  display:grid;place-items:center;transition:filter .2s ease}
+.odc-send:hover{filter:brightness(1.07)}
+.odc-send svg{width:18px;height:18px}
+
+.odc-foot{padding:0 13px 11px;font-size:11px;color:var(--ink-faint,#8b9497);background:var(--paper,#f6f7f9);
+  font-family:var(--font-mono,monospace);letter-spacing:.02em;flex:none}
+
+@media (max-width:560px){
+  .odc{right:14px;bottom:14px;left:14px;align-items:stretch}
+  .odc-launch{justify-content:center}
+  .odc-panel{width:100%;height:min(70vh,520px)}
+  .odc-inline{height:clamp(340px,60vh,480px)}
+}
+@media (prefers-reduced-motion:reduce){
+  .odc-m{animation:none}
+  .odc-launch{transition:none}
+}

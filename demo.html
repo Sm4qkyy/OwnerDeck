@@ -26,6 +26,7 @@
 <link rel="stylesheet" href="ds/tokens/base.css">
 <link rel="stylesheet" href="ds/tokens/components.css">
 <link rel="stylesheet" href="ds/styles.css">
+<link rel="stylesheet" href="chat-widget.css?v=20260901">
 <style>
 :root{
   --accent:#01c0b8; --accent-strong:#097f7a; --accent-wash:#e6faf8; --accent-line:#a4f4ec;
@@ -205,7 +206,9 @@ footer{border-top:1px solid var(--line);background:var(--paper);padding:26px 0;f
     <div class="sbar" data-bar="1"><i></i></div>
     <div class="sdot" data-dot="2"><div class="n">2</div><div class="lbl">Try it</div></div>
     <div class="sbar" data-bar="2"><i></i></div>
-    <div class="sdot" data-dot="3"><div class="n">3</div><div class="lbl">Get in touch</div></div>
+    <div class="sdot" data-dot="3"><div class="n">3</div><div class="lbl">Ask it anything</div></div>
+    <div class="sbar" data-bar="3"><i></i></div>
+    <div class="sdot" data-dot="4"><div class="n">4</div><div class="lbl">Get in touch</div></div>
   </div>
 </div>
 
@@ -230,18 +233,31 @@ footer{border-top:1px solid var(--line);background:var(--paper);padding:26px 0;f
       <div id="od-bot" class="bot-shell"></div>
       <div class="nav-row">
         <button class="od-btn od-btn--secondary od-btn--lg" data-go="1">← Back</button>
-        <button class="od-btn od-btn--primary od-btn--lg" data-go="3">Next — get in touch
+        <button class="od-btn od-btn--primary od-btn--lg" data-go="3">Next — ask it anything
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
       </div>
     </section>
 
+
     <section class="pane" data-pane="3">
-      <div class="kicker"><span class="s">//</span> Step 3 · Get in touch</div>
+      <div class="kicker"><span class="s">//</span> Step 3 · Ask it anything</div>
+      <h1>Now ask it yourself.</h1>
+      <p class="lede">This one is live — type a real question about pricing, setup, languages, or whether it suits your business. Same assistant, answering here on the page.</p>
+      <div id="od-live-chat"></div>
+      <div class="nav-row">
+        <button class="od-btn od-btn--secondary od-btn--lg" data-go="2">← Back</button>
+        <button class="od-btn od-btn--primary od-btn--lg" data-go="4">Next — get in touch
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+      </div>
+    </section>
+
+    <section class="pane" data-pane="4">
+      <div class="kicker"><span class="s">//</span> Step 4 · Get in touch</div>
       <h1>Want this on your own number?</h1>
       <p class="lede">Message on whichever you actually use. You'll get a straight answer about whether it fits your business — and what it would take to set up.</p>
       <div id="od-channels"></div>
       <div class="nav-row">
-        <button class="od-btn od-btn--secondary od-btn--lg" data-go="2">← Back</button>
+        <button class="od-btn od-btn--secondary od-btn--lg" data-go="3">← Back</button>
       </div>
     </section>
 
@@ -252,6 +268,7 @@ footer{border-top:1px solid var(--line);background:var(--paper);padding:26px 0;f
 
 <script src="config.js?v=20260801"></script>
 <script src="demo.js?v=20260801"></script>
+<script src="chat-widget.js?v=20260901"></script>
 <script>
 (function(){
   /* ---- theme ---- */
@@ -283,7 +300,7 @@ footer{border-top:1px solid var(--line);background:var(--paper);padding:26px 0;f
   addEventListener('scroll',hupd,{passive:true});
 
   /* ---- steps ---- */
-  var MAX=3;
+  var MAX=4;
   function show(n){
     if(n<1||n>MAX) return;
     document.querySelectorAll('.pane').forEach(function(p){p.classList.toggle('on',+p.dataset.pane===n);});
