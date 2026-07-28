@@ -99,7 +99,7 @@
           '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>' +
         '</button>' +
       '</form>' +
-      '<div class="odc-foot">Demo assistant · answers about Ownerdeck only</div>';
+      '<div class="odc-foot">AI assistant · answers about Ownerdeck only</div>';
   }
 
   function bubble(log, who, text) {
