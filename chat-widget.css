@@ -15,6 +15,9 @@
   overflow:hidden;display:flex;flex-direction:column;font-family:var(--font-sans,system-ui)}
 .odc-panel{width:min(380px,calc(100vw - 40px));height:min(520px,calc(100vh - 120px));
   box-shadow:0 30px 70px -30px rgba(15,17,21,.45)}
+/* The display:flex above outranks the browser's [hidden]{display:none}, so the
+   closed panel would otherwise sit open over the corner of every page. Keep this. */
+.odc-panel[hidden]{display:none}
 .odc-inline{max-width:540px;margin:0 auto;height:clamp(380px,52vh,520px)}
 
 .odc-head{display:flex;align-items:center;gap:9px;padding:13px 14px;background:var(--paper,#f6f7f9);
