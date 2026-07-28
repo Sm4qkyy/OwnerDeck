@@ -135,7 +135,7 @@
       "trust.kicker": "Why Ownerdeck",
       "trust.title": "Set up and supported by a real person.",
       "trust.quote": "“I set up and support every assistant myself. If it doesn't fit your business, I'll tell you straight — no hard sell.”",
-      "trust.role": "Founder · Larnaca, Cyprus",
+      "trust.role": "Founder",
 
       "contact.kicker": "Get started",
       "contact.title": "See it answer your own WhatsApp.",
@@ -151,7 +151,7 @@
       "form.submit": "Request my demo",
       "form.note": "No commitment. We'll reply within 24 hours. <a href=\"/privacy.html\">Privacy policy</a>.",
 
-      "footer.copyright": "© 2026 Ownerdeck. Built in Cyprus.",
+      "footer.copyright": "© 2026 Ownerdeck.",
       "footer.privacy": "Privacy Policy"
     },
 
