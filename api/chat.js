@@ -86,20 +86,36 @@ async function rateLimit(key) {
   }
 }
 
+// Canonical Turnstile siteverify. Fails closed on every path: a missing
+// secret, a missing token, a non-2xx reply and a network error all deny.
+// Do not add a "not configured yet" bypass here — an unverified request is
+// exactly the request this endpoint exists to reject.
 async function verifyTurnstile(token, ip) {
   const secret = process.env.TURNSTILE_SECRET;
-  if (!secret) return { ok: true, skipped: true };   // not configured yet
-  if (!token) return { ok: false, skipped: false };
-  try {
-    const body = new URLSearchParams({ secret, response: token, remoteip: ip });
-    const r = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-      method: 'POST', body
-    });
-    const data = await r.json();
-    return { ok: !!data.success, skipped: false };
-  } catch (e) {
-    return { ok: false, skipped: false };
+  if (!secret) {
+    console.error('turnstile_secret_missing');
+    return { ok: false, reason: 'no_secret' };
   }
+  if (!token) return { ok: false, reason: 'no_token' };
+
+  let result;
+  try {
+    const r = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ secret, response: token, remoteip: ip })
+    });
+    if (!r.ok) throw new Error(`siteverify ${r.status}`);
+    result = await r.json();
+  } catch (e) {
+    console.error('turnstile_unreachable', e && e.message);
+    return { ok: false, reason: 'unreachable' };
+  }
+
+  if (result.success !== true) {
+    return { ok: false, reason: (result['error-codes'] || []).join(',') || 'failed' };
+  }
+  return { ok: true };
 }
 
 /* ---------- handler ---------- */
@@ -148,9 +164,12 @@ module.exports = async (req, res) => {
 
   const ip = ipOf(req);
 
-  // 4. human check
+  // 4. human check — must pass before we spend anything
   const ts = await verifyTurnstile(tsToken, ip);
-  if (!ts.ok) return res.status(403).json({ error: 'failed_challenge', reply: 'Could not verify you are human. Refresh the page and try again.' });
+  if (!ts.ok) {
+    console.warn('turnstile_denied', ts.reason, ip);
+    return res.status(403).json({ error: 'failed_challenge', reply: 'Could not verify you are human. Refresh the page and try again.' });
+  }
 
   // 5. per-IP rate limit
   const { count } = await rateLimit(`od:chat:${ip}`);

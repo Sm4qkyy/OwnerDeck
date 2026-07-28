@@ -19,40 +19,68 @@
   var MAX_CHARS  = 500;
   var MAX_TURNS  = 12;
 
-  var history = [];        // [{role, content}]
-  var turns   = 0;
-  var busy    = false;
-  var tsToken = '';
-  var tsReady = false;
+  var history  = [];       // [{role, content}]
+  var turns    = 0;
+  var busy     = false;
+  var widgetId = null;
+  var waiting  = [];       // resolvers queued for the next token
 
-  /* ---------- Turnstile (invisible human check) ---------- */
-  function loadTurnstile(cb) {
-    if (!SITE_KEY) { tsReady = true; return cb && cb(); }
-    if (window.turnstile) return renderTurnstile(cb);
+  /* ---------- Turnstile (invisible human check) ----------
+     A token is redeemed exactly once at siteverify and expires after a few
+     minutes, so we mint a fresh one per message. Reusing the token issued at
+     page load would get the second message rejected as timeout-or-duplicate. */
+
+  function settle(token) {
+    var queued = waiting;
+    waiting = [];
+    queued.forEach(function (resolve) { resolve(token || ''); });
+  }
+
+  function loadTurnstile() {
+    if (!SITE_KEY || widgetId !== null) return;
+    if (window.turnstile) return renderTurnstile();
+    if (document.getElementById('od-ts-script')) return;   // already in flight
     var s = document.createElement('script');
+    s.id = 'od-ts-script';
     s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
     s.async = true; s.defer = true;
-    s.onload = function () { renderTurnstile(cb); };
-    s.onerror = function () { tsReady = true; cb && cb(); };
+    s.onload  = renderTurnstile;
+    s.onerror = function () { settle(''); };
     document.head.appendChild(s);
   }
-  function renderTurnstile(cb) {
+
+  function renderTurnstile() {
     var host = document.getElementById('od-turnstile');
-    if (!host || !window.turnstile) { tsReady = true; return cb && cb(); }
+    if (!host || !window.turnstile || widgetId !== null) return;
     try {
-      window.turnstile.render(host, {
+      widgetId = window.turnstile.render(host, {
         sitekey: SITE_KEY,
         size: 'invisible',
-        callback: function (t) { tsToken = t; tsReady = true; cb && cb(); },
-        'error-callback': function () { tsReady = true; cb && cb(); }
+        action: 'turnstile-spin-v2',
+        callback: function (t) { settle(t); },
+        'error-callback': function () { settle(''); },
+        'timeout-callback': function () { settle(''); }
       });
-      window.turnstile.execute(host);
-    } catch (e) { tsReady = true; cb && cb(); }
+      if (waiting.length) window.turnstile.execute(widgetId);
+    } catch (e) { settle(''); }
   }
-  function refreshToken() {
-    if (!SITE_KEY || !window.turnstile) return;
-    try { window.turnstile.reset(); window.turnstile.execute(document.getElementById('od-turnstile')); }
-    catch (e) {}
+
+  // Resolves with a fresh token, or '' if Turnstile can't produce one.
+  // An empty token is not treated as permission — the server rejects it.
+  function getToken() {
+    return new Promise(function (resolve) {
+      if (!SITE_KEY) return resolve('');
+      var done = false;
+      var timer = setTimeout(function () { finish(''); }, 10000);
+      function finish(t) { if (done) return; done = true; clearTimeout(timer); resolve(t || ''); }
+
+      waiting.push(finish);
+      loadTurnstile();
+      if (widgetId !== null && window.turnstile) {
+        try { window.turnstile.reset(widgetId); window.turnstile.execute(widgetId); }
+        catch (e) { finish(''); }
+      }
+    });
   }
 
   /* ---------- markup ---------- */
@@ -111,10 +139,13 @@
       busy = true;
       var t = typing(log);
 
-      fetch(ENDPOINT, {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ message: text, history: history.slice(-12), turnstile: tsToken })
+      getToken()
+      .then(function (token) {
+        return fetch(ENDPOINT, {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ message: text, history: history.slice(-12), turnstile: token })
+        });
       })
       .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
       .then(function (out) {
@@ -126,7 +157,6 @@
           history.push({ role: 'assistant', content: reply });
           turns++;
         }
-        refreshToken();   // one-shot tokens
       })
       .catch(function () {
         t.remove();
@@ -156,7 +186,7 @@
         '<span>Ask a question</span>' +
       '</button>' +
       '<div class="odc-panel" role="dialog" aria-label="Ownerdeck chat" hidden>' + panelHTML(false) + '</div>' +
-      '<div id="od-turnstile" style="display:none"></div>';
+      '<div id="od-turnstile" class="cf-turnstile" data-action="turnstile-spin-v2" style="display:none"></div>';
     document.body.appendChild(wrap);
 
     var launch = wrap.querySelector('.odc-launch');
@@ -183,7 +213,11 @@
     host.className = 'odc-inline';
     host.innerHTML = panelHTML(true);
     if (!document.getElementById('od-turnstile')) {
-      var t = document.createElement('div'); t.id = 'od-turnstile'; t.style.display = 'none';
+      var t = document.createElement('div');
+      t.id = 'od-turnstile';
+      t.className = 'cf-turnstile';
+      t.setAttribute('data-action', 'turnstile-spin-v2');
+      t.style.display = 'none';
       document.body.appendChild(t);
     }
     var log = host.querySelector('#odc-log-i');

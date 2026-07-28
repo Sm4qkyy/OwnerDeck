@@ -57,7 +57,7 @@ window.OD_CONFIG = {
     enabled: true,
     floating: true,
     endpoint: "/api/chat",
-    turnstileSiteKey: ""
+    turnstileSiteKey: "0x4AAAAAAD_9xwr6or8BKILz"
   },
 
   /* ---------------------------------------------------------------
