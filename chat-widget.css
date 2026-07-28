@@ -56,9 +56,14 @@
   font-family:var(--font-mono,monospace);letter-spacing:.02em;flex:none}
 
 @media (max-width:560px){
-  .odc{right:14px;bottom:14px;left:14px;align-items:stretch}
-  .odc-launch{justify-content:center}
-  .odc-panel{width:100%;height:min(70vh,520px)}
+  /* Collapse the launcher to a circular icon pinned bottom-right. A full-width
+     bar eats too much of a small screen; the aria-label carries the meaning
+     that the hidden text label was providing. */
+  .odc{right:14px;bottom:14px}
+  .odc-launch{width:56px;height:56px;padding:0;border-radius:50%;justify-content:center}
+  .odc-launch span{display:none}
+  .odc-launch svg{width:23px;height:23px}
+  .odc-panel{width:calc(100vw - 28px);height:min(70vh,520px)}
   .odc-inline{height:clamp(340px,60vh,480px)}
 }
 @media (prefers-reduced-motion:reduce){
