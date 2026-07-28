@@ -223,6 +223,45 @@ html.od-js [data-reveal]{transition:opacity .55s cubic-bezier(.2,.7,.2,1), trans
   @media (min-width: 941px){
     .od-mmenu{display:none}
   }
+
+  /* ---- Phone density ----
+     Every size on this page is clamp(min, Xvw, max). On a phone the vw term
+     falls far below the min — 8vw is 31px at 390px — so every clamp resolves
+     to its minimum, and those minimums were chosen to look right on a desktop.
+     The result was 64px of padding above AND below nine sections: roughly
+     1,150px of empty space to scroll past.
+
+     Body copy is deliberately not touched. It reads well at 17px/1.6, and
+     shrinking it would cut scrolling at the cost of legibility — the opposite
+     of the point. What shrinks here is chrome: padding, gaps, display type.
+
+     These values live in style attributes, which outrank any selector, so
+     !important is the only way to reach them without rewriting the markup.
+     The [style*=...] rules match on the literal inline value; if that value is
+     edited in the HTML the override simply stops applying, leaving the desktop
+     size rather than breaking. */
+  @media (max-width: 560px){
+    section{
+      padding-top:34px !important;padding-bottom:34px !important;
+      padding-left:18px !important;padding-right:18px !important;
+    }
+    /* hero sits directly under the header, so it needs less air above */
+    #top{padding-top:24px !important;padding-bottom:36px !important}
+    footer{padding:34px 18px 26px !important}
+
+    h1{font-size:31px !important;letter-spacing:-0.03em !important}
+    section h2{font-size:25px !important;line-height:1.12 !important}
+
+    /* card interiors */
+    [style*="padding:30px 28px 32px"]{padding:20px 18px 22px !important}
+    [style*="padding:28px 26px 30px"]{padding:19px 17px 21px !important}
+    [style*="padding:26px 24px 28px"]{padding:18px 16px 20px !important}
+
+    /* space between stacked blocks */
+    [style*="gap:32px"]{gap:20px !important}
+    [style*="gap:28px"]{gap:18px !important}
+    [style*="gap:24px"]{gap:16px !important}
+  }
 </style>
 <script>
 (function(){
