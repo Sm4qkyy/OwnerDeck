@@ -20,8 +20,12 @@ window.OD_CONFIG = {
   --------------------------------------------------------------- */
   demo: {
     type: "mp4",
-    src: "demo.mp4",
-    poster: "demo-poster.jpg"
+    /* Version query, not decoration. A <video> keeps its own media cache and
+       routinely ignores Cache-Control: no-store, so re-cutting the file is not
+       enough to make a browser fetch it — the URL has to change. Bump this
+       whenever demo.mp4 is replaced. */
+    src: "demo.mp4?v=2",
+    poster: "demo-poster.jpg?v=2"
   },
 
   /* ---------------------------------------------------------------
