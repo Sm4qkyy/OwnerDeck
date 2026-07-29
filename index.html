@@ -229,43 +229,77 @@ html.od-js [data-reveal]{transition:opacity .55s cubic-bezier(.2,.7,.2,1), trans
     .od-mmenu{display:none}
   }
 
-  /* ---- Phone density ----
+  /* ---- Phone layout ----
      Every size on this page is clamp(min, Xvw, max). On a phone the vw term
      falls far below the min — 8vw is 31px at 390px — so every clamp resolves
      to its minimum, and those minimums were chosen to look right on a desktop.
-     The result was 64px of padding above AND below nine sections: roughly
-     1,150px of empty space to scroll past.
+     Nine sections at 64px top and bottom is ~1,150px of empty scrolling.
 
-     Body copy is deliberately not touched. It reads well at 17px/1.6, and
-     shrinking it would cut scrolling at the cost of legibility — the opposite
-     of the point. What shrinks here is chrome: padding, gaps, display type.
+     But cutting that alone made the page read as one undifferentiated column.
+     Sections are told apart by alternating --card and --paper, and those two
+     differ by 1.07:1 in light and 1.04:1 in dark — invisible on a handset in
+     daylight. Padding was the only thing separating them, so removing it
+     removed the separation. Only 4 of the 9 carried a border.
+
+     So: padding stays well below desktop but above where it was, and every
+     light section gets an explicit hairline. Boundaries are now drawn rather
+     than implied, which is what lets the spacing stay tight without crowding.
+
+     Body copy is deliberately untouched at 17px/1.6. Shrinking it would cut
+     scrolling at the cost of legibility, which is the opposite of the point.
 
      These values live in style attributes, which outrank any selector, so
      !important is the only way to reach them without rewriting the markup.
-     The [style*=...] rules match on the literal inline value; if that value is
-     edited in the HTML the override simply stops applying, leaving the desktop
-     size rather than breaking. */
+     The [style*=...] rules match the literal inline value; if that value is
+     edited in the HTML the override stops applying and the element keeps its
+     desktop size rather than breaking. */
   @media (max-width: 560px){
     section{
-      padding-top:34px !important;padding-bottom:34px !important;
+      padding-top:44px !important;padding-bottom:44px !important;
       padding-left:18px !important;padding-right:18px !important;
     }
-    /* hero sits directly under the header, so it needs less air above */
-    #top{padding-top:24px !important;padding-bottom:36px !important}
-    footer{padding:34px 18px 26px !important}
+    /* Draw the boundary the near-identical backgrounds can't. Scoped to the
+       light sections: the two dark ones already separate by contrast, and a
+       pale hairline on them would read as a seam. */
+    section[style*="background:var(--card)"],
+    section[style*="background:var(--paper)"]{border-top:1px solid var(--line)}
+    /* hero is first, and sits directly under the header */
+    #top{padding-top:26px !important;padding-bottom:40px !important;border-top:0}
+    footer{padding:40px 18px 28px !important}
 
     h1{font-size:31px !important;letter-spacing:-0.03em !important}
-    section h2{font-size:25px !important;line-height:1.12 !important}
+    section h2{font-size:25px !important;line-height:1.15 !important}
 
-    /* card interiors */
-    [style*="padding:30px 28px 32px"]{padding:20px 18px 22px !important}
-    [style*="padding:28px 26px 30px"]{padding:19px 17px 21px !important}
-    [style*="padding:26px 24px 28px"]{padding:18px 16px 20px !important}
+    /* Bind each heading to the copy it introduces: more air above than below,
+       so a section header groups with its own content instead of floating
+       equidistant between two. */
+    section h2{margin-bottom:2px !important}
+    section h2 + p{margin-top:10px !important}
 
-    /* space between stacked blocks */
-    [style*="gap:32px"]{gap:20px !important}
-    [style*="gap:28px"]{gap:18px !important}
-    [style*="gap:24px"]{gap:16px !important}
+    /* card interiors — roomier than the density pass left them, since a
+       cramped card is what makes a stack of them look like noise */
+    [style*="padding:30px 28px 32px"]{padding:22px 20px 24px !important}
+    [style*="padding:28px 26px 30px"]{padding:21px 19px 23px !important}
+    [style*="padding:26px 24px 28px"]{padding:20px 18px 22px !important}
+
+    /* Cards stack vertically here, so these gaps stop being incidental
+       spacing and become the only thing dividing one card from the next. */
+    [style*="gap:32px"]{gap:26px !important}
+    [style*="gap:28px"]{gap:24px !important}
+    [style*="gap:24px"]{gap:22px !important}
+    [style*="gap:16px"]{gap:18px !important}
+
+    /* Shorter travel and a quicker curve. The desktop values are tuned for a
+       block entering a wide viewport; on a thumb-scrolled phone the same 18px
+       and .55s read as lag rather than polish.
+
+       Nested inside no-preference deliberately. These selectors match the
+       reduced-motion rule's specificity exactly and are declared after it, so
+       ungated they would win on source order and hand motion back to someone
+       who asked for none. */
+    @media (prefers-reduced-motion: no-preference){
+      html.od-js [data-reveal]{transform:translateY(10px);transition-duration:.38s}
+    }
   }
 
   /* ---- Language switcher ---- */
@@ -859,7 +893,13 @@ html.od-js [data-reveal]{transition:opacity .55s cubic-bezier(.2,.7,.2,1), trans
     entries.forEach(function(en){
       if(en.isIntersecting){ en.target.style.opacity='1'; en.target.style.transform='none'; io.unobserve(en.target); }
     });
-  },{threshold:0.08, rootMargin:'0px 0px -40px 0px'});
+  /* Fire just BEFORE an element arrives, not after. A percentage threshold is
+     the wrong instrument on a phone: sections are far taller than the viewport,
+     so 8% of one is ~120px, and with a negative bottom margin the content sat
+     invisible for well over a screen-inch of scrolling before fading in. The
+     positive bottom margin expands the root downward instead, so a block has
+     finished animating by the time it is actually looked at. */
+  },{threshold:0, rootMargin:'0px 0px 12% 0px'});
   els.forEach(function(e){ io.observe(e); });
   setTimeout(showAll, 2500); // failsafe: never leave content hidden
 })();
