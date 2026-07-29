@@ -101,8 +101,13 @@ html.od-js [data-reveal]{transition:opacity .55s cubic-bezier(.2,.7,.2,1), trans
     background-image:radial-gradient(rgba(238,244,244,.07) 1px, transparent 1px)!important;
   }
   /* The phone mockup is a screenshot of WhatsApp — keep it light in both themes */
-  .od-phone{
-    --card:#ffffff; --line:#e5e8ea; --ink:#0f1115; --ink-faint:#8b9497;
+  /* Device screenshots, not page chrome: these panels paint a hardcoded light
+     background in both themes, so the theme tokens have to be pinned light
+     inside them. Without this the dark theme flips --ink to near-white while
+     the panel stays light, and the message text disappears. */
+  .od-phone, .od-screen{
+    --card:#ffffff; --line:#e5e8ea; --ink:#0f1115;
+    --ink-soft:#3d4448; --ink-mute:#6b7478; --ink-faint:#8b9497;
     --accent-wash:#e6faf8; --accent-line:#a4f4ec; --accent-strong:#097f7a;
   }
   /* Theme toggle */
@@ -526,7 +531,7 @@ html.od-js [data-reveal]{transition:opacity .55s cubic-bezier(.2,.7,.2,1), trans
       <div data-reveal="1" style="display:flex;justify-content:center">
         <div style="width:100%;max-width:392px">
           <div style="background:#161d1f;padding:9px;border-radius:44px;box-shadow:0 40px 80px -30px rgba(0,0,0,.7), 0 0 0 1px #243032">
-            <div style="background:#eff0f1;border-radius:36px;overflow:hidden">
+            <div class="od-screen" style="background:#eff0f1;border-radius:36px;overflow:hidden">
               <div style="background:#0f1115;color:#fff;padding:13px 16px;display:flex;align-items:center;gap:11px">
                 <div style="width:34px;height:34px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;flex:none;font-family:var(--font-display);font-size:14px;font-weight:600;color:#04201f">V</div>
                 <div style="min-width:0">
@@ -539,7 +544,7 @@ html.od-js [data-reveal]{transition:opacity .55s cubic-bezier(.2,.7,.2,1), trans
                 <div style="align-self:center;font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;color:var(--ink-faint);background:var(--card);border:1px solid var(--line);padding:3px 10px;border-radius:999px;margin-bottom:2px">23 JUNE 2026 · 21:12</div>
                 <div style="align-self:flex-start;max-width:80%;background:var(--card);border:1px solid var(--line);border-radius:16px 16px 16px 5px;padding:10px 13px;font-size:14.5px;line-height:1.45;color:var(--ink)">Добрый день</div>
                 <div style="align-self:flex-end;max-width:84%;background:var(--accent-wash);border:1px solid var(--accent-line);border-radius:16px 16px 5px 16px;padding:10px 13px;font-size:14.5px;line-height:1.45;color:var(--ink)">Здравствуйте! Нужна машина в аренду? Скажите даты и где вам её подать.</div>
-                <div style="align-self:flex-start;max-width:80%;background:var(--card);border:1px solid var(--line);border-radius:16px 16px 16px 5px;padding:10px 13px;font-size:14.5px;line-height:1.45;color:var(--ink)">Наш отель Лимасол</div>
+                <div style="align-self:flex-start;max-width:80%;background:var(--card);border:1px solid var(--line);border-radius:16px 16px 16px 5px;padding:10px 13px;font-size:14.5px;line-height:1.45;color:var(--ink)">Наш отель</div>
                 <div style="align-self:flex-start;max-width:80%;background:var(--card);border:1px solid var(--line);border-radius:16px 16px 16px 5px;padding:10px 13px;font-size:14.5px;line-height:1.45;color:var(--ink)">24 до 26</div>
                 <div style="align-self:flex-start;max-width:80%;background:var(--card);border:1px solid var(--line);border-radius:16px 16px 16px 5px;padding:10px 13px;font-size:14.5px;line-height:1.45;color:var(--ink)">Эконом</div>
                 <div style="align-self:flex-end;max-width:86%;background:var(--accent-wash);border:1px solid var(--accent-line);border-radius:16px 16px 5px 16px;padding:10px 13px;font-size:14.5px;line-height:1.5;color:var(--ink)">Свободны на 24–26 июня, эконом:<br>1. Nissan March — €45/день<br>2. Toyota Vitz — €48/день<br>3. Hyundai i10 — €45/день<br>Какую подать?</div>
