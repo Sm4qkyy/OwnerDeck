@@ -19,6 +19,17 @@
   var MAX_CHARS  = 500;
   var MAX_TURNS  = 12;
 
+  /* Translation. i18n.js may not be on the page (demo.html has no switcher),
+     so every call falls back to the English passed in. Static markup below
+     carries data-i18n and is repainted by refresh(); text created later — the
+     greeting, error replies — has to ask for a translation as it is built. */
+  function T(key, en) {
+    return (window.OD_i18n && window.OD_i18n.t(key, en)) || en;
+  }
+  function repaint() {
+    if (window.OD_i18n) window.OD_i18n.refresh();
+  }
+
   var history  = [];       // [{role, content}]
   var turns    = 0;
   var busy     = false;
@@ -88,23 +99,28 @@
     return '' +
       '<div class="odc-head">' +
         '<span class="odc-dot" aria-hidden="true"></span>' +
-        '<div class="odc-title">Ask Ownerdeck</div>' +
-        (inline ? '' : '<button class="odc-x" type="button" aria-label="Close chat">&times;</button>') +
+        '<div class="odc-title" data-i18n="k81b934cf">Ask Ownerdeck</div>' +
+        (inline ? '' : '<button class="odc-x" type="button" aria-label="' + T('k726da9c1', 'Close chat') + '">&times;</button>') +
       '</div>' +
       '<div class="odc-log" id="odc-log' + (inline ? '-i' : '') + '" role="log" aria-live="polite"></div>' +
       '<form class="odc-form" autocomplete="off">' +
         '<input class="odc-input" type="text" maxlength="' + MAX_CHARS + '" ' +
-          'placeholder="Ask about price, setup, languages…" aria-label="Your message">' +
-        '<button class="odc-send" type="submit" aria-label="Send">' +
+          'placeholder="' + T('k309d1a72', 'Ask about price, setup, languages…') + '" ' +
+          'aria-label="' + T('kcfe1b4b7', 'Your message') + '">' +
+        '<button class="odc-send" type="submit" aria-label="' + T('k94966d90', 'Send') + '">' +
           '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>' +
         '</button>' +
       '</form>' +
-      '<div class="odc-foot">AI assistant · answers about Ownerdeck only</div>';
+      '<div class="odc-foot" data-i18n="k07fe50da">AI assistant · answers about Ownerdeck only</div>';
   }
 
-  function bubble(log, who, text) {
+  function bubble(log, who, text, key) {
     var d = document.createElement('div');
     d.className = 'odc-m odc-m--' + who;
+    // Tagging our own canned lines lets them re-translate on a language
+    // switch. Anything the model or the visitor wrote stays untagged: it is
+    // already in the right language and must never be swapped out.
+    if (key) d.setAttribute('data-i18n', key);
     d.textContent = text;
     log.appendChild(d);
     requestAnimationFrame(function () { log.scrollTop = log.scrollHeight; });
@@ -130,7 +146,7 @@
       if (!text || busy) return;
       if (text.length > MAX_CHARS) text = text.slice(0, MAX_CHARS);
       if (turns >= MAX_TURNS) {
-        bubble(log, 'bot', "That's as far as the demo goes — email mark@ownerdeck.com and you'll get a straight answer about your own setup.");
+        bubble(log, 'bot', T('k7aa1c0db', "That's as far as the demo goes — email mark@ownerdeck.com and you'll get a straight answer about your own setup."), 'k7aa1c0db');
         return;
       }
 
@@ -150,7 +166,7 @@
       .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
       .then(function (out) {
         t.remove();
-        var reply = (out.j && out.j.reply) || 'Something went wrong. Email mark@ownerdeck.com and he will answer directly.';
+        var reply = (out.j && out.j.reply) || T('k7e647227', 'Something went wrong. Email mark@ownerdeck.com and he will answer directly.');
         bubble(log, 'bot', reply);
         if (out.ok) {
           history.push({ role: 'user', content: text });
@@ -160,7 +176,7 @@
       })
       .catch(function () {
         t.remove();
-        bubble(log, 'bot', 'Could not reach the assistant. Email mark@ownerdeck.com and he will answer directly.');
+        bubble(log, 'bot', T('k85721b54', 'Could not reach the assistant. Email mark@ownerdeck.com and he will answer directly.'), 'k85721b54');
       })
       .finally(function () { busy = false; });
 
@@ -170,7 +186,7 @@
 
   function greet(log) {
     if (log.childElementCount) return;
-    bubble(log, 'bot', "Hi — ask me anything about Ownerdeck. What it costs, how setup works, whether it fits your business.");
+    bubble(log, 'bot', T('k7a1cb1d6', "Hi — ask me anything about Ownerdeck. What it costs, how setup works, whether it fits your business."), 'k7a1cb1d6');
   }
 
   /* ---------- floating launcher ---------- */
@@ -181,9 +197,9 @@
     var wrap = document.createElement('div');
     wrap.className = 'odc';
     wrap.innerHTML =
-      '<button class="odc-launch" type="button" aria-label="Open chat" aria-expanded="false">' +
+      '<button class="odc-launch" type="button" aria-label="' + T('kb0f90548','Open chat') + '" aria-expanded="false">' +
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.9 8.9 0 0 1-3.8-.8L3 21l1.9-5a8.4 8.4 0 0 1 3.7-11.3 8.6 8.6 0 0 1 12.4 6.3Z"/></svg>' +
-        '<span>Ask a question</span>' +
+        '<span data-i18n="k69d9a05e">Ask a question</span>' +
       '</button>' +
       '<div class="odc-panel" role="dialog" aria-label="Ownerdeck chat" hidden>' + panelHTML(false) + '</div>' +
       '<div id="od-turnstile" class="cf-turnstile" data-action="turnstile-spin-v2" style="display:none"></div>';
@@ -226,7 +242,29 @@
     wire(host, log);
   }
 
-  function init() { mountFloating(); mountInline(); }
+  /* Attributes were interpolated when the panel was built, before the
+     language pack had loaded, so they need re-applying on every change. */
+  function retranslate() {
+    repaint();
+    var ins = document.querySelectorAll('.odc-input');
+    for (var n = 0; n < ins.length; n++) {
+      ins[n].placeholder = T('k309d1a72', 'Ask about price, setup, languages…');
+      ins[n].setAttribute('aria-label', T('kcfe1b4b7', 'Your message'));
+    }
+    var x = document.querySelector('.odc-x');
+    if (x) x.setAttribute('aria-label', T('k726da9c1', 'Close chat'));
+    var sd = document.querySelector('.odc-send');
+    if (sd) sd.setAttribute('aria-label', T('k94966d90', 'Send'));
+    var lz = document.querySelector('.odc-launch');
+    if (lz) lz.setAttribute('aria-label', T('kb0f90548', 'Open chat'));
+  }
+
+  function init() {
+    mountFloating();
+    mountInline();
+    retranslate();
+    if (window.OD_i18n && window.OD_i18n.onChange) window.OD_i18n.onChange(retranslate);
+  }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 })();

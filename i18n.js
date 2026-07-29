@@ -30,6 +30,7 @@
   var packs = {};        // code -> dictionary
   var english = null;    // key -> original DOM text
   var current = 'en';
+  var listeners = [];    // notified after every language change
 
   function byCode(c) {
     for (var i = 0; i < LANGS.length; i++) if (LANGS[i].code === c) return LANGS[i];
@@ -63,6 +64,9 @@
     document.documentElement.setAttribute('dir', L.dir);
     paint(L.code === 'en' ? null : packs[L.code]);
     syncButton();
+    for (var i = 0; i < listeners.length; i++) {
+      try { listeners[i](L.code); } catch (e) {}
+    }
   }
 
   function load(code, done) {
@@ -159,6 +163,23 @@
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
+
+  /* Public API, for UI that JavaScript builds after this file has run — the
+     chat widget in particular. Static nodes it creates can carry data-i18n and
+     will be picked up by refresh(); text created later (a greeting, an error)
+     has to ask for a translation directly via t(). */
+  window.OD_i18n = {
+    lang: function () { return current; },
+    t: function (key, fallbackText) {
+      var d = packs[current];
+      return (d && d[key]) || fallbackText;
+    },
+    refresh: function () {
+      captureEnglish();
+      paint(current === 'en' ? null : packs[current]);
+    },
+    onChange: function (fn) { listeners.push(fn); }
+  };
 
   window.OD_setLang = function (c) { set(c, true); };
 })();
