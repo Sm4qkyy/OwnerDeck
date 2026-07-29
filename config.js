@@ -19,9 +19,9 @@ window.OD_CONFIG = {
      much faster for visitors than a big file on the site.
   --------------------------------------------------------------- */
   demo: {
-    type: "",
-    src: "",
-    poster: ""   // optional image shown before play, e.g. "demo-poster.png"
+    type: "mp4",
+    src: "demo.mp4",
+    poster: "demo-poster.jpg"
   },
 
   /* ---------------------------------------------------------------
