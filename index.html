@@ -267,6 +267,44 @@ html.od-js [data-reveal]{transition:opacity .55s cubic-bezier(.2,.7,.2,1), trans
     [style*="gap:28px"]{gap:18px !important}
     [style*="gap:24px"]{gap:16px !important}
   }
+
+  /* ---- Language switcher ---- */
+  .od-lang{position:relative;flex:none}
+  .od-lang-btn{
+    display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 10px;cursor:pointer;
+    background:transparent;border:1px solid var(--line);border-radius:10px;
+    color:var(--ink-mute);font-family:var(--font-sans);font-size:13px;font-weight:600;
+    letter-spacing:.02em;transition:color .18s ease,border-color .18s ease,background .18s ease;
+  }
+  .od-lang-btn:hover{color:var(--ink);border-color:var(--border-strong);background:var(--card)}
+  .od-lang-btn:focus-visible{outline:none;box-shadow:var(--ring)}
+  .od-lang-btn svg{width:16px;height:16px;flex:none}
+  .od-lang-menu{
+    position:absolute;top:calc(100% + 8px);inset-inline-end:0;z-index:60;min-width:150px;
+    display:flex;flex-direction:column;padding:6px;
+    background:var(--card);border:1px solid var(--line);border-radius:12px;
+    box-shadow:0 20px 44px -20px rgba(15,17,21,.35);
+  }
+  .od-lang-menu[hidden]{display:none}
+  .od-lang-menu button{
+    text-align:start;padding:9px 11px;border:none;border-radius:8px;cursor:pointer;
+    background:transparent;color:var(--ink-soft);font-family:var(--font-sans);font-size:14.5px;
+  }
+  .od-lang-menu button:hover{background:var(--paper);color:var(--ink)}
+  .od-lang-menu button[aria-checked="true"]{color:var(--accent-strong);font-weight:600}
+  @media (max-width:400px){ .od-lang-code{display:none} .od-lang-btn{padding:0 9px} }
+
+  /* ---- Right-to-left (Hebrew, Arabic) ----
+     dir=rtl already mirrors text alignment and flex/grid order. These are the
+     things it cannot reach: list indent, the asymmetric "tail" on chat
+     bubbles, and a handful of hardcoded left-aligns. The device screenshots
+     stay LTR on purpose — they are pictures of a real conversation. */
+  [dir="rtl"] ul{padding-left:0;padding-right:20px}
+  [dir="rtl"] [style*="border-radius:16px 16px 16px 5px"]{border-radius:16px 16px 5px 16px !important}
+  [dir="rtl"] [style*="border-radius:16px 16px 5px 16px"]{border-radius:16px 16px 16px 5px !important}
+  [dir="rtl"] [style*="text-align:left"]{text-align:right !important}
+  [dir="rtl"] .od-phone, [dir="rtl"] .od-screen{direction:ltr;text-align:left}
+  [dir="rtl"] .od-lang-menu button{text-align:right}
 </style>
 <script>
 (function(){
@@ -303,15 +341,15 @@ html.od-js [data-reveal]{transition:opacity .55s cubic-bezier(.2,.7,.2,1), trans
       <img class="od-logo od-logo--onLight" src="logo-lockup-dark.png" alt="OwnerDeck" width="667" height="120"><img class="od-logo od-logo--onDark" src="logo-lockup-light.png" alt="" aria-hidden="true" width="667" height="120">
     </a>
     <nav aria-label="Main" style="display:flex;align-items:center;margin-left:auto;justify-content:flex-end">
-      <a href="#how" style="font-size:14.5px;font-weight:500;color:var(--ink-mute)" class="hv-ink">How it works</a>
-      <a href="#handles" style="font-size:14.5px;font-weight:500;color:var(--ink-mute)" class="hv-ink">What it handles</a>
-      <a href="#pricing" style="font-size:14.5px;font-weight:500;color:var(--ink-mute)" class="hv-ink">Pricing</a>
-      <a href="#faq" style="font-size:14.5px;font-weight:500;color:var(--ink-mute)" class="hv-ink">FAQ</a>
+      <a href="#how" style="font-size:14.5px;font-weight:500;color:var(--ink-mute)" class="hv-ink" data-i18n="k9ffdb952">How it works</a>
+      <a href="#handles" style="font-size:14.5px;font-weight:500;color:var(--ink-mute)" class="hv-ink" data-i18n="ka6d9b7ae">What it handles</a>
+      <a href="#pricing" style="font-size:14.5px;font-weight:500;color:var(--ink-mute)" class="hv-ink" data-i18n="ke22ac25b">Pricing</a>
+      <a href="#faq" style="font-size:14.5px;font-weight:500;color:var(--ink-mute)" class="hv-ink" data-i18n="k1fe917b0">FAQ</a>
       <button id="theme-toggle" type="button" class="od-theme-btn" aria-label="Switch to dark mode" aria-pressed="false" title="Toggle dark mode">
         <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
         <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
       </button>
-      <a href="demo.html" class="od-btn od-btn--primary" style="text-decoration:none;flex:none">Watch the demo</a>
+      <a href="demo.html" class="od-btn od-btn--primary" style="text-decoration:none;flex:none" data-i18n="k45e3e7bc">Watch the demo</a>
       <button id="od-burger" class="od-burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="od-mobile-menu">
         <span class="od-burger__box" aria-hidden="true"><span></span><span></span><span></span></span>
       </button>
@@ -319,11 +357,11 @@ html.od-js [data-reveal]{transition:opacity .55s cubic-bezier(.2,.7,.2,1), trans
   </div>
   <div id="od-mobile-menu" class="od-mmenu">
     <nav aria-label="Mobile" class="od-mmenu__inner">
-      <a href="#how">How it works</a>
-      <a href="#handles">What it handles</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#faq">FAQ</a>
-      <a href="demo.html" class="od-btn od-btn--primary od-btn--block od-mmenu__cta">Watch the demo</a>
+      <a href="#how" data-i18n="k9ffdb952">How it works</a>
+      <a href="#handles" data-i18n="ka6d9b7ae">What it handles</a>
+      <a href="#pricing" data-i18n="ke22ac25b">Pricing</a>
+      <a href="#faq" data-i18n="k1fe917b0">FAQ</a>
+      <a href="demo.html" class="od-btn od-btn--primary od-btn--block od-mmenu__cta" data-i18n="k45e3e7bc">Watch the demo</a>
     </nav>
   </div>
 </header>
@@ -335,10 +373,10 @@ html.od-js [data-reveal]{transition:opacity .55s cubic-bezier(.2,.7,.2,1), trans
     <div>
       <div style="display:flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:22px">
         <span style="width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent)"></span>
-        <span style="color:var(--accent-strong)">//</span> Live now — in any language
+        <span style="color:var(--accent-strong)" data-i18n="k7bc0ee63">//</span> Live now — in any language
       </div>
-      <h1 style="font-size:clamp(38px,5.4vw,68px);line-height:1.02;letter-spacing:-0.04em">Every customer message answered — <span style="color:var(--accent-strong)">even at 2am</span>.</h1>
-      <p style="margin-top:24px;font-size:clamp(17px,1.5vw,20px);line-height:1.6;color:var(--ink-soft);max-width:34em">Ownerdeck sits on your own WhatsApp number and replies in about two seconds — in your customer's language, with your real prices and real availability. Then it takes the booking and sends it to your phone.</p>
+      <h1 style="font-size:clamp(38px,5.4vw,68px);line-height:1.02;letter-spacing:-0.04em">Every customer message answered — <span style="color:var(--accent-strong)" data-i18n="kca3ded4c">even at 2am</span>.</h1>
+      <p style="margin-top:24px;font-size:clamp(17px,1.5vw,20px);line-height:1.6;color:var(--ink-soft);max-width:34em" data-i18n="k1ca4aaec">Ownerdeck sits on your own WhatsApp number and replies in about two seconds — in your customer's language, with your real prices and real availability. Then it takes the booking and sends it to your phone.</p>
       <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:34px">
         <a href="demo.html" class="od-btn od-btn--primary od-btn--lg" style="text-decoration:none">Watch the demo
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
@@ -354,21 +392,21 @@ html.od-js [data-reveal]{transition:opacity .55s cubic-bezier(.2,.7,.2,1), trans
             <div style="background:var(--ink-fixed);color:#fff;padding:13px 16px;display:flex;align-items:center;gap:11px">
               <div style="width:34px;height:34px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;flex:none;font-family:var(--font-display);font-size:14px;font-weight:600;color:#04201f">V</div>
               <div style="min-width:0">
-                <div style="font-size:14px;font-weight:600;letter-spacing:-0.01em">Voyage Rent A Car</div>
-                <div style="font-size:11px;color:#9fb0b2;font-family:var(--font-mono);letter-spacing:.03em">online · replies instantly</div>
+                <div style="font-size:14px;font-weight:600;letter-spacing:-0.01em" data-i18n="kf5b89357">Voyage Rent A Car</div>
+                <div style="font-size:11px;color:#9fb0b2;font-family:var(--font-mono);letter-spacing:.03em" data-i18n="k6b780827">online · replies instantly</div>
               </div>
-              <div style="margin-left:auto;font-family:var(--font-mono);font-size:10.5px;color:#9fb0b2">WhatsApp</div>
+              <div style="margin-left:auto;font-family:var(--font-mono);font-size:10.5px;color:#9fb0b2" data-i18n="k8b777ebc">WhatsApp</div>
             </div>
             <div role="img" aria-label="A WhatsApp conversation at 23:47. A customer asks whether an automatic car is available on Saturday and how much for three days. The assistant replies within two seconds with three available automatics, quotes the Nissan March at 45 euro per day, calculates 135 euro for three days, adds 15 euro hotel delivery for a total of 150 euro, and confirms the booking with reference VRC-4182." style="display:flex;flex-direction:column;gap:9px;padding:18px 14px 16px;min-height:430px">
-              <div style="align-self:center;font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;color:var(--ink-faint);background:var(--card);border:1px solid var(--line);padding:3px 10px;border-radius:999px;margin-bottom:2px">SATURDAY, 23:47</div>
-              <div style="align-self:flex-start;max-width:80%;background:var(--card);border:1px solid var(--line);border-radius:16px 16px 16px 5px;padding:10px 13px;font-size:14.5px;line-height:1.45;color:var(--ink);box-shadow:0 1px 2px rgba(15,17,21,.04)">Hi, do you have an automatic for Saturday? How much for 3 days?</div>
+              <div style="align-self:center;font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;color:var(--ink-faint);background:var(--card);border:1px solid var(--line);padding:3px 10px;border-radius:999px;margin-bottom:2px" data-i18n="k91f90fa2">SATURDAY, 23:47</div>
+              <div style="align-self:flex-start;max-width:80%;background:var(--card);border:1px solid var(--line);border-radius:16px 16px 16px 5px;padding:10px 13px;font-size:14.5px;line-height:1.45;color:var(--ink);box-shadow:0 1px 2px rgba(15,17,21,.04)" data-i18n="k8e72eb0e">Hi, do you have an automatic for Saturday? How much for 3 days?</div>
               <div style="align-self:flex-end;display:flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;color:var(--accent-strong)">
                 <span style="width:5px;height:5px;border-radius:50%;background:var(--accent)"></span>REPLIED IN 2s
               </div>
-              <div style="align-self:flex-end;max-width:84%;background:var(--accent-wash);border:1px solid var(--accent-line);border-radius:16px 16px 5px 16px;padding:10px 13px;font-size:14.5px;line-height:1.45;color:var(--ink)">Yes — three automatics free on Saturday 26 July. The cheapest is the Nissan March at €45 a day. Three days is €135. Where should I bring it?</div>
-              <div style="align-self:flex-start;max-width:80%;background:var(--card);border:1px solid var(--line);border-radius:16px 16px 16px 5px;padding:10px 13px;font-size:14.5px;line-height:1.45;color:var(--ink);box-shadow:0 1px 2px rgba(15,17,21,.04)">Our hotel</div>
+              <div style="align-self:flex-end;max-width:84%;background:var(--accent-wash);border:1px solid var(--accent-line);border-radius:16px 16px 5px 16px;padding:10px 13px;font-size:14.5px;line-height:1.45;color:var(--ink)" data-i18n="k23822f6e">Yes — three automatics free on Saturday 26 July. The cheapest is the Nissan March at €45 a day. Three days is €135. Where should I bring it?</div>
+              <div style="align-self:flex-start;max-width:80%;background:var(--card);border:1px solid var(--line);border-radius:16px 16px 16px 5px;padding:10px 13px;font-size:14.5px;line-height:1.45;color:var(--ink);box-shadow:0 1px 2px rgba(15,17,21,.04)" data-i18n="ka1f69ca3">Our hotel</div>
               <div style="align-self:flex-end;max-width:84%;background:var(--accent-wash);border:1px solid var(--accent-line);border-radius:16px 16px 5px 16px;padding:10px 13px;font-size:14.5px;line-height:1.45;color:var(--ink)">Hotel delivery is €15. So €135 + €15 = <strong style="font-weight:600">€150 total</strong>. Insurance is included, deposit €100 on pickup. Shall I hold the car for you?</div>
-              <div style="align-self:flex-start;background:var(--card);border:1px solid var(--line);border-radius:16px 16px 16px 5px;padding:10px 13px;font-size:14.5px;line-height:1.45;color:var(--ink);box-shadow:0 1px 2px rgba(15,17,21,.04)">yes please</div>
+              <div style="align-self:flex-start;background:var(--card);border:1px solid var(--line);border-radius:16px 16px 16px 5px;padding:10px 13px;font-size:14.5px;line-height:1.45;color:var(--ink);box-shadow:0 1px 2px rgba(15,17,21,.04)" data-i18n="k318afef8">yes please</div>
               <div style="align-self:flex-end;max-width:88%;background:var(--accent);border-radius:16px 16px 5px 16px;padding:12px 14px;font-size:14.5px;line-height:1.5;color:#04201f;box-shadow:0 6px 18px -8px color-mix(in srgb, var(--accent) 70%, transparent)">Booked. Nissan March, Sat 26 – Tue 29 July, delivered to your hotel. Reference <strong style="font-weight:600">VRC-4182</strong>. The owner has the details.</div>
               <div style="align-self:center;margin-top:6px;display:flex;align-items:center;gap:8px;background:var(--ink-fixed);color:#eef4f4;border-radius:999px;padding:7px 13px;font-family:var(--font-mono);font-size:10px;letter-spacing:.06em">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
@@ -384,23 +422,23 @@ html.od-js [data-reveal]{transition:opacity .55s cubic-bezier(.2,.7,.2,1), trans
 
 <section style="background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:clamp(64px,8vw,104px) 24px">
   <div data-reveal="1" style="max-width:1140px;margin:0 auto">
-    <div style="font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:20px"><span style="color:var(--accent-strong)">//</span> What peak season actually looks like</div>
-    <h2 style="font-size:clamp(30px,4.2vw,50px);line-height:1.06;max-width:20em">The enquiries don't stop when you do.</h2>
+    <div style="font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:20px"><span style="color:var(--accent-strong)" data-i18n="k7bc0ee63">//</span> What peak season actually looks like</div>
+    <h2 style="font-size:clamp(30px,4.2vw,50px);line-height:1.06;max-width:20em" data-i18n="k382496a8">The enquiries don't stop when you do.</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(20px,2.5vw,28px);margin-top:clamp(40px,5vw,56px)">
       <div style="background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px 26px 30px;box-shadow:0 1px 2px rgba(15,17,21,.04)">
-        <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;color:var(--ink-faint);margin-bottom:16px">01</div>
-        <h3 style="font-size:21px;line-height:1.25;letter-spacing:-0.02em">It's 11pm, and it's the same five questions.</h3>
-        <p style="margin-top:12px;font-size:15.5px;line-height:1.62;color:var(--ink-soft)">Do you have an automatic. How much for three days. Can you deliver to my hotel. Is insurance included. Do I need a deposit. In August that arrives a hundred times a day.</p>
+        <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;color:var(--ink-faint);margin-bottom:16px" data-i18n="k96a3be3c">01</div>
+        <h3 style="font-size:21px;line-height:1.25;letter-spacing:-0.02em" data-i18n="k089efdfe">It's 11pm, and it's the same five questions.</h3>
+        <p style="margin-top:12px;font-size:15.5px;line-height:1.62;color:var(--ink-soft)" data-i18n="k4f3b749f">Do you have an automatic. How much for three days. Can you deliver to my hotel. Is insurance included. Do I need a deposit. In August that arrives a hundred times a day.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px 26px 30px;box-shadow:0 1px 2px rgba(15,17,21,.04)">
-        <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;color:var(--ink-faint);margin-bottom:16px">02</div>
-        <h3 style="font-size:21px;line-height:1.25;letter-spacing:-0.02em">By morning they've booked with someone else.</h3>
-        <p style="margin-top:12px;font-size:15.5px;line-height:1.62;color:var(--ink-soft)">A tourist messages four rental companies at once. The first reply wins the booking. You were asleep — and that is the only reason you lost it.</p>
+        <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;color:var(--ink-faint);margin-bottom:16px" data-i18n="ka2ef406e">02</div>
+        <h3 style="font-size:21px;line-height:1.25;letter-spacing:-0.02em" data-i18n="k9f855735">By morning they've booked with someone else.</h3>
+        <p style="margin-top:12px;font-size:15.5px;line-height:1.62;color:var(--ink-soft)" data-i18n="k75569153">A tourist messages four rental companies at once. The first reply wins the booking. You were asleep — and that is the only reason you lost it.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px 26px 30px;box-shadow:0 1px 2px rgba(15,17,21,.04)">
-        <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;color:var(--ink-faint);margin-bottom:16px">03</div>
-        <h3 style="font-size:21px;line-height:1.25;letter-spacing:-0.02em">Your evening isn't your evening.</h3>
-        <p style="margin-top:12px;font-size:15.5px;line-height:1.62;color:var(--ink-soft)">Changeover day, an airport pickup at six, and the phone buzzing through dinner. There's no night shift, because the night shift is you.</p>
+        <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;color:var(--ink-faint);margin-bottom:16px" data-i18n="ke45ee7ce">03</div>
+        <h3 style="font-size:21px;line-height:1.25;letter-spacing:-0.02em" data-i18n="k2ecac304">Your evening isn't your evening.</h3>
+        <p style="margin-top:12px;font-size:15.5px;line-height:1.62;color:var(--ink-soft)" data-i18n="k8b73a96d">Changeover day, an airport pickup at six, and the phone buzzing through dinner. There's no night shift, because the night shift is you.</p>
       </div>
     </div>
   </div>
@@ -408,11 +446,11 @@ html.od-js [data-reveal]{transition:opacity .55s cubic-bezier(.2,.7,.2,1), trans
 
 <section style="background:var(--card);padding:clamp(64px,8vw,104px) 24px">
   <div data-reveal="1" style="max-width:1140px;margin:0 auto">
-    <div style="font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:20px"><span style="color:var(--accent-strong)">//</span> Before and after</div>
-    <h2 style="font-size:clamp(30px,4.2vw,50px);line-height:1.06;max-width:22em">Same phone. Same number. Different evenings.</h2>
+    <div style="font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:20px"><span style="color:var(--accent-strong)" data-i18n="k7bc0ee63">//</span> Before and after</div>
+    <h2 style="font-size:clamp(30px,4.2vw,50px);line-height:1.06;max-width:22em" data-i18n="kadbf695a">Same phone. Same number. Different evenings.</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;margin-top:clamp(40px,5vw,56px)">
       <div style="background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:30px 28px 32px">
-        <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:22px">Today</div>
+        <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:22px" data-i18n="k1dd1c5fb">Today</div>
         <ul style="display:flex;flex-direction:column;gap:16px">
           <li style="display:flex;gap:12px;align-items:flex-start;font-size:16px;line-height:1.55;color:var(--ink-mute)"><span aria-hidden="true" style="flex:none;margin-top:9px;width:14px;height:1.5px;background:var(--border-strong)"></span>Enquiries sit unread until morning.</li>
           <li style="display:flex;gap:12px;align-items:flex-start;font-size:16px;line-height:1.55;color:var(--ink-mute)"><span aria-hidden="true" style="flex:none;margin-top:9px;width:14px;height:1.5px;background:var(--border-strong)"></span>You type the same five answers again.</li>
@@ -422,7 +460,7 @@ html.od-js [data-reveal]{transition:opacity .55s cubic-bezier(.2,.7,.2,1), trans
         </ul>
       </div>
       <div style="background:var(--card);border:1px solid var(--accent-line);border-radius:16px;padding:30px 28px 32px;box-shadow:0 1px 2px rgba(15,17,21,.05), 0 24px 48px -32px color-mix(in srgb, var(--accent) 45%, transparent)">
-        <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-strong);margin-bottom:22px">With Ownerdeck</div>
+        <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-strong);margin-bottom:22px" data-i18n="k37ff4482">With Ownerdeck</div>
         <ul style="display:flex;flex-direction:column;gap:16px">
           <li style="display:flex;gap:12px;align-items:flex-start;font-size:16px;line-height:1.55;color:var(--ink)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;margin-top:4px"><path d="M20 6 9 17l-5-5"></path></svg>Every message answered in about two seconds.</li>
           <li style="display:flex;gap:12px;align-items:flex-start;font-size:16px;line-height:1.55;color:var(--ink)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;margin-top:4px"><path d="M20 6 9 17l-5-5"></path></svg>Answered in the customer's own language.</li>
@@ -437,83 +475,83 @@ html.od-js [data-reveal]{transition:opacity .55s cubic-bezier(.2,.7,.2,1), trans
 
 <section id="how" style="background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:clamp(64px,8vw,104px) 24px;scroll-margin-top:80px">
   <div data-reveal="1" style="max-width:1140px;margin:0 auto">
-    <div style="font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:20px"><span style="color:var(--accent-strong)">//</span> How it works</div>
-    <h2 style="font-size:clamp(30px,4.2vw,50px);line-height:1.06;max-width:20em">Three steps. You do the first one.</h2>
+    <div style="font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:20px"><span style="color:var(--accent-strong)" data-i18n="k7bc0ee63">//</span> How it works</div>
+    <h2 style="font-size:clamp(30px,4.2vw,50px);line-height:1.06;max-width:20em" data-i18n="kc591890d">Three steps. You do the first one.</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:clamp(20px,2.5vw,28px);margin-top:clamp(40px,5vw,56px)">
       <div style="background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px 26px 30px;box-shadow:0 1px 2px rgba(15,17,21,.04)">
-        <div style="width:40px;height:40px;border-radius:12px;background:var(--accent-wash);border:1px solid var(--accent-line);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:14px;font-weight:500;color:var(--accent-strong);margin-bottom:20px">01</div>
-        <h3 style="font-size:21px;line-height:1.25;letter-spacing:-0.02em">You tell me about your business.</h3>
-        <p style="margin-top:12px;font-size:15.5px;line-height:1.62;color:var(--ink-soft)">Your fleet, your rates, your locations, delivery fees, insurance, deposits, the policies you repeat every day. One conversation, and it's mine to build.</p>
+        <div style="width:40px;height:40px;border-radius:12px;background:var(--accent-wash);border:1px solid var(--accent-line);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:14px;font-weight:500;color:var(--accent-strong);margin-bottom:20px" data-i18n="k96a3be3c">01</div>
+        <h3 style="font-size:21px;line-height:1.25;letter-spacing:-0.02em" data-i18n="k33ab5582">You tell me about your business.</h3>
+        <p style="margin-top:12px;font-size:15.5px;line-height:1.62;color:var(--ink-soft)" data-i18n="k4798ca45">Your fleet, your rates, your locations, delivery fees, insurance, deposits, the policies you repeat every day. One conversation, and it's mine to build.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px 26px 30px;box-shadow:0 1px 2px rgba(15,17,21,.04)">
-        <div style="width:40px;height:40px;border-radius:12px;background:var(--accent-wash);border:1px solid var(--accent-line);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:14px;font-weight:500;color:var(--accent-strong);margin-bottom:20px">02</div>
-        <h3 style="font-size:21px;line-height:1.25;letter-spacing:-0.02em">I set it up on your WhatsApp number.</h3>
-        <p style="margin-top:12px;font-size:15.5px;line-height:1.62;color:var(--ink-soft)">Live in 48 hours. Set up by me, personally, on the number you already give out — not by a signup form you have to figure out alone.</p>
+        <div style="width:40px;height:40px;border-radius:12px;background:var(--accent-wash);border:1px solid var(--accent-line);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:14px;font-weight:500;color:var(--accent-strong);margin-bottom:20px" data-i18n="ka2ef406e">02</div>
+        <h3 style="font-size:21px;line-height:1.25;letter-spacing:-0.02em" data-i18n="k983625dc">I set it up on your WhatsApp number.</h3>
+        <p style="margin-top:12px;font-size:15.5px;line-height:1.62;color:var(--ink-soft)" data-i18n="kdbf4fd81">Live in 48 hours. Set up by me, personally, on the number you already give out — not by a signup form you have to figure out alone.</p>
       </div>
       <div style="background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px 26px 30px;box-shadow:0 1px 2px rgba(15,17,21,.04)">
-        <div style="width:40px;height:40px;border-radius:12px;background:var(--accent-wash);border:1px solid var(--accent-line);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:14px;font-weight:500;color:var(--accent-strong);margin-bottom:20px">03</div>
-        <h3 style="font-size:21px;line-height:1.25;letter-spacing:-0.02em">It answers, and sends you the bookings.</h3>
-        <p style="margin-top:12px;font-size:15.5px;line-height:1.62;color:var(--ink-soft)">You get a message the moment a booking lands, and every conversation is written to a log you can read. Take over any time you want to.</p>
+        <div style="width:40px;height:40px;border-radius:12px;background:var(--accent-wash);border:1px solid var(--accent-line);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:14px;font-weight:500;color:var(--accent-strong);margin-bottom:20px" data-i18n="ke45ee7ce">03</div>
+        <h3 style="font-size:21px;line-height:1.25;letter-spacing:-0.02em" data-i18n="k974ddd02">It answers, and sends you the bookings.</h3>
+        <p style="margin-top:12px;font-size:15.5px;line-height:1.62;color:var(--ink-soft)" data-i18n="kb4754fa1">You get a message the moment a booking lands, and every conversation is written to a log you can read. Take over any time you want to.</p>
       </div>
     </div>
     <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:32px">
-      <span style="font-family:var(--font-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 14px">No app to install</span>
-      <span style="font-family:var(--font-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 14px">No new number</span>
-      <span style="font-family:var(--font-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 14px">Nothing changes for your customers</span>
+      <span style="font-family:var(--font-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 14px" data-i18n="k9a32569a">No app to install</span>
+      <span style="font-family:var(--font-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 14px" data-i18n="k6f0a8164">No new number</span>
+      <span style="font-family:var(--font-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 14px" data-i18n="k4c2d10c7">Nothing changes for your customers</span>
     </div>
   </div>
 </section>
 
 <section id="handles" style="background:var(--card);padding:clamp(64px,8vw,104px) 24px;scroll-margin-top:80px">
   <div data-reveal="1" style="max-width:1140px;margin:0 auto">
-    <div style="font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:20px"><span style="color:var(--accent-strong)">//</span> What it handles</div>
-    <h2 style="font-size:clamp(30px,4.2vw,50px);line-height:1.06;max-width:20em">The repetitive eighty per cent, handled.</h2>
+    <div style="font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:20px"><span style="color:var(--accent-strong)" data-i18n="k7bc0ee63">//</span> What it handles</div>
+    <h2 style="font-size:clamp(30px,4.2vw,50px);line-height:1.06;max-width:20em" data-i18n="ke6c3e470">The repetitive eighty per cent, handled.</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-top:clamp(40px,5vw,56px)">
       <div style="background:var(--card);padding:30px 28px 32px">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
-        <h3 style="margin-top:16px;font-size:18px;line-height:1.3;letter-spacing:-0.02em">Replies in about two seconds, all night</h3>
-        <p style="margin-top:9px;font-size:15px;line-height:1.6;color:var(--ink-soft)">The 2am enquiry gets the same answer as the 2pm one. Nobody waits for you to wake up.</p>
+        <h3 style="margin-top:16px;font-size:18px;line-height:1.3;letter-spacing:-0.02em" data-i18n="kea0ed8e7">Replies in about two seconds, all night</h3>
+        <p style="margin-top:9px;font-size:15px;line-height:1.6;color:var(--ink-soft)" data-i18n="k4bea343a">The 2am enquiry gets the same answer as the 2pm one. Nobody waits for you to wake up.</p>
       </div>
       <div style="background:var(--card);padding:30px 28px 32px">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20"></path><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-        <h3 style="margin-top:16px;font-size:18px;line-height:1.3;letter-spacing:-0.02em">Any language, detected on its own</h3>
-        <p style="margin-top:9px;font-size:15px;line-height:1.6;color:var(--ink-soft)">English, Russian, Greek, German, Arabic, Hebrew and more. If your customer switches mid-chat, it switches too.</p>
+        <h3 style="margin-top:16px;font-size:18px;line-height:1.3;letter-spacing:-0.02em" data-i18n="k54a72484">Any language, detected on its own</h3>
+        <p style="margin-top:9px;font-size:15px;line-height:1.6;color:var(--ink-soft)" data-i18n="k3b7e76e7">English, Russian, Greek, German, Arabic, Hebrew and more. If your customer switches mid-chat, it switches too.</p>
       </div>
       <div style="background:var(--card);padding:30px 28px 32px">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path><path d="m9 16 2 2 4-4"></path></svg>
-        <h3 style="margin-top:16px;font-size:18px;line-height:1.3;letter-spacing:-0.02em">Live availability, your real prices</h3>
-        <p style="margin-top:9px;font-size:15px;line-height:1.6;color:var(--ink-soft)">It reads your own booking system. It never guesses a rate, and never promises a car you don't have free.</p>
+        <h3 style="margin-top:16px;font-size:18px;line-height:1.3;letter-spacing:-0.02em" data-i18n="k2b2766b5">Live availability, your real prices</h3>
+        <p style="margin-top:9px;font-size:15px;line-height:1.6;color:var(--ink-soft)" data-i18n="kcb3d6435">It reads your own booking system. It never guesses a rate, and never promises a car you don't have free.</p>
       </div>
       <div style="background:var(--card);padding:30px 28px 32px">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 7h8M8 12h8M8 16h4"></path></svg>
-        <h3 style="margin-top:16px;font-size:18px;line-height:1.3;letter-spacing:-0.02em">The whole quote, worked out</h3>
-        <p style="margin-top:9px;font-size:15px;line-height:1.6;color:var(--ink-soft)">Days × rate, hotel or airport delivery, extras like insurance. The customer gets one clear total, not a maybe.</p>
+        <h3 style="margin-top:16px;font-size:18px;line-height:1.3;letter-spacing:-0.02em" data-i18n="kd8e5391d">The whole quote, worked out</h3>
+        <p style="margin-top:9px;font-size:15px;line-height:1.6;color:var(--ink-soft)" data-i18n="k0da5c23b">Days × rate, hotel or airport delivery, extras like insurance. The customer gets one clear total, not a maybe.</p>
       </div>
       <div style="background:var(--card);padding:30px 28px 32px">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="11" r="2"></circle><path d="m3 17 5-4 4 3 3-2 6 4"></path></svg>
-        <h3 style="margin-top:16px;font-size:18px;line-height:1.3;letter-spacing:-0.02em">Photos of the actual car</h3>
-        <p style="margin-top:9px;font-size:15px;line-height:1.6;color:var(--ink-soft)">When someone settles on one vehicle, it sends the photos — the way you would if you were holding the phone.</p>
+        <h3 style="margin-top:16px;font-size:18px;line-height:1.3;letter-spacing:-0.02em" data-i18n="kcc3e8608">Photos of the actual car</h3>
+        <p style="margin-top:9px;font-size:15px;line-height:1.6;color:var(--ink-soft)" data-i18n="k09bddf18">When someone settles on one vehicle, it sends the photos — the way you would if you were holding the phone.</p>
       </div>
       <div style="background:var(--card);padding:30px 28px 32px">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
-        <h3 style="margin-top:16px;font-size:18px;line-height:1.3;letter-spacing:-0.02em">The booking, captured properly</h3>
-        <p style="margin-top:9px;font-size:15px;line-height:1.6;color:var(--ink-soft)">Dates, times, pickup and drop-off, name, contact — confirmed back to the customer with a reference number.</p>
+        <h3 style="margin-top:16px;font-size:18px;line-height:1.3;letter-spacing:-0.02em" data-i18n="k37cbc089">The booking, captured properly</h3>
+        <p style="margin-top:9px;font-size:15px;line-height:1.6;color:var(--ink-soft)" data-i18n="k8de1d5b5">Dates, times, pickup and drop-off, name, contact — confirmed back to the customer with a reference number.</p>
       </div>
       <div style="background:var(--card);padding:30px 28px 32px">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
-        <h3 style="margin-top:16px;font-size:18px;line-height:1.3;letter-spacing:-0.02em">You know the second it happens</h3>
-        <p style="margin-top:9px;font-size:15px;line-height:1.6;color:var(--ink-soft)">A message the moment a booking lands, and every conversation written to a sheet you can open whenever you like.</p>
+        <h3 style="margin-top:16px;font-size:18px;line-height:1.3;letter-spacing:-0.02em" data-i18n="k3d686d03">You know the second it happens</h3>
+        <p style="margin-top:9px;font-size:15px;line-height:1.6;color:var(--ink-soft)" data-i18n="kc4a8ff01">A message the moment a booking lands, and every conversation written to a sheet you can open whenever you like.</p>
       </div>
       <div style="background:var(--card);padding:30px 28px 32px">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 3h5v5"></path><path d="M8 21H3v-5"></path><path d="M21 3 3 21"></path></svg>
-        <h3 style="margin-top:16px;font-size:18px;line-height:1.3;letter-spacing:-0.02em">Hand it back to yourself, any time</h3>
-        <p style="margin-top:9px;font-size:15px;line-height:1.6;color:var(--ink-soft)">You reply, it steps back. The conversations that need a person still reach a person — you.</p>
+        <h3 style="margin-top:16px;font-size:18px;line-height:1.3;letter-spacing:-0.02em" data-i18n="kca857890">Hand it back to yourself, any time</h3>
+        <p style="margin-top:9px;font-size:15px;line-height:1.6;color:var(--ink-soft)" data-i18n="k7d288840">You reply, it steps back. The conversations that need a person still reach a person — you.</p>
       </div>
     </div>
 
     <div style="margin-top:clamp(28px,3vw,36px);background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:clamp(28px,3vw,36px)">
-      <h3 style="font-size:19px;line-height:1.3;letter-spacing:-0.02em">And what it doesn't do — plainly</h3>
-      <p style="margin-top:10px;font-size:15.5px;line-height:1.6;color:var(--ink-soft);max-width:58ch">It doesn't take payment. It doesn't handle complaints or accidents. It doesn't manage your contracts or your fleet. And it doesn't replace anyone on your team — the person answering WhatsApp at 11pm is you, and this gives you that hour back.</p>
+      <h3 style="font-size:19px;line-height:1.3;letter-spacing:-0.02em" data-i18n="k11679b31">And what it doesn't do — plainly</h3>
+      <p style="margin-top:10px;font-size:15.5px;line-height:1.6;color:var(--ink-soft);max-width:58ch" data-i18n="k3d90e117">It doesn't take payment. It doesn't handle complaints or accidents. It doesn't manage your contracts or your fleet. And it doesn't replace anyone on your team — the person answering WhatsApp at 11pm is you, and this gives you that hour back.</p>
     </div>
   </div>
 </section>
@@ -522,9 +560,9 @@ html.od-js [data-reveal]{transition:opacity .55s cubic-bezier(.2,.7,.2,1), trans
   <div aria-hidden="true" style="position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.07) 1px, transparent 1px);background-size:24px 24px;mask-image:radial-gradient(110% 70% at 30% 0%, #000 10%, transparent 70%);-webkit-mask-image:radial-gradient(110% 70% at 30% 0%, #000 10%, transparent 70%);pointer-events:none"></div>
   <div style="position:relative;max-width:1140px;margin:0 auto">
     <div data-reveal="1">
-      <div style="font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#9fb0b2;margin-bottom:20px"><span style="color:#38dccd">//</span> Real conversations, real logs</div>
-      <h2 style="font-size:clamp(30px,4.2vw,50px);line-height:1.06;color:#eef4f4;max-width:20em">A customer wrote in Russian. It never switched back.</h2>
-      <p style="margin-top:20px;font-size:17px;line-height:1.65;color:#c8d4d4;max-width:62ch">This is a real conversation from 23 June on Voyage Rent A Car's WhatsApp — from "hello" to a confirmed booking, with a car swapped, a price recalculated and insurance added. No one from the company touched it.</p>
+      <div style="font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#9fb0b2;margin-bottom:20px"><span style="color:#38dccd" data-i18n="k7bc0ee63">//</span> Real conversations, real logs</div>
+      <h2 style="font-size:clamp(30px,4.2vw,50px);line-height:1.06;color:#eef4f4;max-width:20em" data-i18n="k2f31b179">A customer wrote in Russian. It never switched back.</h2>
+      <p style="margin-top:20px;font-size:17px;line-height:1.65;color:#c8d4d4;max-width:62ch" data-i18n="k09d05a6f">This is a real conversation from 23 June on Voyage Rent A Car's WhatsApp — from "hello" to a confirmed booking, with a car swapped, a price recalculated and insurance added. No one from the company touched it.</p>
     </div>
 
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(24px,3vw,32px);margin-top:clamp(40px,5vw,56px);align-items:start">
@@ -535,22 +573,22 @@ html.od-js [data-reveal]{transition:opacity .55s cubic-bezier(.2,.7,.2,1), trans
               <div style="background:#0f1115;color:#fff;padding:13px 16px;display:flex;align-items:center;gap:11px">
                 <div style="width:34px;height:34px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;flex:none;font-family:var(--font-display);font-size:14px;font-weight:600;color:#04201f">V</div>
                 <div style="min-width:0">
-                  <div style="font-size:14px;font-weight:600;letter-spacing:-0.01em">Voyage Rent A Car</div>
-                  <div style="font-size:11px;color:#9fb0b2;font-family:var(--font-mono);letter-spacing:.03em">online · replies instantly</div>
+                  <div style="font-size:14px;font-weight:600;letter-spacing:-0.01em" data-i18n="kf5b89357">Voyage Rent A Car</div>
+                  <div style="font-size:11px;color:#9fb0b2;font-family:var(--font-mono);letter-spacing:.03em" data-i18n="k6b780827">online · replies instantly</div>
                 </div>
-                <div style="margin-left:auto;font-family:var(--font-mono);font-size:10.5px;color:#9fb0b2">RU · auto-detected</div>
+                <div style="margin-left:auto;font-family:var(--font-mono);font-size:10.5px;color:#9fb0b2" data-i18n="k618b62ac">RU · auto-detected</div>
               </div>
               <div role="img" aria-label="A real WhatsApp conversation held entirely in Russian on 23 June. The customer greets the business, says where their hotel is and gives dates 24 to 26, asks for an economy car and picks option one. The assistant quotes the Nissan March at 45 euro per day, calculates two days at 90 euro plus 15 euro delivery for 105 euro total, adds collision damage waiver at 10 euro per day for a new total of 125 euro, and confirms the booking with a reference number." style="display:flex;flex-direction:column;gap:9px;padding:18px 14px 16px">
-                <div style="align-self:center;font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;color:var(--ink-faint);background:var(--card);border:1px solid var(--line);padding:3px 10px;border-radius:999px;margin-bottom:2px">23 JUNE 2026 · 21:12</div>
-                <div style="align-self:flex-start;max-width:80%;background:var(--card);border:1px solid var(--line);border-radius:16px 16px 16px 5px;padding:10px 13px;font-size:14.5px;line-height:1.45;color:var(--ink)">Добрый день</div>
-                <div style="align-self:flex-end;max-width:84%;background:var(--accent-wash);border:1px solid var(--accent-line);border-radius:16px 16px 5px 16px;padding:10px 13px;font-size:14.5px;line-height:1.45;color:var(--ink)">Здравствуйте! Нужна машина в аренду? Скажите даты и где вам её подать.</div>
-                <div style="align-self:flex-start;max-width:80%;background:var(--card);border:1px solid var(--line);border-radius:16px 16px 16px 5px;padding:10px 13px;font-size:14.5px;line-height:1.45;color:var(--ink)">Наш отель</div>
-                <div style="align-self:flex-start;max-width:80%;background:var(--card);border:1px solid var(--line);border-radius:16px 16px 16px 5px;padding:10px 13px;font-size:14.5px;line-height:1.45;color:var(--ink)">24 до 26</div>
-                <div style="align-self:flex-start;max-width:80%;background:var(--card);border:1px solid var(--line);border-radius:16px 16px 16px 5px;padding:10px 13px;font-size:14.5px;line-height:1.45;color:var(--ink)">Эконом</div>
+                <div style="align-self:center;font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;color:var(--ink-faint);background:var(--card);border:1px solid var(--line);padding:3px 10px;border-radius:999px;margin-bottom:2px" data-i18n="kec31a948">23 JUNE 2026 · 21:12</div>
+                <div style="align-self:flex-start;max-width:80%;background:var(--card);border:1px solid var(--line);border-radius:16px 16px 16px 5px;padding:10px 13px;font-size:14.5px;line-height:1.45;color:var(--ink)" data-i18n="k92d2ef01">Добрый день</div>
+                <div style="align-self:flex-end;max-width:84%;background:var(--accent-wash);border:1px solid var(--accent-line);border-radius:16px 16px 5px 16px;padding:10px 13px;font-size:14.5px;line-height:1.45;color:var(--ink)" data-i18n="kfbc3b5d7">Здравствуйте! Нужна машина в аренду? Скажите даты и где вам её подать.</div>
+                <div style="align-self:flex-start;max-width:80%;background:var(--card);border:1px solid var(--line);border-radius:16px 16px 16px 5px;padding:10px 13px;font-size:14.5px;line-height:1.45;color:var(--ink)" data-i18n="ka732fa49">Наш отель</div>
+                <div style="align-self:flex-start;max-width:80%;background:var(--card);border:1px solid var(--line);border-radius:16px 16px 16px 5px;padding:10px 13px;font-size:14.5px;line-height:1.45;color:var(--ink)" data-i18n="kd5748588">24 до 26</div>
+                <div style="align-self:flex-start;max-width:80%;background:var(--card);border:1px solid var(--line);border-radius:16px 16px 16px 5px;padding:10px 13px;font-size:14.5px;line-height:1.45;color:var(--ink)" data-i18n="k3f16fe56">Эконом</div>
                 <div style="align-self:flex-end;max-width:86%;background:var(--accent-wash);border:1px solid var(--accent-line);border-radius:16px 16px 5px 16px;padding:10px 13px;font-size:14.5px;line-height:1.5;color:var(--ink)">Свободны на 24–26 июня, эконом:<br>1. Nissan March — €45/день<br>2. Toyota Vitz — €48/день<br>3. Hyundai i10 — €45/день<br>Какую подать?</div>
                 <div style="align-self:flex-start;background:var(--card);border:1px solid var(--line);border-radius:16px 16px 16px 5px;padding:10px 13px;font-size:14.5px;line-height:1.45;color:var(--ink)">1</div>
                 <div style="align-self:flex-end;max-width:86%;background:var(--accent-wash);border:1px solid var(--accent-line);border-radius:16px 16px 5px 16px;padding:10px 13px;font-size:14.5px;line-height:1.5;color:var(--ink)">Nissan March — €45/день. 2 дня × €45 = €90, + €15 доставка в отель = <strong style="font-weight:600">€105 всего</strong>. Нужна страховка CDW?</div>
-                <div style="align-self:flex-start;max-width:80%;background:var(--card);border:1px solid var(--line);border-radius:16px 16px 16px 5px;padding:10px 13px;font-size:14.5px;line-height:1.45;color:var(--ink)">да, добавьте</div>
+                <div style="align-self:flex-start;max-width:80%;background:var(--card);border:1px solid var(--line);border-radius:16px 16px 16px 5px;padding:10px 13px;font-size:14.5px;line-height:1.45;color:var(--ink)" data-i18n="k1eae8bec">да, добавьте</div>
                 <div style="align-self:flex-end;max-width:86%;background:var(--accent-wash);border:1px solid var(--accent-line);border-radius:16px 16px 5px 16px;padding:10px 13px;font-size:14.5px;line-height:1.45;color:var(--ink)">CDW €10/день × 2 = €20. Новый итог: <strong style="font-weight:600">€125</strong>.</div>
                 <div style="align-self:flex-end;max-width:88%;background:var(--accent);border-radius:16px 16px 5px 16px;padding:12px 14px;font-size:14.5px;line-height:1.5;color:#04201f;box-shadow:0 6px 18px -8px color-mix(in srgb, var(--accent) 70%, transparent)">Забронировано. Номер брони <strong style="font-weight:600">VRC-3907</strong>. Подадим к отелю 24 июня. Хозяин уже получил детали.</div>
               </div>
@@ -561,45 +599,45 @@ html.od-js [data-reveal]{transition:opacity .55s cubic-bezier(.2,.7,.2,1), trans
 
       <div data-reveal="1" style="display:flex;flex-direction:column;gap:clamp(20px,2.5vw,26px)">
         <div style="background:#161d1f;border:1px solid #243032;border-radius:18px;padding:26px 24px 28px;box-shadow:0 1px 0 rgba(255,255,255,.04) inset">
-          <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#6b7b7d;margin-bottom:18px">What the owner got, 21:19</div>
+          <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#6b7b7d;margin-bottom:18px" data-i18n="kd0ea16e6">What the owner got, 21:19</div>
           <div style="background:#0a0e0f;border:1px solid #243032;border-radius:14px;padding:18px 18px 20px">
             <div style="display:flex;align-items:center;gap:9px;margin-bottom:14px">
               <span style="width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb, var(--accent) 20%, transparent)"></span>
-              <span style="font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#38dccd">New booking</span>
+              <span style="font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#38dccd" data-i18n="k8977b2ad">New booking</span>
             </div>
             <div style="display:grid;grid-template-columns:auto 1fr;gap:9px 18px;font-size:14px;line-height:1.5">
-              <span style="font-family:var(--font-mono);font-size:11.5px;color:#6b7b7d;letter-spacing:.04em">REF</span><span style="color:#eef4f4;font-weight:500">VRC-3907</span>
-              <span style="font-family:var(--font-mono);font-size:11.5px;color:#6b7b7d;letter-spacing:.04em">CAR</span><span style="color:#c8d4d4">Nissan March · automatic</span>
-              <span style="font-family:var(--font-mono);font-size:11.5px;color:#6b7b7d;letter-spacing:.04em">DATES</span><span style="color:#c8d4d4">24 – 26 June</span>
-              <span style="font-family:var(--font-mono);font-size:11.5px;color:#6b7b7d;letter-spacing:.04em">DELIVER</span><span style="color:#c8d4d4">Customer's hotel</span>
-              <span style="font-family:var(--font-mono);font-size:11.5px;color:#6b7b7d;letter-spacing:.04em">EXTRAS</span><span style="color:#c8d4d4">CDW insurance, 2 days</span>
-              <span style="font-family:var(--font-mono);font-size:11.5px;color:#6b7b7d;letter-spacing:.04em">TOTAL</span><span style="color:#eef4f4;font-weight:600">€125</span>
-              <span style="font-family:var(--font-mono);font-size:11.5px;color:#6b7b7d;letter-spacing:.04em">LANG</span><span style="color:#c8d4d4">Russian</span>
+              <span style="font-family:var(--font-mono);font-size:11.5px;color:#6b7b7d;letter-spacing:.04em" data-i18n="k727e346d">REF</span><span style="color:#eef4f4;font-weight:500" data-i18n="k6ccd0abc">VRC-3907</span>
+              <span style="font-family:var(--font-mono);font-size:11.5px;color:#6b7b7d;letter-spacing:.04em" data-i18n="kedc860e2">CAR</span><span style="color:#c8d4d4" data-i18n="kcc51dd90">Nissan March · automatic</span>
+              <span style="font-family:var(--font-mono);font-size:11.5px;color:#6b7b7d;letter-spacing:.04em" data-i18n="k33d59b1b">DATES</span><span style="color:#c8d4d4" data-i18n="k78745479">24 – 26 June</span>
+              <span style="font-family:var(--font-mono);font-size:11.5px;color:#6b7b7d;letter-spacing:.04em" data-i18n="kcf37cbd3">DELIVER</span><span style="color:#c8d4d4" data-i18n="ka3141404">Customer's hotel</span>
+              <span style="font-family:var(--font-mono);font-size:11.5px;color:#6b7b7d;letter-spacing:.04em" data-i18n="k60d4e6b3">EXTRAS</span><span style="color:#c8d4d4" data-i18n="k8cb884bf">CDW insurance, 2 days</span>
+              <span style="font-family:var(--font-mono);font-size:11.5px;color:#6b7b7d;letter-spacing:.04em" data-i18n="k3af22b59">TOTAL</span><span style="color:#eef4f4;font-weight:600" data-i18n="k5531655e">€125</span>
+              <span style="font-family:var(--font-mono);font-size:11.5px;color:#6b7b7d;letter-spacing:.04em" data-i18n="k8559c2e5">LANG</span><span style="color:#c8d4d4" data-i18n="kdeba6920">Russian</span>
             </div>
           </div>
-          <p style="margin-top:16px;font-size:14.5px;line-height:1.6;color:#9fb0b2">One message on your phone. Nothing to log in to, nothing to check.</p>
+          <p style="margin-top:16px;font-size:14.5px;line-height:1.6;color:#9fb0b2" data-i18n="kd53f4bbe">One message on your phone. Nothing to log in to, nothing to check.</p>
         </div>
 
         <div style="background:#161d1f;border:1px solid #243032;border-radius:18px;padding:26px 24px 28px">
-          <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#6b7b7d;margin-bottom:18px">Every conversation, logged</div>
+          <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#6b7b7d;margin-bottom:18px" data-i18n="kee3b2cfa">Every conversation, logged</div>
           <div style="display:grid;grid-template-columns:1fr auto auto;gap:0;font-family:var(--font-mono);font-size:12px">
-            <div style="padding:8px 0;color:#6b7b7d;letter-spacing:.06em;border-bottom:1px solid #243032">TIME</div>
-            <div style="padding:8px 12px;color:#6b7b7d;letter-spacing:.06em;border-bottom:1px solid #243032">LANG</div>
-            <div style="padding:8px 0;color:#6b7b7d;letter-spacing:.06em;border-bottom:1px solid #243032;text-align:right">OUTCOME</div>
-            <div style="padding:11px 0;color:#c8d4d4;border-bottom:1px solid #1b2426">23 Jun 21:12</div>
-            <div style="padding:11px 12px;color:#9fb0b2;border-bottom:1px solid #1b2426">RU</div>
-            <div style="padding:11px 0;color:#38dccd;text-align:right;border-bottom:1px solid #1b2426">BOOKED</div>
-            <div style="padding:11px 0;color:#c8d4d4;border-bottom:1px solid #1b2426">24 Jun 02:38</div>
-            <div style="padding:11px 12px;color:#9fb0b2;border-bottom:1px solid #1b2426">EN</div>
-            <div style="padding:11px 0;color:#38dccd;text-align:right;border-bottom:1px solid #1b2426">BOOKED</div>
-            <div style="padding:11px 0;color:#c8d4d4;border-bottom:1px solid #1b2426">24 Jun 09:04</div>
-            <div style="padding:11px 12px;color:#9fb0b2;border-bottom:1px solid #1b2426">DE</div>
-            <div style="padding:11px 0;color:#9fb0b2;text-align:right;border-bottom:1px solid #1b2426">QUOTED</div>
-            <div style="padding:11px 0;color:#c8d4d4">5 Jul 23:51</div>
-            <div style="padding:11px 12px;color:#9fb0b2">PL</div>
-            <div style="padding:11px 0;color:#fbbf24;text-align:right">PASSED TO OWNER</div>
+            <div style="padding:8px 0;color:#6b7b7d;letter-spacing:.06em;border-bottom:1px solid #243032" data-i18n="k346ff32e">TIME</div>
+            <div style="padding:8px 12px;color:#6b7b7d;letter-spacing:.06em;border-bottom:1px solid #243032" data-i18n="k8559c2e5">LANG</div>
+            <div style="padding:8px 0;color:#6b7b7d;letter-spacing:.06em;border-bottom:1px solid #243032;text-align:right" data-i18n="k79988be0">OUTCOME</div>
+            <div style="padding:11px 0;color:#c8d4d4;border-bottom:1px solid #1b2426" data-i18n="ka31fd252">23 Jun 21:12</div>
+            <div style="padding:11px 12px;color:#9fb0b2;border-bottom:1px solid #1b2426" data-i18n="kf9308c5d">RU</div>
+            <div style="padding:11px 0;color:#38dccd;text-align:right;border-bottom:1px solid #1b2426" data-i18n="k4513f6b5">BOOKED</div>
+            <div style="padding:11px 0;color:#c8d4d4;border-bottom:1px solid #1b2426" data-i18n="k287e973c">24 Jun 02:38</div>
+            <div style="padding:11px 12px;color:#9fb0b2;border-bottom:1px solid #1b2426" data-i18n="kaa85f184">EN</div>
+            <div style="padding:11px 0;color:#38dccd;text-align:right;border-bottom:1px solid #1b2426" data-i18n="k4513f6b5">BOOKED</div>
+            <div style="padding:11px 0;color:#c8d4d4;border-bottom:1px solid #1b2426" data-i18n="kf1b47ab0">24 Jun 09:04</div>
+            <div style="padding:11px 12px;color:#9fb0b2;border-bottom:1px solid #1b2426" data-i18n="k3a52f3c2">DE</div>
+            <div style="padding:11px 0;color:#9fb0b2;text-align:right;border-bottom:1px solid #1b2426" data-i18n="ka41713a6">QUOTED</div>
+            <div style="padding:11px 0;color:#c8d4d4" data-i18n="ke4d6edcc">5 Jul 23:51</div>
+            <div style="padding:11px 12px;color:#9fb0b2" data-i18n="k9b7d173b">PL</div>
+            <div style="padding:11px 0;color:#fbbf24;text-align:right" data-i18n="k7ed00923">PASSED TO OWNER</div>
           </div>
-          <p style="margin-top:16px;font-size:14.5px;line-height:1.6;color:#9fb0b2">When a question falls outside what it knows, it says so and passes it to you. That last row is the assistant choosing not to guess.</p>
+          <p style="margin-top:16px;font-size:14.5px;line-height:1.6;color:#9fb0b2" data-i18n="kf63f89c5">When a question falls outside what it knows, it says so and passes it to you. That last row is the assistant choosing not to guess.</p>
         </div>
 
         <a href="demo.html" style="display:inline-flex;align-items:center;justify-content:center;gap:9px;height:48px;padding:0 28px;border-radius:10px;background:var(--accent);color:#04201f;font-family:var(--font-sans);font-size:15px;font-weight:600;letter-spacing:-0.01em;text-decoration:none;box-shadow:0 10px 30px -10px color-mix(in srgb, var(--accent) 75%, transparent)" class="hv-teal">Watch the demo
@@ -612,32 +650,32 @@ html.od-js [data-reveal]{transition:opacity .55s cubic-bezier(.2,.7,.2,1), trans
 
 <section id="pricing" style="background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:clamp(64px,8vw,104px) 24px;scroll-margin-top:80px">
   <div data-reveal="1" style="max-width:1140px;margin:0 auto">
-    <div style="font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:20px"><span style="color:var(--accent-strong)">//</span> Pricing</div>
-    <h2 style="font-size:clamp(30px,4.2vw,50px);line-height:1.06;max-width:20em">€150 a month. That's the whole price.</h2>
-    <p style="margin-top:18px;font-size:17px;line-height:1.65;color:var(--ink-soft);max-width:56ch">One plan, one number, printed on the page. No tiers, no "contact sales", no per-message pricing that grows in August when you can least afford a surprise.</p>
+    <div style="font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:20px"><span style="color:var(--accent-strong)" data-i18n="k7bc0ee63">//</span> Pricing</div>
+    <h2 style="font-size:clamp(30px,4.2vw,50px);line-height:1.06;max-width:20em" data-i18n="kbcaecdd3">€150 a month. That's the whole price.</h2>
+    <p style="margin-top:18px;font-size:17px;line-height:1.65;color:var(--ink-soft);max-width:56ch" data-i18n="k8d2117c3">One plan, one number, printed on the page. No tiers, no "contact sales", no per-message pricing that grows in August when you can least afford a surprise.</p>
 
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(24px,3vw,32px);margin-top:clamp(40px,5vw,56px);align-items:start">
       <div style="background:var(--card);border:1px solid var(--accent-line);border-radius:20px;padding:clamp(30px,3.2vw,40px);box-shadow:0 1px 2px rgba(15,17,21,.05), 0 40px 70px -50px color-mix(in srgb, var(--accent) 60%, transparent)">
         <div style="display:flex;align-items:baseline;gap:10px">
-          <span style="font-family:var(--font-display);font-size:clamp(44px,5vw,60px);font-weight:600;letter-spacing:-0.045em;line-height:1">€150</span>
-          <span style="font-size:16px;color:var(--ink-mute)">/ month</span>
-          <span style="font-size:13.5px;color:var(--ink-faint)">no VAT</span>
+          <span style="font-family:var(--font-display);font-size:clamp(44px,5vw,60px);font-weight:600;letter-spacing:-0.045em;line-height:1" data-i18n="k8206eb42">€150</span>
+          <span style="font-size:16px;color:var(--ink-mute)" data-i18n="kfc2b9c46">/ month</span>
+          <span style="font-size:13.5px;color:var(--ink-faint)" data-i18n="ka3e6812e">no VAT</span>
         </div>
         <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;align-items:center">
-          <span style="font-size:15px;color:var(--ink-mute);text-decoration:line-through">€400 setup</span>
-          <span style="font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-strong);background:var(--accent-wash);border:1px solid var(--accent-line);border-radius:999px;padding:5px 11px">Waived for early operators</span>
+          <span style="font-size:15px;color:var(--ink-mute);text-decoration:line-through" data-i18n="k7182a163">€400 setup</span>
+          <span style="font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-strong);background:var(--accent-wash);border:1px solid var(--accent-line);border-radius:999px;padding:5px 11px" data-i18n="k2258a0f5">Waived for early operators</span>
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:18px;margin-top:26px;padding:16px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-family:var(--font-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)">
-          <span>Live in 48 hours</span><span>Cancel anytime</span><span>No long contract</span>
+          <span data-i18n="kf61ec8c1">Live in 48 hours</span><span data-i18n="kdb0dba28">Cancel anytime</span><span data-i18n="k863b1fa5">No long contract</span>
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:26px">
-          <a href="demo.html" class="od-btn od-btn--primary od-btn--lg" style="text-decoration:none">Watch the demo</a>
+          <a href="demo.html" class="od-btn od-btn--primary od-btn--lg" style="text-decoration:none" data-i18n="k45e3e7bc">Watch the demo</a>
         </div>
-        <p style="margin-top:16px;font-size:13.5px;line-height:1.6;color:var(--ink-mute)">No card, no form, no sales call. Message the demo first and decide after. If it isn't earning its €150, tell me and stop — there's nothing to cancel out of.</p>
+        <p style="margin-top:16px;font-size:13.5px;line-height:1.6;color:var(--ink-mute)" data-i18n="kfd2625ab">No card, no form, no sales call. Message the demo first and decide after. If it isn't earning its €150, tell me and stop — there's nothing to cancel out of.</p>
       </div>
 
       <div style="background:var(--card);border:1px solid var(--line);border-radius:20px;padding:clamp(30px,3.2vw,40px)">
-        <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:22px">Everything included</div>
+        <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:22px" data-i18n="kfdfbea1e">Everything included</div>
         <ul style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px 24px">
           <li style="display:flex;gap:11px;align-items:flex-start;font-size:15px;line-height:1.5;color:var(--ink)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;margin-top:4px"><path d="M20 6 9 17l-5-5"></path></svg>Setup on your existing WhatsApp number</li>
           <li style="display:flex;gap:11px;align-items:flex-start;font-size:15px;line-height:1.5;color:var(--ink)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;margin-top:4px"><path d="M20 6 9 17l-5-5"></path></svg>Trained on your fleet, rates, locations and policies</li>
@@ -657,96 +695,96 @@ html.od-js [data-reveal]{transition:opacity .55s cubic-bezier(.2,.7,.2,1), trans
 
 <section id="faq" style="background:var(--card);padding:clamp(64px,8vw,104px) 24px;scroll-margin-top:80px">
   <div data-reveal="1" style="max-width:880px;margin:0 auto">
-    <div style="font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:20px"><span style="color:var(--accent-strong)">//</span> Questions owners actually ask</div>
-    <h2 style="font-size:clamp(30px,4.2vw,50px);line-height:1.06">The objections, answered straight.</h2>
+    <div style="font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:20px"><span style="color:var(--accent-strong)" data-i18n="k7bc0ee63">//</span> Questions owners actually ask</div>
+    <h2 style="font-size:clamp(30px,4.2vw,50px);line-height:1.06" data-i18n="ke7d1b141">The objections, answered straight.</h2>
     <div style="margin-top:clamp(36px,4vw,48px);border-top:1px solid var(--line)">
 
       <details style="border-bottom:1px solid var(--line)">
         <summary style="display:flex;align-items:center;gap:16px;padding:22px 4px;font-family:var(--font-display);font-size:18px;font-weight:600;letter-spacing:-0.02em;color:var(--ink)">
-          <span style="flex:1">Do I need a new phone number?</span>
+          <span style="flex:1" data-i18n="k8588f505">Do I need a new phone number?</span>
           <svg data-chev="1" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ink-faint)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;transition:transform 200ms cubic-bezier(.2,.7,.2,1)"><path d="m6 9 6 6 6-6"></path></svg>
         </summary>
-        <p style="padding:0 40px 24px 4px;font-size:16px;line-height:1.65;color:var(--ink-soft)">No. It runs on the WhatsApp number you already give out. Your customers message the same number they always have, and nothing on your business cards or listings has to change.</p>
+        <p style="padding:0 40px 24px 4px;font-size:16px;line-height:1.65;color:var(--ink-soft)" data-i18n="k0be81be8">No. It runs on the WhatsApp number you already give out. Your customers message the same number they always have, and nothing on your business cards or listings has to change.</p>
       </details>
 
       <details style="border-bottom:1px solid var(--line)">
         <summary style="display:flex;align-items:center;gap:16px;padding:22px 4px;font-family:var(--font-display);font-size:18px;font-weight:600;letter-spacing:-0.02em;color:var(--ink)">
-          <span style="flex:1">What if it says something wrong?</span>
+          <span style="flex:1" data-i18n="keeb1fe42">What if it says something wrong?</span>
           <svg data-chev="1" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ink-faint)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;transition:transform 200ms cubic-bezier(.2,.7,.2,1)"><path d="m6 9 6 6 6-6"></path></svg>
         </summary>
-        <p style="padding:0 40px 24px 4px;font-size:16px;line-height:1.65;color:var(--ink-soft)">It quotes only from your own prices and your own availability — it doesn't answer from memory. When a question falls outside what you've told it, it says so and passes the conversation to you instead of guessing. You'll see those in the log.</p>
+        <p style="padding:0 40px 24px 4px;font-size:16px;line-height:1.65;color:var(--ink-soft)" data-i18n="kba512752">It quotes only from your own prices and your own availability — it doesn't answer from memory. When a question falls outside what you've told it, it says so and passes the conversation to you instead of guessing. You'll see those in the log.</p>
       </details>
 
       <details style="border-bottom:1px solid var(--line)">
         <summary style="display:flex;align-items:center;gap:16px;padding:22px 4px;font-family:var(--font-display);font-size:18px;font-weight:600;letter-spacing:-0.02em;color:var(--ink)">
-          <span style="flex:1">Can I take over a conversation?</span>
+          <span style="flex:1" data-i18n="k0f023157">Can I take over a conversation?</span>
           <svg data-chev="1" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ink-faint)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;transition:transform 200ms cubic-bezier(.2,.7,.2,1)"><path d="m6 9 6 6 6-6"></path></svg>
         </summary>
-        <p style="padding:0 40px 24px 4px;font-size:16px;line-height:1.65;color:var(--ink-soft)">Yes, any time. You reply in the chat and it steps back. Hand it back whenever you're done. It's your WhatsApp — you're never locked out of your own conversation.</p>
+        <p style="padding:0 40px 24px 4px;font-size:16px;line-height:1.65;color:var(--ink-soft)" data-i18n="k1a0f4a78">Yes, any time. You reply in the chat and it steps back. Hand it back whenever you're done. It's your WhatsApp — you're never locked out of your own conversation.</p>
       </details>
 
       <details style="border-bottom:1px solid var(--line)">
         <summary style="display:flex;align-items:center;gap:16px;padding:22px 4px;font-family:var(--font-display);font-size:18px;font-weight:600;letter-spacing:-0.02em;color:var(--ink)">
-          <span style="flex:1">What languages does it speak?</span>
+          <span style="flex:1" data-i18n="kaf65fffb">What languages does it speak?</span>
           <svg data-chev="1" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ink-faint)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;transition:transform 200ms cubic-bezier(.2,.7,.2,1)"><path d="m6 9 6 6 6-6"></path></svg>
         </summary>
-        <p style="padding:0 40px 24px 4px;font-size:16px;line-height:1.65;color:var(--ink-soft)">It detects the customer's language and replies in it — English, Russian, Greek, German, Polish, Arabic, Hebrew and more. If a customer starts in English and switches to Russian halfway, it switches too, in the same thread.</p>
+        <p style="padding:0 40px 24px 4px;font-size:16px;line-height:1.65;color:var(--ink-soft)" data-i18n="k80261a1e">It detects the customer's language and replies in it — English, Russian, Greek, German, Polish, Arabic, Hebrew and more. If a customer starts in English and switches to Russian halfway, it switches too, in the same thread.</p>
       </details>
 
       <details style="border-bottom:1px solid var(--line)">
         <summary style="display:flex;align-items:center;gap:16px;padding:22px 4px;font-family:var(--font-display);font-size:18px;font-weight:600;letter-spacing:-0.02em;color:var(--ink)">
-          <span style="flex:1">Does it work with my booking system?</span>
+          <span style="flex:1" data-i18n="k3463d963">Does it work with my booking system?</span>
           <svg data-chev="1" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ink-faint)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;transition:transform 200ms cubic-bezier(.2,.7,.2,1)"><path d="m6 9 6 6 6-6"></path></svg>
         </summary>
-        <p style="padding:0 40px 24px 4px;font-size:16px;line-height:1.65;color:var(--ink-soft)">It reads live availability and prices from the system you already use, so it can't sell a car that's out. If your availability lives in a spreadsheet, that works too. We check yours on the first call, before you commit to anything.</p>
+        <p style="padding:0 40px 24px 4px;font-size:16px;line-height:1.65;color:var(--ink-soft)" data-i18n="k6b1720b6">It reads live availability and prices from the system you already use, so it can't sell a car that's out. If your availability lives in a spreadsheet, that works too. We check yours on the first call, before you commit to anything.</p>
       </details>
 
       <details style="border-bottom:1px solid var(--line)">
         <summary style="display:flex;align-items:center;gap:16px;padding:22px 4px;font-family:var(--font-display);font-size:18px;font-weight:600;letter-spacing:-0.02em;color:var(--ink)">
-          <span style="flex:1">How long does setup take?</span>
+          <span style="flex:1" data-i18n="k7f6a6aa9">How long does setup take?</span>
           <svg data-chev="1" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ink-faint)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;transition:transform 200ms cubic-bezier(.2,.7,.2,1)"><path d="m6 9 6 6 6-6"></path></svg>
         </summary>
-        <p style="padding:0 40px 24px 4px;font-size:16px;line-height:1.65;color:var(--ink-soft)">Live in 48 hours. You tell me your fleet, rates, locations and policies once — that's your part. I build and test it, then switch it on.</p>
+        <p style="padding:0 40px 24px 4px;font-size:16px;line-height:1.65;color:var(--ink-soft)" data-i18n="k2cc77c3a">Live in 48 hours. You tell me your fleet, rates, locations and policies once — that's your part. I build and test it, then switch it on.</p>
       </details>
 
       <details style="border-bottom:1px solid var(--line)">
         <summary style="display:flex;align-items:center;gap:16px;padding:22px 4px;font-family:var(--font-display);font-size:18px;font-weight:600;letter-spacing:-0.02em;color:var(--ink)">
-          <span style="flex:1">What happens when my prices change?</span>
+          <span style="flex:1" data-i18n="k0863f5d9">What happens when my prices change?</span>
           <svg data-chev="1" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ink-faint)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;transition:transform 200ms cubic-bezier(.2,.7,.2,1)"><path d="m6 9 6 6 6-6"></path></svg>
         </summary>
-        <p style="padding:0 40px 24px 4px;font-size:16px;line-height:1.65;color:var(--ink-soft)">Change them where you already keep them. It quotes from the live source every time, so a July rate never turns up in August. Policy changes — a new delivery fee, a different deposit — you message me and it's done.</p>
+        <p style="padding:0 40px 24px 4px;font-size:16px;line-height:1.65;color:var(--ink-soft)" data-i18n="k66f76dd8">Change them where you already keep them. It quotes from the live source every time, so a July rate never turns up in August. Policy changes — a new delivery fee, a different deposit — you message me and it's done.</p>
       </details>
 
       <details style="border-bottom:1px solid var(--line)">
         <summary style="display:flex;align-items:center;gap:16px;padding:22px 4px;font-family:var(--font-display);font-size:18px;font-weight:600;letter-spacing:-0.02em;color:var(--ink)">
-          <span style="flex:1">Is my customer data safe?</span>
+          <span style="flex:1" data-i18n="kfd6fccdf">Is my customer data safe?</span>
           <svg data-chev="1" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ink-faint)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;transition:transform 200ms cubic-bezier(.2,.7,.2,1)"><path d="m6 9 6 6 6-6"></path></svg>
         </summary>
-        <p style="padding:0 40px 24px 4px;font-size:16px;line-height:1.65;color:var(--ink-soft)">Conversations stay in your WhatsApp and in a log only you and I can open. Nothing is sold, nothing is shared with other operators, and nothing is used to train anything. If you leave, the log is yours.</p>
+        <p style="padding:0 40px 24px 4px;font-size:16px;line-height:1.65;color:var(--ink-soft)" data-i18n="k239f942a">Conversations stay in your WhatsApp and in a log only you and I can open. Nothing is sold, nothing is shared with other operators, and nothing is used to train anything. If you leave, the log is yours.</p>
       </details>
 
       <details style="border-bottom:1px solid var(--line)">
         <summary style="display:flex;align-items:center;gap:16px;padding:22px 4px;font-family:var(--font-display);font-size:18px;font-weight:600;letter-spacing:-0.02em;color:var(--ink)">
-          <span style="flex:1">What if I want to stop?</span>
+          <span style="flex:1" data-i18n="k5c551291">What if I want to stop?</span>
           <svg data-chev="1" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ink-faint)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;transition:transform 200ms cubic-bezier(.2,.7,.2,1)"><path d="m6 9 6 6 6-6"></path></svg>
         </summary>
-        <p style="padding:0 40px 24px 4px;font-size:16px;line-height:1.65;color:var(--ink-soft)">Message me and it's off. No notice period, no contract, no exit fee. Your number, your customers and your conversation history stay exactly where they are.</p>
+        <p style="padding:0 40px 24px 4px;font-size:16px;line-height:1.65;color:var(--ink-soft)" data-i18n="k9551b558">Message me and it's off. No notice period, no contract, no exit fee. Your number, your customers and your conversation history stay exactly where they are.</p>
       </details>
 
       <details style="border-bottom:1px solid var(--line)">
         <summary style="display:flex;align-items:center;gap:16px;padding:22px 4px;font-family:var(--font-display);font-size:18px;font-weight:600;letter-spacing:-0.02em;color:var(--ink)">
-          <span style="flex:1">Does it work for boats, buggies and transfers, not just cars?</span>
+          <span style="flex:1" data-i18n="kbb032a05">Does it work for boats, buggies and transfers, not just cars?</span>
           <svg data-chev="1" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ink-faint)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;transition:transform 200ms cubic-bezier(.2,.7,.2,1)"><path d="m6 9 6 6 6-6"></path></svg>
         </summary>
-        <p style="padding:0 40px 24px 4px;font-size:16px;line-height:1.65;color:var(--ink-soft)">Yes. Car rental is where it's running today, so that's the one I can show you. Anything with availability, a price and a booking works the same way — buggy and quad rental, boat charters, airport transfers, villa changeovers.</p>
+        <p style="padding:0 40px 24px 4px;font-size:16px;line-height:1.65;color:var(--ink-soft)" data-i18n="ka14cf51e">Yes. Car rental is where it's running today, so that's the one I can show you. Anything with availability, a price and a booking works the same way — buggy and quad rental, boat charters, airport transfers, villa changeovers.</p>
       </details>
 
       <details style="border-bottom:1px solid var(--line)">
         <summary style="display:flex;align-items:center;gap:16px;padding:22px 4px;font-family:var(--font-display);font-size:18px;font-weight:600;letter-spacing:-0.02em;color:var(--ink)">
-          <span style="flex:1">Who is behind this?</span>
+          <span style="flex:1" data-i18n="k494142f1">Who is behind this?</span>
           <svg data-chev="1" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ink-faint)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;transition:transform 200ms cubic-bezier(.2,.7,.2,1)"><path d="m6 9 6 6 6-6"></path></svg>
         </summary>
-        <p style="padding:0 40px 24px 4px;font-size:16px;line-height:1.65;color:var(--ink-soft)">Mark. I build each assistant and set it up personally — I'm not reselling someone else's platform. You'll have my WhatsApp, and you'll be talking to the person who built the thing.</p>
+        <p style="padding:0 40px 24px 4px;font-size:16px;line-height:1.65;color:var(--ink-soft)" data-i18n="ka623a957">Mark. I build each assistant and set it up personally — I'm not reselling someone else's platform. You'll have my WhatsApp, and you'll be talking to the person who built the thing.</p>
       </details>
 
     </div>
@@ -756,14 +794,14 @@ html.od-js [data-reveal]{transition:opacity .55s cubic-bezier(.2,.7,.2,1), trans
 <section style="background:var(--ink-fixed);padding:clamp(72px,9vw,120px) 24px;position:relative;overflow:hidden">
   <div aria-hidden="true" style="position:absolute;bottom:-260px;right:-160px;width:640px;height:640px;border-radius:50%;background:radial-gradient(circle, color-mix(in srgb, var(--accent) 26%, transparent) 0%, transparent 66%);filter:blur(20px);pointer-events:none"></div>
   <div data-reveal="1" style="position:relative;max-width:820px;margin:0 auto;text-align:center">
-    <h2 style="font-size:clamp(32px,4.6vw,56px);line-height:1.04;color:#fff;letter-spacing:-0.04em">Don't take my word for it. Message it.</h2>
-    <p style="margin-top:22px;font-size:clamp(16px,1.5vw,19px);line-height:1.6;color:#c8d4d4;max-width:46em;margin-left:auto;margin-right:auto">Ask about a car for Saturday. Ask the price. Ask in Russian. You'll have an answer in about two seconds — the same answer your customers would get at 2am.</p>
+    <h2 style="font-size:clamp(32px,4.6vw,56px);line-height:1.04;color:#fff;letter-spacing:-0.04em" data-i18n="kc146ea86">Don't take my word for it. Message it.</h2>
+    <p style="margin-top:22px;font-size:clamp(16px,1.5vw,19px);line-height:1.6;color:#c8d4d4;max-width:46em;margin-left:auto;margin-right:auto" data-i18n="kae83ec28">Ask about a car for Saturday. Ask the price. Ask in Russian. You'll have an answer in about two seconds — the same answer your customers would get at 2am.</p>
     <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:36px">
       <a href="demo.html" style="display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 30px;border-radius:12px;background:var(--accent);color:#04201f;font-size:16px;font-weight:600;letter-spacing:-0.01em;text-decoration:none;box-shadow:0 14px 40px -12px color-mix(in srgb, var(--accent) 80%, transparent)" class="hv-teal">Watch the demo
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
       </a>
     </div>
-    <p style="margin-top:20px;font-family:var(--font-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:#6b7b7d">Opens WhatsApp · no form · no sign-up</p>
+    <p style="margin-top:20px;font-family:var(--font-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:#6b7b7d" data-i18n="kc736855b">Opens WhatsApp · no form · no sign-up</p>
   </div>
 </section>
 
@@ -773,38 +811,38 @@ html.od-js [data-reveal]{transition:opacity .55s cubic-bezier(.2,.7,.2,1), trans
       <div style="display:flex;align-items:center;gap:10px">
         <img class="od-logo od-logo--onLight od-logo--foot" src="logo-lockup-dark.png" alt="OwnerDeck" width="667" height="120"><img class="od-logo od-logo--onDark od-logo--foot" src="logo-lockup-light.png" alt="" aria-hidden="true" width="667" height="120">
       </div>
-      <p style="margin-top:14px;font-size:14.5px;line-height:1.6;color:var(--ink-mute);max-width:30ch">A WhatsApp assistant for owner-run rental, tourism and appointment businesses. Any language, any timezone.</p>
+      <p style="margin-top:14px;font-size:14.5px;line-height:1.6;color:var(--ink-mute);max-width:30ch" data-i18n="k3f7c9a53">A WhatsApp assistant for owner-run rental, tourism and appointment businesses. Any language, any timezone.</p>
     </div>
     <div>
-      <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px">Page</div>
+      <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px" data-i18n="k193cfc9b">Page</div>
       <ul style="display:flex;flex-direction:column;gap:10px">
-        <li><a href="#how" style="font-size:14.5px;color:var(--ink-soft)" class="hv-ink">How it works</a></li>
-        <li><a href="#handles" style="font-size:14.5px;color:var(--ink-soft)" class="hv-ink">What it handles</a></li>
-        <li><a href="#pricing" style="font-size:14.5px;color:var(--ink-soft)" class="hv-ink">Pricing</a></li>
-        <li><a href="#faq" style="font-size:14.5px;color:var(--ink-soft)" class="hv-ink">FAQ</a></li>
+        <li><a href="#how" style="font-size:14.5px;color:var(--ink-soft)" class="hv-ink" data-i18n="k9ffdb952">How it works</a></li>
+        <li><a href="#handles" style="font-size:14.5px;color:var(--ink-soft)" class="hv-ink" data-i18n="ka6d9b7ae">What it handles</a></li>
+        <li><a href="#pricing" style="font-size:14.5px;color:var(--ink-soft)" class="hv-ink" data-i18n="ke22ac25b">Pricing</a></li>
+        <li><a href="#faq" style="font-size:14.5px;color:var(--ink-soft)" class="hv-ink" data-i18n="k1fe917b0">FAQ</a></li>
       </ul>
     </div>
     <div>
-      <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px">Talk to me</div>
+      <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px" data-i18n="keb49a5ec">Talk to me</div>
       <ul style="display:flex;flex-direction:column;gap:10px">
-        <li><a href="mailto:mark@ownerdeck.com" style="font-size:14.5px;color:var(--ink-soft)" class="hv-ink">mark@ownerdeck.com</a></li>
-        <li><a href="https://www.instagram.com/ownerdeckcy/" style="font-size:14.5px;color:var(--ink-soft)" class="hv-ink">Instagram @ownerdeckcy</a></li>
+        <li><a href="mailto:mark@ownerdeck.com" style="font-size:14.5px;color:var(--ink-soft)" class="hv-ink" data-i18n="k25b032e0">mark@ownerdeck.com</a></li>
+        <li><a href="https://www.instagram.com/ownerdeckcy/" style="font-size:14.5px;color:var(--ink-soft)" class="hv-ink" data-i18n="kbe0ba2bb">Instagram @ownerdeckcy</a></li>
       </ul>
     </div>
     <div>
-      <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px">Legal</div>
+      <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px" data-i18n="ka10a9bcd">Legal</div>
       <ul style="display:flex;flex-direction:column;gap:10px">
-        <li><a href="privacy.html" style="font-size:14.5px;color:var(--ink-soft)" class="hv-ink">Privacy</a></li>
-        <li><a href="terms.html" style="font-size:14.5px;color:var(--ink-soft)" class="hv-ink">Terms</a></li>
+        <li><a href="privacy.html" style="font-size:14.5px;color:var(--ink-soft)" class="hv-ink" data-i18n="kc5f29bb3">Privacy</a></li>
+        <li><a href="terms.html" style="font-size:14.5px;color:var(--ink-soft)" class="hv-ink" data-i18n="k6f1bf85c">Terms</a></li>
 <!-- "Terms" link removed: terms.html does not exist yet and would 404.
              Re-add this line once the page is written:
-             <li><a href="terms.html" style="font-size:14.5px;color:var(--ink-soft)" class="hv-ink">Terms</a></li> -->
+             <li><a href="terms.html" style="font-size:14.5px;color:var(--ink-soft)" class="hv-ink" data-i18n="k6f1bf85c">Terms</a></li> -->
       </ul>
     </div>
   </div>
   <div style="max-width:1140px;margin:clamp(32px,4vw,44px) auto 0;padding-top:22px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;font-family:var(--font-mono);font-size:11.5px;letter-spacing:.05em;color:var(--ink-faint)">
-    <span>© 2026 Ownerdeck</span>
-    <span>Any language · any timezone · on your own number</span>
+    <span data-i18n="k9aaa9d9f">© 2026 Ownerdeck</span>
+    <span data-i18n="ke81a21cc">Any language · any timezone · on your own number</span>
   </div>
 </footer>
 
@@ -921,5 +959,6 @@ html.od-js [data-reveal]{transition:opacity .55s cubic-bezier(.2,.7,.2,1), trans
 <script src="config.js?v=20260701"></script>
 <script src="chat-widget.js?v=20260901"></script>
 <script src="analytics-events.js?v=20260701"></script>
+<script src="i18n.js?v=20260728"></script>
 </body>
 </html>
