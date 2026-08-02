@@ -186,7 +186,7 @@
 
   function greet(log) {
     if (log.childElementCount) return;
-    bubble(log, 'bot', T('k7a1cb1d6', "Hi — ask me anything about Ownerdeck. What it costs, how setup works, whether it fits your business."), 'k7a1cb1d6');
+    bubble(log, 'bot', T('k3fc90439', "Hi — I'm an AI assistant, not a person. Ask me anything about Ownerdeck: what it costs, how setup works, whether it fits your business."), 'k3fc90439');
   }
 
   /* ---------- floating launcher ---------- */

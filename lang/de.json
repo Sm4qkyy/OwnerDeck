@@ -128,7 +128,6 @@
  "k81b934cf": "Ownerdeck fragen",
  "k309d1a72": "Fragen Sie nach Preis, Einrichtung, Sprachen…",
  "k07fe50da": "KI-Assistent · beantwortet nur Fragen zu Ownerdeck",
- "k7a1cb1d6": "Hallo — fragen Sie mich alles über Ownerdeck. Was es kostet, wie die Einrichtung läuft, ob es zu Ihrem Betrieb passt.",
  "k85721b54": "Der Assistent war nicht erreichbar. Schreiben Sie an mark@ownerdeck.com, dann antwortet er direkt.",
  "k7aa1c0db": "So weit geht die Demo — schreiben Sie an mark@ownerdeck.com und Sie bekommen eine klare Antwort zu Ihrem eigenen Fall.",
  "k7e647227": "Etwas ist schiefgelaufen. Schreiben Sie an mark@ownerdeck.com, dann antwortet er direkt.",
@@ -136,5 +135,6 @@
  "k726da9c1": "Chat schließen",
  "kcfe1b4b7": "Ihre Nachricht",
  "k94966d90": "Senden",
- "kbe11c74c": "Loslegen"
+ "kbe11c74c": "Loslegen",
+ "k3fc90439": "Hallo — ich bin ein KI-Assistent, kein Mensch. Fragen Sie mich alles über Ownerdeck: was es kostet, wie die Einrichtung läuft, ob es zu Ihrem Betrieb passt."
 }
