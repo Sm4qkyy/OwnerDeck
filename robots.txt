@@ -1,4 +1,86 @@
+# ownerdeck.com
+#
+# Two kinds of crawler show up here and they are not the same thing.
+#
+# Search and answer engines send people back. When an owner-operator asks an
+# assistant "who builds WhatsApp booking bots for car rental", these are what
+# decide whether Ownerdeck is in the answer. They are allowed.
+#
+# Training-only scrapers take the content and send nothing back. They are not.
+#
+# Content-Signal below is an express reservation of rights under Article 4 of
+# EU Directive 2019/790. It permits search and reference use and withholds
+# permission for training, independently of the crawl rules.
+
 User-agent: *
+Content-Signal: search=yes,ai-input=yes,ai-train=no,use=reference
 Allow: /
+
+# ---- Search and answer engines: allowed ----
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# ---- Training-only scrapers: not allowed ----
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: Amazonbot
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: meta-externalagent
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+User-agent: Diffbot
+Disallow: /
+
+User-agent: Omgilibot
+Disallow: /
 
 Sitemap: https://www.ownerdeck.com/sitemap.xml
