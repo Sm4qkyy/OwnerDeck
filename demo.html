@@ -4,6 +4,14 @@
 <meta charset="utf-8">
 <title>See it work — Ownerdeck</title>
 <meta name="description" content="Watch Ownerdeck handle a real enquiry, try it yourself, then get in touch — three quick steps.">
+<link rel="canonical" href="https://www.ownerdeck.com/demo.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.ownerdeck.com/demo.html">
+<meta property="og:site_name" content="Ownerdeck">
+<meta property="og:title" content="See Ownerdeck work">
+<meta property="og:description" content="Watch it handle a real enquiry, try it yourself, then ask the live assistant anything.">
+<meta property="og:image" content="https://www.ownerdeck.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <script>
@@ -95,7 +103,11 @@ main{flex:1;padding:26px 0 76px}
 @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .kicker{font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:14px;text-align:center}
 .kicker .s{color:var(--accent-strong)}
-h1{font-size:clamp(27px,4vw,40px);line-height:1.08;text-align:center;margin-bottom:12px}
+h1,.step-h{font-size:clamp(27px,4vw,40px);line-height:1.08;text-align:center;margin-bottom:12px}
+/* One H1 per document. The four step headings are peers of each other, not
+   four page titles, so they are h2 and the page's real h1 sits in the header
+   for assistive tech. */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 .lede{font-size:16.5px;color:var(--ink-soft);text-align:center;max-width:560px;margin:0 auto 34px;line-height:1.6}
 
 .nav-row{display:flex;gap:12px;justify-content:center;margin-top:36px;flex-wrap:wrap}
@@ -213,11 +225,12 @@ footer{border-top:1px solid var(--line);background:var(--paper);padding:26px 0;f
 </div>
 
 <main>
+  <h1 class="sr-only">See Ownerdeck work — watch it, try it, then get in touch</h1>
   <div class="wrap">
 
     <section class="pane on" data-pane="1">
       <div class="kicker"><span class="s">//</span> Step 1 · See it live</div>
-      <h1>Watch it handle a real enquiry.</h1>
+      <h2 class="step-h">Watch it handle a real enquiry.</h2>
       <p class="lede">A short recording of Ownerdeck answering, quoting a real price and closing a booking — start to finish, with nobody typing.</p>
       <div id="od-video"></div>
       <div class="nav-row">
@@ -228,7 +241,7 @@ footer{border-top:1px solid var(--line);background:var(--paper);padding:26px 0;f
 
     <section class="pane" data-pane="2">
       <div class="kicker"><span class="s">//</span> Step 2 · Try it yourself</div>
-      <h1>Have a conversation with it.</h1>
+      <h2 class="step-h">Have a conversation with it.</h2>
       <p class="lede">A preset demo standing in for a tour company. Tap a reply and watch how it answers — including in another language.</p>
       <div id="od-bot" class="bot-shell"></div>
       <div class="nav-row">
@@ -241,7 +254,7 @@ footer{border-top:1px solid var(--line);background:var(--paper);padding:26px 0;f
 
     <section class="pane" data-pane="3">
       <div class="kicker"><span class="s">//</span> Step 3 · Ask it anything</div>
-      <h1>Now ask it yourself.</h1>
+      <h2 class="step-h">Now ask it yourself.</h2>
       <p class="lede">This one is live — type a real question about pricing, setup, languages, or whether it suits your business. Same assistant, answering here on the page.</p>
       <div id="od-live-chat"></div>
       <div class="nav-row">
@@ -253,7 +266,7 @@ footer{border-top:1px solid var(--line);background:var(--paper);padding:26px 0;f
 
     <section class="pane" data-pane="4">
       <div class="kicker"><span class="s">//</span> Step 4 · Get in touch</div>
-      <h1>Want this on your own number?</h1>
+      <h2 class="step-h">Want this on your own number?</h2>
       <p class="lede">Message on whichever you actually use. You'll get a straight answer about whether it fits your business — and what it would take to set up.</p>
       <div id="od-channels"></div>
       <div class="nav-row">

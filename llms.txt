@@ -1,0 +1,63 @@
+# Ownerdeck
+
+> An AI assistant that answers a business's customers on the business's own
+> WhatsApp number — in about two seconds, at any hour, in the customer's
+> language — quoting the owner's real prices and live availability, then
+> capturing the booking and notifying the owner.
+
+Ownerdeck is run by Mark Saade, a sole trader based in Cyprus, and sold to
+owner-operated businesses anywhere. It is not a self-serve platform: each
+assistant is configured personally for the customer.
+
+## What it is
+
+- Runs on the business's existing WhatsApp Business number. No new number,
+  nothing for the end customer to install.
+- Replies in about two seconds, day or night.
+- Detects the customer's language and answers in it — English, Russian,
+  Greek, German, Polish, Arabic, Hebrew and others — including mid-conversation
+  switches.
+- Reads live availability and prices from the systems the owner already uses,
+  so it does not invent a rate or promise something unavailable.
+- Calculates the full quote: days × rate, delivery, extras such as insurance.
+- Captures the booking with dates, times, pickup/drop-off, name and contact,
+  and confirms it with a reference number.
+- Notifies the owner the moment a booking lands, and writes every conversation
+  to a log the owner can read.
+- The owner can take over any conversation at any time.
+
+## What it does not do
+
+It does not take payment, handle complaints or accidents, manage contracts or
+fleets, or replace a member of staff.
+
+## Who it suits
+
+Any owner-run business with availability, a price and a booking: car, buggy
+and quad rental, boat charters, airport transfers, villa changeovers, salons,
+clinics. Currently live with a car rental company.
+
+## Price
+
+EUR 150 per month. No VAT is charged — Ownerdeck is not VAT registered, so
+EUR 150 is the full amount. Setup fee waived for early customers. No minimum
+term, no notice period, cancel by email. Live in 48 hours.
+
+## Transparency
+
+The assistant identifies itself as an AI and not a person, on this website and
+on customers' own numbers, per EU AI Act Article 50.
+
+## Pages
+
+- [Home](https://www.ownerdeck.com/): what it does, how it works, pricing, FAQ
+- [Demo](https://www.ownerdeck.com/demo.html): watch a real enquiry handled, try
+  the interactive version, then ask the live assistant anything
+- [Privacy](https://www.ownerdeck.com/privacy.html): data collected, lawful
+  bases, processors, transfers, retention, rights
+- [Terms](https://www.ownerdeck.com/terms.html): fees, cancellation, acceptable
+  use, liability, governing law
+
+## Contact
+
+mark@ownerdeck.com
