@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>WhatsApp Bot for Car Rental Companies | Ownerdeck</title>
+<meta name="description" content="An AI assistant that answers rental enquiries on your own WhatsApp number in about two seconds — quoting your real rates and live availability, then capturing the booking.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="canonical" href="https://www.ownerdeck.com/whatsapp-bot-car-rental.html">
+<script>
+/* Resolve theme before paint: saved choice, else OS preference. */
+(function(){try{
+  var s=localStorage.getItem('od_theme');
+  var d=s?s:((window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');
+  document.documentElement.setAttribute('data-theme',d);
+}catch(e){document.documentElement.setAttribute('data-theme','light');}})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<meta name="theme-color" content="#ffffff">
+<link rel="stylesheet" href="ds/tokens/typography.css">
+<link rel="stylesheet" href="ds/tokens/colors.css">
+<link rel="stylesheet" href="ds/tokens/spacing.css">
+<link rel="stylesheet" href="ds/tokens/elevation.css">
+<link rel="stylesheet" href="ds/tokens/base.css">
+<link rel="stylesheet" href="ds/tokens/components.css">
+<link rel="stylesheet" href="ds/styles.css">
+<style>
+:root{
+  --accent:#01c0b8; --accent-strong:#097f7a; --accent-wash:#e6faf8; --accent-line:#a4f4ec;
+  --paper:#f6f7f9; --ink:#0f1115; --ink-soft:#3d4448; --ink-mute:#6b7478; --ink-faint:#8b9497;
+  --line:#e5e8ea; --line-soft:#eef0f2;
+  --page:#ffffff; --card:#ffffff; --ink-fixed:#0f1115;
+  --bg-app:#ffffff; --bg-raised:#f6f7f9; --surface-sunken:#eef0f2;
+  --surface-card:#ffffff; --surface-hover:#f1f3f4; --surface:#f6f7f9;
+  --text-strong:#0f1115; --text-body:#3d4448; --text-muted:#6b7478; --text-faint:#8b9497;
+  --border:#e5e8ea; --border-soft:#eef0f2; --border-strong:#cfd5d7; --accent-text:#097f7a;
+  color-scheme: light;
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --page:#0a0e0f; --card:#121819; --paper:#0e1314;
+  --bg-app:#0a0e0f; --bg-raised:#0e1314; --surface-sunken:#07090a;
+  --ink:#eef4f4; --ink-soft:#c8d4d4; --ink-mute:#9fb0b2; --ink-faint:#6b7b7d;
+  --line:#243032; --line-soft:#1b2426;
+  --accent-strong:#38dccd; --accent-wash:rgba(1,192,184,.13); --accent-line:rgba(1,192,184,.32);
+  --surface-card:#121819; --surface-hover:#1b2426; --surface:#0e1314;
+  --text-strong:#eef4f4; --text-body:#c8d4d4; --text-muted:#9fb0b2; --text-faint:#6b7b7d;
+  --border:#243032; --border-soft:#1b2426; --border-strong:#415052; --accent-text:#38dccd;
+}
+/* ---- Logo: monochrome lockup, swapped per theme ---- */
+  .od-logo{display:block;width:auto;height:30px}
+  .od-logo--onDark{display:none}
+  :root[data-theme="dark"] .od-logo--onLight{display:none}
+  :root[data-theme="dark"] .od-logo--onDark{display:block}
+  @media (max-width:520px){ .od-logo{height:26px} }
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased}
+h1,h2{margin:0;font-family:var(--font-display);font-weight:600;letter-spacing:-0.03em;color:var(--ink);text-wrap:balance}
+p,li{margin:0;text-wrap:pretty}
+a{color:var(--accent-strong);text-decoration:none}
+a:hover{color:var(--ink)}
+ul{margin:0;padding-left:20px}
+
+header{position:sticky;top:0;z-index:50;border-bottom:1px solid transparent}
+header::before{content:'';position:absolute;inset:0;pointer-events:none;background:color-mix(in srgb, var(--page) 84%, transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);opacity:0;transition:opacity .28s ease}
+header > .bar{position:relative}
+header.od-stuck::before{opacity:1}
+header.od-stuck{border-bottom-color:var(--line)}
+@media (prefers-reduced-motion: no-preference){
+  header{transition:border-color .28s ease}
+  ::view-transition-old(root),::view-transition-new(root){animation-duration:.32s;animation-timing-function:ease}
+}
+.bar{max-width:820px;margin:0 auto;padding:0 24px;height:68px;display:flex;align-items:center;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;flex:none}
+.brand span{font-family:var(--font-display);font-size:19px;font-weight:600;letter-spacing:-0.035em;color:var(--ink)}
+.brand .t{color:var(--accent-strong)}
+.spacer{margin-left:auto}
+.od-theme-btn{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;flex:none;padding:0;cursor:pointer;background:transparent;border:1px solid var(--line);border-radius:10px;color:var(--ink-mute);transition:color .18s ease,border-color .18s ease}
+.od-theme-btn:hover{color:var(--ink);border-color:var(--border-strong)}
+.od-theme-btn svg{width:17px;height:17px;display:block}
+.od-theme-btn .ic-moon{display:none}
+:root[data-theme="dark"] .od-theme-btn .ic-moon{display:block}
+:root[data-theme="dark"] .od-theme-btn .ic-sun{display:none}
+
+main{max-width:820px;margin:0 auto;padding:clamp(40px,6vw,72px) 24px clamp(64px,8vw,96px)}
+.back{display:inline-flex;align-items:center;gap:7px;font-size:14px;font-weight:500;color:var(--ink-mute);margin-bottom:36px}
+.back:hover{color:var(--ink)}
+.eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:16px}
+.eyebrow .s{color:var(--accent-strong)}
+h1{font-size:clamp(32px,4.4vw,46px);line-height:1.06}
+.updated{margin-top:14px;font-size:14px;color:var(--ink-mute);font-family:var(--font-mono)}
+.lede{margin-top:26px;font-size:17px;line-height:1.65;color:var(--ink-soft)}
+h2{font-size:20px;line-height:1.3;margin:46px 0 14px}
+p,li{font-size:15.5px;line-height:1.68;color:var(--ink-soft)}
+p+p{margin-top:12px}
+li{margin-bottom:8px}
+.note{margin-top:40px;background:var(--accent-wash);border:1px solid var(--accent-line);border-radius:14px;padding:20px 22px;font-size:15px;line-height:1.6;color:var(--ink-soft)}
+/* Unfilled legal details. Deliberately loud so they can't ship unnoticed. */
+.todo{background:#ffe8a3;color:#5b4300;border-radius:4px;padding:1px 6px;font-family:var(--font-mono);font-size:13px}
+.warn{margin-bottom:34px;background:#fff4d1;border:1px solid #e8c65c;border-radius:14px;padding:18px 20px;font-size:14.5px;line-height:1.6;color:#5b4300}
+
+footer{border-top:1px solid var(--line);background:var(--paper)}
+.foot{max-width:820px;margin:0 auto;padding:28px 24px;display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;font-size:14px;color:var(--ink-mute)}
+</style>
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://www.ownerdeck.com/whatsapp-bot-car-rental.html">
+<meta property="og:site_name" content="Ownerdeck">
+<meta property="og:title" content="A WhatsApp bot for car rental companies">
+<meta property="og:description" content="An AI assistant that answers rental enquiries on your own WhatsApp number in about two seconds — quoting your real rates and live availability, then capturing the booking.">
+<meta property="og:image" content="https://www.ownerdeck.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "headline": "A WhatsApp bot for car rental companies", "description": "An AI assistant that answers rental enquiries on your own WhatsApp number in about two seconds — quoting your real rates and live availability, then capturing the booking.", "url": "https://www.ownerdeck.com/whatsapp-bot-car-rental.html", "inLanguage": "en", "author": {"@type": "Person", "name": "Mark Saade"}, "publisher": {"@type": "Organization", "name": "Ownerdeck", "url": "https://www.ownerdeck.com/"}, "mainEntityOfPage": "https://www.ownerdeck.com/whatsapp-bot-car-rental.html"}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Do I need a new phone number for a WhatsApp bot?", "acceptedAnswer": {"@type": "Answer", "text": "No. It runs on the WhatsApp Business number you already give out, so your customers message the same number as always and nothing on your cards or listings has to change."}}, {"@type": "Question", "name": "Can it quote real prices and availability?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. It reads live availability and rates from the system you already use, so it cannot sell a car that is out or quote a rate that has changed. If your availability lives in a spreadsheet, that works too."}}, {"@type": "Question", "name": "What happens if a customer asks something it does not know?", "acceptedAnswer": {"@type": "Answer", "text": "It says so and passes the conversation to you rather than guessing. Every one of those handoffs appears in the log so you can see what it declined to answer."}}]}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Ownerdeck", "item": "https://www.ownerdeck.com/"}, {"@type": "ListItem", "position": 2, "name": "A WhatsApp bot for car rental companies", "item": "https://www.ownerdeck.com/whatsapp-bot-car-rental.html"}]}]}</script>
+</head>
+<body>
+
+<header>
+  <div class="bar">
+    <a href="/" class="brand" aria-label="Ownerdeck home">
+      <img class="od-logo od-logo--onLight" src="logo-lockup-dark.png" alt="OwnerDeck" width="667" height="120"><img class="od-logo od-logo--onDark" src="logo-lockup-light.png" alt="" aria-hidden="true" width="667" height="120">
+    </a>
+    <div class="spacer"></div>
+    <button id="theme-toggle" type="button" class="od-theme-btn" aria-label="Switch to dark mode" aria-pressed="false" title="Toggle dark mode">
+      <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+    </button>
+    <a href="/" class="od-btn od-btn--secondary" style="text-decoration:none">Back to site</a>
+  </div>
+</header>
+
+<main>
+  <a href="/" class="back">&larr; Back to ownerdeck.com</a>
+  <div class="eyebrow"><span class="s">//</span> Guide</div>
+  <h1>A WhatsApp bot for car rental companies</h1>
+  <p class="lede">Most rental enquiries arrive as a WhatsApp message, and most of them ask the same five things. Here is what it looks like when those get answered without you.</p>
+
+<h2>The five questions</h2>
+<p>Do you have an automatic. How much for three days. Can you deliver to my hotel. Is insurance included. Do I need a deposit. In August that arrives a hundred times a day, and every single one of them is a booking waiting to happen or a booking about to be lost.</p>
+<p>The problem is not that the questions are hard. It is that they are relentless, they arrive at 11pm, and the person who has to answer them is you — after a changeover day and an airport pickup at six.</p>
+
+<h2>Why the timing matters more than the answer</h2>
+<p>A tourist looking for a car does not message one company. They message four, at the same time, and take whichever answer arrives first with a clear price. This is not disloyalty; they are standing in an airport with luggage and want the problem solved.</p>
+<p>Which means the booking is usually decided before you have read the message. Not on price, not on your fleet, not on your reviews — on who replied. That is the part an assistant fixes, and it is the only part that has to happen instantly.</p>
+
+<h2>What it actually does</h2>
+<ul>
+  <li>Answers on your existing WhatsApp Business number, in about two seconds, at any hour.</li>
+  <li>Detects the customer's language and replies in it — English, Russian, German, Polish, Arabic and more — including if they switch mid-conversation.</li>
+  <li>Reads live availability and rates from the system you already use, so it never quotes a car that is out or a July price in August.</li>
+  <li>Works out the whole quote: days times rate, hotel or airport delivery, extras like CDW. One clear total, not a maybe.</li>
+  <li>Sends photos of the actual vehicle once someone settles on one.</li>
+  <li>Captures the booking with dates, times, pickup and drop-off, name and contact, confirmed back with a reference number.</li>
+  <li>Messages you the moment a booking lands, and writes every conversation to a log you can read.</li>
+</ul>
+
+<h2>What it will not do</h2>
+<p>It does not take payment. It does not handle complaints or accidents. It does not manage your contracts or your fleet. And when a question falls outside what you have told it, it says so and passes the conversation to you rather than guessing — which is the behaviour that makes the rest of it trustworthy.</p>
+
+<h2>The honest part about accuracy</h2>
+<p>An assistant that invents a rate is worse than no assistant. This one quotes only from your own prices and your own availability; it does not answer from memory. If your rates live in a spreadsheet, that works too. You will see every handoff in the log, so you can check what it chose not to answer.</p>
+
+<h2>Setup</h2>
+<p>Live in 48 hours. You tell me your fleet, rates, locations and policies once — that is your part. I build it, test it, and switch it on. It runs on the number already printed on your cards and listings, so nothing changes for your customers and there is no app for anyone to install.</p>
+<p>€150 per month, no VAT. No minimum term, no notice period. Cancel by email and it stops.</p>
+
+  <h2>Questions people ask</h2>
+  <h2>Do I need a new phone number for a WhatsApp bot?</h2>
+  <p>No. It runs on the WhatsApp Business number you already give out, so your customers message the same number as always and nothing on your cards or listings has to change.</p>
+  <h2>Can it quote real prices and availability?</h2>
+  <p>Yes. It reads live availability and rates from the system you already use, so it cannot sell a car that is out or quote a rate that has changed. If your availability lives in a spreadsheet, that works too.</p>
+  <h2>What happens if a customer asks something it does not know?</h2>
+  <p>It says so and passes the conversation to you rather than guessing. Every one of those handoffs appears in the log so you can see what it declined to answer.</p>
+
+  <div class="note">
+    <strong>See it working.</strong> Watch it handle a real enquiry, then message the
+    live assistant yourself and ask it anything — price, setup, whether it fits your
+    business. <a href="/demo.html">Open the demo</a>, or read
+    <a href="/">what Ownerdeck does</a>.
+  </div>
+</main>
+
+<footer>
+  <div class="foot">
+    <div>© 2026 Ownerdeck · Cyprus</div>
+    <div><a href="/privacy.html">Privacy</a> · <a href="/">ownerdeck.com</a></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var KEY='od_theme', root=document.documentElement;
+  function apply(t){
+    root.setAttribute('data-theme',t);
+    var b=document.getElementById('theme-toggle');
+    if(b){b.setAttribute('aria-pressed',t==='dark'?'true':'false');
+          b.setAttribute('aria-label',t==='dark'?'Switch to light mode':'Switch to dark mode');}
+    var m=document.querySelector('meta[name="theme-color"]');
+    if(m) m.setAttribute('content', t==='dark'?'#0a0e0f':'#ffffff');
+  }
+  apply(root.getAttribute('data-theme')||'light');
+
+  (function(){
+    var h=document.querySelector('header'); if(!h) return;
+    function upd(){ h.classList.toggle('od-stuck',(window.scrollY||window.pageYOffset||0)>8); }
+    window.OD_headerUpdate=upd;
+    upd();
+    addEventListener('scroll',upd,{passive:true});
+    addEventListener('resize',upd,{passive:true});
+  })();
+
+  function swap(next){
+    var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(document.startViewTransition && !reduce){document.startViewTransition(function(){apply(next);});}
+    else{apply(next);}
+  }
+
+  var mq=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)');
+  if(mq&&mq.addEventListener){mq.addEventListener('change',function(e){
+    var s=null; try{s=localStorage.getItem(KEY);}catch(err){}
+    if(!s) swap(e.matches?'dark':'light');
+  });}
+  document.addEventListener('click',function(e){
+    var b=e.target.closest&&e.target.closest('#theme-toggle'); if(!b) return;
+    var next=root.getAttribute('data-theme')==='dark'?'light':'dark';
+    try{localStorage.setItem(KEY,next);}catch(err){}
+    swap(next);
+  });
+})();
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
