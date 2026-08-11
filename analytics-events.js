@@ -30,6 +30,16 @@
   }
 
   function init() {
+  // Private counter for /stats. Fire-and-forget: a failed beacon must never
+  // affect the page, so no error surface and no await.
+  try {
+    fetch('/api/track', {
+      method: 'POST', keepalive: true,
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ path: location.pathname, ref: document.referrer || '' })
+    }).catch(function () {});
+  } catch (e) {}
+
 
     /* --- primary CTAs: which one earns the click, and from where --- */
     document.querySelectorAll(".od-btn--primary, .od-mmenu__cta").forEach(function (el) {

@@ -13,6 +13,8 @@
 # permission for training, independently of the crawl rules.
 
 User-agent: *
+Disallow: /stats.html
+Disallow: /api/
 Content-Signal: search=yes,ai-input=yes,ai-train=no,use=reference
 Allow: /
 

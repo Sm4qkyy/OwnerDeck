@@ -915,7 +915,12 @@ html.od-js [data-reveal]{transition:opacity .55s cubic-bezier(.2,.7,.2,1), trans
     </div>
   </div>
   <div style="max-width:1140px;margin:clamp(32px,4vw,44px) auto 0;padding-top:22px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;font-family:var(--font-mono);font-size:11.5px;letter-spacing:.05em;color:var(--ink-faint)">
-    <span data-i18n="k9aaa9d9f">© 2026 Ownerdeck</span>
+    <!-- The © is the way in to /stats. Discreet by request: it reads as
+         ordinary footer text, carries rel="nofollow" so crawlers ignore it,
+         and leads to a page that holds no data until the server is satisfied.
+         Obscurity is not the protection here — the password is. -->
+    <span><a href="/stats.html" rel="nofollow" aria-label="Site statistics"
+       style="color:inherit;text-decoration:none"><span data-i18n="k9aaa9d9f">© 2026 Ownerdeck</span></a></span>
     <span data-i18n="ke81a21cc">Any language · any timezone · on your own number</span>
   </div>
 </footer>
