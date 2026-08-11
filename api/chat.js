@@ -30,6 +30,7 @@ const MAX_TURNS          = 12;    // per conversation
 const MAX_HISTORY        = 12;    // messages replayed to the model
 const RATE_LIMIT_MAX     = 15;    // messages per IP…
 const RATE_LIMIT_WINDOW  = 3600;  // …per hour (seconds)
+const UNVERIFIED_RATE_LIMIT = 3;  // …when Turnstile never ran (see verifyTurnstile)
 
 const SYSTEM_PROMPT = `You are the Ownerdeck assistant, embedded on ownerdeck.com as a live demo.
 
@@ -93,17 +94,30 @@ async function rateLimit(key) {
   }
 }
 
-// Canonical Turnstile siteverify. Fails closed on every path: a missing
-// secret, a missing token, a non-2xx reply and a network error all deny.
-// Do not add a "not configured yet" bypass here — an unverified request is
-// exactly the request this endpoint exists to reject.
+/* Canonical Turnstile siteverify, returning one of three verdicts.
+   The distinction matters: a token that Cloudflare actively rejected is
+   evidence of a bot, but no token at all is only evidence that the widget
+   never ran — Safari tracking prevention, a privacy extension, a corporate
+   proxy, or a slow connection all produce exactly that, and so does a real
+   person on a locked-down Mac. Treating those two as the same thing is what
+   made a legitimate visitor read "could not verify you are human" and
+   conclude the product is broken.
+
+     verified    — Cloudflare confirmed a human. Full allowance.
+     rejected    — a token was supplied and Cloudflare refused it. Deny.
+     unavailable — no token reached us. Serve, but on a much shorter leash.
+
+   'unavailable' is forgeable: a bot can simply omit the token and take the
+   reduced allowance. That is priced in. Three messages per IP per hour is
+   worth far less to an attacker than it is to the Safari user it rescues,
+   and the edge rate limit plus the provider spend cap still sit underneath. */
 async function verifyTurnstile(token, ip) {
   const secret = process.env.TURNSTILE_SECRET;
   if (!secret) {
     console.error('turnstile_secret_missing');
-    return { ok: false, reason: 'no_secret' };
+    return { verdict: 'rejected', reason: 'no_secret' };
   }
-  if (!token) return { ok: false, reason: 'no_token' };
+  if (!token) return { verdict: 'unavailable', reason: 'no_token' };
 
   let result;
   try {
@@ -115,14 +129,20 @@ async function verifyTurnstile(token, ip) {
     if (!r.ok) throw new Error(`siteverify ${r.status}`);
     result = await r.json();
   } catch (e) {
+    // Our own call to Cloudflare failed. That is our outage, not the
+    // visitor's fault, so it degrades rather than denies.
     console.error('turnstile_unreachable', e && e.message);
-    return { ok: false, reason: 'unreachable' };
+    return { verdict: 'unavailable', reason: 'unreachable' };
   }
 
   if (result.success !== true) {
-    return { ok: false, reason: (result['error-codes'] || []).join(',') || 'failed' };
+    const codes = (result['error-codes'] || []).join(',') || 'failed';
+    // An expired or already-spent token means a real widget ran and the
+    // person simply took too long. Not evidence of a bot.
+    const stale = /timeout-or-duplicate/.test(codes);
+    return { verdict: stale ? 'unavailable' : 'rejected', reason: codes };
   }
-  return { ok: true };
+  return { verdict: 'verified' };
 }
 
 /* ---------- handler ---------- */
@@ -173,15 +193,23 @@ module.exports = async (req, res) => {
 
   // 4. human check — must pass before we spend anything
   const ts = await verifyTurnstile(tsToken, ip);
-  if (!ts.ok) {
-    console.warn('turnstile_denied', ts.reason, ip);
+  if (ts.verdict === 'rejected') {
+    console.warn('turnstile_rejected', ts.reason, ip);
     return res.status(403).json({ error: 'failed_challenge', reply: 'Could not verify you are human. Refresh the page and try again.' });
   }
 
-  // 5. per-IP rate limit
+  // 5. per-IP rate limit, sized by how much we trust this caller
+  const unverified = ts.verdict !== 'verified';
+  if (unverified) console.warn('turnstile_unavailable', ts.reason, ip);
+  const allowance = unverified ? UNVERIFIED_RATE_LIMIT : RATE_LIMIT_MAX;
   const { count } = await rateLimit(`od:chat:${ip}`);
-  if (count > RATE_LIMIT_MAX) {
-    return res.status(429).json({ error: 'rate_limited', reply: "You've hit the demo limit for now. Email mark@ownerdeck.com and he'll pick it up personally." });
+  if (count > allowance) {
+    return res.status(429).json({
+      error: 'rate_limited',
+      reply: unverified
+        ? "I can't take more questions from this browser right now — its privacy settings block the check that tells me you're a person. Email mark@ownerdeck.com and he'll answer properly."
+        : "You've hit the demo limit for now. Email mark@ownerdeck.com and he'll pick it up personally."
+    });
   }
 
   // sanitise history into the shape the API expects

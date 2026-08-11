@@ -82,7 +82,10 @@
     return new Promise(function (resolve) {
       if (!SITE_KEY) return resolve('');
       var done = false;
-      var timer = setTimeout(function () { finish(''); }, 10000);
+      // 10s was too tight. Turnstile on a cold cache over hotel wifi can take
+      // longer than that, and timing out silently downgraded a real person to
+      // the unverified allowance for no reason.
+      var timer = setTimeout(function () { finish(''); }, 20000);
       function finish(t) { if (done) return; done = true; clearTimeout(timer); resolve(t || ''); }
 
       waiting.push(finish);
