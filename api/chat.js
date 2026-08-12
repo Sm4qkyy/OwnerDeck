@@ -7,10 +7,12 @@
      3. Kill switch                                  (CHAT_ENABLED=off)
      4. Cloudflare Turnstile token                   (proves a human)
      5. Per-IP rate limit                            (Upstash, or in-memory)
-     6. Per-conversation message cap                 (below)
-     7. Input length cap + history trim              (bounds input tokens)
-     8. max_tokens cap                               (bounds output tokens)
-     9. Hard spend cap in the Anthropic console      <-- YOU MUST SET THIS
+     6. Whole-site daily cap                          (DAILY_MAX — the only
+        limit a botnet cannot walk around by changing address)
+     7. Per-conversation message cap                 (below)
+     8. Input length cap + history trim              (bounds input tokens)
+     9. max_tokens cap                               (bounds output tokens)
+    10. Hard spend cap in the Anthropic console      <-- YOU MUST SET THIS
 
    The spend cap is the only layer that cannot be bypassed. Set it.
 
@@ -31,6 +33,10 @@ const MAX_HISTORY        = 12;    // messages replayed to the model
 const RATE_LIMIT_MAX     = 15;    // messages per IP…
 const RATE_LIMIT_WINDOW  = 3600;  // …per hour (seconds)
 const UNVERIFIED_RATE_LIMIT = 3;  // …when Turnstile never ran (see verifyTurnstile)
+/* Whole-site ceiling. Per-IP limits are defeated by having more IPs; this is
+   the only number that bounds the bill no matter where traffic comes from.
+   200 exchanges is far more than genuine demo traffic and costs under 10c. */
+const DAILY_MAX = 200;
 
 const SYSTEM_PROMPT = `You are the Ownerdeck assistant, embedded on ownerdeck.com as a live demo.
 
@@ -68,8 +74,8 @@ function ipOf(req) {
 // Fallback limiter. Per-instance only, so it leaks across cold starts —
 // it is a speed bump, not a wall. Upstash is what makes this durable.
 const memHits = new Map();
-function memLimit(key) {
-  const now = Date.now(), win = RATE_LIMIT_WINDOW * 1000;
+function memLimit(key, ttl) {
+  const now = Date.now(), win = (ttl || RATE_LIMIT_WINDOW) * 1000;
   const rec = memHits.get(key);
   if (!rec || now - rec.start > win) { memHits.set(key, { start: now, n: 1 }); return 1; }
   rec.n += 1;
@@ -77,20 +83,21 @@ function memLimit(key) {
   return rec.n;
 }
 
-async function rateLimit(key) {
+async function rateLimit(key, ttl) {
   const url = process.env.UPSTASH_REDIS_REST_URL;
   const tok = process.env.UPSTASH_REDIS_REST_TOKEN;
-  if (!url || !tok) return { count: memLimit(key), durable: false };
+  const window = ttl || RATE_LIMIT_WINDOW;
+  if (!url || !tok) return { count: memLimit(key, window), durable: false };
   try {
     const auth = { Authorization: `Bearer ${tok}` };
     const r = await fetch(`${url}/incr/${encodeURIComponent(key)}`, { headers: auth });
     const { result } = await r.json();
     if (result === 1) {
-      await fetch(`${url}/expire/${encodeURIComponent(key)}/${RATE_LIMIT_WINDOW}`, { headers: auth });
+      await fetch(`${url}/expire/${encodeURIComponent(key)}/${window}`, { headers: auth });
     }
     return { count: Number(result) || 1, durable: true };
   } catch (e) {
-    return { count: memLimit(key), durable: false };   // fail closed-ish
+    return { count: memLimit(key, window), durable: false };   // fail closed-ish
   }
 }
 
@@ -198,7 +205,30 @@ module.exports = async (req, res) => {
     return res.status(403).json({ error: 'failed_challenge', reply: 'Could not verify you are human. Refresh the page and try again.' });
   }
 
-  // 5. per-IP rate limit, sized by how much we trust this caller
+  /* 5a. Whole-site daily budget.
+
+     Every other limit here is per IP, and per-IP limits are defeated by
+     having more IPs — which is exactly what a botnet or a proxy pool is.
+     Nothing above this line puts a ceiling on the total bill.
+
+     This does. Whatever the traffic looks like, the assistant answers at
+     most DAILY_MAX times a day, so the worst case is a known number rather
+     than an open question. At current per-exchange cost that is a few cents
+     a day, meaning the credit lasts months even under sustained attack.
+
+     Checked before the per-IP limit so a flood cannot spend anything by
+     arriving from addresses that each look individually reasonable. */
+  const dayKey = `od:chat:day:${new Date().toISOString().slice(0, 10)}`;
+  const day = await rateLimit(dayKey, 172800);
+  if (day.count > DAILY_MAX) {
+    console.warn('daily_cap_hit', day.count, ip);
+    return res.status(429).json({
+      error: 'daily_cap',
+      reply: "The demo has answered all it can today. Email mark@ownerdeck.com and you'll get a straight answer about your own setup."
+    });
+  }
+
+  // 5b. per-IP rate limit, sized by how much we trust this caller
   const unverified = ts.verdict !== 'verified';
   if (unverified) console.warn('turnstile_unavailable', ts.reason, ip);
   const allowance = unverified ? UNVERIFIED_RATE_LIMIT : RATE_LIMIT_MAX;
