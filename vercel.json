@@ -1,4 +1,8 @@
 {
+  "redirects": [
+    { "source": "/walkthrough.html", "destination": "/", "permanent": true },
+    { "source": "/welcome.html",     "destination": "/", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/(.*)",
