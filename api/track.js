@@ -18,12 +18,12 @@ const DAYS_KEPT = 90 * 24 * 3600;   // counters expire on their own
 // rather than used as keys directly. Otherwise a bot can mint unlimited
 // Redis keys by requesting /?a=1, /?a=2, ... and quietly fill the database.
 const KNOWN = new Set([
-  '/', '/demo.html', '/privacy.html', '/terms.html',
-  '/whatsapp-bot-car-rental.html',
-  '/whatsapp-booking-bot-boat-charter-tours.html',
-  '/stop-losing-bookings-slow-whatsapp-replies.html',
-  '/whatsapp-auto-reply-vs-ai-assistant.html',
-  '/do-i-need-a-new-number-whatsapp-bot.html'
+  '/', '/demo', '/privacy', '/terms',
+  '/whatsapp-bot-car-rental',
+  '/whatsapp-booking-bot-boat-charter-tours',
+  '/stop-losing-bookings-slow-whatsapp-replies',
+  '/whatsapp-auto-reply-vs-ai-assistant',
+  '/do-i-need-a-new-number-whatsapp-bot'
 ]);
 
 function redis() {

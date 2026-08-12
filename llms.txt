@@ -51,20 +51,20 @@ on customers' own numbers, per EU AI Act Article 50.
 ## Pages
 
 - [Home](https://www.ownerdeck.com/): what it does, how it works, pricing, FAQ
-- [Demo](https://www.ownerdeck.com/demo.html): watch a real enquiry handled, try
+- [Demo](https://www.ownerdeck.com/demo): watch a real enquiry handled, try
   the interactive version, then ask the live assistant anything
-- [Privacy](https://www.ownerdeck.com/privacy.html): data collected, lawful
+- [Privacy](https://www.ownerdeck.com/privacy): data collected, lawful
   bases, processors, transfers, retention, rights
-- [Terms](https://www.ownerdeck.com/terms.html): fees, cancellation, acceptable
+- [Terms](https://www.ownerdeck.com/terms): fees, cancellation, acceptable
   use, liability, governing law
 
 ## Guides
 
-- [WhatsApp bot for car rental](https://www.ownerdeck.com/whatsapp-bot-car-rental.html)
-- [WhatsApp booking bot for boat charters and tours](https://www.ownerdeck.com/whatsapp-booking-bot-boat-charter-tours.html)
-- [How to stop losing bookings to slow replies](https://www.ownerdeck.com/stop-losing-bookings-slow-whatsapp-replies.html)
-- [WhatsApp auto-reply vs an AI assistant](https://www.ownerdeck.com/whatsapp-auto-reply-vs-ai-assistant.html)
-- [Do you need a new number for a WhatsApp bot?](https://www.ownerdeck.com/do-i-need-a-new-number-whatsapp-bot.html)
+- [WhatsApp bot for car rental](https://www.ownerdeck.com/whatsapp-bot-car-rental)
+- [WhatsApp booking bot for boat charters and tours](https://www.ownerdeck.com/whatsapp-booking-bot-boat-charter-tours)
+- [How to stop losing bookings to slow replies](https://www.ownerdeck.com/stop-losing-bookings-slow-whatsapp-replies)
+- [WhatsApp auto-reply vs an AI assistant](https://www.ownerdeck.com/whatsapp-auto-reply-vs-ai-assistant)
+- [Do you need a new number for a WhatsApp bot?](https://www.ownerdeck.com/do-i-need-a-new-number-whatsapp-bot)
 
 ## Contact
 

@@ -217,7 +217,9 @@ PAGES = [
 
 
 def build(p):
-    url = BASE + p['slug']
+    # cleanUrls is on, so the public URL has no extension even though the
+    # file on disk still does. Canonical must name the served URL.
+    url = BASE + p['slug'].replace('.html', '')
     faq_html = ''.join(
         f'\n  <h2>{q}</h2>\n  <p>{a}</p>' for q, a in p['faq'])
 
@@ -266,7 +268,7 @@ def build(p):
   <div class="note">
     <strong>See it working.</strong> Watch it handle a real enquiry, then message the
     live assistant yourself and ask it anything — price, setup, whether it fits your
-    business. <a href="/demo.html">Open the demo</a>, or read
+    business. <a href="/demo">Open the demo</a>, or read
     <a href="/">what Ownerdeck does</a>.
   </div>
 </main>"""

@@ -1,7 +1,10 @@
 {
+  "cleanUrls": true,
   "redirects": [
     { "source": "/walkthrough.html", "destination": "/", "permanent": true },
-    { "source": "/welcome.html",     "destination": "/", "permanent": true }
+    { "source": "/walkthrough",      "destination": "/", "permanent": true },
+    { "source": "/welcome.html",     "destination": "/", "permanent": true },
+    { "source": "/welcome",          "destination": "/", "permanent": true }
   ],
   "headers": [
     {
