@@ -156,6 +156,8 @@ footer{border-top:1px solid var(--line);background:var(--paper)}
        password would be decoration, because anyone can read page source. -->
   <div id="lock" class="lock">
     <form id="lockform" autocomplete="off">
+      <input id="user" type="text" placeholder="Username" aria-label="Username"
+             autocomplete="username" style="margin-bottom:10px">
       <input id="pw" type="password" placeholder="Password" aria-label="Password"
              autocomplete="current-password">
       <button type="submit">Unlock</button>
@@ -265,19 +267,20 @@ footer{border-top:1px solid var(--line);background:var(--paper)}
   document.getElementById('lockform').addEventListener('submit', function (e) {
     e.preventDefault();
     msg.textContent = '';
-    var pw = document.getElementById('pw').value;
+    var user = document.getElementById('user').value;
+    var pw   = document.getElementById('pw').value;
     fetch('/api/stats', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ password: pw })
+      body: JSON.stringify({ user: user, password: pw })
     })
       .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, s: r.status, j: j }; }); })
       .then(function (o) {
         document.getElementById('pw').value = '';
         if (o.ok && o.j.token) { setTok(o.j.token); load(); return; }
-        if (o.s === 429) { msg.textContent = o.j.message || 'Too many attempts.'; return; }
-        if (o.s === 503) { msg.textContent = 'Not set up yet - STATS_PASSWORD is missing in Vercel.'; return; }
-        msg.textContent = 'Wrong password.';
+        if (o.s === 429) { msg.textContent = o.j.message || 'Too many attempts. Locked for an hour.'; return; }
+        if (o.s === 503) { msg.textContent = 'Not set up yet - STATS_USER or STATS_PASSWORD missing in Vercel.'; return; }
+        msg.textContent = 'Wrong username or password.';
       })
       .catch(function () { msg.textContent = 'Could not reach the server.'; });
   });

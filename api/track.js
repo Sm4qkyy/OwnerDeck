@@ -66,6 +66,21 @@ module.exports = async (req, res) => {
   const run = redis();
   if (!run) return res.status(204).end();   // nothing configured: silently no-op
 
+  /* Cap per IP per hour. Without this the counter is trivially poisoned: a
+     script posting in a loop inflates the numbers until they mean nothing,
+     and grows the Redis hashes while doing it. A real person generates a
+     handful of pageviews an hour, so 40 is invisible to them and useless to
+     a bot. The cap key is counted BEFORE the pageview so that hitting the
+     limit cannot itself be used to keep writing. */
+  const ip = (req.headers['cf-connecting-ip'] ||
+              (req.headers['x-forwarded-for'] || '').split(',')[0].trim() ||
+              'unknown');
+  try {
+    const gate = `od:s:cap:${ip}`;
+    const out = await run([['INCR', gate], ['EXPIRE', gate, 3600]]);
+    if (Number((out[0] || {}).result || 0) > 40) return res.status(204).end();
+  } catch (e) { /* cap unavailable; still better to count than to fail */ }
+
   let body = req.body;
   if (typeof body === 'string') { try { body = JSON.parse(body); } catch (e) { body = {}; } }
   body = body || {};
