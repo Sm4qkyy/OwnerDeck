@@ -251,3 +251,33 @@
 .od-node__port { position: absolute; width: 9px; height: 9px; border-radius: 50%; background: var(--ink-500); border: 1px solid var(--border-strong); top: 50%; transform: translateY(-50%); }
 .od-node__port--in { left: -5px; }
 .od-node__port--out { right: -5px; background: var(--accent); border-color: var(--accent); }
+
+/* ---------- Language switcher ----------
+   Built by i18n.js, which inserts it before #theme-toggle. Lives here rather
+   than inline on one page so every page that loads the design system gets the
+   same switcher instead of a copy that drifts. */
+.od-lang{position:relative;flex:none}
+.od-lang-btn{
+  display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 10px;cursor:pointer;
+  background:transparent;border:1px solid var(--line);border-radius:10px;
+  color:var(--ink-mute);font-family:var(--font-sans);font-size:13px;font-weight:600;
+  letter-spacing:.02em;transition:color .18s ease,border-color .18s ease,background .18s ease;
+}
+.od-lang-btn:hover{color:var(--ink);border-color:var(--border-strong);background:var(--card)}
+.od-lang-btn:focus-visible{outline:none;box-shadow:var(--ring)}
+.od-lang-btn svg{width:16px;height:16px;flex:none}
+.od-lang-menu{
+  position:absolute;top:calc(100% + 8px);inset-inline-end:0;z-index:60;min-width:150px;
+  display:flex;flex-direction:column;padding:6px;
+  background:var(--card);border:1px solid var(--line);border-radius:12px;
+  box-shadow:0 20px 44px -20px rgba(15,17,21,.35);
+}
+.od-lang-menu[hidden]{display:none}
+.od-lang-menu button{
+  text-align:start;padding:9px 11px;border:none;border-radius:8px;cursor:pointer;
+  background:transparent;color:var(--ink-soft);font-family:var(--font-sans);font-size:14.5px;
+}
+.od-lang-menu button:hover{background:var(--paper);color:var(--ink)}
+.od-lang-menu button[aria-checked="true"]{color:var(--accent-strong);font-weight:600}
+[dir="rtl"] .od-lang-menu button{text-align:right}
+@media (max-width:400px){ .od-lang-code{display:none} .od-lang-btn{padding:0 9px} }
