@@ -4,3 +4,4 @@ brand-assets/
 _*.tmp
 _new_strings.json
 __pycache__/
+_en_source.json

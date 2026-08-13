@@ -6,7 +6,7 @@
 # that no longer exists.
 import hashlib, io, json, re, sys
 
-LANGS = ['el', 'ru', 'de', 'he', 'ar']
+LANGS = ['el', 'ru', 'de', 'pt', 'he', 'ar']
 fail = []
 
 def key(s):
@@ -69,4 +69,4 @@ if fail:
     for f in fail:
         print('  ' + f)
     sys.exit(1)
-print('\nOK — every key hashes to its English, exists in all 5 packs, none orphaned.')
+print('\nOK — every key hashes to its English, exists in all %d packs, none orphaned.' % len(LANGS))

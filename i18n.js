@@ -11,8 +11,9 @@
    — prices, reference numbers, brand names, the Russian transcript —
    stays exactly as authored.
 
-   el/ru/de/he/ar are machine-assisted. Have a native speaker read them
-   before you lean on them commercially.
+   el/ru/de/pt/he/ar are machine-assisted. Have a native speaker read them
+   before you lean on them commercially. pt is European Portuguese; the
+   match is on the two-letter prefix, so pt-BR browsers land there too.
 ============================================================ */
 (function () {
   "use strict";
@@ -22,6 +23,7 @@
     { code: 'el', native: 'Ελληνικά', dir: 'ltr' },
     { code: 'ru', native: 'Русский',  dir: 'ltr' },
     { code: 'de', native: 'Deutsch',  dir: 'ltr' },
+    { code: 'pt', native: 'Português', dir: 'ltr' },
     { code: 'he', native: 'עברית',    dir: 'rtl' },
     { code: 'ar', native: 'العربية',  dir: 'rtl' }
   ];
