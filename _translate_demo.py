@@ -1,8 +1,8 @@
 # Translations for the /demo walkthrough (see _i18n_demo.py for the key map).
 #
 # Not translated on purpose: "Ownerdeck", "Blue Bay Tours", booking reference
-# #TC-2291, and the Russian/German lines inside the language-detection demo —
-# those exist to be in another language.
+# #TC-2291, and the Russian lines inside the language-detection demo — those
+# exist to be in another language.
 import io, json
 
 T = {

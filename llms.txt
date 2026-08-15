@@ -15,7 +15,7 @@ assistant is configured personally for the customer.
   nothing for the end customer to install.
 - Replies in about two seconds, day or night.
 - Detects the customer's language and answers in it — English, Russian,
-  Greek, German, Polish, Arabic, Hebrew and others — including mid-conversation
+  English, Greek and Russian first — including mid-conversation
   switches.
 - Reads live availability and prices from the systems the owner already uses,
   so it does not invent a rate or promise something unavailable.

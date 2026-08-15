@@ -29,7 +29,7 @@ PAGES = [
 <h2>What it actually does</h2>
 <ul>
   <li>Answers on your existing WhatsApp Business number, in about two seconds, at any hour.</li>
-  <li>Detects the customer's language and replies in it — English, Russian, German, Polish, Arabic and more — including if they switch mid-conversation.</li>
+  <li>Detects the customer's language and replies in it — English, Greek and Russian first — including if they switch mid-conversation.</li>
   <li>Reads live availability and rates from the system you already use, so it never quotes a car that is out or a July price in August.</li>
   <li>Works out the whole quote: days times rate, hotel or airport delivery, extras like CDW. One clear total, not a maybe.</li>
   <li>Sends photos of the actual vehicle once someone settles on one.</li>

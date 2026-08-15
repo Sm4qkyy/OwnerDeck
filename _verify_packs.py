@@ -2,7 +2,7 @@
 # blanks and no stray English. Run after adding a language or editing copy.
 import io, json, re, sys
 
-LANGS = json.loads('["el","ru","de","pt","he","ar"]')
+LANGS = json.loads('["el","ru"]')
 
 # Legitimately identical to the English: labels, brand names, abbreviations.
 SAME_OK = {
@@ -13,6 +13,18 @@ SAME_OK = {
     'kbe0ba2bb',   # Instagram @ownerdeckcy
     'ka10a9bcd',   # Legal
     'k618b62ac',   # RU · auto-detected  (prefix is a language code)
+    'k2b1f94ef',   # Book
+    'k2b487b0f',   # Deck
+    'k3751695c',   # Answer
+    'k597b56e5',   # Cookies
+    'k6a32fccf',   # Instagram DMs
+    'k8b36e920',   # Google
+    'k8b777ebc',   # WhatsApp
+    'k988fd738',   # Return
+    'ka7d6475e',   # Site
+    'kb350f6de',   # Reach
+    'kcb01173c',   # Full Deck
+    'kf6068daa',   # Data
 }
 
 en    = json.load(io.open('_en_source.json', encoding='utf-8'))

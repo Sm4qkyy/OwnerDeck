@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>How it works — Ownerdeck</title>
+<meta name="description" content="What you tell us once, what it runs, and what actually happens in the first week.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="canonical" href="https://www.ownerdeck.com/how-it-works">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.ownerdeck.com/how-it-works">
+<meta property="og:site_name" content="Ownerdeck">
+<meta property="og:title" content="How it works — Ownerdeck">
+<meta property="og:description" content="What you tell us once, what it runs, and what actually happens in the first week.">
+<meta property="og:image" content="https://www.ownerdeck.com/og-image.png">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How it works — Ownerdeck">
+<meta name="twitter:description" content="What you tell us once, what it runs, and what actually happens in the first week.">
+<meta name="twitter:image" content="https://www.ownerdeck.com/og-image.png">
+
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/favicon.png">
+<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0A0A0B" media="(prefers-color-scheme: dark)">
+
+<!-- Runs before first paint and does two things.
+     .js marks that scripting is available: every rule in od.css that hides
+     something is scoped to it, so if this line is never reached the page
+     renders complete rather than blank.
+     data-theme is read here rather than in od.js because a deferred script
+     would repaint the page light-then-dark on every single load. -->
+<script>
+(function () {
+  var r = document.documentElement;
+  r.classList.add('js');
+  try {
+    var t = localStorage.getItem('od_theme');
+    if (t === 'light' || t === 'dark') r.setAttribute('data-theme', t);
+  } catch (e) {}
+})();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/od.css?v=20260815a">
+<link rel="stylesheet" href="/chat-widget.css?v=20260815a">
+</head>
+<body>
+<a class="skip-link" href="#main" data-i18n="kb58273f2">Skip to content</a>
+
+<header class="masthead">
+  <div class="wrap masthead__bar">
+    <a class="masthead__mark" href="/" aria-label="Ownerdeck home"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5.5" width="12" height="15" rx="2.2" fill="currentColor" opacity=".22"/><rect x="7.5" y="3.5" width="12" height="15" rx="2.2" fill="currentColor"/></svg> Ownerdeck</a>
+
+    <nav class="masthead__nav" aria-label="Primary">
+      <a href="/what-we-build" data-i18n="kfbdc1c76">What we build</a>
+      <a href="/how-it-works" data-i18n="k9ffdb952">How it works</a>
+      <a href="/pricing" data-i18n="ke22ac25b">Pricing</a>
+      <a href="/who-its-for" data-i18n="k92cd7d99">Who it's for</a>
+      <a href="/questions" data-i18n="k6ce3bdc3">Questions</a>
+    </nav>
+    <span class="masthead__nav-spacer"></span>
+
+    <div class="masthead__tools">
+      <!-- i18n.js inserts the language switcher immediately before this
+           button, so the id is load-bearing, not decoration. -->
+      <button id="theme-toggle" class="icon-btn" type="button" aria-label="Switch to the dark theme">
+        <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.2v2M12 19.8v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M2.2 12h2M19.8 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>
+        <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+      </button>
+
+      <a class="btn btn--primary btn--sm masthead__cta" href="https://wa.me/447520689685?text=Hi%20Mark%20%E2%80%94%20I%20saw%20Ownerdeck%20and%20I%27d%20like%20to%20know%20more." rel="noopener" data-i18n="k38c731cd">Talk to us</a>
+
+      <!-- <details> rather than a scripted panel: it opens, closes and takes
+           keyboard focus with no JavaScript at all. -->
+      <details class="mmenu">
+        <summary aria-label="Open the menu"><span class="mmenu__bars" aria-hidden="true"><i></i></span></summary>
+        <div class="mmenu__panel">
+        <a href="/what-we-build" data-i18n="kfbdc1c76">What we build</a>
+        <a href="/how-it-works" data-i18n="k9ffdb952">How it works</a>
+        <a href="/pricing" data-i18n="ke22ac25b">Pricing</a>
+        <a href="/who-its-for" data-i18n="k92cd7d99">Who it's for</a>
+        <a href="/questions" data-i18n="k6ce3bdc3">Questions</a>
+          <span class="mmenu__sep"></span>
+        <a href="/terms" data-i18n="k6f1bf85c">Terms</a>
+        <a href="/privacy" data-i18n="kc5f29bb3">Privacy</a>
+        <a href="/cookies" data-i18n="k597b56e5">Cookies</a>
+        <a href="/legal" data-i18n="k23e162ba">Legal notice</a>
+          <a class="btn btn--primary" href="https://wa.me/447520689685?text=Hi%20Mark%20%E2%80%94%20I%20saw%20Ownerdeck%20and%20I%27d%20like%20to%20know%20more." rel="noopener" data-i18n="k63a19537">Message us on WhatsApp</a>
+        </div>
+      </details>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="eyebrow" data-i18n="k9ffdb952">How it works</p>
+        <h1 data-i18n="kb0242b72">Tell it once. It runs everything.</h1>
+        <p class="lede" data-i18n="kc973f617">Most small businesses keep the same facts in four places and keep three of them wrong. Ownerdeck keeps them in one place and points everything else at it.</p>
+      </div>
+
+      <div class="grid grid--3">
+        <div class="tile" data-reveal>
+          <span class="tile__n">01</span>
+          <h2 class="t-h3" data-i18n="k4f45c11a">You tell us the facts</h2>
+          <p data-i18n="keb79bb93">Services, prices, seasons, availability, opening hours, deposit and cancellation policy, photos. One conversation, usually about an hour.</p>
+        </div>
+        <div class="tile" data-reveal>
+          <span class="tile__n">02</span>
+          <h2 class="t-h3" data-i18n="kb73a7bc4">We build it around them</h2>
+          <p data-i18n="k7aeca338">The database, then the website on top of it, then the assistant that answers from it, then bookings and the follow-up if you have taken those cards.</p>
+        </div>
+        <div class="tile" data-reveal>
+          <span class="tile__n">03</span>
+          <h2 class="t-h3" data-i18n="k551f5a93">It runs, and we keep it running</h2>
+          <p data-i18n="kcc3a0163">Hosting, backups, updates and the changes you ask for are the monthly fee. You send a message, we make the change.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sunk section--edge">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="eyebrow" data-i18n="ka4bb7aeb">The wiring</p>
+        <h2 data-i18n="kfe5615b3">One set of facts, five outputs.</h2>
+      </div>
+      <div class="grid grid--2">
+        <div class="panel" data-reveal>
+          <p class="eyebrow" data-i18n="k64c3f621">What you tell us once</p>
+          <ul class="chips" style="margin-top:1rem">
+            <li class="chip" data-on="1" data-i18n="k992a0f05">Services</li><li class="chip" data-on="1" data-i18n="ke16dd6e1">Prices</li>
+            <li class="chip" data-on="1" data-i18n="kab2c0722">Seasons</li><li class="chip" data-on="1" data-i18n="kfaeaec9e">Availability</li>
+            <li class="chip" data-on="1" data-i18n="k6a7e7316">Hours</li><li class="chip" data-on="1" data-i18n="k9e476387">Policies</li>
+            <li class="chip" data-on="1" data-i18n="k5daaf223">Photos</li>
+          </ul>
+        </div>
+        <div class="panel" data-reveal>
+          <p class="eyebrow" data-i18n="ke330bc78">What reads from it</p>
+          <ul class="chips" style="margin-top:1rem">
+            <li class="chip" data-on="1" data-i18n="k8c4f35b3">Your website</li><li class="chip" data-on="1" data-i18n="kd73157e3">WhatsApp replies</li>
+            <li class="chip" data-on="1" data-i18n="k6a32fccf">Instagram DMs</li><li class="chip" data-on="1" data-i18n="k86b752f5">Website chat</li>
+            <li class="chip" data-on="1" data-i18n="k6e33b638">Booking confirmations</li><li class="chip" data-on="1" data-i18n="k25ee5ced">Google listing</li>
+            <li class="chip" data-on="1" data-i18n="kdf580adb">Follow-up messages</li>
+          </ul>
+        </div>
+      </div>
+      <p class="note" style="margin-top:1.5rem;text-align:center" data-i18n="kff7f9ea0">Change a price in one place and every one of those changes with it.</p>
+    </div>
+  </section>
+
+  <section class="section section--edge">
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <p class="eyebrow" data-i18n="kfb4dddc3">The first week</p>
+          <h2 data-i18n="k8c556fa2">What actually happens.</h2>
+          <p class="lede" data-i18n="kf3447aaa">No project plan, no kick-off deck. A conversation, a build, a check, and then it is live.</p>
+        </div>
+        <ol class="numbered">
+          <li data-reveal><b>DAY 1</b><span data-i18n="kb31f3573">We talk for an hour and write down everything your business charges for.</span></li>
+          <li data-reveal><b>DAY 2</b><span data-i18n="k71f596fd">You get the database and the admin screen, filled in, to correct.</span></li>
+          <li data-reveal><b>DAY 4</b><span data-i18n="k0b02bd08">The site and the assistant are live on a test link for you to try.</span></li>
+          <li data-reveal><b>DAY 6</b><span data-i18n="k906b010a">We point your number and your domain at it, and it goes live.</span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sunk section--edge">
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <p class="eyebrow" data-i18n="k73118a66">Where the line is</p>
+          <h2 data-i18n="kb6a01c23">The assistant knows your prices. It does not invent them.</h2>
+          <p class="lede" data-i18n="k054fe8d1">It answers from your database and nothing else. When it does not know, it says so and hands the conversation to you rather than guessing. You can take over any conversation at any time.</p>
+        </div>
+        <div><div class="mock" data-reveal="120">
+          <div class="mock__bar">
+            <span class="mock__title" data-i18n="k3751695c">Answer</span>
+            <span class="mock__meta">WHATSAPP &middot; 02:14</span>
+          </div>
+          <div class="mock__body">
+            <p class="bub bub--them" data-i18n="k1977b545">Do you have a jeep for tomorrow? What&rsquo;s the price for 3 days?</p>
+            <p class="bub bub--us" data-i18n="kd06a952b">Yes — a Suzuki Jimny is free tomorrow. Three days is &euro;135, insurance included. Want me to hold it?</p>
+            <p class="bub bub--them" data-i18n="kda8ac62e">Yes please</p>
+          </div>
+          <div class="mock__foot">
+            <span class="mock__tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>
+            <span data-i18n="ke17123c0">Booking confirmed. Deposit taken, added to the July calendar.</span>
+          </div>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="cta" data-reveal>
+        <h2 data-i18n="kf85f9e68">Set it once. Let it run.</h2>
+        <p data-i18n="kd524b226">Tell us about your business and we will show you exactly how Ownerdeck would handle your website, your messages and your bookings.</p>
+        <div class="btn-row">
+          <a class="btn btn--primary" href="https://wa.me/447520689685?text=Hi%20Mark%20%E2%80%94%20I%20saw%20Ownerdeck%20and%20I%27d%20like%20to%20know%20more." rel="noopener"><span data-i18n="k63a19537">Message us on WhatsApp</span><svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+          <a class="btn btn--ghost" href="/pricing" data-i18n="kd411d39d">See pricing</a>
+        </div>
+        <p class="note" data-i18n="kfc8a6156">No VAT. No long contract on the entry plan.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+  <div class="wrap"><nav class="pagenav" aria-label="Page">
+    <a href="/what-we-build"><small data-i18n="kdd1f775e">Previous</small><b data-i18n="kfbdc1c76">What we build</b></a>
+    <a href="/pricing"><small data-i18n="k10ac3d04">Next</small><b data-i18n="ke22ac25b">Pricing</b></a>
+  </nav></div>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div>
+        <a class="masthead__mark" href="/" aria-label="Ownerdeck home"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5.5" width="12" height="15" rx="2.2" fill="currentColor" opacity=".22"/><rect x="7.5" y="3.5" width="12" height="15" rx="2.2" fill="currentColor"/></svg> Ownerdeck</a>
+        <p class="foot__blurb" data-i18n="k0569a6cf">We build and run the online side of small owner-operated businesses. One set of facts drives the website, the messages, the bookings and the follow-up.</p>
+      </div>
+      <div>
+        <h2 data-i18n="k84e5e7de">The cards</h2>
+        <ul><li><a href="/what-we-build#answer" data-i18n="k3751695c">Answer</a></li>
+<li><a href="/what-we-build#site" data-i18n="ka7d6475e">Site</a></li>
+<li><a href="/what-we-build#data" data-i18n="kf6068daa">Data</a></li>
+<li><a href="/what-we-build#book" data-i18n="k2b1f94ef">Book</a></li>
+<li><a href="/what-we-build#reach" data-i18n="kb350f6de">Reach</a></li>
+<li><a href="/what-we-build#return" data-i18n="k988fd738">Return</a></li></ul>
+      </div>
+      <div>
+        <h2 data-i18n="k26fccddf">Reading</h2>
+        <ul><li><a href="/what-we-build" data-i18n="kfbdc1c76">What we build</a></li>
+<li><a href="/how-it-works" data-i18n="k9ffdb952">How it works</a></li>
+<li><a href="/pricing" data-i18n="ke22ac25b">Pricing</a></li>
+<li><a href="/who-its-for" data-i18n="k92cd7d99">Who it's for</a></li>
+<li><a href="/questions" data-i18n="k6ce3bdc3">Questions</a></li></ul>
+      </div>
+      <div>
+        <h2 data-i18n="ka10a9bcd">Legal</h2>
+        <ul><li><a href="/terms" data-i18n="k6f1bf85c">Terms</a></li>
+<li><a href="/privacy" data-i18n="kc5f29bb3">Privacy</a></li>
+<li><a href="/cookies" data-i18n="k597b56e5">Cookies</a></li>
+<li><a href="/legal" data-i18n="k23e162ba">Legal notice</a></li></ul>
+        <h2 style="margin-top:1.5rem" data-i18n="kbbaff128">Contact</h2>
+        <ul>
+          <li><a href="https://wa.me/447520689685?text=Hi%20Mark%20%E2%80%94%20I%20saw%20Ownerdeck%20and%20I%27d%20like%20to%20know%20more." rel="noopener" data-i18n="k8b777ebc">WhatsApp</a></li>
+          <li><a href="mailto:mark@ownerdeck.com">mark@ownerdeck.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot__base">
+      <span>&copy; 2026 Ownerdeck</span>
+      <span data-i18n="k3a427f0a">Built and run in Cyprus.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/config.js?v=20260815a"></script>
+<script src="/chat-widget.js?v=20260815a"></script>
+<script src="/i18n.js?v=20260815a" defer></script>
+<script src="/od.js?v=20260815a" defer></script>
+<script src="/analytics-events.js?v=20260815a" defer></script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

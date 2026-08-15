@@ -1,0 +1,573 @@
+# Regenerates the language packs from _en_source.json.
+#
+# The English string is the key here, not the hash, because a human has to be
+# able to read and correct this file. The hashing happens below, against the
+# same normalisation _build_site.py uses, so the two cannot drift.
+#
+# Greek and Russian are complete. The other four packs are left alone by this
+# script — rewriting them from an incomplete table would delete translations
+# that are still good.
+#
+# el/ru are machine-assisted and should be read by a native speaker before
+# being leaned on commercially.
+#
+# Run:  python _translate.py
+import hashlib
+import io
+import json
+import os
+import re
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+LANGS = ['el', 'ru']
+
+ENT = {'&rsquo;': '’', '&lsquo;': '‘', '&euro;': '€',
+       '&middot;': '·', '&mdash;': '—', '&ndash;': '–',
+       '&amp;': '&', '&quot;': '"'}
+
+
+def decode(s):
+    for a, b in ENT.items():
+        s = s.replace(a, b)
+    return s
+
+
+# English -> (Greek, Russian)
+T = {
+    # ---- chrome, navigation, buttons ----
+    'Skip to content': ('Μετάβαση στο περιεχόμενο', 'Перейти к содержимому'),
+    'What we build': ('Τι φτιάχνουμε', 'Что мы создаём'),
+    'How it works': ('Πώς λειτουργεί', 'Как это работает'),
+    'Pricing': ('Τιμές', 'Цены'),
+    "Who it's for": ('Για ποιους είναι', 'Для кого это'),
+    'Questions': ('Ερωτήσεις', 'Вопросы'),
+    'Terms': ('Όροι', 'Условия'),
+    'Privacy': ('Απόρρητο', 'Конфиденциальность'),
+    'Cookies': ('Cookies', 'Cookies'),
+    'Legal notice': ('Νομικές πληροφορίες', 'Правовая информация'),
+    'Talk to us': ('Μιλήστε μας', 'Свяжитесь с нами'),
+    'Message us on WhatsApp': ('Στείλτε μας στο WhatsApp', 'Напишите нам в WhatsApp'),
+    'See pricing': ('Δείτε τις τιμές', 'Посмотреть цены'),
+    'See how it works': ('Δείτε πώς λειτουργεί', 'Посмотреть, как это работает'),
+    'Previous': ('Προηγούμενο', 'Назад'),
+    'Next': ('Επόμενο', 'Вперёд'),
+    'Contact': ('Επικοινωνία', 'Контакты'),
+    'Reading': ('Διαβάστε', 'Читать'),
+    'The cards': ('Οι κάρτες', 'Карты'),
+    'Legal': ('Νομικά', 'Правовое'),
+    'WhatsApp': ('WhatsApp', 'WhatsApp'),
+    'Built and run in Cyprus.': ('Φτιαγμένο και συντηρημένο στην Κύπρο.',
+                                 'Создано и обслуживается на Кипре.'),
+    'We build and run the online side of small owner-operated businesses. One set of facts drives the website, the messages, the bookings and the follow-up.':
+        ('Φτιάχνουμε και τρέχουμε την ψηφιακή πλευρά μικρών επιχειρήσεων. Ένα σύνολο δεδομένων τροφοδοτεί την ιστοσελίδα, τα μηνύματα, τις κρατήσεις και την επικοινωνία μετά.',
+         'Мы создаём и обслуживаем онлайн-часть небольших бизнесов. Один набор данных управляет сайтом, сообщениями, бронированиями и последующей связью.'),
+
+    # ---- the cards ----
+    'Answer': ('Answer', 'Answer'),
+    'Site': ('Site', 'Site'),
+    'Data': ('Data', 'Data'),
+    'Book': ('Book', 'Book'),
+    'Reach': ('Reach', 'Reach'),
+    'Return': ('Return', 'Return'),
+    'Deck': ('Deck', 'Deck'),
+    'Full Deck': ('Full Deck', 'Full Deck'),
+    'The deck': ('Η τράπουλα', 'Колода'),
+    'Five cards. One system.': ('Πέντε κάρτες. Ένα σύστημα.', 'Пять карт. Одна система.'),
+    'Enquiries handled on WhatsApp, Instagram DMs and website chat. Any language, any hour.':
+        ('Απαντάμε σε ερωτήματα στο WhatsApp, στα Instagram DMs και στο chat της ιστοσελίδας. Σε κάθε γλώσσα, κάθε ώρα.',
+         'Обработка запросов в WhatsApp, Instagram DM и чате сайта. На любом языке, в любое время.'),
+    'A fast website that reads live from your prices, so it never goes stale.':
+        ('Μια γρήγορη ιστοσελίδα που διαβάζει ζωντανά τις τιμές σας, ώστε να μην παλιώνει ποτέ.',
+         'Быстрый сайт, который читает ваши цены напрямую, поэтому он никогда не устаревает.'),
+    'Real availability, confirmations, deposits and a calendar that fills itself in.':
+        ('Πραγματική διαθεσιμότητα, επιβεβαιώσεις, προκαταβολές και ένα ημερολόγιο που συμπληρώνεται μόνο του.',
+         'Реальная доступность, подтверждения, депозиты и календарь, который заполняется сам.'),
+    'Your Google listing set up properly, and a review request after every booking.':
+        ('Η καταχώρισή σας στο Google σωστά ρυθμισμένη και αίτημα αξιολόγησης μετά από κάθε κράτηση.',
+         'Ваш профиль в Google, настроенный правильно, и запрос отзыва после каждого бронирования.'),
+    'Reminders, off-season offers, and past customers who come back.':
+        ('Υπενθυμίσεις, προσφορές εκτός σεζόν και παλιοί πελάτες που επιστρέφουν.',
+         'Напоминания, предложения вне сезона и возвращающиеся клиенты.'),
+    'Who it is for': ('Για ποιους είναι', 'Для кого это'),
+    'Owners who lose bookings to slow replies.':
+        ('Ιδιοκτήτες που χάνουν κρατήσεις από αργές απαντήσεις.',
+         'Владельцев, теряющих брони из-за медленных ответов.'),
+    'Anyone whose website has not been touched in years.':
+        ('Όποιον δεν έχει αγγίξει την ιστοσελίδα του εδώ και χρόνια.',
+         'Всех, чей сайт не обновлялся годами.'),
+    'Businesses still taking bookings by phone and paper.':
+        ('Επιχειρήσεις που κρατούν ακόμη ραντεβού με τηλέφωνο και χαρτί.',
+         'Бизнесов, которые всё ещё принимают брони по телефону и на бумаге.'),
+    'Owners who are hard to find and rarely reviewed.':
+        ('Ιδιοκτήτες που δύσκολα βρίσκονται και σπάνια αξιολογούνται.',
+         'Владельцев, которых трудно найти и редко оценивают.'),
+    'Seasonal businesses with quiet months to fill.':
+        ('Εποχικές επιχειρήσεις με ήσυχους μήνες προς κάλυψη.',
+         'Сезонных бизнесов с тихими месяцами.'),
+    'Underneath all of it': ('Κάτω από όλα αυτά', 'В основе всего'),
+    'Why it matters': ('Γιατί έχει σημασία', 'Почему это важно'),
+    'The database every card reads from. Your services, prices, seasons, availability, hours and policies, in one place with an admin screen you can actually use.':
+        ('Η βάση δεδομένων από την οποία διαβάζει κάθε κάρτα. Οι υπηρεσίες, οι τιμές, οι σεζόν, η διαθεσιμότητα, οι ώρες και οι πολιτικές σας, σε ένα σημείο με μια οθόνη διαχείρισης που μπορείτε πραγματικά να χρησιμοποιήσετε.',
+         'База данных, из которой читает каждая карта. Ваши услуги, цены, сезоны, доступность, часы работы и правила — в одном месте, с админ-панелью, которой действительно можно пользоваться.'),
+    'Without it, a price change means editing the website, correcting the assistant and remembering what you told Google. With it, you change one number.':
+        ('Χωρίς αυτήν, μια αλλαγή τιμής σημαίνει επεξεργασία της ιστοσελίδας, διόρθωση του βοηθού και να θυμάστε τι είπατε στο Google. Με αυτήν, αλλάζετε έναν αριθμό.',
+         'Без неё изменение цены означает правку сайта, исправление ассистента и попытку вспомнить, что вы указали в Google. С ней вы меняете одно число.'),
+    'Start with the card you need and add the rest as you grow. Each one reads from the same set of facts.':
+        ('Ξεκινήστε με την κάρτα που χρειάζεστε και προσθέστε τις υπόλοιπες καθώς μεγαλώνετε. Καθεμία διαβάζει από τα ίδια δεδομένα.',
+         'Начните с нужной карты и добавляйте остальные по мере роста. Каждая читает из одного набора данных.'),
+    'Start with the card you need and add the rest as you grow. Every card reads from the same set of facts, so nothing you own can contradict anything else you own.':
+        ('Ξεκινήστε με την κάρτα που χρειάζεστε και προσθέστε τις υπόλοιπες καθώς μεγαλώνετε. Κάθε κάρτα διαβάζει από τα ίδια δεδομένα, ώστε τίποτα δικό σας να μην έρχεται σε αντίφαση με κάτι άλλο δικό σας.',
+         'Начните с нужной карты и добавляйте остальные по мере роста. Каждая карта читает из одного набора данных, поэтому ничто из вашего не может противоречить другому.'),
+    'What each card does': ('Τι κάνει κάθε κάρτα', 'Что делает каждая карта'),
+
+    # ---- hero, reality, one idea ----
+    'Run the online side of your business.':
+        ('Τρέξτε την ψηφιακή πλευρά της επιχείρησής σας.',
+         'Управляйте онлайн-частью вашего бизнеса.'),
+    'Ownerdeck runs the online side of your business — your website, your enquiries, your bookings and the follow-up after. Set your prices once and everything says the same thing.':
+        ('Το Ownerdeck τρέχει την ψηφιακή πλευρά της επιχείρησής σας — την ιστοσελίδα, τα ερωτήματα, τις κρατήσεις και την επικοινωνία μετά. Ορίστε τις τιμές σας μία φορά και όλα λένε το ίδιο πράγμα.',
+         'Ownerdeck управляет онлайн-частью вашего бизнеса — сайтом, запросами, бронированиями и последующей связью. Задайте цены один раз, и везде будет одно и то же.'),
+    'No VAT. No long contract on the entry plan.':
+        ('Χωρίς ΦΠΑ. Χωρίς μακροχρόνιο συμβόλαιο στο εισαγωγικό πακέτο.',
+         'Без НДС. Без долгосрочного договора на начальном тарифе.'),
+    'The reality': ('Η πραγματικότητα', 'Реальность'),
+    'The online side runs whether you are watching or not.':
+        ('Η ψηφιακή πλευρά τρέχει είτε την παρακολουθείτε είτε όχι.',
+         'Онлайн-часть работает, смотрите вы за ней или нет.'),
+    'Enquiries arrive at 11pm and wait until morning.':
+        ('Τα ερωτήματα φτάνουν στις 11 το βράδυ και περιμένουν ως το πρωί.',
+         'Запросы приходят в 11 вечера и ждут до утра.'),
+    'Prices are out of date in three different places.':
+        ('Οι τιμές είναι ξεπερασμένες σε τρία διαφορετικά σημεία.',
+         'Цены устарели сразу в трёх местах.'),
+    'Customers move on while they wait for a reply.':
+        ('Οι πελάτες φεύγουν όσο περιμένουν απάντηση.',
+         'Клиенты уходят, пока ждут ответа.'),
+    'The website has not been touched since it was built.':
+        ('Η ιστοσελίδα δεν έχει αγγιχτεί από τότε που φτιάχτηκε.',
+         'Сайт не трогали с момента создания.'),
+    'The one idea': ('Η μία ιδέα', 'Одна идея'),
+    'Tell it once. It runs everything.':
+        ('Πείτε το μία φορά. Τα τρέχει όλα.', 'Скажите один раз. Оно управляет всем.'),
+    'You give Ownerdeck the facts about your business one time. That single set of facts becomes everything your customers see. Change a price in one place and everything says the same thing.':
+        ('Δίνετε στο Ownerdeck τα δεδομένα της επιχείρησής σας μία φορά. Αυτό το σύνολο δεδομένων γίνεται ό,τι βλέπουν οι πελάτες σας. Αλλάξτε μια τιμή σε ένα σημείο και όλα λένε το ίδιο.',
+         'Вы один раз передаёте Ownerdeck данные о вашем бизнесе. Этот набор данных становится всем, что видят клиенты. Измените цену в одном месте — и везде будет одно и то же.'),
+    'How it fits together': ('Πώς δένουν όλα μαζί', 'Как всё связано'),
+    'What you tell us once': ('Τι μας λέτε μία φορά', 'Что вы говорите один раз'),
+    'What it runs': ('Τι τρέχει', 'Чем оно управляет'),
+    'What reads from it': ('Τι διαβάζει από αυτό', 'Что из этого читает'),
+    'Services': ('Υπηρεσίες', 'Услуги'),
+    'Prices': ('Τιμές', 'Цены'),
+    'Availability': ('Διαθεσιμότητα', 'Доступность'),
+    'Hours': ('Ωράριο', 'Часы работы'),
+    'Policies': ('Πολιτικές', 'Правила'),
+    'Photos': ('Φωτογραφίες', 'Фотографии'),
+    'Seasons': ('Σεζόν', 'Сезоны'),
+    'Website': ('Ιστοσελίδα', 'Сайт'),
+    'Messages': ('Μηνύματα', 'Сообщения'),
+    'Bookings': ('Κρατήσεις', 'Бронирования'),
+    'Google': ('Google', 'Google'),
+    'Follow-up': ('Επικοινωνία μετά', 'Последующая связь'),
+    'Your website': ('Η ιστοσελίδα σας', 'Ваш сайт'),
+    'WhatsApp replies': ('Απαντήσεις WhatsApp', 'Ответы в WhatsApp'),
+    'Instagram DMs': ('Instagram DMs', 'Instagram DM'),
+    'Website chat': ('Chat ιστοσελίδας', 'Чат на сайте'),
+    'Booking confirmations': ('Επιβεβαιώσεις κρατήσεων', 'Подтверждения броней'),
+    'Google listing': ('Καταχώριση Google', 'Профиль в Google'),
+    'Follow-up messages': ('Μηνύματα επικοινωνίας', 'Последующие сообщения'),
+    'The wiring': ('Η καλωδίωση', 'Как это соединено'),
+    'One set of facts, five outputs.':
+        ('Ένα σύνολο δεδομένων, πέντε εξόδους.', 'Один набор данных, пять результатов.'),
+    'Change a price in one place and every one of those changes with it.':
+        ('Αλλάξτε μια τιμή σε ένα σημείο και όλα τα παραπάνω αλλάζουν μαζί.',
+         'Измените цену в одном месте — и всё перечисленное изменится вместе с ней.'),
+
+    # ---- chat mock ----
+    'Do you have a jeep for tomorrow? What&rsquo;s the price for 3 days?':
+        ('Έχετε τζιπ για αύριο; Ποια είναι η τιμή για 3 μέρες;',
+         'У вас есть джип на завтра? Сколько стоит на 3 дня?'),
+    'Yes — a Suzuki Jimny is free tomorrow. Three days is &euro;135, insurance included. Want me to hold it?':
+        ('Ναι — ένα Suzuki Jimny είναι ελεύθερο αύριο. Οι τρεις μέρες είναι 135 €, με την ασφάλεια. Θέλετε να το κρατήσω;',
+         'Да — Suzuki Jimny свободен завтра. Три дня — 135 €, страховка включена. Забронировать?'),
+    'Yes please': ('Ναι, παρακαλώ', 'Да, пожалуйста'),
+    'Booking confirmed. Deposit taken, added to the July calendar.':
+        ('Η κράτηση επιβεβαιώθηκε. Η προκαταβολή ελήφθη και προστέθηκε στο ημερολόγιο Ιουλίου.',
+         'Бронирование подтверждено. Депозит принят, добавлено в календарь на июль.'),
+
+    # ---- proof ----
+    'Proof &middot; Limassol': ('Απόδειξη · Λεμεσός', 'Доказательство · Лимасол'),
+    'enquiries booked between 9pm and 8am last month':
+        ('ερωτήματα έγιναν κρατήσεις μεταξύ 9 μ.μ. και 8 π.μ. τον περασμένο μήνα',
+         'запросов превратились в брони между 21:00 и 8:00 в прошлом месяце'),
+    'A car rental operator in Limassol, live at &euro;150 a month. The after-hours coverage booked those 14 enquiries automatically — ones the owner would otherwise have picked up the next morning, if they were still waiting.':
+        ('Μια εταιρεία ενοικίασης αυτοκινήτων στη Λεμεσό, ενεργή στα 150 € τον μήνα. Η κάλυψη εκτός ωραρίου έκλεισε αυτά τα 14 ερωτήματα αυτόματα — αυτά που ο ιδιοκτήτης θα έπιανε το επόμενο πρωί, αν περίμεναν ακόμη.',
+         'Прокат автомобилей в Лимасоле, работает за 150 € в месяц. Покрытие в нерабочие часы автоматически закрыло эти 14 запросов — те, которые владелец увидел бы только утром, если бы они ещё ждали.'),
+    'A car rental operator in Limassol, live at &euro;150 a month. Those 14 were booked while the owner was asleep.':
+        ('Μια εταιρεία ενοικίασης αυτοκινήτων στη Λεμεσό, ενεργή στα 150 € τον μήνα. Αυτά τα 14 κλείστηκαν όσο ο ιδιοκτήτης κοιμόταν.',
+         'Прокат автомобилей в Лимасоле, работает за 150 € в месяц. Эти 14 броней были сделаны, пока владелец спал.'),
+    'Car rental, Limassol': ('Ενοικίαση αυτοκινήτων, Λεμεσός', 'Прокат авто, Лимасол'),
+    'Enquiries answered': ('Ερωτήματα που απαντήθηκαν', 'Отвечено на запросы'),
+    'Answered after hours': ('Απαντήθηκαν εκτός ωραρίου', 'Отвечено вне рабочих часов'),
+    'Average reply time': ('Μέσος χρόνος απάντησης', 'Среднее время ответа'),
+    'under a minute': ('κάτω από ένα λεπτό', 'меньше минуты'),
+
+    # ---- how it works ----
+    'You tell us the facts': ('Μας λέτε τα δεδομένα', 'Вы сообщаете нам факты'),
+    'We build it around them': ('Το χτίζουμε γύρω από αυτά', 'Мы строим вокруг них'),
+    'It runs, and we keep it running': ('Τρέχει, και το κρατάμε να τρέχει',
+                                        'Оно работает, а мы поддерживаем работу'),
+    'Most small businesses keep the same facts in four places and keep three of them wrong. Ownerdeck keeps them in one place and points everything else at it.':
+        ('Οι περισσότερες μικρές επιχειρήσεις κρατούν τα ίδια δεδομένα σε τέσσερα σημεία και τα τρία είναι λάθος. Το Ownerdeck τα κρατά σε ένα σημείο και στρέφει όλα τα υπόλοιπα εκεί.',
+         'Большинство малых бизнесов хранят одни и те же данные в четырёх местах, и в трёх они неверны. Ownerdeck хранит их в одном месте и направляет туда всё остальное.'),
+    'Services, prices, seasons, availability, opening hours, deposit and cancellation policy, photos. One conversation, usually about an hour.':
+        ('Υπηρεσίες, τιμές, σεζόν, διαθεσιμότητα, ωράριο, πολιτική προκαταβολής και ακύρωσης, φωτογραφίες. Μία συζήτηση, συνήθως περίπου μία ώρα.',
+         'Услуги, цены, сезоны, доступность, часы работы, правила депозита и отмены, фотографии. Один разговор, обычно около часа.'),
+    'The database, then the website on top of it, then the assistant that answers from it, then bookings and the follow-up if you have taken those cards.':
+        ('Πρώτα η βάση δεδομένων, μετά η ιστοσελίδα πάνω της, μετά ο βοηθός που απαντά από αυτήν, μετά οι κρατήσεις και η επικοινωνία μετά, αν έχετε πάρει αυτές τις κάρτες.',
+         'Сначала база данных, затем сайт поверх неё, затем ассистент, который отвечает из неё, затем бронирования и последующая связь, если вы взяли эти карты.'),
+    'Hosting, backups, updates and the changes you ask for are the monthly fee. You send a message, we make the change.':
+        ('Η φιλοξενία, τα αντίγραφα ασφαλείας, οι ενημερώσεις και οι αλλαγές που ζητάτε είναι η μηνιαία συνδρομή. Στέλνετε μήνυμα, κάνουμε την αλλαγή.',
+         'Хостинг, резервные копии, обновления и запрошенные вами изменения входят в ежемесячную плату. Вы пишете — мы вносим изменение.'),
+    'The first week': ('Η πρώτη εβδομάδα', 'Первая неделя'),
+    'What actually happens.': ('Τι γίνεται στην πράξη.', 'Что происходит на самом деле.'),
+    'No project plan, no kick-off deck. A conversation, a build, a check, and then it is live.':
+        ('Χωρίς πλάνο έργου, χωρίς παρουσίαση εκκίνησης. Μια συζήτηση, μια κατασκευή, ένας έλεγχος, και μετά είναι ζωντανό.',
+         'Никакого плана проекта и презентаций. Разговор, сборка, проверка — и всё работает.'),
+    'We talk for an hour and write down everything your business charges for.':
+        ('Μιλάμε για μία ώρα και καταγράφουμε όλα όσα χρεώνει η επιχείρησή σας.',
+         'Мы час разговариваем и записываем всё, за что берёт деньги ваш бизнес.'),
+    'You get the database and the admin screen, filled in, to correct.':
+        ('Παίρνετε τη βάση δεδομένων και την οθόνη διαχείρισης, συμπληρωμένες, για να τις διορθώσετε.',
+         'Вы получаете заполненную базу данных и админ-панель, чтобы всё проверить.'),
+    'The site and the assistant are live on a test link for you to try.':
+        ('Η ιστοσελίδα και ο βοηθός είναι ζωντανά σε δοκιμαστικό σύνδεσμο για να τα δοκιμάσετε.',
+         'Сайт и ассистент доступны по тестовой ссылке — попробуйте.'),
+    'We point your number and your domain at it, and it goes live.':
+        ('Στρέφουμε τον αριθμό και το domain σας σε αυτό, και βγαίνει ζωντανά.',
+         'Мы направляем на него ваш номер и домен — и всё запускается.'),
+    'Where the line is': ('Πού είναι το όριο', 'Где проходит граница'),
+    'The assistant knows your prices. It does not invent them.':
+        ('Ο βοηθός ξέρει τις τιμές σας. Δεν τις επινοεί.',
+         'Ассистент знает ваши цены. Он их не выдумывает.'),
+    'It answers from your database and nothing else. When it does not know, it says so and hands the conversation to you rather than guessing. You can take over any conversation at any time.':
+        ('Απαντά από τη βάση δεδομένων σας και από τίποτε άλλο. Όταν δεν ξέρει, το λέει και σας παραδίδει τη συνομιλία αντί να μαντεύει. Μπορείτε να αναλάβετε οποιαδήποτε συνομιλία, οποιαδήποτε στιγμή.',
+         'Он отвечает только из вашей базы данных. Если он не знает, он так и говорит и передаёт разговор вам, а не гадает. Вы можете вмешаться в любой разговор в любой момент.'),
+
+    # ---- pricing ----
+    'Pick a hand. Add cards as you grow.':
+        ('Διαλέξτε χέρι. Προσθέστε κάρτες καθώς μεγαλώνετε.',
+         'Выберите руку. Добавляйте карты по мере роста.'),
+    'A one-off fee to build it, then a monthly fee to run it. The monthly covers hosting, the database, the assistant, backups and the changes you ask for. No VAT is charged.':
+        ('Μια εφάπαξ χρέωση για την κατασκευή, μετά μια μηνιαία για τη λειτουργία. Η μηνιαία καλύπτει φιλοξενία, βάση δεδομένων, τον βοηθό, αντίγραφα ασφαλείας και τις αλλαγές που ζητάτε. Δεν χρεώνεται ΦΠΑ.',
+         'Разовая плата за создание, затем ежемесячная за обслуживание. Ежемесячная покрывает хостинг, базу данных, работу ассистента, резервные копии и запрошенные изменения. НДС не начисляется.'),
+    'one-off, to build it': ('εφάπαξ, για την κατασκευή', 'разово, за создание'),
+    'per month after': ('τον μήνα μετά', 'в месяц далее'),
+    'Common choice': ('Συνήθης επιλογή', 'Частый выбор'),
+    'Not included:': ('Δεν περιλαμβάνεται:', 'Не входит:'),
+    'The AI assistant, plus a basic website of your own. Everything a small business needs to be found and to reply.':
+        ('Ο βοηθός τεχνητής νοημοσύνης, μαζί με μια βασική δική σας ιστοσελίδα. Ό,τι χρειάζεται μια μικρή επιχείρηση για να βρίσκεται και να απαντά.',
+         'ИИ-ассистент плюс собственный базовый сайт. Всё, что нужно малому бизнесу, чтобы его находили и он отвечал.'),
+    'The website, the database behind it, the assistant answering, and the bookings landing on your phone.':
+        ('Η ιστοσελίδα, η βάση δεδομένων από πίσω, ο βοηθός που απαντά και οι κρατήσεις που φτάνουν στο κινητό σας.',
+         'Сайт, база данных за ним, отвечающий ассистент и брони, которые приходят вам на телефон.'),
+    'All five cards. Everything above, plus your Google listing set up properly and customers who come back.':
+        ('Και οι πέντε κάρτες. Όλα τα παραπάνω, μαζί με τη σωστή ρύθμιση της καταχώρισής σας στο Google και πελάτες που επιστρέφουν.',
+         'Все пять карт. Всё вышеперечисленное плюс правильно настроенный профиль в Google и возвращающиеся клиенты.'),
+    'AI assistant on WhatsApp, Instagram DMs and website chat':
+        ('Βοηθός AI σε WhatsApp, Instagram DMs και chat ιστοσελίδας',
+         'ИИ-ассистент в WhatsApp, Instagram DM и чате сайта'),
+    'A basic website — your services, prices and contact details':
+        ('Μια βασική ιστοσελίδα — υπηρεσίες, τιμές και στοιχεία επικοινωνίας',
+         'Базовый сайт — услуги, цены и контакты'),
+    'Hosting, domain and certificate': ('Φιλοξενία, domain και πιστοποιητικό',
+                                        'Хостинг, домен и сертификат'),
+    'Answers in any language your customers write in':
+        ('Απαντήσεις σε όποια γλώσσα γράφουν οι πελάτες σας',
+         'Ответы на любом языке, на котором пишут клиенты'),
+    'Handover to you whenever it is unsure':
+        ('Παράδοση σε εσάς όποτε δεν είναι σίγουρος', 'Передача вам при любой неуверенности'),
+    'Changes when you need them': ('Αλλαγές όποτε τις χρειάζεστε', 'Изменения, когда нужно'),
+    'Live database and admin screen': ('Ζωντανή βάση δεδομένων και οθόνη διαχείρισης',
+                                       'Живая база данных и админ-панель'),
+    'Bookings, deposits and calendar': ('Κρατήσεις, προκαταβολές και ημερολόγιο',
+                                        'Брони, депозиты и календарь'),
+    'Follow-up campaigns': ('Καμπάνιες επικοινωνίας', 'Кампании последующей связи'),
+    'Everything in Answer': ('Όλα του Answer', 'Всё из Answer'),
+    'Everything in Deck': ('Όλα του Deck', 'Всё из Deck'),
+    'A website that reads live from your prices':
+        ('Μια ιστοσελίδα που διαβάζει ζωντανά τις τιμές σας',
+         'Сайт, который читает ваши цены напрямую'),
+    'The database and an admin screen you control':
+        ('Η βάση δεδομένων και μια οθόνη διαχείρισης που ελέγχετε',
+         'База данных и админ-панель под вашим контролем'),
+    'Real availability, confirmations and deposits':
+        ('Πραγματική διαθεσιμότητα, επιβεβαιώσεις και προκαταβολές',
+         'Реальная доступность, подтверждения и депозиты'),
+    'A calendar that fills itself in': ('Ένα ημερολόγιο που συμπληρώνεται μόνο του',
+                                        'Календарь, который заполняется сам'),
+    'Google Business Profile set up and kept current':
+        ('Το Google Business Profile ρυθμισμένο και ενημερωμένο',
+         'Google Business Profile настроен и поддерживается актуальным'),
+    'A review request after every booking': ('Αίτημα αξιολόγησης μετά από κάθε κράτηση',
+                                             'Запрос отзыва после каждой брони'),
+    'Reminders and off-season offers': ('Υπενθυμίσεις και προσφορές εκτός σεζόν',
+                                        'Напоминания и предложения вне сезона'),
+    'Past customers brought back': ('Παλιοί πελάτες που επιστρέφουν',
+                                    'Возвращение прошлых клиентов'),
+    'Start with Answer': ('Ξεκινήστε με το Answer', 'Начать с Answer'),
+    'Get the Deck': ('Πάρτε το Deck', 'Выбрать Deck'),
+    'Get the Full Deck': ('Πάρτε το Full Deck', 'Выбрать Full Deck'),
+    'Starting from nothing': ('Ξεκινώντας από το μηδέν', 'Начиная с нуля'),
+    'New business? Everything from zero in a week.':
+        ('Νέα επιχείρηση; Τα πάντα από το μηδέν σε μία εβδομάδα.',
+         'Новый бизнес? Всё с нуля за неделю.'),
+    'Nothing upfront. &euro;249 a month on a twelve month term, and you get the Deck — the site, the database, the assistant and the bookings — built from scratch.':
+        ('Τίποτα προκαταβολικά. 249 € τον μήνα με δωδεκάμηνη δέσμευση, και παίρνετε το Deck — την ιστοσελίδα, τη βάση δεδομένων, τον βοηθό και τις κρατήσεις — φτιαγμένα από την αρχή.',
+         'Без предоплаты. 249 € в месяц на двенадцать месяцев, и вы получаете Deck — сайт, базу данных, ассистента и бронирования — созданные с нуля.'),
+    'Start from zero': ('Ξεκινήστε από το μηδέν', 'Начать с нуля'),
+    'What the monthly covers': ('Τι καλύπτει η μηνιαία', 'Что покрывает ежемесячная плата'),
+    'Running it is the job, not an extra.':
+        ('Η λειτουργία είναι η δουλειά, όχι έξτρα.', 'Обслуживание — это работа, а не доплата.'),
+    'Hosting and domain': ('Φιλοξενία και domain', 'Хостинг и домен'),
+    'The site, the certificate and the domain renewal.':
+        ('Η ιστοσελίδα, το πιστοποιητικό και η ανανέωση του domain.',
+         'Сайт, сертификат и продление домена.'),
+    'The assistant running': ('Η λειτουργία του βοηθού', 'Работа ассистента'),
+    'Every message answered, every hour, at our cost not yours.':
+        ('Κάθε μήνυμα απαντημένο, κάθε ώρα, με δικό μας κόστος και όχι δικό σας.',
+         'Каждое сообщение, в любой час, за наш счёт, а не за ваш.'),
+    'Backups and updates': ('Αντίγραφα ασφαλείας και ενημερώσεις',
+                            'Резервные копии и обновления'),
+    'Kept online, kept current, kept backed up.':
+        ('Πάντα online, πάντα ενημερωμένο, πάντα με αντίγραφα.',
+         'Всегда онлайн, всегда актуально, всегда с резервной копией.'),
+    'Changes you ask for': ('Αλλαγές που ζητάτε', 'Изменения по вашему запросу'),
+    'New prices, new services, new photos. You message, we change it.':
+        ('Νέες τιμές, νέες υπηρεσίες, νέες φωτογραφίες. Στέλνετε μήνυμα, το αλλάζουμε.',
+         'Новые цены, услуги, фотографии. Вы пишете — мы меняем.'),
+    'Not covered: rebuilding the site from scratch, adding a card you did not take, or work outside the online side of the business. We will quote before doing any of it.':
+        ('Δεν καλύπτεται: ανακατασκευή της ιστοσελίδας από την αρχή, προσθήκη κάρτας που δεν πήρατε, ή εργασία εκτός της ψηφιακής πλευράς. Θα δώσουμε προσφορά πριν κάνουμε οτιδήποτε από αυτά.',
+         'Не покрывается: пересборка сайта с нуля, добавление невзятой карты или работа вне онлайн-части бизнеса. Мы дадим смету, прежде чем что-либо делать.'),
+    'Money questions': ('Ερωτήσεις για τα χρήματα', 'Вопросы о деньгах'),
+    'The awkward ones, answered.': ('Οι δύσκολες, απαντημένες.', 'Неудобные — с ответами.'),
+    'Why is there a build fee now?': ('Γιατί υπάρχει τώρα χρέωση κατασκευής;',
+                                      'Почему теперь есть плата за создание?'),
+    'Because building a website, a database and a working assistant takes real days, and a monthly-only price means every new client starts deeply underwater. The build fee covers the build at cost. The monthly is what keeps it running.':
+        ('Επειδή η κατασκευή ιστοσελίδας, βάσης δεδομένων και ενός βοηθού που δουλεύει παίρνει πραγματικές μέρες, και μια τιμή μόνο μηνιαία σημαίνει ότι κάθε νέος πελάτης ξεκινά βαθιά ζημιωμένος. Η χρέωση κατασκευής καλύπτει την κατασκευή στο κόστος. Η μηνιαία είναι αυτό που το κρατά να λειτουργεί.',
+         'Потому что создание сайта, базы данных и работающего ассистента занимает реальные дни, а цена только по подписке означает, что каждый новый клиент начинается с глубокого минуса. Плата за создание покрывает работу по себестоимости. Ежемесячная плата поддерживает работу.'),
+    'Is there VAT on top?': ('Υπάρχει ΦΠΑ επιπλέον;', 'НДС добавляется?'),
+    'No. Ownerdeck is not registered for VAT, so the prices shown are the prices you pay.':
+        ('Όχι. Το Ownerdeck δεν είναι εγγεγραμμένο στο ΦΠΑ, οπότε οι τιμές που βλέπετε είναι οι τιμές που πληρώνετε.',
+         'Нет. Ownerdeck не зарегистрирован плательщиком НДС, поэтому указанные цены — это то, что вы платите.'),
+    'Can I stop paying?': ('Μπορώ να σταματήσω να πληρώνω;', 'Могу ли я перестать платить?'),
+    'Yes, with a month&rsquo;s notice, except on the new-business option which runs for twelve months. If you stop, you keep the site files and an export of your database.':
+        ('Ναι, με προειδοποίηση ενός μήνα, εκτός από την επιλογή για νέες επιχειρήσεις που τρέχει δώδεκα μήνες. Αν σταματήσετε, κρατάτε τα αρχεία της ιστοσελίδας και εξαγωγή της βάσης δεδομένων σας.',
+         'Да, с уведомлением за месяц, кроме варианта для новых бизнесов, который действует двенадцать месяцев. При остановке вы сохраняете файлы сайта и выгрузку базы данных.'),
+    'Do you take a cut of my bookings?': ('Παίρνετε ποσοστό από τις κρατήσεις μου;',
+                                          'Вы берёте процент с моих броней?'),
+    'No. Deposits and payments run through your own account and your own payment provider. We never handle your customers&rsquo; money.':
+        ('Όχι. Οι προκαταβολές και οι πληρωμές περνούν από τον δικό σας λογαριασμό και τον δικό σας πάροχο πληρωμών. Δεν διαχειριζόμαστε ποτέ τα χρήματα των πελατών σας.',
+         'Нет. Депозиты и платежи проходят через ваш собственный счёт и вашего платёжного провайдера. Мы никогда не обрабатываем деньги ваших клиентов.'),
+    'What if I only want the assistant?': ('Κι αν θέλω μόνο τον βοηθό;',
+                                           'А если мне нужен только ассистент?'),
+    'That is the Answer plan, and it now comes with a basic website of its own. If you already have a website you are happy with, we will point the assistant at it and price accordingly — just ask.':
+        ('Αυτό είναι το πακέτο Answer, και τώρα περιλαμβάνει και μια δική του βασική ιστοσελίδα. Αν έχετε ήδη ιστοσελίδα που σας ικανοποιεί, θα στρέψουμε τον βοηθό σε αυτήν και θα τιμολογήσουμε ανάλογα — απλώς ρωτήστε.',
+         'Это тариф Answer, и теперь в него входит собственный базовый сайт. Если у вас уже есть сайт, который вас устраивает, мы направим ассистента на него и пересчитаем цену — просто спросите.'),
+
+    # ---- who it's for ----
+    'Built for businesses that run on bookings.':
+        ('Φτιαγμένο για επιχειρήσεις που ζουν από κρατήσεις.',
+         'Создано для бизнесов, которые живут за счёт броней.'),
+    'If your customers ask what it costs, whether it is free, and can they have it tomorrow — this is built for you. The trade changes, the questions do not.':
+        ('Αν οι πελάτες σας ρωτούν πόσο κοστίζει, αν είναι ελεύθερο και αν μπορούν να το έχουν αύριο — αυτό είναι φτιαγμένο για εσάς. Το επάγγελμα αλλάζει, οι ερωτήσεις όχι.',
+         'Если ваши клиенты спрашивают, сколько это стоит, свободно ли это и можно ли завтра — это создано для вас. Отрасль меняется, вопросы — нет.'),
+    'Car and 4x4 rental': ('Ενοικίαση αυτοκινήτων και 4x4', 'Аренда автомобилей и внедорожников'),
+    'Fleet, day rates, insurance and delivery, all answered from one price list.':
+        ('Στόλος, ημερήσιες τιμές, ασφάλεια και παράδοση, όλα απαντημένα από έναν τιμοκατάλογο.',
+         'Автопарк, дневные тарифы, страховка и доставка — всё из одного прайс-листа.'),
+    'Scooter and bike hire': ('Ενοικίαση σκούτερ και ποδηλάτων', 'Прокат скутеров и велосипедов'),
+    'Walk-ups and day hires without the phone ringing all afternoon.':
+        ('Περαστικοί και ημερήσιες ενοικιάσεις χωρίς να χτυπά το τηλέφωνο όλο το απόγευμα.',
+         'Клиенты с улицы и дневная аренда — без звонков весь день.'),
+    'Boat and jetski charter': ('Ναύλωση σκαφών και jetski', 'Аренда лодок и гидроциклов'),
+    'Half-day and full-day slots, weather holds, deposits taken up front.':
+        ('Μισής και ολόκληρης ημέρας θέσεις, αναβολές λόγω καιρού, προκαταβολές εκ των προτέρων.',
+         'Слоты на полдня и день, отмены из-за погоды, депозиты вперёд.'),
+    'Tours, excursions and diving': ('Εκδρομές, ξεναγήσεις και καταδύσεις',
+                                     'Туры, экскурсии и дайвинг'),
+    'Group sizes, pick-up points and departure times that stay in step.':
+        ('Μεγέθη ομάδων, σημεία παραλαβής και ώρες αναχώρησης που μένουν συγχρονισμένα.',
+         'Размеры групп, точки сбора и время отправления — всегда согласованы.'),
+    'Villas and short-term rentals': ('Βίλες και βραχυχρόνιες μισθώσεις',
+                                      'Виллы и краткосрочная аренда'),
+    'Nightly rates by season, minimum stays and availability that is actually true.':
+        ('Τιμές ανά διανυκτέρευση κατά σεζόν, ελάχιστες διαμονές και διαθεσιμότητα που ισχύει πραγματικά.',
+         'Цены за ночь по сезонам, минимальный срок и доступность, которая действительно верна.'),
+    'Guesthouses and small hotels': ('Ξενώνες και μικρά ξενοδοχεία',
+                                     'Гостевые дома и небольшие отели'),
+    'Room types, breakfast, late check-out — asked and answered at 2am.':
+        ('Τύποι δωματίων, πρωινό, αργό check-out — ερωτήσεις και απαντήσεις στις 2 τα ξημερώματα.',
+         'Типы номеров, завтрак, поздний выезд — спрошено и отвечено в 2 часа ночи.'),
+    'Estate agencies': ('Κτηματομεσιτικά γραφεία', 'Агентства недвижимости'),
+    'Listings that stay current and viewings booked without the back and forth.':
+        ('Αγγελίες που μένουν ενημερωμένες και ραντεβού που κλείνονται χωρίς πέρα δώθε.',
+         'Объявления остаются актуальными, а просмотры бронируются без долгой переписки.'),
+    'Private clinics': ('Ιδιωτικές κλινικές', 'Частные клиники'),
+    'Appointment slots, first-visit questions and reminders that cut no-shows.':
+        ('Ραντεβού, ερωτήσεις πρώτης επίσκεψης και υπενθυμίσεις που μειώνουν τις απουσίες.',
+         'Слоты приёма, вопросы перед первым визитом и напоминания, снижающие неявки.'),
+    'Salons and spas': ('Κομμωτήρια και σπα', 'Салоны и спа'),
+    'Treatments, durations and prices, with the diary kept full.':
+        ('Θεραπείες, διάρκειες και τιμές, με το ημερολόγιο πάντα γεμάτο.',
+         'Процедуры, длительность и цены, с постоянно заполненным расписанием.'),
+    'Not on the list? If your business takes bookings or answers the same questions all day, it will fit. Ask us.':
+        ('Δεν είστε στη λίστα; Αν η επιχείρησή σας δέχεται κρατήσεις ή απαντά τις ίδιες ερωτήσεις όλη μέρα, ταιριάζει. Ρωτήστε μας.',
+         'Вас нет в списке? Если ваш бизнес принимает брони или весь день отвечает на одни и те же вопросы — подойдёт. Спросите нас.'),
+
+    # ---- questions ----
+    'Everything owners ask.': ('Όλα όσα ρωτούν οι ιδιοκτήτες.', 'Всё, о чём спрашивают владельцы.'),
+    'If yours is not here, message us — it probably belongs on this page.':
+        ('Αν η δική σας δεν είναι εδώ, στείλτε μας μήνυμα — μάλλον ανήκει σε αυτή τη σελίδα.',
+         'Если вашего вопроса тут нет, напишите нам — вероятно, ему здесь самое место.'),
+    'I already have a website. Do I have to replace it?':
+        ('Έχω ήδη ιστοσελίδα. Πρέπει να την αντικαταστήσω;',
+         'У меня уже есть сайт. Обязательно ли его менять?'),
+    'No. If you are happy with it, we can point the assistant at it and leave it alone. But if it is out of date and nobody can edit it, replacing it is usually cheaper than maintaining it.':
+        ('Όχι. Αν σας ικανοποιεί, μπορούμε να στρέψουμε τον βοηθό σε αυτήν και να την αφήσουμε ως έχει. Αλλά αν είναι ξεπερασμένη και κανείς δεν μπορεί να την επεξεργαστεί, η αντικατάσταση συνήθως κοστίζει λιγότερο από τη συντήρηση.',
+         'Нет. Если он вас устраивает, мы направим на него ассистента и не будем его трогать. Но если он устарел и никто не может его редактировать, заменить обычно дешевле, чем поддерживать.'),
+    'Do I need a new phone number?': ('Χρειάζομαι νέο αριθμό τηλεφώνου;',
+                                      'Нужен ли新 новый номер телефона?'),
+    'No. The assistant runs on your existing WhatsApp Business number. Your customers keep messaging the number they already have.':
+        ('Όχι. Ο βοηθός τρέχει στον υπάρχοντα αριθμό σας WhatsApp Business. Οι πελάτες σας συνεχίζουν να γράφουν στον αριθμό που ήδη έχουν.',
+         'Нет. Ассистент работает на вашем существующем номере WhatsApp Business. Клиенты продолжают писать на тот же номер.'),
+    'What happens when it does not know the answer?':
+        ('Τι γίνεται όταν δεν ξέρει την απάντηση;', 'Что происходит, если он не знает ответа?'),
+    'It says so and hands the conversation to you, with everything the customer already said. It never guesses at a price or an availability.':
+        ('Το λέει και σας παραδίδει τη συνομιλία, μαζί με όλα όσα έχει ήδη πει ο πελάτης. Ποτέ δεν μαντεύει τιμή ή διαθεσιμότητα.',
+         'Он так и говорит и передаёт вам разговор вместе со всем, что уже сказал клиент. Он никогда не угадывает цену или доступность.'),
+    'Can I take over a conversation?': ('Μπορώ να αναλάβω μια συνομιλία;',
+                                        'Могу ли я взять разговор на себя?'),
+    'At any time. You reply from your own phone and the assistant steps back for that conversation.':
+        ('Οποιαδήποτε στιγμή. Απαντάτε από το δικό σας κινητό και ο βοηθός αποσύρεται για εκείνη τη συνομιλία.',
+         'В любой момент. Вы отвечаете со своего телефона, и ассистент отступает в этом разговоре.'),
+    'What languages does it answer in?': ('Σε ποιες γλώσσες απαντά;',
+                                          'На каких языках он отвечает?'),
+    'Whatever the customer writes in. It reads the message, answers in the same language, and your prices stay the same in all of them.':
+        ('Σε όποια γράφει ο πελάτης. Διαβάζει το μήνυμα, απαντά στην ίδια γλώσσα, και οι τιμές σας μένουν ίδιες σε όλες.',
+         'На том, на котором пишет клиент. Он читает сообщение, отвечает на том же языке, а ваши цены везде одинаковы.'),
+    'Who owns the website and the data?': ('Ποιος έχει την ιστοσελίδα και τα δεδομένα;',
+                                           'Кому принадлежат сайт и данные?'),
+    'You do. The site, the database and the phone number are yours. If you leave, we hand over the site files and an export of your data.':
+        ('Εσείς. Η ιστοσελίδα, η βάση δεδομένων και ο αριθμός τηλεφώνου είναι δικά σας. Αν φύγετε, παραδίδουμε τα αρχεία της ιστοσελίδας και εξαγωγή των δεδομένων σας.',
+         'Вам. Сайт, база данных и номер телефона — ваши. Если вы уходите, мы передаём файлы сайта и выгрузку ваших данных.'),
+    'How long does it take to go live?': ('Πόσο χρόνο παίρνει για να βγει ζωντανά;',
+                                          'Сколько времени до запуска?'),
+    'About a week for the Deck, less for Answer. The slow part is usually waiting on photos and a decision about prices.':
+        ('Περίπου μία εβδομάδα για το Deck, λιγότερο για το Answer. Το αργό κομμάτι είναι συνήθως η αναμονή για φωτογραφίες και μια απόφαση για τις τιμές.',
+         'Около недели для Deck, меньше для Answer. Дольше всего обычно ждём фотографии и решение по ценам.'),
+    'I am not technical. Is that a problem?': ('Δεν είμαι τεχνικός. Είναι πρόβλημα;',
+                                               'Я не технарь. Это проблема?'),
+    'No. Everything you need to change day to day is a form with words on it, and if you would rather not, you message us and we change it.':
+        ('Όχι. Ό,τι χρειάζεται να αλλάζετε καθημερινά είναι μια φόρμα με λέξεις, και αν προτιμάτε, μας στέλνετε μήνυμα και το αλλάζουμε εμείς.',
+         'Нет. Всё, что нужно менять изо дня в день, — это форма со словами, а если не хотите, напишите нам, и мы изменим сами.'),
+    'Do you work outside Cyprus?': ('Δουλεύετε εκτός Κύπρου;', 'Вы работаете за пределами Кипра?'),
+    'Yes. Everything is remote and the assistant does not care where it runs. Most clients are in Cyprus because that is where we are.':
+        ('Ναι. Όλα γίνονται εξ αποστάσεως και στον βοηθό δεν έχει σημασία πού τρέχει. Οι περισσότεροι πελάτες είναι στην Κύπρο επειδή εκεί είμαστε κι εμείς.',
+         'Да. Всё удалённо, и ассистенту всё равно, где он работает. Большинство клиентов на Кипре просто потому, что мы здесь.'),
+    'What if the assistant gets something wrong?': ('Κι αν ο βοηθός κάνει λάθος;',
+                                                    'А если ассистент ошибётся?'),
+    'Tell us and we fix the facts it read from, so it cannot get the same thing wrong twice. It answers from your database, so a wrong answer is almost always a wrong entry.':
+        ('Πείτε μας και διορθώνουμε τα δεδομένα από τα οποία διάβασε, ώστε να μην ξανακάνει το ίδιο λάθος. Απαντά από τη βάση δεδομένων σας, οπότε μια λάθος απάντηση είναι σχεδόν πάντα μια λάθος καταχώριση.',
+         'Скажите нам, и мы исправим данные, из которых он читал, чтобы та же ошибка не повторилась. Он отвечает из вашей базы, поэтому неверный ответ почти всегда означает неверную запись.'),
+    'Is my customers&rsquo; data safe?': ('Είναι ασφαλή τα δεδομένα των πελατών μου;',
+                                          'В безопасности ли данные моих клиентов?'),
+    'Conversations are processed to answer them and stored so you can read your own history. We do not sell data or use it to advertise. The privacy notice sets out exactly who processes what.':
+        ('Οι συνομιλίες επεξεργάζονται για να απαντηθούν και αποθηκεύονται ώστε να διαβάζετε το ιστορικό σας. Δεν πουλάμε δεδομένα ούτε τα χρησιμοποιούμε για διαφήμιση. Η δήλωση απορρήτου ορίζει ακριβώς ποιος επεξεργάζεται τι.',
+         'Разговоры обрабатываются, чтобы на них ответить, и сохраняются, чтобы вы могли читать свою историю. Мы не продаём данные и не используем их для рекламы. В политике конфиденциальности указано, кто именно что обрабатывает.'),
+    'Can I start small and add later?': ('Μπορώ να ξεκινήσω μικρά και να προσθέσω αργότερα;',
+                                         'Могу ли я начать с малого и добавить позже?'),
+    'That is the point of the deck. Start with Answer, add Book when the bookings get heavy, add Reach and Return when you want the quiet months filled.':
+        ('Αυτό ακριβώς είναι το νόημα της τράπουλας. Ξεκινήστε με το Answer, προσθέστε το Book όταν οι κρατήσεις πυκνώσουν, προσθέστε Reach και Return όταν θέλετε να γεμίσουν οι ήσυχοι μήνες.',
+         'В этом и смысл колоды. Начните с Answer, добавьте Book, когда броней станет много, добавьте Reach и Return, когда захотите заполнить тихие месяцы.'),
+
+    # ---- call to action ----
+    'Set it once. Let it run.': ('Ρυθμίστε το μία φορά. Αφήστε το να τρέχει.',
+                                 'Настройте один раз. Пусть работает.'),
+    'Tell us about your business and we will show you exactly how Ownerdeck would handle your website, your messages and your bookings.':
+        ('Πείτε μας για την επιχείρησή σας και θα σας δείξουμε ακριβώς πώς θα χειριζόταν το Ownerdeck την ιστοσελίδα, τα μηνύματα και τις κρατήσεις σας.',
+         'Расскажите о своём бизнесе, и мы покажем, как именно Ownerdeck справится с вашим сайтом, сообщениями и бронированиями.'),
+}
+
+
+# demo.js and chat-widget.js build their own DOM after the page has loaded and
+# ask for translations by key directly. Those keys never appear in the markup,
+# so _en_source.json does not know about them and a naive regenerate deletes
+# them. Scan the scripts and carry their keys across untouched.
+SCRIPTED = ['demo.js', 'chat-widget.js']
+
+
+def scripted_keys():
+    keys = set()
+    for name in SCRIPTED:
+        path = os.path.join(HERE, name)
+        if os.path.exists(path):
+            with io.open(path, encoding='utf-8') as f:
+                # No word boundaries needed: the key format is distinctive.
+                keys |= set(re.findall('k[0-9a-f]{8}', f.read()))
+    return keys
+
+
+def key_for(text):
+    return 'k' + hashlib.md5(' '.join(text.split()).encode('utf-8')).hexdigest()[:8]
+
+
+def main():
+    with io.open(os.path.join(HERE, '_en_source.json'), encoding='utf-8') as f:
+        source = json.load(f)
+
+    # Index the table by hash so a mismatch is visible rather than silent.
+    by_key = {}
+    unknown = []
+    for en, vals in T.items():
+        k = key_for(en)
+        if k not in source:
+            unknown.append(en)
+        by_key[k] = vals
+
+    keep = scripted_keys()
+    packs = {}
+    for code in LANGS:
+        path = os.path.join(HERE, 'lang', code + '.json')
+        existing = {}
+        if os.path.exists(path):
+            with io.open(path, encoding='utf-8') as f:
+                existing = json.load(f)
+        packs[code] = {k: v for k, v in existing.items() if k in keep}
+    missing = []
+    for k, en in source.items():
+        if k in by_key:
+            for i, code in enumerate(LANGS):
+                packs[code][k] = decode(by_key[k][i])
+        else:
+            missing.append(en)
+
+    for code in LANGS:
+        path = os.path.join(HERE, 'lang', code + '.json')
+        with io.open(path, 'w', encoding='utf-8', newline='\n') as f:
+            json.dump(packs[code], f, ensure_ascii=False, indent=1, sort_keys=True)
+        carried = len([k for k in packs[code] if k in keep])
+        print('  lang/%s.json  %d / %d page strings, %d scripted keys carried'
+              % (code, len([k for k in packs[code] if k in source]), len(source), carried))
+
+    if unknown:
+        print('\n  In the table but no longer on the site (%d) — safe to delete:' % len(unknown))
+        for s in unknown[:10]:
+            print('    %s' % s[:78])
+    if missing:
+        print('\n  On the site but not translated (%d):' % len(missing))
+        for s in missing[:40]:
+            print('    %s' % s[:78])
+
+
+if __name__ == '__main__':
+    main()

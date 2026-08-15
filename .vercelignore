@@ -1,0 +1,23 @@
+.git/
+__pycache__/
+.agents/
+.codex/
+
+# Build scripts, prompts and local verification helpers are not public site files.
+*.py
+_*.html
+_*.css
+*.md
+BUILD-PROMPT.md
+BRAND-BRIEF.md
+CLAUDE-DESIGN-PROMPT.md
+LOGO-PROMPT.md
+SECURITY-CHAT.md
+README.md
+
+# Retired design/source assets.
+brand-assets/
+brand.css
+motion.js
+Logo-old-teal.png.bak
+Adobe Express - file (1).png

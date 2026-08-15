@@ -2,7 +2,7 @@
 #
 # The distinction that matters: copy which describes SCOPE gets broadened,
 # copy which shows PROOF stays exactly as it is. The two WhatsApp
-# conversations, "Voyage Rent A Car", and "running on a car rental company's
+# conversations, a named operator, and "running on a car rental company's
 # WhatsApp" are the only concrete evidence on the page. Genericising those
 # would leave claims with nothing behind them — and they are already framed
 # as an example rather than as the limit of who this serves.

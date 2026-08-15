@@ -58,7 +58,7 @@ EN = [
   "Confirmation sent, and I've pinged the owner.",
   "Language auto-detected — no setup needed",
   "Try asking in Russian",
-  "Try asking in German",
+  "Try asking in Greek",
   "Switch back",
 ]
 

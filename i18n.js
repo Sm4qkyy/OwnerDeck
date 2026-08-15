@@ -11,21 +11,21 @@
    — prices, reference numbers, brand names, the Russian transcript —
    stays exactly as authored.
 
-   el/ru/de/pt/he/ar are machine-assisted. Have a native speaker read them
-   before you lean on them commercially. pt is European Portuguese; the
-   match is on the two-letter prefix, so pt-BR browsers land there too.
+   el/ru are machine-assisted. Have a native speaker read them before you
+   lean on them commercially.
 ============================================================ */
 (function () {
   "use strict";
 
+  /* Only languages that are actually translated end to end belong here.
+     A code in this list that has no pack silently serves English, which is a
+     promise the visitor breaks by clicking it. de, pt, he and ar were removed
+     for that reason; their packs are still on disk, so adding a market back is
+     re-adding a line here once the pack is complete. */
   var LANGS = [
     { code: 'en', native: 'English',  dir: 'ltr' },
     { code: 'el', native: 'Ελληνικά', dir: 'ltr' },
-    { code: 'ru', native: 'Русский',  dir: 'ltr' },
-    { code: 'de', native: 'Deutsch',  dir: 'ltr' },
-    { code: 'pt', native: 'Português', dir: 'ltr' },
-    { code: 'he', native: 'עברית',    dir: 'rtl' },
-    { code: 'ar', native: 'العربية',  dir: 'rtl' }
+    { code: 'ru', native: 'Русский',  dir: 'ltr' }
   ];
 
   var STORE = 'od_lang';
@@ -73,7 +73,9 @@
 
   function load(code, done) {
     if (code === 'en' || packs[code]) return done();
-    fetch('lang/' + code + '.json', { cache: 'no-store' })
+    /* Absolute. The site is multi-page now, so a relative path would resolve
+       against whichever sub-page is open. */
+    fetch('/lang/' + code + '.json', { cache: 'no-store' })
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(function (j) { packs[code] = j; done(); })
       .catch(function () { done(); });   // stay on English rather than break

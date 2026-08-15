@@ -20,10 +20,15 @@ BOOKING_MODEL = 'sonnet-4.6'       # Haiku was unreliable at the required JSON
 # Build hours, once per client, by service.
 HOURS = {
     'Site':     16,   # design, build, copy pass, deploy
+    'Site-Lite': 9,   # ASSUMED - brochure site, no live database behind it.
+                      # The entry tier now carries a website, so it carries
+                      # the hours for one; the saving over Site is the data
+                      # wiring and the admin views, not the design work.
     'Data':     10,   # schema, admin views, import of what they already have
     'Answer':   12,   # prompt, business config, availability wiring, testing
     'Book':      8,   # calendar, confirmations, deposits
     'Reach':     3,   # Google listing, review flow
+    'Return':    5,   # ASSUMED - campaign templates, segments, scheduling
 }
 SUPPORT_HRS_MONTH = 1.5            # ASSUMED - per client, per month, ongoing
 TARGET_HOURLY     = 45             # ASSUMED - EUR/hour Mark wants to clear
@@ -42,10 +47,13 @@ STABLE   = 0.70                    # ASSUMED - share of input that is stable
 BOOK_RATE = 0.25                   # ASSUMED - conversations that become bookings
 TPL_UTIL, TPL_MKT = 0.03, 0.06     # ASSUMED - EUR per WhatsApp template message
 
+# The entry tier used to be the assistant bolted onto whatever site the client
+# already had. It now ships a basic website of its own, which moves 9 hours and
+# a hosting share into a tier that was priced without either.
 TIERS = {
-    'Answer':    (['Answer'],                                  150),
-    'Deck':      (['Answer', 'Site', 'Book'],                   249),
-    'Full Deck': (['Answer', 'Site', 'Book', 'Reach', 'Data'],  299),
+    'Answer':    (['Answer', 'Site-Lite'],                                     150),
+    'Deck':      (['Answer', 'Site', 'Data', 'Book'],                          249),
+    'Full Deck': (['Answer', 'Site', 'Data', 'Book', 'Reach', 'Return'],       299),
 }
 
 
@@ -67,7 +75,8 @@ def templates_eur(convos, cards):
 def monthly_cash(cards, convos):
     c = HOSTING + DOMAIN + claude_eur(convos) + templates_eur(convos, cards)
     if 'Data' in cards: c += DATABASE
-    if 'Site' not in cards: c -= HOSTING * 0.5     # no site to host
+    # Every tier now hosts a site of some kind, so the old "no site to host"
+    # discount no longer applies to any of them.
     return c
 
 
