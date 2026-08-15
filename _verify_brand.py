@@ -16,7 +16,8 @@ BANNED_CSS = [
   (r'backdrop-filter', 'glassmorphism'),
   (r'border-radius:\s*999', 'pill radius'),
   (r'font-family:[^;]*Inter', 'Inter'),
-  (r'\[data-theme|prefers-color-scheme', 'dark mode'),
+  (r'box-shadow:[^;]*(0 0 \d|inset 0 0)', 'glow'),
+  (r'text-shadow', 'glow'),
 ]
 
 # Gradients are no longer banned outright — the warm-futuristic direction uses
@@ -57,17 +58,29 @@ def strip_comments(s):
 # Comments are stripped first: the palette comment names #000 in order to
 # forbid it, and a scanner that cannot tell prose from a declaration would
 # report the ban as a violation of itself.
+#
+# "Outside :root" means outside any palette block, not outside the first one —
+# dark mode declares the same tokens again under :root[data-theme="dark"] and
+# under a prefers-color-scheme guard. Those are the palette; a hex in a
+# component rule is the thing being forbidden.
 root = strip_comments(io.open('brand.css', encoding='utf-8').read())
-root_block = re.search(r'(?s):root\s*\{(.*?)\n\}', root)
-root_hex = set(re.findall(r'#[0-9a-fA-F]{3,8}\b', root_block.group(1))) if root_block else set()
+PALETTE = re.compile(r'(?s):root(?:\[[^\]]*\]|:not\([^)]*\))*\s*\{(.*?)\n\s*\}')
+palette_blocks = [m.group(0) for m in PALETTE.finditer(root)]
+root_hex = set()
+for b in palette_blocks:
+    root_hex |= set(re.findall(r'#[0-9a-fA-F]{3,8}\b', b))
+if not palette_blocks:
+    fail.append('brand.css: no :root palette block found')
 
 for f in css_files:
     body = strip_comments(io.open(f, encoding='utf-8').read())
-    if f == 'brand.css' and root_block:
-        body = body.replace(root_block.group(0), '')
+    if f == 'brand.css':
+        for b in palette_blocks:
+            body = body.replace(b, '')
     stray = re.findall(r'#[0-9a-fA-F]{3,8}\b', body)
     if stray:
-        fail.append('%s: %d hex literal(s) outside :root -> %s' % (f, len(stray), sorted(set(stray))))
+        fail.append('%s: %d hex literal(s) outside the palette -> %s'
+                    % (f, len(stray), sorted(set(stray))))
 
 for p in PAGES:
     h = io.open(p, encoding='utf-8').read()

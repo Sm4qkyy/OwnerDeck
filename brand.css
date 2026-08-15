@@ -37,8 +37,10 @@
   --reach:  #C89B4A;
   --return: #7A5C6B;
 
+  --shade:     #100D09;   /* shadow base — the only colour that does not flip */
+
   /* ---- derived, so no rule below needs a literal ---- */
-  --lift:      color-mix(in srgb, var(--ink) 14%, transparent);
+  --lift:      color-mix(in srgb, var(--shade) 16%, transparent);
   --wash:      color-mix(in srgb, var(--clay) 8%, transparent);
   --rule-soft: color-mix(in srgb, var(--rule) 55%, transparent);
 
@@ -56,6 +58,34 @@
   --radius: 5px;          /* small, per the brief. never a pill */
 
   color-scheme: light;    /* stop the UA inverting a deliberately light page */
+}
+
+/* ---- dark ----
+   Not an inversion. Two things move that a filter would get wrong: the ground
+   is warm brown-black rather than blue-black or #000, so it reads as ink on
+   dark paper instead of a terminal; and the accent moves UP in luminance,
+   because the light-mode clay-deep would vanish here. Measured, all AA:
+   ink 15.6:1, ink-soft 7.4:1, clay-deep as text 9.3:1, bone on clay-deep 9.3:1.
+   No glow, no neon, no second accent — the brief bans those, not dark itself. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bone: #17140F; --bone-2: #201C16;
+    --ink: #F2ECE1;  --ink-soft: #ACA396; --rule: #332D24;
+    --clay: #E08A5F; --clay-deep: #F0A87E;
+    --answer: #E08A5F; --site: #9DAA83; --book: #6FA3A3;
+    --reach: #E0B96B;  --return: #B08FA0;
+    --lift: color-mix(in srgb, var(--shade) 62%, transparent);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bone: #17140F; --bone-2: #201C16;
+  --ink: #F2ECE1;  --ink-soft: #ACA396; --rule: #332D24;
+  --clay: #E08A5F; --clay-deep: #F0A87E;
+  --answer: #E08A5F; --site: #9DAA83; --book: #6FA3A3;
+  --reach: #E0B96B;  --return: #B08FA0;
+  --lift: color-mix(in srgb, var(--shade) 62%, transparent);
+  color-scheme: dark;
 }
 
 /* ============================================================
@@ -187,7 +217,8 @@ h2 + p                   { margin-top: var(--s5); }
 p + .btn-row             { margin-top: var(--s6); }
 .lede + .idea            { margin-top: var(--s7); }
 h2 + .deck--list,
-h2 + .plans              { margin-top: var(--s7); }
+h2 + .plans,
+h2 + .steps              { margin-top: var(--s7); }
 h2 + .verticals          { margin-top: var(--s6); }
 
 .headline-tight { max-width: 22ch; }
@@ -256,8 +287,111 @@ h2 + .verticals          { margin-top: var(--s6); }
   color: var(--ink-soft); text-decoration: none; font-size: .9375rem; font-weight: 500;
 }
 .masthead__nav a:hover { color: var(--ink); }
-.masthead__cta { margin-inline-start: auto; }
-@media (min-width: 56rem) { .masthead__cta { margin-inline-start: 0; } }
+.masthead__tools { margin-inline-start: auto; display: flex; align-items: center; gap: var(--s3); }
+/* The desktop CTA lives inside the mobile menu instead, so the small-screen
+   bar is only the wordmark and two icons. */
+.masthead__cta { display: none; }
+@media (min-width: 56rem) {
+  .masthead__tools { margin-inline-start: 0; }
+  .masthead__cta { display: inline-flex; }
+}
+
+/* Icon buttons — theme toggle and the mobile menu trigger. */
+.icon-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 2.5rem; height: 2.5rem; flex: none; padding: 0;
+  background: transparent; color: var(--ink-soft);
+  border: 1px solid var(--rule); border-radius: var(--radius);
+  cursor: pointer; transition: color .18s ease, border-color .18s ease;
+}
+.icon-btn:hover { color: var(--ink); border-color: var(--ink); }
+.icon-btn svg { width: 1.0625rem; height: 1.0625rem; }
+
+/* One button, two glyphs: show the one for the theme you would switch TO. */
+.icon-btn .ic-moon { display: none; }
+:root[data-theme="dark"] .icon-btn .ic-moon { display: block; }
+:root[data-theme="dark"] .icon-btn .ic-sun { display: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .icon-btn .ic-moon { display: block; }
+  :root:not([data-theme="light"]) .icon-btn .ic-sun  { display: none; }
+}
+
+/* ---- mobile menu ----
+   Built on <details>, so it opens and takes keyboard focus with no script.
+   The JS in motion.js only closes it on navigation and on Escape, which is
+   polish rather than function. */
+.mmenu { position: relative; }
+@media (min-width: 56rem) { .mmenu { display: none; } }
+
+.mmenu__trigger {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 2.5rem; height: 2.5rem; cursor: pointer; list-style: none;
+  border: 1px solid var(--rule); border-radius: var(--radius); color: var(--ink);
+}
+.mmenu__trigger::-webkit-details-marker { display: none; }
+.mmenu__trigger:focus-visible { outline: 2px solid var(--clay); outline-offset: 2px; }
+.mmenu__bars { position: relative; width: 1.0625rem; height: 11px; }
+.mmenu__bars i, .mmenu__bars::before, .mmenu__bars::after {
+  content: ''; position: absolute; inset-inline: 0; height: 1.5px;
+  background: currentColor; border-radius: 1px;
+  transition: transform .3s cubic-bezier(.22,.61,.36,1), opacity .2s ease;
+}
+.mmenu__bars::before { top: 0; }
+.mmenu__bars i      { top: 50%; margin-top: -.75px; }
+.mmenu__bars::after { bottom: 0; }
+.mmenu[open] .mmenu__bars::before { transform: translateY(4.75px) rotate(45deg); }
+.mmenu[open] .mmenu__bars i       { opacity: 0; }
+.mmenu[open] .mmenu__bars::after  { transform: translateY(-4.75px) rotate(-45deg); }
+
+.mmenu__panel {
+  position: fixed; inset: 4.5rem 0 0; z-index: 90;
+  background: var(--bone);
+  border-top: 1px solid var(--rule);
+  padding: var(--s6) var(--s5) var(--s8);
+  display: flex; flex-direction: column; gap: var(--s2);
+  overflow-y: auto;
+}
+.mmenu__panel a {
+  font-family: var(--display); font-size: 1.5rem; font-weight: 600;
+  letter-spacing: -0.02em; color: var(--ink); text-decoration: none;
+  padding: var(--s4) 0; border-bottom: 1px solid var(--rule);
+}
+.mmenu__panel a:hover { color: var(--clay-deep); }
+.mmenu__panel .btn { margin-top: var(--s5); justify-content: center; }
+.mmenu__panel .mmenu__note { font-size: .9375rem; color: var(--ink-soft); margin-top: var(--s5); }
+
+/* ============================================================
+   Setup steps
+   ============================================================ */
+.steps { display: grid; gap: var(--s7); counter-reset: step; }
+@media (min-width: 56rem) { .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s7); } }
+.step-card { border-top: 1px solid var(--rule); padding-top: var(--s5); }
+.step-card__n {
+  counter-increment: step;
+  font-family: var(--body); font-size: .8125rem; font-weight: 500;
+  letter-spacing: .08em; color: var(--clay-deep);
+}
+.step-card__n::before { content: counter(step, decimal-leading-zero); }
+.step-card__ico { color: var(--clay); margin: var(--s4) 0; }
+.step-card__ico svg { width: 2.75rem; height: 2.75rem; }
+.step-card h3 { margin-bottom: var(--s3); }
+.step-card p { color: var(--ink-soft); font-size: .9375rem; }
+
+/* ============================================================
+   What it does not do
+   ============================================================ */
+.notdo { display: grid; gap: var(--s5); max-width: 52rem; }
+@media (min-width: 48rem) { .notdo { grid-template-columns: 1fr 1fr; gap: var(--s5) var(--s7); } }
+.notdo li {
+  display: flex; gap: var(--s3); align-items: baseline;
+  font-size: .9375rem; color: var(--ink-soft);
+  padding-bottom: var(--s4); border-bottom: 1px solid var(--rule-soft);
+}
+.notdo li::before {
+  content: ''; flex: none; width: .625rem; height: 1px;
+  background: var(--clay); transform: translateY(-.35em);
+}
+.notdo li strong { color: var(--ink); font-weight: 500; }
 
 /* ============================================================
    The deck — the one memorable image on the site
@@ -552,17 +686,30 @@ h2 + .verticals          { margin-top: var(--s6); }
     transform: rotate(0deg) translateY(-.65rem)
                rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
   }
-  /* Dealt in on load, one card after another. */
-  .deck--fan.is-dealt .card { animation: deal .62s cubic-bezier(.22,.61,.36,1) both; }
-  .deck--fan.is-dealt .card:nth-child(1) { animation-delay: .05s }
-  .deck--fan.is-dealt .card:nth-child(2) { animation-delay: .13s }
-  .deck--fan.is-dealt .card:nth-child(3) { animation-delay: .21s }
-  .deck--fan.is-dealt .card:nth-child(4) { animation-delay: .29s }
-  .deck--fan.is-dealt .card:nth-child(5) { animation-delay: .37s }
-}
-@keyframes deal {
-  from { opacity: 0; transform: translateY(2.5rem) rotate(0deg) scale(.96); }
-  to   { opacity: 1; transform: rotate(var(--rot)) translateY(var(--dy)); }
+  /* Dealt in on load.
+     Transitions, not @keyframes: an animation with fill-mode `both` keeps
+     ownership of `transform` after it finishes, and animated properties beat
+     ordinary ones in the cascade — so the hover tilt below would have been
+     silently dead on arrival. The stagger is applied as inline
+     transition-delay by motion.js and cleared once dealt, otherwise every
+     hover would also wait out its card's delay. */
+  .js .deck--fan .card {
+    transition: transform .58s cubic-bezier(.22,.61,.36,1),
+                opacity .58s cubic-bezier(.22,.61,.36,1),
+                border-color .28s ease, box-shadow .28s ease;
+  }
+  .js .deck--fan:not(.is-dealt) .card {
+    opacity: 0;
+    transform: translateY(2.5rem) rotate(0deg) scale(.96);
+  }
+  /* Settled: snap back to the shorter hover timing. */
+  .js .deck--fan.is-live .card {
+    transition: transform .3s cubic-bezier(.22,.61,.36,1),
+                border-color .28s ease, box-shadow .28s ease;
+  }
+  /* While the pointer is being tracked, transform must not transition at all —
+     a 0.3s ease fighting a 120Hz pointermove is exactly what reads as choppy. */
+  .deck--fan.is-tracking .card { transition-property: border-color, box-shadow; }
 }
 
 /* --- spotlight: a single-hue clay wash, no second accent --- */
@@ -578,7 +725,8 @@ h2 + .verticals          { margin-top: var(--s6); }
 }
 
 /* --- magnetic action --- */
-[data-magnet] { transition: transform .25s cubic-bezier(.22,.61,.36,1), background-color .18s ease; }
+[data-magnet] { transition: transform .35s cubic-bezier(.22,.61,.36,1), background-color .18s ease; }
+[data-magnet].is-tracking { transition: background-color .18s ease; }
 
 /* --- hairline that draws itself in --- */
 .rule-draw { height: 1px; background: var(--clay); border: 0; margin: var(--s5) 0 0; }

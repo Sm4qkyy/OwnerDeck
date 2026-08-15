@@ -63,14 +63,26 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
 
 class Server(socketserver.TCPServer):
-    allow_reuse_address = True
+    # NOT allow_reuse_address on Windows. There SO_REUSEADDR does not mean
+    # "reclaim a port in TIME_WAIT" as it does on Unix — it lets a second
+    # process bind a port another process is already listening on, and
+    # requests then land on whichever socket the OS picks. The symptom is a
+    # preview that serves stale files, or refuses to connect while a `netstat`
+    # clearly shows something listening. Better to fail loudly on a taken port.
+    allow_reuse_address = (os.name != 'nt')
 
 
 if __name__ == '__main__':
     print('Ownerdeck preview  ->  http://localhost:%d' % PORT)
     print('cleanUrls and redirects emulated. api/ routes are not available.')
     print('Ctrl+C to stop.\n')
-    with Server(('', PORT), Handler) as httpd:
+    try:
+        httpd = Server(('', PORT), Handler)
+    except OSError as e:
+        sys.exit('Port %d is already in use (%s).\n'
+                 'Another preview is still running — stop it, or pass a different '
+                 'port:  python _serve.py 8001' % (PORT, e))
+    with httpd:
         try:
             httpd.serve_forever()
         except KeyboardInterrupt:
