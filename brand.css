@@ -854,3 +854,69 @@ h2 + .verticals          { margin-top: var(--s6); }
 .card__ico svg { width: 1.75rem; height: 1.75rem; }
 .plan__then { font-size: 1rem; color: var(--ink-soft); margin-top: calc(var(--s2) * -1); }
 .pricing__note strong { color: var(--ink); font-weight: 600; }
+
+/* ============================================================
+   Work mockups — the website, the data, the assistant
+   Drawn in CSS rather than photographed. Nothing to license, nothing
+   that looks generated, and they restyle themselves in dark mode.
+   ============================================================ */
+.work { display: grid; gap: var(--s6); }
+@media (min-width: 56rem) {
+  .work { grid-template-columns: 1.35fr 1fr; grid-template-rows: auto auto; align-items: start; }
+  .work__browser { grid-row: span 2; }
+}
+
+.frame {
+  border: 1px solid var(--rule); border-radius: var(--radius);
+  background: var(--bone); overflow: hidden;
+  box-shadow: 0 24px 50px -38px var(--lift);
+}
+.frame__bar {
+  display: flex; align-items: center; gap: var(--s2);
+  padding: var(--s3) var(--s4);
+  background: var(--bone-2); border-bottom: 1px solid var(--rule);
+}
+.frame__dots { display: flex; gap: 5px; }
+.frame__dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--rule); }
+.frame__url {
+  margin-inline-start: var(--s2); flex: 1;
+  font-size: .6875rem; color: var(--ink-soft);
+  background: var(--bone); border: 1px solid var(--rule);
+  border-radius: 3px; padding: 2px var(--s3);
+}
+.frame__label {
+  font-size: .6875rem; font-weight: 500; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--ink-soft);
+}
+.frame__body { padding: var(--s5); }
+
+/* A miniature of the kind of site we build */
+.mini__hero { border-bottom: 1px solid var(--rule); padding-bottom: var(--s4); }
+.mini__h { font-family: var(--display); font-size: 1.125rem; font-weight: 600; letter-spacing: -.02em; }
+.mini__p { font-size: .75rem; color: var(--ink-soft); margin-top: var(--s2); }
+.mini__cta {
+  display: inline-block; margin-top: var(--s3); font-size: .6875rem; font-weight: 600;
+  background: var(--clay-deep); color: var(--bone);
+  padding: var(--s2) var(--s3); border-radius: 3px;
+}
+.mini__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s3); margin-top: var(--s4); }
+.mini__tile { border: 1px solid var(--rule); border-radius: 3px; padding: var(--s3); }
+.mini__swatch { height: 2.25rem; border-radius: 2px; background: var(--bone-2); margin-bottom: var(--s2); }
+.mini__name { font-size: .6875rem; font-weight: 500; }
+.mini__price { font-size: .6875rem; color: var(--clay-deep); }
+
+/* The database behind it */
+.tbl { width: 100%; border-collapse: collapse; font-size: .6875rem; }
+.tbl th {
+  text-align: start; font-weight: 500; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--ink-soft); padding: var(--s2) var(--s2); border-bottom: 1px solid var(--rule);
+}
+.tbl td { padding: var(--s2); border-bottom: 1px solid var(--rule-soft); color: var(--ink); }
+.tbl td:last-child { text-align: end; color: var(--clay-deep); font-weight: 500; }
+.tbl tr:last-child td { border-bottom: 0; }
+
+.wire {
+  display: flex; align-items: center; gap: var(--s2);
+  font-size: .75rem; color: var(--ink-soft); margin-top: var(--s4);
+}
+.wire::before, .wire::after { content: ''; height: 1px; background: var(--clay); flex: 1; }
