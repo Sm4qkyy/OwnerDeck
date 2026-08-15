@@ -349,9 +349,40 @@
     });
   }
 
+  /* ------------------------------------------------------- HEADER + PROGRESS */
+  /* One scroll listener for both, rAF-throttled. Two listeners each doing their
+     own layout read is how a smooth page becomes a janky one. */
+  function scrollUI() {
+    var head = document.querySelector('.masthead');
+    var bar = null;
+
+    if (!reduce) {
+      bar = document.createElement('div');
+      bar.className = 'progress';
+      bar.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(bar);
+    }
+
+    var queued = false;
+    function apply() {
+      queued = false;
+      var y = window.scrollY || document.documentElement.scrollTop;
+      if (head) head.classList.toggle('is-stuck', y > 4);
+      if (bar) {
+        var max = document.documentElement.scrollHeight - window.innerHeight;
+        bar.style.setProperty('--p', max > 0 ? Math.min(1, y / max).toFixed(4) : 0);
+      }
+    }
+    addEventListener('scroll', function () {
+      if (!queued) { queued = true; requestAnimationFrame(apply); }
+    }, { passive: true });
+    apply();
+  }
+
   function init() {
     theme();
     menu();
+    scrollUI();
     var host = document.querySelector('[data-dotfield]');
     if (host) dotField(host);
     reveals();

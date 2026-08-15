@@ -123,6 +123,13 @@
 
 html { -webkit-text-size-adjust: 100%; }
 
+body::before {
+  content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  opacity: .5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.045'/%3E%3C/svg%3E");
+}
+:root[data-theme="dark"] body::before { opacity: .28; }
+
 body {
   margin: 0;
   background: var(--bone);
@@ -143,8 +150,8 @@ h1, h2, h3, h4 {
   letter-spacing: -0.02em;
   text-wrap: balance;
 }
-h1 { font-size: clamp(2.5rem, 9vw, 4.75rem); }
-h2 { font-size: clamp(1.9rem, 6vw, 3rem); }
+h1 { font-size: clamp(2.75rem, 8.4vw, 5.5rem); letter-spacing: -0.035em; line-height: 1.02; }
+h2 { font-size: clamp(2rem, 5.2vw, 3.5rem); letter-spacing: -0.028em; line-height: 1.04; }
 h3 { font-size: clamp(1.25rem, 3.4vw, 1.5rem); letter-spacing: -0.015em; }
 h4 { font-size: 1.0625rem; letter-spacing: -0.01em; }
 
@@ -266,15 +273,20 @@ h2 + .verticals          { margin-top: var(--s6); }
 }
 .btn--quiet:hover { border-color: var(--ink); color: var(--ink); }
 
+.btn__arrow { transition: transform .28s cubic-bezier(.22,.61,.36,1); }
+.btn:hover .btn__arrow { transform: translateX(3px); }
 .btn-row { display: flex; flex-wrap: wrap; gap: var(--s4); align-items: center; }
 
 /* ============================================================
    Header
    ============================================================ */
 .masthead {
-  border-bottom: 1px solid var(--rule);
+  position: sticky; top: 0; z-index: 80;
   background: var(--bone);
+  border-bottom: 1px solid transparent;
+  transition: border-color .3s ease;
 }
+.masthead.is-stuck { border-bottom-color: var(--rule); }
 .masthead__bar {
   display: flex; align-items: center; gap: var(--s5);
   min-height: 4.5rem;
@@ -920,3 +932,26 @@ h2 + .verticals          { margin-top: var(--s6); }
   font-size: .75rem; color: var(--ink-soft); margin-top: var(--s4);
 }
 .wire::before, .wire::after { content: ''; height: 1px; background: var(--clay); flex: 1; }
+
+/* ---- reading progress ---- */
+.progress {
+  position: fixed; inset-block-start: 0; inset-inline: 0; z-index: 120;
+  height: 2px; background: var(--clay);
+  transform: scaleX(var(--p, 0)); transform-origin: 0 50%;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) { .progress { display: none; } }
+
+/* ---- section rhythm ----
+   More air between sections than inside them: the single cheapest thing that
+   makes a page read as considered rather than crowded. */
+@media (min-width: 62rem) {
+  .section { padding-block: 9rem; }
+  .section--tint { padding-block: 9rem; }
+}
+
+/* ---- the deck, larger and more deliberate ---- */
+@media (min-width: 62rem) {
+  .deck--fan .card { flex: 0 0 14.5rem; padding: var(--s6) var(--s5); }
+  .deck--fan .card__name { font-size: 1.5rem; }
+}
