@@ -1,173 +1,151 @@
-# Does the pricing cover costs at 2x minimum?
+# Does the pricing survive the repositioning?
 #
-# Two kinds of number live here, and they are not the same:
-#   VERIFIED  - taken from the repo, the live config, or Anthropic's published
-#               rates. Safe to reason from.
-#   ASSUMED   - a placeholder. Every one of these is marked and listed at the
-#               end. Change them and re-run; do not quote the output until the
-#               ASSUMED block matches reality.
+# The old version of this file modelled one assistant and deliberately excluded
+# Mark's time. That was defensible when the product was a bot that ran itself.
+# It is not defensible now: selling a built website and database means the
+# dominant cost IS the hours, and a monthly-only price with no build fee means
+# every new client starts deeply underwater.
 #
-# Run:  python _margins.py            (central case)
-#       python _margins.py 400        (400 customer conversations/client/month)
+# VERIFIED  - repo config, live rates, Anthropic published pricing.
+# ASSUMED   - placeholder. All listed at the end. Change and re-run.
 import sys
 
-EUR_PER_USD = 0.92          # ASSUMED - set to the rate your card actually bills
+EUR_USD = 0.92                     # ASSUMED
 
 # ---------------------------------------------------------------- VERIFIED
-# Anthropic list prices, USD per million tokens (input, output).
-CLAUDE = {
-    'haiku-4.5':  (1.00,  5.00),
-    'sonnet-4.6': (3.00, 15.00),
-    'sonnet-5':   (3.00, 15.00),   # intro $2/$10 through 2026-08-31
-}
-
-PRICES = {'Answer': 150, 'Deck': 249, 'Full Deck': 299}
-
-# The booking bot runs Sonnet 4.6 (Haiku was unreliable at the required JSON —
-# see the Voyage notes). The website chat runs Haiku 4.5 with a 300-token
-# output cap and a measured ~$0.0004 per exchange.
-BOOKING_MODEL = 'sonnet-4.6'
+CLAUDE = {'haiku-4.5': (1.00, 5.00), 'sonnet-4.6': (3.00, 15.00)}
+BOOKING_MODEL = 'sonnet-4.6'       # Haiku was unreliable at the required JSON
 
 # ---------------------------------------------------------------- ASSUMED
-# Per inbound customer message, the bot resends system prompt + filtered
-# history, so input dominates. Sized from the known architecture: BUSINESS
-# config + rules + ~15 turns of history, max_tokens 1500.
-IN_TOK, OUT_TOK = 5000, 300          # ASSUMED
-MSGS_PER_CONVO  = 8                  # ASSUMED
-CONVOS_PER_MONTH = int(sys.argv[1]) if len(sys.argv) > 1 else 250   # ASSUMED
+# Build hours, once per client, by service.
+HOURS = {
+    'Site':     16,   # design, build, copy pass, deploy
+    'Data':     10,   # schema, admin views, import of what they already have
+    'Answer':   12,   # prompt, business config, availability wiring, testing
+    'Book':      8,   # calendar, confirmations, deposits
+    'Reach':     3,   # Google listing, review flow
+}
+SUPPORT_HRS_MONTH = 1.5            # ASSUMED - per client, per month, ongoing
+TARGET_HOURLY     = 45             # ASSUMED - EUR/hour Mark wants to clear
 
-BOOKING_RATE = 0.25                  # ASSUMED - conversations that become bookings
-HETZNER_TOTAL = 12.00                # ASSUMED - EUR/month for the n8n box, ALL clients
-CLIENTS = 10                         # ASSUMED - clients sharing that box
-STRIPE_PCT, STRIPE_FIX = 0.015, 0.25 # ASSUMED - EU card rate
+# Monthly cash costs, per client
+HOSTING   = 2.00                   # ASSUMED - EUR, share of Vercel/Hetzner
+DATABASE  = 3.00                   # ASSUMED - EUR, share of managed Postgres
+DOMAIN    = 1.20                   # ASSUMED - EUR, ~15/yr
+STRIPE_PCT, STRIPE_FIX = 0.015, 0.25
 
-# WhatsApp: service replies inside the 24h customer window are free. Business
-# INITIATED template messages are charged per message, by category and country.
-# This is the single biggest unknown in the model and the only cost that scales
-# with the client's booking volume.
-TPL_UTILITY   = 0.03                 # ASSUMED - EUR, reminders/confirmations
-TPL_MARKETING = 0.06                 # ASSUMED - EUR, off-season offers
+CONVOS   = int(sys.argv[1]) if len(sys.argv) > 1 else 250   # ASSUMED
+MSGS     = 8                       # ASSUMED - messages per conversation
+IN_TOK, OUT_TOK = 5000, 300        # ASSUMED - per message, system prompt resent
+CACHING  = True                    # prompt caching on the system prefix
+STABLE   = 0.70                    # ASSUMED - share of input that is stable
+BOOK_RATE = 0.25                   # ASSUMED - conversations that become bookings
+TPL_UTIL, TPL_MKT = 0.03, 0.06     # ASSUMED - EUR per WhatsApp template message
+
+TIERS = {
+    'Answer':    (['Answer'],                                  150),
+    'Deck':      (['Answer', 'Site', 'Book'],                   249),
+    'Full Deck': (['Answer', 'Site', 'Book', 'Reach', 'Data'],  299),
+}
 
 
-# Pass "cache" as the second argument to model prompt caching being switched on
-# for the booking bot's system prompt. Cache reads bill at ~0.1x, and the system
-# prompt is the stable prefix that gets resent on every single message.
-CACHING = len(sys.argv) > 2 and sys.argv[2] == 'cache'
-STABLE_PREFIX = 0.70                 # ASSUMED - share of input that never changes
-
-
-def claude_cost_eur(convos):
-    """Booking-bot inference for one client for one month."""
+def claude_eur(convos):
     cin, cout = CLAUDE[BOOKING_MODEL]
-    msgs = convos * MSGS_PER_CONVO
-    eff_in = (IN_TOK * (1 - STABLE_PREFIX) + IN_TOK * STABLE_PREFIX * 0.1
-              if CACHING else IN_TOK)
-    usd = (msgs * eff_in / 1e6) * cin + (msgs * OUT_TOK / 1e6) * cout
-    return usd * EUR_PER_USD
+    n = convos * MSGS
+    eff = IN_TOK * (1 - STABLE) + IN_TOK * STABLE * 0.1 if CACHING else IN_TOK
+    return ((n * eff / 1e6) * cin + (n * OUT_TOK / 1e6) * cout) * EUR_USD
 
 
-def template_cost_eur(convos, cards):
-    """Only the cards that send business-initiated messages cost per message."""
-    bookings = convos * BOOKING_RATE
+def templates_eur(convos, cards):
+    b = convos * BOOK_RATE
     n = 0.0
-    if 'Book' in cards:
-        n += bookings * 2 * TPL_UTILITY          # confirmation + pickup reminder
-    if 'Reach' in cards:
-        n += bookings * 1 * TPL_UTILITY          # review request after each booking
-    if 'Return' in cards:
-        n += bookings * 1.5 * TPL_MARKETING      # reminders + off-season offers
+    if 'Book' in cards:  n += b * 2 * TPL_UTIL
+    if 'Reach' in cards: n += b * 1 * TPL_UTIL
     return n
 
 
-TIERS = {
-    'Answer':    ['Answer'],
-    'Deck':      ['Answer', 'Site', 'Book'],
-    'Full Deck': ['Answer', 'Site', 'Book', 'Reach', 'Return'],
-}
+def monthly_cash(cards, convos):
+    c = HOSTING + DOMAIN + claude_eur(convos) + templates_eur(convos, cards)
+    if 'Data' in cards: c += DATABASE
+    if 'Site' not in cards: c -= HOSTING * 0.5     # no site to host
+    return c
 
 
 def report(convos):
-    print('=' * 74)
-    print('  %d conversations/client/month, %d msgs each, %s, %d clients on one box'
-          % (convos, MSGS_PER_CONVO, BOOKING_MODEL, CLIENTS))
-    print('=' * 74)
-    print('%-11s %8s %8s %8s %8s %8s %7s %6s' %
-          ('TIER', 'PRICE', 'CLAUDE', 'WHATSAPP', 'HOST', 'STRIPE', 'GROSS', 'MULT'))
+    print('=' * 78)
+    print('  %d conversations/client/month · target %d EUR/hour · %.1f h/mo support'
+          % (convos, TARGET_HOURLY, SUPPORT_HRS_MONTH))
+    print('=' * 78)
+    print('%-11s %6s %7s %8s %9s %10s %9s' %
+          ('TIER', 'PRICE', 'CASH/mo', 'BUILD h', 'BUILD @cost', 'BREAK-EVEN', 'YR1 €/h'))
 
-    host = HETZNER_TOTAL / CLIENTS
-    for tier, cards in TIERS.items():
-        price  = PRICES[tier]
-        claude = claude_cost_eur(convos)
-        tpl    = template_cost_eur(convos, cards)
+    rows = []
+    for tier, (cards, price) in TIERS.items():
+        cash   = monthly_cash(cards, convos)
+        hours  = sum(HOURS[c] for c in cards)
+        build  = hours * TARGET_HOURLY
         stripe = price * STRIPE_PCT + STRIPE_FIX
-        total  = claude + tpl + host + stripe
-        gross  = price - total
-        mult   = price / total if total else float('inf')
-        flag   = '' if mult >= 2 else '   <-- UNDER 2x'
-        print('%-11s %8.0f %8.2f %8.2f %8.2f %8.2f %7.2f %5.1fx%s'
-              % (tier, price, claude, tpl, host, stripe, gross, mult, flag))
+        # Monthly contribution after cash costs and ongoing support time.
+        contrib = price - cash - stripe - (SUPPORT_HRS_MONTH * TARGET_HOURLY)
+        months  = (build / contrib) if contrib > 0 else None
+        # Effective hourly across year one: what the work actually paid.
+        yr1_hours = hours + SUPPORT_HRS_MONTH * 12
+        yr1_cash  = price * 12 - (cash + stripe) * 12
+        yr1_rate  = yr1_cash / yr1_hours
+        rows.append((tier, price, cash, hours, build, months, yr1_rate, contrib))
+        print('%-11s %6.0f %7.2f %8d %9.0f %10s %9.0f'
+              % (tier, price, cash, hours, build,
+                 ('%.1f mo' % months) if months else 'never', yr1_rate))
+    return rows
 
+
+def verdict(rows):
     print()
-    print('  MULT = price / direct cost. Target is 2.0x or better.')
-    print('  Excludes your time, which is the real constraint (see notes).')
+    print('Reading it')
+    print('-' * 78)
+    for tier, price, cash, hours, build, months, yr1, contrib in rows:
+        cash_mult = price / (cash + price * STRIPE_PCT + STRIPE_FIX)
+        line = '  %-11s cash margin %.0fx' % (tier, cash_mult)
+        if months is None:
+            line += ' · never recovers the build'
+        elif months > 12:
+            line += ' · build not repaid inside a year (%.1f mo)' % months
+        elif months > 6:
+            line += ' · build repaid in %.1f months' % months
+        else:
+            line += ' · build repaid in %.1f months' % months
+        if yr1 < TARGET_HOURLY:
+            line += ' · year one pays %.0f/h, under target' % yr1
+        print(line)
 
 
-def breakeven():
-    """At what volume does each tier stop returning 2x?"""
+def with_build_fee():
     print()
-    print('Volume at which each tier drops below 2x')
-    print('-' * 74)
-    host = HETZNER_TOTAL / CLIENTS
-    for tier, cards in TIERS.items():
-        price = PRICES[tier]
+    print('Same tiers, with a one-off build fee at cost')
+    print('-' * 78)
+    print('%-11s %9s %8s %10s %9s' % ('TIER', 'BUILD FEE', 'MONTHLY', 'YR1 TOTAL', 'YR1 €/h'))
+    for tier, (cards, price) in TIERS.items():
+        hours = sum(HOURS[c] for c in cards)
+        fee   = round(hours * TARGET_HOURLY / 50) * 50          # to the nearest 50
+        cash  = monthly_cash(cards, CONVOS)
         stripe = price * STRIPE_PCT + STRIPE_FIX
-        limit = None
-        for c in range(10, 20001, 10):
-            total = claude_cost_eur(c) + template_cost_eur(c, cards) + host + stripe
-            if price / total < 2:
-                limit = c
-                break
-        print('  %-11s  %s conversations/month'
-              % (tier, ('%d' % limit) if limit else '>20,000 (never, at these rates)'))
-
-
-def levers():
-    print()
-    print('Biggest levers, measured')
-    print('-' * 74)
-    base = claude_cost_eur(CONVOS_PER_MONTH)
-    cin, cout = CLAUDE[BOOKING_MODEL]
-
-    # Prompt caching: the system prompt is resent on every message and is the
-    # bulk of the input. Cache reads bill at ~0.1x.
-    cached_in = IN_TOK * 0.3 + IN_TOK * 0.7 * 0.1     # 70% of input is stable prefix
-    msgs = CONVOS_PER_MONTH * MSGS_PER_CONVO
-    cached = ((msgs * cached_in / 1e6) * cin +
-              (msgs * OUT_TOK / 1e6) * cout) * EUR_PER_USD
-    print('  prompt caching on the system prompt   EUR %.2f -> %.2f  (-%.0f%%)'
-          % (base, cached, (1 - cached / base) * 100))
-
-    hin, hout = CLAUDE['haiku-4.5']
-    haiku = ((msgs * IN_TOK / 1e6) * hin + (msgs * OUT_TOK / 1e6) * hout) * EUR_PER_USD
-    print('  Haiku instead of Sonnet               EUR %.2f -> %.2f  (-%.0f%%)  '
-          'NOTE: Haiku was unreliable at the JSON this bot needs'
-          % (base, haiku, (1 - haiku / base) * 100))
+        yr1_hours = hours + SUPPORT_HRS_MONTH * 12
+        yr1_cash  = fee + price * 12 - (cash + stripe) * 12
+        print('%-11s %9.0f %8.0f %10.0f %9.0f'
+              % (tier, fee, price, fee + price * 12, yr1_cash / yr1_hours))
 
 
 if __name__ == '__main__':
-    report(CONVOS_PER_MONTH)
-    breakeven()
-    levers()
+    rows = report(CONVOS)
+    verdict(rows)
+    with_build_fee()
     print()
-    print('ASSUMED inputs you must confirm before trusting any of the above:')
-    print('-' * 74)
-    for k, v in [('conversations/client/month', CONVOS_PER_MONTH),
-                 ('messages per conversation', MSGS_PER_CONVO),
-                 ('input tokens per message', IN_TOK),
-                 ('booking rate', BOOKING_RATE),
-                 ('WhatsApp utility template EUR', TPL_UTILITY),
-                 ('WhatsApp marketing template EUR', TPL_MARKETING),
-                 ('Hetzner EUR/month (all clients)', HETZNER_TOTAL),
-                 ('clients sharing the box', CLIENTS),
-                 ('USD->EUR', EUR_PER_USD)]:
-        print('  %-34s %s' % (k, v))
+    print('ASSUMED inputs — confirm before quoting any of this')
+    print('-' * 78)
+    for k, v in [('build hours per service', HOURS),
+                 ('support hours/client/month', SUPPORT_HRS_MONTH),
+                 ('target hourly (EUR)', TARGET_HOURLY),
+                 ('conversations/client/month', CONVOS),
+                 ('managed Postgres share (EUR/mo)', DATABASE),
+                 ('hosting share (EUR/mo)', HOSTING)]:
+        print('  %-32s %s' % (k, v))

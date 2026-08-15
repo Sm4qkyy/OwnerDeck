@@ -5,12 +5,16 @@ import glob, io, os, re, sys
 PAGES = sorted(p for p in glob.glob('*.html'))
 fail, warn = [], []
 
+# The marketing-fluff ban stands. The technical-vocabulary ban does not:
+# Ownerdeck now sells websites, databases and AI chat assistants, and a page
+# that will not name them is a page nobody finds. "chatbot", "automation" and
+# "AI" came off the list deliberately; the words that were only ever padding
+# stayed on it.
 BANNED_COPY = ['supercharge', 'seamless', 'effortless', 'unlock', 'revolutionis',
-               'revolutioniz', 'game-changer', 'powered by ai', 'chatbot',
-               'automation', 'leverage', 'solution', 'platform']
-# "AI" is allowed in exactly one place: the disclosure the assistant is
-# legally required to make. It must not appear in marketing copy.
-DISCLOSURE_FILES = {'chat-widget.js', 'api/chat.js', 'terms.html', 'privacy.html'}
+               'revolutioniz', 'game-changer', 'cutting-edge', 'best-in-class',
+               'leverage', 'synergy', 'one-stop shop', 'turnkey',
+               'trusted by 1,000', 'trusted by thousands']
+DISCLOSURE_FILES = set()
 
 BANNED_CSS = [
   (r'backdrop-filter', 'glassmorphism'),
@@ -127,8 +131,6 @@ for p in PAGES:
     for w in BANNED_COPY:
         if w in copy:
             (warn if legacy else fail).append('%s: banned word in copy -> %r' % (p, w))
-    if re.search(r'\bAI\b', text_of(io.open(p, encoding='utf-8').read())) and p not in DISCLOSURE_FILES:
-        warn.append('%s: the letters AI appear in visible copy' % p)
     if '!' in copy.replace('!important', ''):
         fail.append('%s: exclamation mark in copy' % p)
 
@@ -165,7 +167,10 @@ for p in PAGES:
 
 # ---------------------------------------------------------------- 4. numbers
 NUM = re.compile(r'(?<![\w/#-])(\d[\d,.]*)(?![\w%-])')
-ALLOWED = {'150', '249', '299', '14', '2026', '2'}   # prices, the proof, the year, "2am"
+# Monthlies, setup fees, the Limassol proof, the year, "2am", the clock times
+# in the conversation mockup, and the five/twelve in "five services"/"12 months".
+ALLOWED = {'150', '249', '299', '600', '1,800', '2,400',
+           '14', '2026', '2', '12', '18', '23', '41', '6', '00'}
 copy = text_of(io.open('index.html', encoding='utf-8').read())
 found = set(NUM.findall(copy)) - ALLOWED
 if found:

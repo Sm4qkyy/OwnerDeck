@@ -62,13 +62,19 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             sys.stderr.write('  %s %s\n' % (code, args[0]))
 
 
-class Server(socketserver.TCPServer):
+class Server(http.server.ThreadingHTTPServer):
+    # Threading is not an optimisation here, it is correctness. A browser opens
+    # several connections to one origin and holds them open; a single-threaded
+    # TCPServer serves exactly one at a time, so one stalled keep-alive blocks
+    # every later request. The symptom is a server that `netstat` shows
+    # listening while every request times out — which looks exactly like a
+    # crash, and is not one.
+    daemon_threads = True
+
     # NOT allow_reuse_address on Windows. There SO_REUSEADDR does not mean
     # "reclaim a port in TIME_WAIT" as it does on Unix — it lets a second
-    # process bind a port another process is already listening on, and
-    # requests then land on whichever socket the OS picks. The symptom is a
-    # preview that serves stale files, or refuses to connect while a `netstat`
-    # clearly shows something listening. Better to fail loudly on a taken port.
+    # process bind a port another is already listening on, and requests land on
+    # whichever socket the OS picks. Better to fail loudly on a taken port.
     allow_reuse_address = (os.name != 'nt')
 
 

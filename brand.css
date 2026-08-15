@@ -848,3 +848,9 @@ h2 + .verticals          { margin-top: var(--s6); }
   [data-spotlight]::before { display: none; }
   .dotfield__canvas { opacity: .55; }
 }
+
+/* Service icons in the expanded card list, and the setup/monthly split. */
+.card__ico { color: var(--clay); margin-bottom: var(--s2); }
+.card__ico svg { width: 1.75rem; height: 1.75rem; }
+.plan__then { font-size: 1rem; color: var(--ink-soft); margin-top: calc(var(--s2) * -1); }
+.pricing__note strong { color: var(--ink); font-weight: 600; }
