@@ -23,13 +23,18 @@
 <link rel="apple-touch-icon" href="favicon.png">
 <meta name="theme-color" content="#F7F4EF">
 
+<!-- Marks that scripting is available. Every motion rule in brand.css is
+     scoped to .js, so with this line unreached the page still renders in
+     full rather than waiting for a class JavaScript never adds. -->
+<script>document.documentElement.classList.add('js')</script>
+
 <!-- Fonts are self-hosted, so they are same-origin and need no preconnect.
      Preloading the two that render above the fold keeps the headline from
      swapping late. -->
 <link rel="preload" href="fonts/fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/switzer-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="brand.css?v=20260815">
-<link rel="stylesheet" href="chat-widget.css?v=20260815">
+<link rel="stylesheet" href="brand.css?v=20260815b">
+<link rel="stylesheet" href="chat-widget.css?v=20260815b">
 
 <script type="application/ld+json">
 {
@@ -61,7 +66,7 @@
     <nav class="masthead__nav" aria-label="Sections">
       <a href="#cards">The cards</a>
       <a href="#pricing">Pricing</a>
-      <a href="#who">Who it is for</a>
+      <a href="#faq">Questions</a>
     </nav>
     <a class="btn btn--quiet masthead__cta" href="#pricing">See pricing</a>
   </div>
@@ -70,23 +75,23 @@
 <main id="main">
 
   <!-- ============================================================
-       Hero
+       1. Hero — what it is, in one sentence, with the hand
        ============================================================ -->
-  <section class="section" id="hero">
+  <section class="section dotfield" id="hero" data-dotfield>
     <div class="wrap">
       <div class="split split--offset">
         <div>
-          <h1>Ownerdeck runs the online side of your business.</h1>
-          <p class="lede">
+          <h1 data-split>Ownerdeck runs the online side of your business.</h1>
+          <p class="lede" data-reveal="120">
             Tell it about your business once — what you offer, your prices, your hours,
             your photos. That one set of facts becomes your website, answers your
             messages, quotes your prices and takes your bookings.
           </p>
-          <div class="btn-row">
+          <div class="btn-row" data-reveal="220">
             <!-- od-btn--primary is a hook analytics-events.js already listens for.
                  The script is deliberately untouched, so the markup carries its
                  selector rather than the other way round. -->
-            <a class="btn btn--primary od-btn--primary"
+            <a class="btn btn--primary od-btn--primary" data-magnet
                href="https://wa.me/447520689685?text=Hi%20Mark%20%E2%80%94%20I%20saw%20Ownerdeck%20and%20I%27d%20like%20to%20know%20more."
                rel="noopener">Message me on WhatsApp</a>
             <a class="btn btn--quiet" href="#cards">See the five cards</a>
@@ -128,39 +133,19 @@
   </section>
 
   <!-- ============================================================
-       The problem
-       ============================================================ -->
-  <section class="section section--tint" id="problem">
-    <div class="wrap">
-      <p class="eyebrow">What it looks like now</p>
-      <div class="split split--wide-right">
-        <h2>Three jobs, and none of them are the one you opened the business to do.</h2>
-        <div class="prose">
-          <p>The enquiries arrive at 11pm, when you have already worked a full day.
-            Answer them in the morning and the booking has gone somewhere else.</p>
-          <p>Your prices changed in April. They are still wrong on the website, wrong
-            on the listing, and right only in your head.</p>
-          <p>Nobody has touched the site since the year it was built. It loads slowly,
-            it says things that are no longer true, and you have stopped sending
-            people to it.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       The one idea
+       2. The one idea
        ============================================================ -->
   <section class="section" id="idea">
     <div class="wrap">
-      <p class="eyebrow">The idea underneath it</p>
-      <h2 class="headline-tight">Tell it once. It runs everything.</h2>
-      <p class="lede">
+      <p class="eyebrow" data-reveal>The idea underneath it</p>
+      <h2 class="headline-tight" data-reveal="80">Tell it once. It runs everything.</h2>
+      <hr class="rule-draw" data-reveal="140" aria-hidden="true">
+      <p class="lede" data-reveal="180">
         There is one set of facts about your business. Change a price in one place
         and every part of it says the same thing.
       </p>
 
-      <div class="idea">
+      <div class="idea" data-reveal="260">
         <ul class="idea__facts" aria-label="What you tell it, once">
           <li>What you offer</li>
           <li>Your prices</li>
@@ -190,15 +175,15 @@
   </section>
 
   <!-- ============================================================
-       The five cards, expanded
+       3. The five cards, expanded
        ============================================================ -->
   <section class="section section--tint" id="cards">
     <div class="wrap">
-      <p class="eyebrow">The five cards</p>
-      <h2 class="headline-tight">Start with a hand. Add cards as you grow.</h2>
+      <p class="eyebrow" data-reveal>The five cards</p>
+      <h2 class="headline-tight" data-reveal="80">Start with a hand. Add cards as you grow.</h2>
 
       <ul class="deck deck--list">
-        <li class="card" style="--pip: var(--answer)">
+        <li class="card" style="--pip: var(--answer)" data-reveal>
           <span class="card__pip" aria-hidden="true"></span>
           <h3 class="card__name">Answer</h3>
           <p class="card__line">Enquiries handled on WhatsApp, Instagram DMs and website
@@ -206,7 +191,7 @@
           <p class="card__who">For anyone whose phone does not stop.</p>
         </li>
 
-        <li class="card" style="--pip: var(--site)">
+        <li class="card" style="--pip: var(--site)" data-reveal="90">
           <span class="card__pip" aria-hidden="true"></span>
           <h3 class="card__name">Site</h3>
           <p class="card__line">A fast website that reads live from your prices, so it
@@ -214,14 +199,14 @@
           <p class="card__who">For anyone whose prices changed and whose website did not.</p>
         </li>
 
-        <li class="card" style="--pip: var(--book)">
+        <li class="card" style="--pip: var(--book)" data-reveal="180">
           <span class="card__pip" aria-hidden="true"></span>
           <h3 class="card__name">Book</h3>
           <p class="card__line">Real availability, confirmations, deposits, calendar.</p>
           <p class="card__who">For anyone still confirming every booking by hand.</p>
         </li>
 
-        <li class="card" style="--pip: var(--reach)">
+        <li class="card" style="--pip: var(--reach)" data-reveal="270">
           <span class="card__pip" aria-hidden="true"></span>
           <h3 class="card__name">Reach</h3>
           <p class="card__line">Google listing set up properly, and a review request after
@@ -229,7 +214,7 @@
           <p class="card__who">For anyone who has never claimed their listing.</p>
         </li>
 
-        <li class="card" style="--pip: var(--return)">
+        <li class="card" style="--pip: var(--return)" data-reveal="360">
           <span class="card__pip" aria-hidden="true"></span>
           <h3 class="card__name">Return</h3>
           <p class="card__line">Reminders, off-season offers, and past customers who come back.</p>
@@ -240,13 +225,34 @@
   </section>
 
   <!-- ============================================================
-       Proof — quiet and factual, not a testimonial block
+       4. The problem
        ============================================================ -->
-  <section class="section" id="proof">
+  <section class="section" id="problem">
     <div class="wrap">
-      <p class="eyebrow">Running now</p>
+      <p class="eyebrow" data-reveal>What it looks like now</p>
+      <div class="split split--wide-right">
+        <h2 data-reveal="80">Three jobs, and none of them are the one you opened the business to do.</h2>
+        <div class="prose" data-reveal="160">
+          <p>The enquiries arrive at 11pm, when you have already worked a full day.
+            Answer them in the morning and the booking has gone somewhere else.</p>
+          <p>Your prices changed in April. They are still wrong on the website, wrong
+            on the listing, and right only in your head.</p>
+          <p>Nobody has touched the site since the year it was built. It loads slowly,
+            it says things that are no longer true, and you have stopped sending
+            people to it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       5. Proof — quiet and factual, not a testimonial block
+       ============================================================ -->
+  <section class="section section--tint" id="proof">
+    <div class="wrap">
+      <p class="eyebrow" data-reveal>Running now</p>
       <div class="split">
-        <div class="proof">
+        <div class="proof" data-reveal="80">
           <p class="proof__figure">14 bookings</p>
           <p>
             A car rental operator in Limassol, live at €150 a month. Last month the
@@ -262,22 +268,22 @@
   </section>
 
   <!-- ============================================================
-       Pricing
+       6. Pricing
        ============================================================ -->
-  <section class="section section--tint" id="pricing">
+  <section class="section" id="pricing">
     <div class="wrap">
-      <p class="eyebrow">Pricing</p>
-      <h2 class="headline-tight">Three ways in. The price is the price.</h2>
+      <p class="eyebrow" data-reveal>Pricing</p>
+      <h2 class="headline-tight" data-reveal="80">Three ways in. The price is the price.</h2>
 
       <div class="plans">
-        <article class="plan">
+        <article class="plan" data-spotlight data-reveal>
           <h3 class="plan__name">Answer</h3>
           <p class="plan__price">€150 <span>/ month</span></p>
           <p class="plan__what"><strong>Answer.</strong> Enquiries handled on WhatsApp,
             Instagram DMs and website chat.</p>
         </article>
 
-        <article class="plan plan--common">
+        <article class="plan plan--common" data-spotlight data-reveal="110">
           <p class="plan__tag">The common choice</p>
           <h3 class="plan__name">Deck</h3>
           <p class="plan__price">€249 <span>/ month</span></p>
@@ -285,7 +291,7 @@
             website that stays current, and the bookings behind it.</p>
         </article>
 
-        <article class="plan">
+        <article class="plan" data-spotlight data-reveal="220">
           <h3 class="plan__name">Full Deck</h3>
           <p class="plan__price">€299 <span>/ month</span></p>
           <p class="plan__what"><strong>All five cards.</strong> Answer, Site, Book, Reach
@@ -293,7 +299,7 @@
         </article>
       </div>
 
-      <div class="pricing__note">
+      <div class="pricing__note" data-reveal>
         <p>New business? Everything from zero in a week. €249 a month, nothing upfront,
           twelve months.</p>
         <p class="pricing__terms">No VAT. No setup fee. No long contract on Answer.</p>
@@ -302,13 +308,106 @@
   </section>
 
   <!-- ============================================================
-       Who it is for
+       7. Questions
+       ============================================================ -->
+  <section class="section section--tint" id="faq">
+    <div class="wrap">
+      <p class="eyebrow" data-reveal>Questions</p>
+      <h2 class="headline-tight" data-reveal="80">The things owners ask first.</h2>
+
+      <div class="faq" data-reveal="160">
+        <details class="faq__item">
+          <summary class="faq__q">Do I need a new phone number?
+            <span class="faq__mark" aria-hidden="true"></span></summary>
+          <p class="faq__a">No. It runs on the WhatsApp number you already give out. Your
+            customers message the same number they always have, and nothing on your cards
+            or listings has to change.</p>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__q">What if it says something wrong?
+            <span class="faq__mark" aria-hidden="true"></span></summary>
+          <p class="faq__a">It quotes only from your own prices and your own availability,
+            never from memory. When a question falls outside what you have told it, it says
+            so and passes the conversation to you rather than guessing. You see every one of
+            those in the log.</p>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__q">Can I take over a conversation?
+            <span class="faq__mark" aria-hidden="true"></span></summary>
+          <p class="faq__a">Any time. You reply in the chat and it steps back. Hand it back
+            whenever you are done. It is your WhatsApp — you are never locked out of your
+            own conversation.</p>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__q">What languages does it speak?
+            <span class="faq__mark" aria-hidden="true"></span></summary>
+          <p class="faq__a">It detects the customer's language and replies in it. If someone
+            starts in English and switches to Russian halfway, it switches too, in the same
+            thread.</p>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__q">Does it work with my booking system?
+            <span class="faq__mark" aria-hidden="true"></span></summary>
+          <p class="faq__a">It reads live availability and prices from the system you already
+            use, so it cannot sell something that is gone. If your availability lives in a
+            spreadsheet, that works too. We check yours before you commit to anything.</p>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__q">How long does setup take?
+            <span class="faq__mark" aria-hidden="true"></span></summary>
+          <p class="faq__a">Days, not weeks. You tell me what you offer, your prices,
+            locations and policies once — that is your part. I build it, test it and switch
+            it on. A brand new business, website and all, takes about a week.</p>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__q">What happens when my prices change?
+            <span class="faq__mark" aria-hidden="true"></span></summary>
+          <p class="faq__a">Change them where you already keep them. It quotes from the live
+            source every time, so a July rate never turns up in August. For policy changes —
+            a new delivery fee, a different deposit — message me and it is done.</p>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__q">Is my customer data safe?
+            <span class="faq__mark" aria-hidden="true"></span></summary>
+          <p class="faq__a">Conversations stay in your WhatsApp and in a log only you and I
+            can open. Nothing is sold, nothing is shared with other operators, and nothing is
+            used to train anything. If you leave, the log is yours.</p>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__q">What if I want to stop?
+            <span class="faq__mark" aria-hidden="true"></span></summary>
+          <p class="faq__a">Message me and it is off. No notice period and no exit fee on
+            Answer. Your number, your customers and your conversation history stay exactly
+            where they are.</p>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__q">Who is behind this?
+            <span class="faq__mark" aria-hidden="true"></span></summary>
+          <p class="faq__a">Mark. I build each one and set it up personally — I am not
+            reselling someone else's product. You will have my WhatsApp, and you will be
+            talking to the person who built the thing.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       8. Who it is for
        ============================================================ -->
   <section class="section" id="who">
     <div class="wrap">
-      <p class="eyebrow">Who it is for</p>
-      <h2 class="headline-tight">Anything with a price, a calendar and a customer waiting.</h2>
-      <ul class="verticals">
+      <p class="eyebrow" data-reveal>Who it is for</p>
+      <h2 class="headline-tight" data-reveal="80">Anything with a price, a calendar and a customer waiting.</h2>
+      <ul class="verticals" data-reveal="160">
         <li>Car, scooter, boat and jetski rental</li>
         <li>Villas and short-term rentals</li>
         <li>Tours and excursions</li>
@@ -322,18 +421,18 @@
   </section>
 
   <!-- ============================================================
-       Close
+       9. Close
        ============================================================ -->
   <section class="section section--tint" id="close">
     <div class="wrap">
       <div class="prose">
-        <h2>Tell me about your business.</h2>
-        <p>
+        <h2 data-reveal>Tell me about your business.</h2>
+        <p data-reveal="80">
           Message me and say what you do and where. You will get a straight answer about
           which cards you need, and what it would take to set up.
         </p>
-        <div class="btn-row">
-          <a class="btn btn--primary od-btn--primary"
+        <div class="btn-row" data-reveal="160">
+          <a class="btn btn--primary od-btn--primary" data-magnet
              href="https://wa.me/447520689685?text=Hi%20Mark%20%E2%80%94%20I%27d%20like%20to%20talk%20about%20Ownerdeck%20for%20my%20business."
              rel="noopener">Message me on WhatsApp</a>
         </div>
@@ -355,9 +454,10 @@
   </div>
 </footer>
 
-<script src="config.js?v=20260815"></script>
-<script src="chat-widget.js?v=20260815"></script>
+<script src="config.js?v=20260815b"></script>
+<script src="chat-widget.js?v=20260815b"></script>
 <script src="analytics-events.js?v=20260811"></script>
+<script src="motion.js?v=20260815b" defer></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

@@ -13,11 +13,33 @@ BANNED_COPY = ['supercharge', 'seamless', 'effortless', 'unlock', 'revolutionis'
 DISCLOSURE_FILES = {'chat-widget.js', 'api/chat.js', 'terms.html', 'privacy.html'}
 
 BANNED_CSS = [
-  (r'linear-gradient|radial-gradient', 'gradient'),
   (r'backdrop-filter', 'glassmorphism'),
   (r'border-radius:\s*999', 'pill radius'),
   (r'font-family:[^;]*Inter', 'Inter'),
+  (r'\[data-theme|prefers-color-scheme', 'dark mode'),
 ]
+
+# Gradients are no longer banned outright — the warm-futuristic direction uses
+# a clay spotlight and a canvas fade mask. What stays banned is the thing the
+# ban was actually for: a multi-hue colour ramp. A gradient here may reference
+# at most one colour token; `transparent` and color-mix on that same token are
+# free. That permits the spotlight and rules out a purple-to-blue wash.
+GRADIENT = re.compile(r'(?:linear|radial|conic)-gradient\(', re.I)
+
+
+def gradient_tokens(css, start):
+    """Colour tokens inside the gradient starting at `start`, brackets balanced."""
+    depth, i = 0, start
+    while i < len(css):
+        if css[i] == '(':
+            depth += 1
+        elif css[i] == ')':
+            depth -= 1
+            if depth == 0:
+                break
+        i += 1
+    body = css[start:i]
+    return set(re.findall(r'var\(\s*(--[\w-]+)\s*\)', body)) - {'--transparent'}
 
 def text_of(html):
     """Visible copy only — strip script, style, comments and tags."""
@@ -59,6 +81,28 @@ for f in css_files + PAGES:
     for pat, name in BANNED_CSS:
         if re.search(pat, body, re.I):
             fail.append('%s: banned technique -> %s' % (f, name))
+    for m in GRADIENT.finditer(body):
+        toks = gradient_tokens(body, m.end() - 1)
+        if len(toks) > 1:
+            fail.append('%s: multi-hue gradient -> %s' % (f, sorted(toks)))
+
+# ---------------------------------------------------------------- 2b. no-JS
+# Motion is decoration. Anything that hides content must be scoped to .js, or a
+# blocked script leaves a blank page; and the FAQ must work with no script at all.
+css = io.open('brand.css', encoding='utf-8').read()
+for m in re.finditer(r'^([^{\n]*\[data-reveal\][^{\n]*|[^{\n]*\.rule-draw[^{\n]*)\{([^}]*)\}',
+                     css, re.M):
+    sel, decl = m.group(1).strip(), m.group(2)
+    if ('opacity: 0' in decl or 'scaleX(0)' in decl) and not sel.startswith('.js'):
+        fail.append('brand.css: %r hides content without a .js guard' % sel)
+
+home = io.open('index.html', encoding='utf-8').read()
+if "classList.add('js')" not in home:
+    fail.append('index.html: no .js bootstrap, so guarded motion never activates')
+if '<details' not in home:
+    warn.append('index.html: FAQ is not <details> — check it works with JS off')
+if re.search(r'<details[^>]*>\s*<summary', home) is None:
+    fail.append('index.html: <details> without <summary> is not keyboard operable')
 
 for p in PAGES:
     copy = text_of(io.open(p, encoding='utf-8').read()).lower()

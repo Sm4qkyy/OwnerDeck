@@ -467,10 +467,127 @@ h2 + .verticals          { margin-top: var(--s6); }
 .back-link { display: inline-block; margin-bottom: var(--s5); font-size: .9375rem; }
 
 /* ============================================================
-   Motion
-   The fan is the only transform on the site, and it is the first
-   thing to go when someone has asked for less movement.
+   FAQ
    ============================================================ */
+/* Built on <details>, so it opens, closes and takes keyboard focus with
+   no JavaScript at all — motion.js stays purely decorative. */
+.faq { max-width: var(--measure); }
+.faq__item { border-top: 1px solid var(--rule); }
+.faq__item:last-child { border-bottom: 1px solid var(--rule); }
+.faq__q {
+  display: flex; align-items: center; gap: var(--s4);
+  cursor: pointer; list-style: none; padding: var(--s5) 0;
+  font-family: var(--display); font-size: 1.125rem; font-weight: 600;
+  letter-spacing: -0.02em; color: var(--ink);
+}
+.faq__q::-webkit-details-marker { display: none; }
+.faq__q:hover { color: var(--clay-deep); }
+.faq__q:focus-visible { outline: 2px solid var(--clay); outline-offset: 3px; }
+.faq__mark {
+  margin-inline-start: auto; flex: none;
+  width: 1.125rem; height: 1.125rem; position: relative;
+}
+.faq__mark::before, .faq__mark::after {
+  content: ''; position: absolute; inset-inline: 0; top: 50%;
+  height: 1px; background: var(--clay);
+  transition: transform .28s ease;
+}
+.faq__mark::after { transform: rotate(90deg); }
+.faq__item[open] .faq__mark::after { transform: rotate(0deg); }
+.faq__a { padding-bottom: var(--s5); color: var(--ink-soft); max-width: var(--measure); }
+
+/* ============================================================
+   Motion
+   Every rule below is decoration layered on a page that is already
+   complete without it. The reduced-motion block at the end removes
+   all of it rather than merely shortening it.
+   ============================================================ */
+
+/* --- the hero dot field (canvas, drawn by motion.js) --- */
+.dotfield { position: relative; }
+.dotfield__canvas {
+  position: absolute; inset: 0; z-index: 0;
+  pointer-events: none;
+  /* Fades out before it reaches the text, so the headline never sits
+     on top of texture and contrast stays exactly as measured. */
+  -webkit-mask-image: radial-gradient(120% 90% at 70% 40%, var(--ink) 30%, transparent 72%);
+          mask-image: radial-gradient(120% 90% at 70% 40%, var(--ink) 30%, transparent 72%);
+}
+.dotfield > .wrap { position: relative; z-index: 1; }
+
+/* --- reveal on scroll ---
+   Scoped to .js, which the inline script in <head> adds. Without that
+   class every [data-reveal] element renders at full opacity, so a
+   blocked, failed or disabled script leaves a complete page rather
+   than a blank one. Never hide content behind a class only JS can add. */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity .7s cubic-bezier(.22,.61,.36,1),
+              transform .7s cubic-bezier(.22,.61,.36,1);
+}
+.js [data-reveal].is-in { opacity: 1; transform: none; }
+
+/* --- headline, word by word --- */
+[data-split] .word { display: inline-block; overflow: hidden; vertical-align: bottom; }
+[data-split] .word__in {
+  display: inline-block;
+  transform: translateY(100%);
+  transition: transform .8s cubic-bezier(.22,.61,.36,1);
+}
+[data-split].is-in .word__in { transform: none; }
+
+/* --- the deck: depth on top of the resting fan --- */
+@media (min-width: 62rem) {
+  .deck--fan { perspective: 1100px; }
+  .deck--fan .card {
+    --tilt-x: 0deg; --tilt-y: 0deg;
+    transform: rotate(var(--rot)) translateY(var(--dy))
+               rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+    transition: transform .28s ease, border-color .28s ease, box-shadow .28s ease;
+    transform-style: preserve-3d;
+  }
+  .deck--fan .card:hover,
+  .deck--fan .card:focus-within {
+    transform: rotate(0deg) translateY(-.65rem)
+               rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  }
+  /* Dealt in on load, one card after another. */
+  .deck--fan.is-dealt .card { animation: deal .62s cubic-bezier(.22,.61,.36,1) both; }
+  .deck--fan.is-dealt .card:nth-child(1) { animation-delay: .05s }
+  .deck--fan.is-dealt .card:nth-child(2) { animation-delay: .13s }
+  .deck--fan.is-dealt .card:nth-child(3) { animation-delay: .21s }
+  .deck--fan.is-dealt .card:nth-child(4) { animation-delay: .29s }
+  .deck--fan.is-dealt .card:nth-child(5) { animation-delay: .37s }
+}
+@keyframes deal {
+  from { opacity: 0; transform: translateY(2.5rem) rotate(0deg) scale(.96); }
+  to   { opacity: 1; transform: rotate(var(--rot)) translateY(var(--dy)); }
+}
+
+/* --- spotlight: a single-hue clay wash, no second accent --- */
+[data-spotlight] { position: relative; isolation: isolate; }
+[data-spotlight]::before {
+  content: ''; position: absolute; inset: 0; z-index: -1;
+  border-radius: inherit;
+  opacity: var(--spot, 0);
+  transition: opacity .3s ease;
+  background: radial-gradient(
+    18rem circle at var(--mx, 50%) var(--my, 50%),
+    color-mix(in srgb, var(--clay) 15%, transparent), transparent 65%);
+}
+
+/* --- magnetic action --- */
+[data-magnet] { transition: transform .25s cubic-bezier(.22,.61,.36,1), background-color .18s ease; }
+
+/* --- hairline that draws itself in --- */
+.rule-draw { height: 1px; background: var(--clay); border: 0; margin: var(--s5) 0 0; }
+.js .rule-draw {
+  transform: scaleX(0); transform-origin: 0 50%;
+  transition: transform 1s cubic-bezier(.22,.61,.36,1);
+}
+.js .rule-draw.is-in { transform: scaleX(1); }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: .001ms !important;
@@ -480,7 +597,8 @@ h2 + .verticals          { margin-top: var(--s6); }
   }
   .deck--fan .card,
   .deck--fan .card:hover,
-  .deck--fan .card:focus-within {
-    transform: none !important;
-  }
+  .deck--fan .card:focus-within { transform: none !important; }
+  .js [data-reveal], [data-split] .word__in, .js .rule-draw { opacity: 1 !important; transform: none !important; }
+  [data-spotlight]::before { display: none; }
+  .dotfield__canvas { opacity: .55; }
 }
