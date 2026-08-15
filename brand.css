@@ -1,0 +1,486 @@
+/* ============================================================
+   Ownerdeck — brand stylesheet
+
+   One file, one system. Every colour in the site is declared once
+   in :root below; nothing further down this file, and nothing in any
+   HTML file, may carry a hex literal. If you need a new shade, add a
+   token here rather than inlining it.
+
+   Self-hosted fonts are not a preference, they are a constraint: the
+   Content-Security-Policy in vercel.json allows font-src 'self' and
+   fonts.gstatic.com only, so a Fontshare CDN link would be blocked.
+   ============================================================ */
+
+:root {
+  /* ---- surface and ink ---- */
+  --bone:      #F7F4EF;   /* page background — never pure white */
+  --bone-2:    #EFE9E1;   /* raised surfaces, alternating sections */
+  --ink:       #1F1D1A;   /* body text — warm near-black, never #000 */
+  --ink-soft:  #6B6560;   /* secondary text */
+  --rule:      #E0D8CD;   /* hairlines and borders */
+
+  /* ---- the single brand accent ----
+     Measured, not assumed: clay on bone is 3.66:1, which fails AA for
+     small text and fails for bone-on-clay button labels too. So clay is
+     used for rules, swatches and focus rings, and clay-deep (5.01:1
+     both ways) carries anything that is text or a filled button. */
+  --clay:      #C4643C;
+  --clay-deep: #A84F2C;
+
+  /* ---- card tints ----
+     Identity only, never a background for a large area. Ochre is
+     2.32:1 on bone, so it is allowed to be a decorative swatch and is
+     never used for text or for a border that carries meaning. */
+  --answer: #C4643C;
+  --site:   #6E7A5A;
+  --book:   #3F6B6B;
+  --reach:  #C89B4A;
+  --return: #7A5C6B;
+
+  /* ---- derived, so no rule below needs a literal ---- */
+  --lift:      color-mix(in srgb, var(--ink) 14%, transparent);
+  --wash:      color-mix(in srgb, var(--clay) 8%, transparent);
+  --rule-soft: color-mix(in srgb, var(--rule) 55%, transparent);
+
+  /* ---- type ---- */
+  --display: 'Fraunces', 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+  --body:    'Switzer', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+
+  --measure: 68ch;        /* the brief's line-length ceiling */
+
+  /* ---- space: a 4px base, named so sections stay in rhythm ---- */
+  --s1: .25rem;  --s2: .5rem;   --s3: .75rem;  --s4: 1rem;
+  --s5: 1.5rem;  --s6: 2rem;    --s7: 3rem;    --s8: 4rem;
+  --s9: 6rem;    --s10: 8rem;
+
+  --radius: 5px;          /* small, per the brief. never a pill */
+
+  color-scheme: light;    /* stop the UA inverting a deliberately light page */
+}
+
+/* ============================================================
+   Fonts
+   ============================================================ */
+@font-face {
+  font-family: 'Fraunces';
+  src: url('fonts/fraunces-var.woff2') format('woff2-variations');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+  /* SOFT and WONK are pinned inside the file, so headlines are warm and
+     slightly hand-cut without any font-variation-settings at call sites. */
+}
+@font-face {
+  font-family: 'Switzer';
+  src: url('fonts/switzer-400.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Switzer';
+  src: url('fonts/switzer-500.woff2') format('woff2');
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Switzer';
+  src: url('fonts/switzer-600.woff2') format('woff2');
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bone);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+h1 { font-size: clamp(2.5rem, 9vw, 4.75rem); }
+h2 { font-size: clamp(1.9rem, 6vw, 3rem); }
+h3 { font-size: clamp(1.25rem, 3.4vw, 1.5rem); letter-spacing: -0.015em; }
+h4 { font-size: 1.0625rem; letter-spacing: -0.01em; }
+
+p  { margin: 0; text-wrap: pretty; }
+p + p { margin-top: var(--s4); }
+
+a { color: var(--clay-deep); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { color: var(--ink); }
+
+ul, ol { margin: 0; padding: 0; list-style: none; }
+
+img, svg { max-width: 100%; height: auto; display: block; }
+
+/* Focus is in clay, and visible on every interactive thing. */
+:focus-visible {
+  outline: 2px solid var(--clay);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+::selection { background: var(--wash); }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+.skip-link {
+  position: absolute; left: var(--s4); top: -4rem; z-index: 100;
+  background: var(--ink); color: var(--bone);
+  padding: var(--s3) var(--s4); border-radius: var(--radius);
+  font-weight: 500; text-decoration: none;
+  transition: top .18s ease;
+}
+.skip-link:focus { top: var(--s4); color: var(--bone); }
+
+/* ============================================================
+   Layout
+   ============================================================ */
+.wrap {
+  width: 100%;
+  max-width: 76rem;
+  margin-inline: auto;
+  padding-inline: var(--s5);
+}
+@media (min-width: 48rem) { .wrap { padding-inline: var(--s7); } }
+
+.section { padding-block: var(--s8); }
+@media (min-width: 48rem) { .section { padding-block: var(--s10); } }
+
+/* Sections are separated by whitespace and a hairline, never a box. */
+.section + .section { border-top: 1px solid var(--rule); }
+.section--tint { background: var(--bone-2); }
+
+.lede {
+  font-size: clamp(1.125rem, 2.4vw, 1.3125rem);
+  line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: var(--measure);
+}
+
+.prose { max-width: var(--measure); }
+
+/* Vertical rhythm lives here, not in the markup. The only style attribute
+   anywhere in the HTML binds --pip to a card tint, which is a token
+   reference rather than a hardcoded value. */
+h1 + .lede, h2 + .lede   { margin-top: var(--s5); }
+h2 + p                   { margin-top: var(--s5); }
+.lede + .btn-row,
+p + .btn-row             { margin-top: var(--s6); }
+.lede + .idea            { margin-top: var(--s7); }
+h2 + .deck--list,
+h2 + .plans              { margin-top: var(--s7); }
+h2 + .verticals          { margin-top: var(--s6); }
+
+.headline-tight { max-width: 22ch; }
+
+.eyebrow {
+  font-family: var(--body);
+  font-size: .8125rem;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: var(--s5);
+}
+
+/* Asymmetric two-column. Deliberately not 50/50, and not centred. */
+.split { display: grid; gap: var(--s7); }
+@media (min-width: 56rem) {
+  .split { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--s9); align-items: start; }
+  .split--wide-right { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+  .split--offset > :last-child { padding-top: var(--s7); }
+}
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+.btn {
+  display: inline-flex; align-items: center; gap: var(--s2);
+  font-family: var(--body); font-size: 1rem; font-weight: 600;
+  line-height: 1; text-decoration: none;
+  padding: var(--s4) var(--s5);
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background-color .18s ease, color .18s ease, border-color .18s ease;
+}
+/* clay-deep, not clay: bone-on-clay is 3.66:1 and fails AA for a label. */
+.btn--primary { background: var(--clay-deep); color: var(--bone); }
+.btn--primary:hover { background: var(--ink); color: var(--bone); }
+
+.btn--quiet {
+  background: transparent; color: var(--ink);
+  border-color: var(--rule);
+}
+.btn--quiet:hover { border-color: var(--ink); color: var(--ink); }
+
+.btn-row { display: flex; flex-wrap: wrap; gap: var(--s4); align-items: center; }
+
+/* ============================================================
+   Header
+   ============================================================ */
+.masthead {
+  border-bottom: 1px solid var(--rule);
+  background: var(--bone);
+}
+.masthead__bar {
+  display: flex; align-items: center; gap: var(--s5);
+  min-height: 4.5rem;
+}
+.masthead__mark {
+  font-family: var(--display); font-size: 1.375rem; font-weight: 600;
+  letter-spacing: -0.02em; color: var(--ink); text-decoration: none;
+}
+.masthead__nav { margin-inline-start: auto; display: none; gap: var(--s6); align-items: center; }
+@media (min-width: 56rem) { .masthead__nav { display: flex; } }
+.masthead__nav a {
+  color: var(--ink-soft); text-decoration: none; font-size: .9375rem; font-weight: 500;
+}
+.masthead__nav a:hover { color: var(--ink); }
+.masthead__cta { margin-inline-start: auto; }
+@media (min-width: 56rem) { .masthead__cta { margin-inline-start: 0; } }
+
+/* ============================================================
+   The deck — the one memorable image on the site
+   ============================================================ */
+.deck {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s4);
+  margin: 0;
+  padding: 0;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+  background: var(--bone);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: var(--s5);
+  text-align: start;
+}
+
+.card__pip {
+  width: 1.125rem; height: 1.125rem;
+  border-radius: 2px;
+  background: var(--pip, var(--clay));
+  /* The ochre pip is 2.32:1 on bone. It is decoration — the card name
+     carries the meaning — but a hairline keeps its edge visible. */
+  border: 1px solid color-mix(in srgb, var(--pip, var(--clay)) 70%, var(--ink));
+}
+
+.card__name {
+  font-family: var(--display);
+  font-size: 1.375rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.card__line { font-size: .9375rem; line-height: 1.5; color: var(--ink-soft); margin: 0; }
+
+/* --- the fanned hand (desktop only) ---
+   Document order matches visual order, so keyboard and screen-reader
+   traversal follow the same path the eye does. The fan is presentation. */
+@media (min-width: 62rem) {
+  .deck--fan {
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0;
+    padding-block: var(--s6);
+  }
+  .deck--fan .card {
+    flex: 0 0 13.5rem;
+    aspect-ratio: 3 / 4;
+    margin-inline: -1.25rem;      /* gentle overlap */
+    transform: rotate(var(--rot)) translateY(var(--dy));
+    transform-origin: 50% 92%;    /* pivot near the bottom, like a held hand */
+    transition: transform .28s ease, border-color .28s ease;
+    background: var(--bone);
+  }
+  /* Set down by hand, not aligned on a grid. */
+  .deck--fan .card:nth-child(1) { --rot: -3.5deg; --dy: .5rem;  z-index: 1; }
+  .deck--fan .card:nth-child(2) { --rot: -1.5deg; --dy: 0;      z-index: 2; }
+  .deck--fan .card:nth-child(3) { --rot:  .5deg;  --dy: -.35rem; z-index: 3; }
+  .deck--fan .card:nth-child(4) { --rot:  2.5deg; --dy: .15rem; z-index: 4; }
+  .deck--fan .card:nth-child(5) { --rot:  4deg;   --dy: .7rem;  z-index: 5; }
+
+  /* Lifts and straightens. A few pixels, no scale, no shadow bloom. */
+  .deck--fan .card:hover,
+  .deck--fan .card:focus-within {
+    transform: rotate(0deg) translateY(-.65rem);
+    border-color: var(--clay);
+    box-shadow: 0 10px 24px -14px var(--lift);
+    z-index: 6;
+  }
+}
+
+/* The expanded five, further down the page: a plain readable grid. */
+.deck--list { gap: var(--s6); }
+@media (min-width: 48rem) {
+  .deck--list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s7); }
+  .deck--list > :nth-child(5) { grid-column: 1 / -1; max-width: 32rem; }
+}
+.deck--list .card { border: 0; border-top: 1px solid var(--rule); border-radius: 0; padding: var(--s5) 0 0; }
+.deck--list .card__line { color: var(--ink); font-size: 1rem; }
+.card__who { font-size: .9375rem; color: var(--ink-soft); margin: 0; }
+
+/* ============================================================
+   The one idea — facts in, everything out
+   ============================================================ */
+.idea { display: grid; gap: var(--s6); align-items: center; }
+@media (min-width: 56rem) { .idea { grid-template-columns: minmax(0,1fr) auto minmax(0,1fr); gap: var(--s7); } }
+
+.idea__facts, .idea__out { display: flex; flex-direction: column; gap: var(--s2); }
+.idea__facts li, .idea__out li {
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: var(--s3) var(--s4);
+  font-size: .9375rem;
+  background: var(--bone);
+}
+.idea__out li { border-color: var(--clay); }
+
+.idea__arrow {
+  justify-self: center;
+  color: var(--clay);
+  transform: rotate(90deg);
+}
+@media (min-width: 56rem) { .idea__arrow { transform: none; } }
+
+.idea__hub {
+  font-family: var(--display);
+  font-size: 1.125rem;
+  text-align: center;
+  color: var(--ink);
+  padding: var(--s3) 0;
+}
+
+/* ============================================================
+   Proof
+   ============================================================ */
+.proof { border-inline-start: 2px solid var(--clay); padding-inline-start: var(--s5); max-width: var(--measure); }
+.proof__figure { font-family: var(--display); font-size: clamp(2.5rem, 7vw, 3.75rem); line-height: 1; letter-spacing: -0.03em; }
+.proof__note { font-size: .9375rem; color: var(--ink-soft); }
+
+/* ============================================================
+   Pricing
+   ============================================================ */
+.plans { display: grid; gap: var(--s5); }
+@media (min-width: 56rem) { .plans { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s5); align-items: start; } }
+
+.plan {
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: var(--s6);
+  background: var(--bone);
+  display: flex; flex-direction: column; gap: var(--s4);
+}
+.plan--common { border-color: var(--clay); border-width: 1px; background: var(--bone-2); }
+
+.plan__tag {
+  align-self: flex-start;
+  font-size: .75rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase;
+  color: var(--clay-deep);
+  border: 1px solid var(--clay);
+  border-radius: 2px;
+  padding: var(--s1) var(--s2);
+}
+.plan__name { font-family: var(--display); font-size: 1.5rem; font-weight: 600; letter-spacing: -0.02em; }
+.plan__price { font-family: var(--display); font-size: 2.5rem; line-height: 1; letter-spacing: -0.03em; }
+.plan__price span { font-family: var(--body); font-size: 1rem; color: var(--ink-soft); letter-spacing: 0; }
+.plan__what { font-size: .9375rem; color: var(--ink-soft); }
+.plan__what strong { color: var(--ink); font-weight: 500; }
+
+.pricing__note {
+  margin-top: var(--s6);
+  border-top: 1px solid var(--rule);
+  padding-top: var(--s5);
+  max-width: var(--measure);
+}
+.pricing__terms { font-size: .9375rem; color: var(--ink-soft); margin-top: var(--s3); }
+
+/* ============================================================
+   Verticals
+   ============================================================ */
+.verticals { columns: 1; column-gap: var(--s7); max-width: 56rem; }
+@media (min-width: 34rem) { .verticals { columns: 2; } }
+@media (min-width: 56rem) { .verticals { columns: 3; } }
+.verticals li {
+  break-inside: avoid;
+  padding-block: var(--s3);
+  border-bottom: 1px solid var(--rule-soft);
+  font-size: .9375rem;
+}
+
+/* ============================================================
+   Footer
+   ============================================================ */
+.footer { border-top: 1px solid var(--rule); padding-block: var(--s7); font-size: .9375rem; color: var(--ink-soft); }
+.footer a { color: var(--ink-soft); }
+.footer a:hover { color: var(--ink); }
+.footer__row { display: flex; flex-wrap: wrap; gap: var(--s5); align-items: baseline; }
+.footer__row .footer__spacer { margin-inline-start: auto; }
+
+/* ============================================================
+   Long-form pages (terms, privacy, guides)
+   ============================================================ */
+.longform { max-width: var(--measure); }
+.longform h2 { font-size: clamp(1.375rem, 3.6vw, 1.75rem); margin-top: var(--s7); }
+.longform h3 { margin-top: var(--s6); }
+.longform p, .longform ul { margin-top: var(--s4); }
+.longform ul { list-style: disc; padding-inline-start: var(--s5); }
+.longform li { margin-top: var(--s2); }
+.longform table { width: 100%; border-collapse: collapse; margin-top: var(--s5); }
+.longform th, .longform td { text-align: start; padding: var(--s3) var(--s2); border-bottom: 1px solid var(--rule); font-size: .9375rem; }
+.longform th { font-weight: 600; }
+
+.note {
+  border-inline-start: 2px solid var(--clay);
+  padding-inline-start: var(--s4);
+  color: var(--ink-soft);
+  font-size: .9375rem;
+}
+
+.back-link { display: inline-block; margin-bottom: var(--s5); font-size: .9375rem; }
+
+/* ============================================================
+   Motion
+   The fan is the only transform on the site, and it is the first
+   thing to go when someone has asked for less movement.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .deck--fan .card,
+  .deck--fan .card:hover,
+  .deck--fan .card:focus-within {
+    transform: none !important;
+  }
+}

@@ -45,7 +45,7 @@ PAGES = [
 
 <h2>Setup</h2>
 <p>Live in 48 hours. You tell me your fleet, rates, locations and policies once — that is your part. I build it, test it, and switch it on. It runs on the number already printed on your cards and listings, so nothing changes for your customers and there is no app for anyone to install.</p>
-<p>€150 per month, no VAT. No minimum term, no notice period. Cancel by email and it stops.</p>
+<p>Answer is €150 per month, no VAT. No minimum term, no notice period. Cancel by email and it stops. It is one of five cards — the website, the bookings, the Google listing and the follow-up are the other four. <a href="/#pricing">See the plans</a>.</p>
 """,
  'faq':[
   ('Do I need a new phone number for a WhatsApp bot?',
@@ -86,7 +86,7 @@ PAGES = [
 
 <h2>What you get</h2>
 <p>A message the moment a booking lands, with dates, times, meeting point, group size and contact details, confirmed back to the customer with a reference. Every conversation written to a log only you and I can open. And the ability to take over any chat yourself — you reply, it steps back.</p>
-<p>€150 per month, no VAT, live in 48 hours, on the number you already use. Cancel any time.</p>
+<p>Answer is €150 per month, no VAT, on the number you already use. Cancel any time. Bundled with the website and bookings it is €249. <a href="/#pricing">See the plans</a>.</p>
 """,
  'faq':[
   ('Does this only work for car rental?',
@@ -123,7 +123,7 @@ PAGES = [
 <p>Most owners find the overnight reply rate is where the money is going, and that it is worse in exactly the month they can least afford it.</p>
 
 <h2>What this costs</h2>
-<p>Ownerdeck answers on your own WhatsApp number in about two seconds, in the customer's language, with your real prices and live availability, then captures the booking and messages you. €150 per month, no VAT, live in 48 hours, cancel any time.</p>
+<p>Ownerdeck answers on your own WhatsApp number in about two seconds, in the customer's language, with your real prices and live availability, then captures the booking and messages you. Answer is €150 per month, no VAT, cancel any time.</p>
 <p>If it is not earning that back, one lost booking a month in most rental businesses, you say so and it stops.</p>
 """,
  'faq':[
@@ -192,7 +192,7 @@ PAGES = [
   <li><strong>Uses your live prices and availability:</strong> auto-reply no, assistant yes.</li>
   <li><strong>Replies in the customer's language:</strong> auto-reply no, assistant yes.</li>
   <li><strong>Captures the booking:</strong> auto-reply no, assistant yes.</li>
-  <li><strong>Cost:</strong> auto-reply free, assistant €150 per month.</li>
+  <li><strong>Cost:</strong> auto-reply free, Answer €150 per month.</li>
 </ul>
 
 <h2>When an auto-reply is genuinely enough</h2>
@@ -258,8 +258,9 @@ def build(p):
     head = head.replace('</head>', social + '</head>')
 
     body = f"""<main>
-  <a href="/" class="back">&larr; Back to ownerdeck.com</a>
-  <div class="eyebrow"><span class="s">//</span> Guide</div>
+  <div id="main" class="wrap section longform">
+  <a class="back-link" href="/">Back to ownerdeck.com</a>
+  <p class="eyebrow">Guide</p>
   <h1>{p['h1']}</h1>
   <p class="lede">{p['lede']}</p>
 {p['body']}
@@ -270,6 +271,7 @@ def build(p):
     live assistant yourself and ask it anything — price, setup, whether it fits your
     business. <a href="/demo">Open the demo</a>, or read
     <a href="/">what Ownerdeck does</a>.
+  </div>
   </div>
 </main>"""
 

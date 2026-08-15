@@ -14,37 +14,32 @@ if 'noindex' not in head:
                         '<meta name="robots" content="noindex, nofollow">\n<meta name="viewport"', 1)
 
 EXTRA_CSS = """<style>
-  .lock{max-width:340px;margin:40px auto 0}
-  .lock input{width:100%;box-sizing:border-box;padding:13px 14px;font-size:16px;
-    font-family:var(--font-sans);color:var(--ink);background:var(--card);
-    border:1px solid var(--line);border-radius:10px}
-  .lock input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(1,192,184,.18)}
-  .lock button{width:100%;margin-top:10px;padding:13px;font-size:15px;font-weight:600;
-    font-family:var(--font-sans);color:#04201f;background:var(--accent);
-    border:none;border-radius:10px;cursor:pointer}
-  .lock .msg{margin-top:12px;font-size:14px;color:#c0392b;min-height:20px}
-  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-top:8px}
-  .kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
-  .kpi b{display:block;font-family:var(--font-display);font-size:30px;letter-spacing:-.03em;color:var(--ink)}
-  .kpi span{font-size:12.5px;color:var(--ink-mute);font-family:var(--font-mono);
-    letter-spacing:.06em;text-transform:uppercase}
-  .spark{display:flex;align-items:flex-end;gap:3px;height:90px;margin-top:8px}
-  .spark i{flex:1;background:var(--accent);border-radius:2px 2px 0 0;min-height:2px;opacity:.85}
-  table{width:100%;border-collapse:collapse;margin-top:8px}
-  th,td{text-align:left;padding:9px 4px;border-bottom:1px solid var(--line-soft);font-size:14.5px}
-  th{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
-    color:var(--ink-faint);font-weight:400}
-  td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
-  .out{margin-top:34px;font-size:14px;color:var(--ink-mute);cursor:pointer;
-    background:none;border:none;padding:0;font-family:var(--font-sans)}
-  @media (max-width:560px){ main{padding-left:18px;padding-right:18px} }
+  /* Tokens come from brand.css; nothing here declares a colour of its own. */
+  .lock{max-width:21rem;margin:var(--s7) 0 0}
+  .lock input{width:100%;box-sizing:border-box;padding:var(--s3) var(--s4);font-size:1rem;
+    font-family:var(--body);color:var(--ink);background:var(--bone);
+    border:1px solid var(--rule);border-radius:var(--radius)}
+  .lock input:focus-visible{outline:2px solid var(--clay);outline-offset:2px}
+  .lock button{width:100%;margin-top:var(--s3);padding:var(--s3);font-size:1rem;font-weight:600;
+    font-family:var(--body);color:var(--bone);background:var(--clay-deep);
+    border:none;border-radius:var(--radius);cursor:pointer}
+  .lock .msg{margin-top:var(--s3);font-size:.9375rem;color:var(--clay-deep);min-height:1.25rem}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(9rem,1fr));gap:var(--s4);margin-top:var(--s4)}
+  .kpi{background:var(--bone-2);border:1px solid var(--rule);border-radius:var(--radius);padding:var(--s5)}
+  .kpi b{display:block;font-family:var(--display);font-size:1.875rem;letter-spacing:-.03em;color:var(--ink)}
+  .kpi span{font-size:.8125rem;color:var(--ink-soft);letter-spacing:.06em;text-transform:uppercase}
+  .spark{display:flex;align-items:flex-end;gap:3px;height:5.5rem;margin-top:var(--s3)}
+  .spark i{flex:1;background:var(--clay);border-radius:2px 2px 0 0;min-height:2px}
+  .out{margin-top:var(--s7);font-size:.9375rem;color:var(--ink-soft);cursor:pointer;
+    background:none;border:none;padding:0;font-family:var(--body);text-decoration:underline}
 </style>
 """
 head = head.replace('</head>', EXTRA_CSS + '</head>')
 
 BODY = """<main>
-  <a href="/" class="back">&larr; Back to ownerdeck.com</a>
-  <div class="eyebrow"><span class="s">//</span> Private</div>
+  <div id="main" class="wrap section longform">
+  <a class="back-link" href="/">Back to ownerdeck.com</a>
+  <p class="eyebrow">Private</p>
   <h1>Stats</h1>
 
   <!-- Nothing below is filled in until the server accepts a password. The page
@@ -56,7 +51,7 @@ BODY = """<main>
              autocomplete="username" style="margin-bottom:10px">
       <input id="pw" type="password" placeholder="Password" aria-label="Password"
              autocomplete="current-password">
-      <button type="submit">Unlock</button>
+      <button type="submit">Sign in</button>
       <div class="msg" id="msg" role="status" aria-live="polite"></div>
     </form>
   </div>
@@ -86,6 +81,7 @@ BODY = """<main>
       plus the event breakdown: video played, chat opened, contact clicked.
     </div>
     <button class="out" id="out">Log out</button>
+  </div>
   </div>
 </main>"""
 
