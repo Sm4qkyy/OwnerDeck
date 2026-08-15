@@ -222,6 +222,8 @@ h2 + .steps              { margin-top: var(--s7); }
 h2 + .verticals          { margin-top: var(--s6); }
 
 .headline-tight { max-width: 22ch; }
+.eyebrow--spaced { margin-top: var(--s6); }
+.lede + .trades { margin-top: var(--s6); }
 
 .eyebrow {
   font-family: var(--body);
@@ -343,6 +345,12 @@ h2 + .verticals          { margin-top: var(--s6); }
 .mmenu[open] .mmenu__bars i       { opacity: 0; }
 .mmenu[open] .mmenu__bars::after  { transform: translateY(-4.75px) rotate(-45deg); }
 
+/* The display:flex below outranks the browser's own rule for the contents of a
+   closed <details>, so without this the panel keeps rendering as a small
+   collapsed box beside the header. Exactly the trap the chat widget hit with
+   [hidden]. Keep this. */
+.mmenu:not([open]) .mmenu__panel { display: none; }
+
 .mmenu__panel {
   position: fixed; inset: 4.5rem 0 0; z-index: 90;
   background: var(--bone);
@@ -359,6 +367,85 @@ h2 + .verticals          { margin-top: var(--s6); }
 .mmenu__panel a:hover { color: var(--clay-deep); }
 .mmenu__panel .btn { margin-top: var(--s5); justify-content: center; }
 .mmenu__panel .mmenu__note { font-size: .9375rem; color: var(--ink-soft); margin-top: var(--s5); }
+
+/* ============================================================
+   Phone — the product, shown working
+   ============================================================ */
+.showcase { display: grid; gap: var(--s7); align-items: center; }
+@media (min-width: 56rem) {
+  .showcase { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: var(--s9); }
+}
+
+.phone {
+  width: min(19rem, 100%); margin-inline: auto;
+  border: 1px solid var(--rule); border-radius: 1.75rem;
+  background: var(--bone-2); padding: var(--s3);
+  box-shadow: 0 30px 60px -40px var(--lift);
+}
+.phone__screen {
+  border: 1px solid var(--rule); border-radius: 1.25rem;
+  background: var(--bone); overflow: hidden;
+}
+.phone__bar {
+  display: flex; align-items: center; gap: var(--s3);
+  padding: var(--s3) var(--s4);
+  background: var(--bone-2); border-bottom: 1px solid var(--rule);
+}
+.phone__av {
+  width: 1.75rem; height: 1.75rem; border-radius: 50%; flex: none;
+  background: var(--clay); color: var(--bone);
+  display: grid; place-items: center;
+  font-family: var(--display); font-size: .8125rem; font-weight: 600;
+}
+.phone__who { font-size: .875rem; font-weight: 500; line-height: 1.2; }
+.phone__state { font-size: .6875rem; color: var(--ink-soft); }
+.phone__thread {
+  padding: var(--s4); display: flex; flex-direction: column; gap: var(--s2);
+  min-height: 20rem;
+}
+.bubble {
+  max-width: 84%; padding: var(--s3) var(--s4); border-radius: var(--radius);
+  font-size: .875rem; line-height: 1.45;
+}
+.bubble--them { align-self: flex-start; background: var(--bone-2); border: 1px solid var(--rule); }
+.bubble--us   { align-self: flex-end;   background: var(--bone);   border: 1px solid var(--clay); }
+.bubble__meta { display: block; margin-top: var(--s1); font-size: .6875rem; color: var(--ink-soft); }
+.thread__stamp {
+  align-self: center; font-size: .6875rem; color: var(--ink-soft);
+  letter-spacing: .06em; text-transform: uppercase; padding: var(--s2) 0;
+}
+.thread__note {
+  align-self: center; text-align: center; font-size: .6875rem; color: var(--ink-soft);
+  border: 1px solid var(--rule); border-radius: var(--radius);
+  padding: var(--s2) var(--s3);
+}
+
+/* ============================================================
+   Verticals — what changes, business by business
+   ============================================================ */
+.trades { display: grid; gap: 0; }
+@media (min-width: 42rem) { .trades { grid-template-columns: 1fr 1fr; column-gap: var(--s7); } }
+@media (min-width: 68rem) { .trades { grid-template-columns: repeat(3, 1fr); } }
+.trade { border-top: 1px solid var(--rule); padding: var(--s5) 0; }
+.trade__h {
+  display: flex; align-items: center; gap: var(--s3);
+  font-family: var(--display); font-size: 1.0625rem; font-weight: 600;
+  letter-spacing: -0.015em; color: var(--ink);
+}
+.trade__h svg { width: 1.375rem; height: 1.375rem; flex: none; color: var(--clay); }
+.trade p { margin-top: var(--s2); font-size: .875rem; color: var(--ink-soft); }
+
+/* ============================================================
+   Channels
+   ============================================================ */
+.channels-row { display: flex; flex-wrap: wrap; gap: var(--s3); }
+.channel-chip {
+  display: inline-flex; align-items: center; gap: var(--s2);
+  border: 1px solid var(--rule); border-radius: var(--radius);
+  padding: var(--s3) var(--s4); font-size: .9375rem; font-weight: 500;
+  color: var(--ink); background: var(--bone);
+}
+.channel-chip svg { width: 1.0625rem; height: 1.0625rem; color: var(--clay); }
 
 /* ============================================================
    Setup steps
@@ -572,11 +659,22 @@ h2 + .verticals          { margin-top: var(--s6); }
 /* ============================================================
    Footer
    ============================================================ */
-.footer { border-top: 1px solid var(--rule); padding-block: var(--s7); font-size: .9375rem; color: var(--ink-soft); }
-.footer a { color: var(--ink-soft); }
+.footer { border-top: 1px solid var(--rule); padding-block: var(--s8) var(--s6);
+          font-size: .9375rem; color: var(--ink-soft); }
+.footer a { color: var(--ink-soft); text-decoration: none; display: block; padding-block: var(--s2); }
 .footer a:hover { color: var(--ink); }
-.footer__row { display: flex; flex-wrap: wrap; gap: var(--s5); align-items: baseline; }
-.footer__row .footer__spacer { margin-inline-start: auto; }
+.footer__cols { display: grid; gap: var(--s7); }
+@media (min-width: 42rem) { .footer__cols { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 62rem) { .footer__cols { grid-template-columns: 2fr 1fr 1fr 1fr; gap: var(--s7); } }
+.footer__mark { font-family: var(--display); font-size: 1.25rem; font-weight: 600;
+                letter-spacing: -0.02em; color: var(--ink); margin-bottom: var(--s3); }
+.footer__brand p:last-child { max-width: 28ch; }
+.footer__h { font-size: .8125rem; font-weight: 500; letter-spacing: .08em;
+             text-transform: uppercase; color: var(--ink); margin-bottom: var(--s2); }
+.footer__base { display: flex; flex-wrap: wrap; gap: var(--s5); align-items: baseline;
+                margin-top: var(--s7); padding-top: var(--s5); border-top: 1px solid var(--rule); }
+.footer__base a { display: inline; padding: 0; }
+.footer__spacer { margin-inline-start: auto; }
 
 /* ============================================================
    Long-form pages (terms, privacy, guides)
