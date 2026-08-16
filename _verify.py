@@ -261,6 +261,30 @@ def check_deployable():
                 fail(name, 'references %s, which .vercelignore excludes (%s)' % (ref, pat))
 
 
+def check_paired_assets():
+    """A script and the stylesheet it needs have to travel together.
+
+    The chat widget shipped for a while with its JS on ten pages and its CSS on
+    none of them, because the shared footer injects the script but the head is
+    built separately. The launcher rendered as a huge unstyled grey block in the
+    bottom-left corner of every guide and legal page.
+    """
+    PAIRS = [('chat-widget.js', 'chat-widget.css')]
+    for name in sorted(os.listdir(HERE)):
+        if not name.endswith('.html') or name.startswith('_'):
+            continue
+        html = read(name)
+        for js, css in PAIRS:
+            if js in html and css not in html:
+                fail(name, 'loads %s without %s — it will render unstyled' % (js, css))
+
+    # demo.js is what draws the entire walkthrough. The page is an empty shell
+    # without it, which is exactly how it shipped once.
+    demo = read('demo.html')
+    if 'od-bot' in demo and '/demo.js' not in demo:
+        fail('demo.html', 'has the walkthrough markup but never loads demo.js')
+
+
 def check_i18n():
     """Keys are a hash of the English, so two different sentences must never
     share one, and every key in the source map must be reachable."""
@@ -309,6 +333,7 @@ def main():
         total_keys += check_page(slug, read(name))
 
     check_deployable()
+    check_paired_assets()
     langs = check_i18n()
 
     print('=' * 74)

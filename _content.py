@@ -138,6 +138,35 @@ def strip_grid():
     return '\n'.join(out)
 
 
+# Floating cards behind the hero. The brand is a deck, so the ambient shapes
+# are cards — not abstract blobs, and not a 3D model that would need a library
+# the CSP forbids and would fight a flat monochrome design.
+#
+# Each carries a depth: od.js multiplies the scroll offset by it, so they drift
+# at different rates and the hero gains a little parallax. Negative depths move
+# against the scroll. They are decorative and aria-hidden.
+FLOATERS = [
+    # (icon slug, top%, left%, rotation deg, depth, scale)
+    ('answer', 14,  3, -12, 0.22, 1.0),
+    ('book',   64,  9,   8, -0.16, 0.8),
+    ('site',    6, 44,  14, 0.30, 0.7),
+    ('return', 78, 38, -6, 0.12, 0.85),
+    ('reach',  30, 92,  10, -0.24, 0.75),
+]
+
+
+def hero_floaters():
+    paths = {c[0]: c[4] for c in CARDS}
+    out = []
+    for slug, top, left, rot, depth, scale in FLOATERS:
+        out.append(
+            f'        <span class="floater" data-depth="{depth}" aria-hidden="true" '
+            f'style="top:{top}%;left:{left}%;--rot:{rot}deg;--scale:{scale}">'
+            f'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" '
+            f'stroke-linecap="round" stroke-linejoin="round">{paths[slug]}</svg></span>')
+    return '\n'.join(out)
+
+
 def chat_mock():
     return '''<div class="mock" data-reveal="120">
           <div class="mock__bar">
@@ -167,7 +196,10 @@ def pages(WA, ARROW, EMAIL):
         desc='We build and run the online side of your business: the website, '
              'the database behind it, an AI assistant answering your messages, '
              'the bookings and the follow-up. Set your prices once.',
-        body=f'''  <section class="section">
+        body=f'''  <section class="section section--hero" id="hero">
+    <div class="hero__field" aria-hidden="true">
+{hero_floaters()}
+    </div>
     <div class="wrap">
       <div class="split">
         <div>

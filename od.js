@@ -69,12 +69,28 @@
      class inside a rAF callback. */
   (function header() {
     var bar = document.querySelector('.masthead');
-    if (!bar) return;
+    // The hero's ambient cards ride the same loop. One scroll listener for the
+    // page, one rAF, one place where anything reads scrollY — adding a second
+    // listener for the parallax is how you end up with two handlers fighting
+    // over the same frame.
+    var floaters = [];
+    if (!reduce && window.matchMedia('(min-width: 62rem)').matches) {
+      floaters = Array.prototype.map.call(
+        document.querySelectorAll('.floater'),
+        function (el) { return { el: el, depth: parseFloat(el.getAttribute('data-depth')) || 0 }; });
+    }
+    if (!bar && !floaters.length) return;
     var ticking = false;
 
     function update() {
       ticking = false;
-      bar.classList.toggle('is-stuck', (window.scrollY || window.pageYOffset) > 6);
+      var y = window.scrollY || window.pageYOffset;
+      if (bar) bar.classList.toggle('is-stuck', y > 6);
+      for (var i = 0; i < floaters.length; i++) {
+        // Capped so a long scroll cannot drag a card halfway down the page.
+        var shift = Math.max(-160, Math.min(160, y * floaters[i].depth));
+        floaters[i].el.style.setProperty('--shift', shift.toFixed(1) + 'px');
+      }
     }
     window.addEventListener('scroll', function () {
       if (!ticking) { ticking = true; requestAnimationFrame(update); }

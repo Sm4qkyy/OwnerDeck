@@ -154,7 +154,7 @@ def head(page):
 <body>
 ''' % dict(title=title, desc=desc, url=url, origin=ORIGIN, ver=VER,
            extra=page.get('head', ''),
-           widget_css=('' if page.get('legal') else
+           widget_css=('' if page.get('no_widget') else
                        '<link rel="stylesheet" href="/chat-widget.css?v=%s">\n' % VER))
 
 
@@ -284,7 +284,7 @@ def footer(page=None):
 ''' % dict(mark=MARK, build=build, read=read, legal=legal,
            wa=WA_LINK, email=EMAIL, ver=VER,
            scripts=(page or {}).get('scripts', ''),
-           widget_js=('' if (page or {}).get('legal') else
+           widget_js=('' if (page or {}).get('no_widget') else
                       '<script src="/config.js?v=%s"></script>\n'
                       '<script src="/chat-widget.js?v=%s"></script>\n' % (VER, VER)))
 
@@ -307,7 +307,7 @@ def build():
         html = (head(page) + header() +
                 '<main id="main">\n\n' + page['body'] +
                 ('' if page.get('no_cta') else cta_band()) +
-                '</main>\n\n' + pagenav(prev, nxt) + footer())
+                '</main>\n\n' + pagenav(prev, nxt) + footer(page))
 
         html = tag_i18n(html, page['slug'])
 

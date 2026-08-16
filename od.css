@@ -269,6 +269,49 @@ p:last-child { margin-bottom: 0; }
 }
 
 .section { padding-block: var(--s9); }
+
+/* --- Hero, and the cards drifting behind it --------------------------------
+   Ambient only. They sit under the content, never take the pointer, and carry
+   no meaning — the hero reads identically with this whole block deleted. */
+.section--hero { position: relative; overflow: hidden; }
+.section--hero > .wrap { position: relative; z-index: 1; }
+
+.hero__field {
+  position: absolute; inset: 0; z-index: 0;
+  pointer-events: none;
+  /* Clipped by the section, but masked at the edges too so a card never ends
+     on a hard straight cut. currentColor rather than a literal: a gradient mask
+     is read for its alpha, so which colour it is makes no difference, and this
+     keeps the no-hex-outside-the-palette rule intact. */
+  -webkit-mask-image: radial-gradient(120% 90% at 50% 40%, currentColor 55%, transparent 100%);
+          mask-image: radial-gradient(120% 90% at 50% 40%, currentColor 55%, transparent 100%);
+}
+
+.floater {
+  position: absolute;
+  display: grid; place-items: center;
+  width: calc(5.5rem * var(--scale, 1));
+  aspect-ratio: 5 / 7;                       /* a playing card */
+  border: 1px solid var(--rule);
+  border-radius: calc(var(--r) * var(--scale, 1));
+  background: var(--paper-2);
+  color: var(--faint);
+  opacity: .55;
+  /* --shift is written by od.js on scroll; the rest is static. Kept in one
+     transform so the whole thing stays on the compositor. */
+  transform: translate3d(0, var(--shift, 0px), 0) rotate(var(--rot, 0deg));
+  will-change: transform;
+}
+.floater svg { width: calc(1.5rem * var(--scale, 1)); height: auto; }
+
+@media (max-width: 62rem) {
+  /* Below the split breakpoint the hero is already tight; ambient cards just
+     crowd the headline. */
+  .hero__field { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .floater { transform: rotate(var(--rot, 0deg)); will-change: auto; }
+}
 .section--tight { padding-block: var(--s8); }
 .section--edge { border-top: 1px solid var(--rule); }
 .section--sunk { background: var(--paper-2); }

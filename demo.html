@@ -278,6 +278,34 @@
 
 <script src="/config.js?v=20260815a"></script>
 <script src="/chat-widget.js?v=20260815a"></script>
+<script src="/demo.js?v=20260815a"></script>
+<script>
+(function () {
+  "use strict";
+  var MAX = 4;
+  function show(n) {
+    if (n < 1 || n > MAX) return;
+    document.querySelectorAll('.pane').forEach(function (p) {
+      p.classList.toggle('is-on', Number(p.dataset.pane) === n);
+    });
+    document.querySelectorAll('.step').forEach(function (s) {
+      var i = Number(s.dataset.step);
+      if (i === n) { s.setAttribute('aria-current', 'step'); }
+      else { s.removeAttribute('aria-current'); }
+      s.classList.toggle('step--done', i < n);
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    try { history.replaceState(null, '', '#step-' + n); } catch (e) {}
+    try { window.va && window.va('event', { name: 'demo_step', step: String(n) }); } catch (e) {}
+  }
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('[data-go]');
+    if (b) show(Number(b.dataset.go));
+  });
+  var m = (location.hash || '').match(/step-(\d)/);
+  if (m) show(Number(m[1]));
+})();
+</script>
 <script src="/i18n.js?v=20260815a" defer></script>
 <script src="/od.js?v=20260815a" defer></script>
 <script src="/analytics-events.js?v=20260815a" defer></script>

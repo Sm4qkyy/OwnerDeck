@@ -94,9 +94,23 @@ def convert(name):
     # drift the moment the header changes — which is exactly what happened when
     # the logo went in and they kept the retired placeholder mark. Both patterns
     # match the old markup and the new, so this is safe to run repeatedly.
+    # stats.html is an internal dashboard behind a robots Disallow — a sales
+    # chat widget has no business on it. The guides are public landing pages
+    # where it earns its place, so they keep it and get its stylesheet below.
+    ctx = {'no_widget': name == 'stats.html'}
+
     html = re.sub(r'<a class="skip-link".*?</header>', B.header().strip(), html, flags=re.S)
     html = re.sub(r'<footer class="(?:footer|foot)">.*?</html>\s*',
-                  B.footer().lstrip(), html, flags=re.S)
+                  B.footer(ctx).lstrip(), html, flags=re.S)
+
+    # The shared footer pulls in chat-widget.js, so any page keeping the widget
+    # needs its stylesheet too. Without it the launcher rendered as a huge grey
+    # unstyled block pinned to the bottom-left of every guide.
+    if not ctx['no_widget'] and 'chat-widget.css' not in html:
+        html = html.replace('<link rel="stylesheet" href="/od.css?v=%s">' % B.VER,
+                            '<link rel="stylesheet" href="/od.css?v=%s">\n'
+                            '<link rel="stylesheet" href="/chat-widget.css?v=%s">'
+                            % (B.VER, B.VER), 1)
 
     # Translation keys for the chrome that was just inserted.
     html = B.tag_i18n(html, name)

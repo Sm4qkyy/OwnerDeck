@@ -42,7 +42,7 @@ def no_obfuscate(html):
 def wrap(slug, nav, title, desc, h1, body):
     body = no_obfuscate(body)
     return dict(
-        slug=slug, in_flow=False, legal=True, no_cta=True, nav=nav,
+        slug=slug, in_flow=False, legal=True, no_cta=True, no_widget=True, nav=nav,
         title=title, desc=desc,
         head='<meta name="robots" content="index,follow">\n',
         body='''  <div class="wrap measure legal">
