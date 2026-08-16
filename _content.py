@@ -811,11 +811,26 @@ def pages(WA, ARROW, EMAIL):
           <h2 tabindex="-1" data-focus data-t>That is everything we need.</h2>
           <p class="lede" data-t>Open the chat and it will already say all of this, so you are not repeating yourself. You will get a straight answer, usually the same day.</p>
           <dl class="flow__summary" id="flow-summary"></dl>
+
+          <div class="deposit" id="flow-paid" hidden>
+            <span class="deposit__tick">{TICK}</span>
+            <p data-t>Deposit received. Your slot is held — open the chat and we will pick it up from here.</p>
+          </div>
+
           <div class="btn-row">
             <a class="btn btn--primary" id="flow-wa" href="{WA}" rel="noopener"><span data-t>Open WhatsApp</span>{ARROW}</a>
             <a class="btn btn--ghost" id="flow-mail" href="mailto:{EMAIL}" data-t>Email instead</a>
           </div>
-          <p class="note" style="margin-top:1.5rem" data-t>Nothing here has been sent anywhere. It is filled into a message you choose to open.</p>
+
+          <div class="deposit deposit--offer" id="flow-pay-wrap">
+            <div>
+              <p class="deposit__head" data-t>Want the slot held while we talk?</p>
+              <p class="note" data-t>&euro;75, refundable in full until work starts, and credited against your build fee. It is a way to hold your place in the queue, not a commitment.</p>
+            </div>
+            <a class="btn btn--ghost btn--sm" id="flow-pay" href="#"><span data-t>Hold my slot &mdash; &euro;75</span></a>
+          </div>
+
+          <p class="note" style="margin-top:1.5rem" data-t>Your answers are not sent anywhere. They are filled into a message you choose to open. Card details are handled entirely by Stripe and never touch this site.</p>
           <button class="flow__back" type="button" data-go="back" data-t>Back</button>
         </section>
       </div>

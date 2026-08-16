@@ -163,11 +163,26 @@
           <h2 tabindex="-1" data-focus data-i18n="k07b5261e">That is everything we need.</h2>
           <p class="lede" data-i18n="k5df51c26">Open the chat and it will already say all of this, so you are not repeating yourself. You will get a straight answer, usually the same day.</p>
           <dl class="flow__summary" id="flow-summary"></dl>
+
+          <div class="deposit" id="flow-paid" hidden>
+            <span class="deposit__tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>
+            <p data-i18n="k32797009">Deposit received. Your slot is held — open the chat and we will pick it up from here.</p>
+          </div>
+
           <div class="btn-row">
             <a class="btn btn--primary" id="flow-wa" href="https://wa.me/447520689685?text=Hi%20Mark%20%E2%80%94%20I%20saw%20Ownerdeck%20and%20I%27d%20like%20to%20know%20more." rel="noopener"><span data-i18n="k5be5914b">Open WhatsApp</span><svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
             <a class="btn btn--ghost" id="flow-mail" href="mailto:mark@ownerdeck.com" data-i18n="k3d9c4c7e">Email instead</a>
           </div>
-          <p class="note" style="margin-top:1.5rem" data-i18n="k2442906a">Nothing here has been sent anywhere. It is filled into a message you choose to open.</p>
+
+          <div class="deposit deposit--offer" id="flow-pay-wrap">
+            <div>
+              <p class="deposit__head" data-i18n="k6fb3fbb7">Want the slot held while we talk?</p>
+              <p class="note" data-i18n="kb797c2ae">&euro;75, refundable in full until work starts, and credited against your build fee. It is a way to hold your place in the queue, not a commitment.</p>
+            </div>
+            <a class="btn btn--ghost btn--sm" id="flow-pay" href="#"><span data-i18n="kbdc52755">Hold my slot &mdash; &euro;75</span></a>
+          </div>
+
+          <p class="note" style="margin-top:1.5rem" data-i18n="k90f37040">Your answers are not sent anywhere. They are filled into a message you choose to open. Card details are handled entirely by Stripe and never touch this site.</p>
           <button class="flow__back" type="button" data-go="back" data-i18n="k0557fa92">Back</button>
         </section>
       </div>

@@ -966,6 +966,33 @@ a.dcard:hover { border-color: var(--rule-2); background: var(--paper-3); transfo
   .flow__summary dt { margin-top: var(--s3); }
 }
 
+/* The deposit offer, and the confirmation when they come back from Stripe.
+   Deliberately quieter than the WhatsApp button above it: it is an option, not
+   the thing we are pushing. */
+.deposit {
+  display: flex; align-items: center; gap: var(--s5);
+  padding: var(--s5); margin-top: var(--s5);
+  border: 1px solid var(--rule); border-radius: var(--r-lg);
+  background: var(--paper-2);
+}
+.deposit--offer { justify-content: space-between; flex-wrap: wrap; }
+.deposit[hidden] { display: none; }
+.deposit__head { font-weight: 600; letter-spacing: -0.015em; margin: 0 0 .2rem; }
+.deposit .note { margin: 0; max-width: 30rem; }
+.deposit .btn { flex: 0 0 auto; }
+.deposit__tick {
+  width: 1.6rem; height: 1.6rem; border-radius: 50%;
+  background: var(--live); color: var(--paper);
+  display: grid; place-items: center; flex: 0 0 auto;
+}
+.deposit__tick svg { width: 14px; height: 14px; }
+.deposit p { margin: 0; }
+#flow-pay[aria-busy="true"] { opacity: .6; pointer-events: none; }
+@media (max-width: 40rem) {
+  .deposit--offer { flex-direction: column; align-items: stretch; gap: var(--s4); }
+  .deposit--offer .btn { justify-content: center; }
+}
+
 .flow__back {
   background: none; border: 0; cursor: pointer; padding: 0;
   color: var(--muted); font-size: .875rem; margin-top: var(--s5);

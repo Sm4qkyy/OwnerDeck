@@ -136,9 +136,76 @@
     }
   }
 
+  /* ---- deposit ---------------------------------------------------------
+     Optional and non-blocking. If the endpoint is not configured, or Stripe
+     is unreachable, the button hides itself and the WhatsApp handoff beside
+     it is untouched — a payment problem must never cost a lead. */
+  var STORE = 'od_flow';
+
+  function remember() {
+    try { sessionStorage.setItem(STORE, JSON.stringify(answers)); } catch (e) {}
+  }
+  function recall() {
+    try {
+      var saved = JSON.parse(sessionStorage.getItem(STORE) || '{}');
+      Object.keys(answers).forEach(function (k) {
+        if (typeof saved[k] === 'string') answers[k] = saved[k];
+      });
+    } catch (e) {}
+  }
+
+  var payBtn = root.querySelector('#flow-pay');
+  if (payBtn) {
+    payBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (payBtn.getAttribute('aria-busy') === 'true') return;
+      payBtn.setAttribute('aria-busy', 'true');
+      var label = payBtn.querySelector('span');
+      var was = label ? label.textContent : '';
+      if (label) label.textContent = 'Opening secure checkout…';
+
+      // The redirect leaves the page, so the answers have to survive it.
+      remember();
+
+      fetch('/api/deposit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ trade: answers.trade, plan: answers.plan, note: answers.note })
+      }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (out) {
+          if (out.ok && out.j && out.j.url) { window.location.href = out.j.url; return; }
+          throw new Error((out.j && out.j.error) || 'failed');
+        })
+        .catch(function () {
+          payBtn.removeAttribute('aria-busy');
+          if (label) label.textContent = was;
+          var box = root.querySelector('#flow-pay-wrap');
+          if (box) box.hidden = true;   // fall back to the WhatsApp handoff
+        });
+    });
+  }
+
+  /* Coming back from Stripe. */
+  (function fromCheckout() {
+    var m = /[?&]deposit=(paid|cancelled)/.exec(window.location.search);
+    if (!m) return;
+    recall();
+    var paid = m[1] === 'paid';
+    var banner = root.querySelector('#flow-paid');
+    if (banner && paid) {
+      banner.hidden = false;
+      var wrap = root.querySelector('#flow-pay-wrap');
+      if (wrap) wrap.hidden = true;
+      answers.note = (answers.note ? answers.note + '\n\n' : '') +
+                     'I have paid the 75 EUR holding deposit.';
+    }
+    show(steps.length - 1);
+  })();
+
   /* A plan can be chosen from the pricing page: /start?plan=Deck lands on the
      trade question with the plan already answered. */
   (function preselect() {
+    if (/[?&]deposit=/.test(window.location.search)) return;   // handled above
     var m = /[?&]plan=([^&]+)/.exec(window.location.search);
     if (!m) return show(0);
     var want = decodeURIComponent(m[1]).toLowerCase();

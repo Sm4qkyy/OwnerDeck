@@ -149,6 +149,7 @@ def pages(EMAIL, WA):
       <li><b>Meta Platforms Ireland Ltd.</b> — WhatsApp Business and Instagram messaging, where a client uses those channels. Meta is an independent controller for the messaging platform itself under its own terms.</li>
       <li><b>Google Ireland Ltd.</b> — Google Business Profile, for clients on the Reach card, and the fonts this site loads. Independent controller.</li>
       <li><b>Web3Forms</b> — delivery of any contact form submission.</li>
+      <li><b>Stripe Payments Europe Ltd.</b> — the holding deposit, if you choose to pay one. Your card details go straight to Stripe&rsquo;s own hosted checkout page and never reach this site. Stripe acts as an independent controller for the payment itself, under its own terms and privacy policy.</li>
       <li>Our accountant and, where legally compelled, public authorities.</li>
     </ul>
     <p>We do not sell personal data, and we do not share it for anyone else&rsquo;s marketing.</p>
@@ -257,6 +258,16 @@ def pages(EMAIL, WA):
     <p>The build fee is invoiced on acceptance and payable before the service goes live, unless we have agreed otherwise in writing. The monthly fee is invoiced monthly in advance. Prices are in euro. <b>Ownerdeck is not registered for VAT, so no VAT is added.</b></p>
     <p>We do not hold your customers&rsquo; money at any point. Deposits and payments run through your own merchant account with your own payment provider, and their fees are theirs, not ours.</p>
     <p>If an invoice is more than 14 days late we may suspend the service after giving you notice. We will not delete anything for non-payment without telling you first and giving you a chance to export it.</p>
+
+    <h2>7a. The holding deposit</h2>
+    <p>You may pay a &euro;75 holding deposit through the website to reserve a place in the build queue. It is not a payment for the work and does not by itself form a contract for it.</p>
+    <ul>
+      <li><b>It is fully refundable</b> at any time before we start work on your build, for any reason or none. Ask by email or WhatsApp and we return it in full.</li>
+      <li>If you go ahead, it is credited in full against your build fee.</li>
+      <li>Once we have started work it stops being refundable, because by then it is paying for hours already spent. We will always tell you before we start.</li>
+      <li>If we decline the job or cannot deliver it, we refund it in full without being asked.</li>
+    </ul>
+    <p>Card details are handled entirely by Stripe Payments Europe Ltd. on their own hosted checkout page. They are never sent to, seen by, or stored on this website. Stripe processes that payment as an independent controller under its own terms and privacy policy.</p>
 
     <h2>8. Changing the price</h2>
     <p>We may change the monthly fee once in any twelve month period, with at least 30 days&rsquo; written notice. If you do not want the new price, you may end the service before it takes effect and owe nothing further.</p>
