@@ -24,6 +24,10 @@
      carries data-i18n and is repainted by refresh(); text created later — the
      greeting, error replies — has to ask for a translation as it is built. */
   function T(key, en) {
+    /* Register the English source as we go, so a line built while the visitor
+       is on another language can still revert when they switch back to English
+       (i18n.js only snapshots English it finds in the DOM). */
+    if (key && window.OD_i18n && window.OD_i18n.note) window.OD_i18n.note(key, en);
     return (window.OD_i18n && window.OD_i18n.t(key, en)) || en;
   }
   function repaint() {
@@ -212,11 +216,43 @@
     var panel  = wrap.querySelector('.odc-panel');
     var log    = wrap.querySelector('#odc-log');
 
+    /* Open and close are animated (chat-widget.css). The panel keeps its
+       [hidden] attribute for accessibility and the no-JS case, but on close we
+       hold the hide back until the exit animation has run so it is visible
+       while it shrinks away. A single timer, cleared on re-open, prevents a
+       fast close-then-open from hiding a panel that is open again. */
+    var reduceMotion = window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var EXIT_MS = reduceMotion ? 0 : 180;
+    var closeTimer = null;
+
     function open(v) {
-      panel.hidden = !v;
-      wrap.classList.toggle('is-open', v);
       launch.setAttribute('aria-expanded', v ? 'true' : 'false');
-      if (v) { greet(log); loadTurnstile(); setTimeout(function(){ var i=panel.querySelector('.odc-input'); i && i.focus(); }, 60); }
+      if (v) {
+        if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+        panel.classList.remove('odc-panel--out');
+        panel.hidden = false;
+        wrap.classList.remove('is-closing');
+        wrap.classList.add('is-open');
+        // Restart the entrance animation from the top on every open.
+        panel.classList.remove('odc-panel--in');
+        void panel.offsetWidth;
+        panel.classList.add('odc-panel--in');
+        greet(log); loadTurnstile();
+        setTimeout(function(){ var i=panel.querySelector('.odc-input'); i && i.focus(); }, 60);
+      } else {
+        if (panel.hidden) return;
+        wrap.classList.remove('is-open');
+        wrap.classList.add('is-closing');
+        panel.classList.remove('odc-panel--in');
+        panel.classList.add('odc-panel--out');
+        closeTimer = setTimeout(function () {
+          panel.hidden = true;
+          panel.classList.remove('odc-panel--out');
+          wrap.classList.remove('is-closing');
+          closeTimer = null;
+        }, EXIT_MS);
+      }
     }
     launch.addEventListener('click', function () { open(panel.hidden); });
     panel.querySelector('.odc-x').addEventListener('click', function () { open(false); });
