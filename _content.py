@@ -328,7 +328,7 @@ def pages(WA, ARROW, EMAIL):
         </div>
         <div class="namecard" data-reveal="120">
           <div class="namecard__top">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5.5" width="12" height="15" rx="2.2" fill="currentColor" opacity=".22"/><rect x="7.5" y="3.5" width="12" height="15" rx="2.2" fill="currentColor"/></svg>
+            <span class="od-mark" aria-hidden="true"></span>
             <span class="mock__meta">Larnaca &middot; Cyprus</span>
           </div>
           <p class="namecard__name">Mark Saade</p>

@@ -35,9 +35,11 @@ ARROW = ('<svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="curren
          'stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
          '<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>')
 
-MARK = ('<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">'
-        '<rect x="3" y="5.5" width="12" height="15" rx="2.2" fill="currentColor" opacity=".22"/>'
-        '<rect x="7.5" y="3.5" width="12" height="15" rx="2.2" fill="currentColor"/></svg>')
+# The real OD monogram, drawn as a CSS mask rather than an <img>. The file is a
+# pure alpha mask, so painting it with currentColor means one asset serves both
+# themes and it always matches the wordmark beside it — no light/dark swap, no
+# second file to keep in step.
+MARK = '<span class="od-mark" aria-hidden="true"></span>'
 
 # Primary navigation. One list, used for the desktop bar and the mobile panel,
 # so the two can never disagree.

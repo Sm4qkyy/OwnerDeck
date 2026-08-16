@@ -22,9 +22,9 @@ motion.js
 Logo-old-teal.png.bak
 Adobe Express - file (1).png
 
-# Intermediates from _make_logo_assets.py. The favicons it produces are served;
-# the alpha masks they were cut from are not.
-ownerdeck-mark-mask.png
+# Intermediates from _make_logo_assets.py. ownerdeck-mark-mask.png is NOT
+# listed here: the header paints it with CSS mask + currentColor, so it is a
+# served asset. Excluding it would 404 the logo on every page.
 ownerdeck-wordmark-mask.png
 
 # The retired typefaces. Nothing has asked for them since the guides moved to

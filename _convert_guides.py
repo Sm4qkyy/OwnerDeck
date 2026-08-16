@@ -25,12 +25,18 @@ sys.path.insert(0, HERE)
 
 import _build_site as B   # noqa: E402
 
+# Every served page that _build_site.py does NOT generate but that still has
+# to carry the shared chrome. stats.html belongs here for the same reason the
+# guides do: it was converted to od.css separately, so nothing was keeping its
+# header in step, and it kept the retired placeholder mark after the real logo
+# went in.
 GUIDES = [
     'whatsapp-bot-car-rental.html',
     'whatsapp-booking-bot-boat-charter-tours.html',
     'whatsapp-auto-reply-vs-ai-assistant.html',
     'do-i-need-a-new-number-whatsapp-bot.html',
     'stop-losing-bookings-slow-whatsapp-replies.html',
+    'stats.html',
 ]
 
 NEW_ASSETS = (
@@ -56,42 +62,47 @@ def convert(name):
     html = io.open(path, encoding='utf-8').read()
     before = len(html)
 
-    if 'brand.css' not in html:
-        return name, before, len(html), 'already converted'
+    first_run = 'brand.css' in html
 
-    # 1. Fonts and stylesheet. The retired Fraunces/Switzer preloads go with
-    #    them — those files are still in the repo but nothing asks for them now.
-    html = re.sub(
-        r'<link rel="preload" href="fonts/[^"]+"[^>]*>\s*'
-        r'(<link rel="preload" href="fonts/[^"]+"[^>]*>\s*)*'
-        r'<link rel="stylesheet" href="brand\.css[^"]*">',
-        NEW_ASSETS, html)
+    # ---- one-time migrations, only meaningful on the first pass -----------
+    if first_run:
+        # 1. Fonts and stylesheet. The retired Fraunces/Switzer preloads go with
+        #    them — those files are still in the repo but nothing asks for them.
+        html = re.sub(
+            r'<link rel="preload" href="fonts/[^"]+"[^>]*>\s*'
+            r'(<link rel="preload" href="fonts/[^"]+"[^>]*>\s*)*'
+            r'<link rel="stylesheet" href="brand\.css[^"]*">',
+            NEW_ASSETS, html)
 
-    # 2. Theme colour, now that there are two themes.
-    html = html.replace('<meta name="theme-color" content="#F7F4EF">', NEW_THEME_COLOR)
+        # Theme colour, now that there are two themes.
+        html = html.replace('<meta name="theme-color" content="#F7F4EF">', NEW_THEME_COLOR)
 
-    # 3. Favicon paths were relative, which is wrong on a clean URL.
-    html = html.replace('href="favicon.png"', 'href="/favicon.png"')
+        # Favicon paths were relative, which is wrong on a clean URL.
+        html = html.replace('href="favicon.png"', 'href="/favicon.png"')
 
-    # 4. Chrome. Taken from _build_site so it matches every other page.
+        # The content wrapper. <main id="main"> now carries the id, and the
+        # reading measure comes from .measure.
+        html = html.replace('<main>\n  <div id="main" class="wrap section longform">',
+                            '<main id="main">\n  <div class="wrap measure longform">')
+
+        # Body classes that changed meaning or name.
+        html = re.sub(r'<a class="back-link" href="/">[^<]*</a>', BACK, html)
+        html = html.replace('<div class="note">', '<div class="callout">')
+
+    # ---- always refresh the chrome ---------------------------------------
+    # Not guarded by first_run. These guides have to track _build_site or they
+    # drift the moment the header changes — which is exactly what happened when
+    # the logo went in and they kept the retired placeholder mark. Both patterns
+    # match the old markup and the new, so this is safe to run repeatedly.
     html = re.sub(r'<a class="skip-link".*?</header>', B.header().strip(), html, flags=re.S)
-    html = re.sub(r'<footer class="footer">.*?</html>\s*',
+    html = re.sub(r'<footer class="(?:footer|foot)">.*?</html>\s*',
                   B.footer().lstrip(), html, flags=re.S)
 
-    # 5. The content wrapper. <main id="main"> now carries the id, and the
-    #    reading measure comes from .measure.
-    html = html.replace('<main>\n  <div id="main" class="wrap section longform">',
-                        '<main id="main">\n  <div class="wrap measure longform">')
-
-    # 6. Body classes that changed meaning or name.
-    html = re.sub(r'<a class="back-link" href="/">[^<]*</a>', BACK, html)
-    html = html.replace('<div class="note">', '<div class="callout">')
-
-    # 7. Translation keys for the chrome that was just inserted.
+    # Translation keys for the chrome that was just inserted.
     html = B.tag_i18n(html, name)
 
     io.open(path, 'w', encoding='utf-8', newline='\n').write(html)
-    return name, before, len(html), 'converted'
+    return name, before, len(html), 'converted' if first_run else 'chrome refreshed'
 
 
 FAVICONS = (
@@ -102,16 +113,20 @@ FAVICONS = (
 
 
 def normalise_favicons():
-    """Runs over every served page this script owns, not only the ones it just
-    converted, so the light/dark pair reaches stats.html too."""
+    """Runs over every page this script owns, not only the ones it just
+    converted."""
     done = []
-    for name in GUIDES + ['stats.html']:
+    for name in GUIDES:
         path = os.path.join(HERE, name)
         if not os.path.exists(path):
             continue
         html = io.open(path, encoding='utf-8').read()
+        # One or more icon links, then apple-touch. The `+` matters: matching a
+        # single icon link meant that on a second run the pattern latched onto
+        # the dark link and the apple-touch after it, and prepended the whole
+        # block again. Four re-runs left four duplicate light-mode links.
         new = re.sub(
-            r'<link rel="icon"[^>]*>\s*<link rel="apple-touch-icon"[^>]*>',
+            r'(?:<link rel="icon"[^>]*>\s*)+<link rel="apple-touch-icon"[^>]*>',
             FAVICONS, html, count=1)
         if new != html:
             io.open(path, 'w', encoding='utf-8', newline='\n').write(new)

@@ -39,6 +39,7 @@
   var busy     = false;
   var widgetId = null;
   var waiting  = [];       // resolvers queued for the next token
+  var unavailable = false; // Turnstile could not be rendered; stop waiting on it
 
   /* ---------- Turnstile (invisible human check) ----------
      A token is redeemed exactly once at siteverify and expires after a few
@@ -66,25 +67,36 @@
 
   function renderTurnstile() {
     var host = document.getElementById('od-turnstile');
-    if (!host || !window.turnstile || widgetId !== null) return;
+    if (!host || !window.turnstile || widgetId !== null || unavailable) return;
     try {
       widgetId = window.turnstile.render(host, {
         sitekey: SITE_KEY,
-        size: 'invisible',
-        action: 'turnstile-spin-v2',
+        /* `size: 'invisible'` is not a valid value and made render() throw on
+           every load — Turnstile accepts compact, flexible or normal. The way
+           to ask for a check that only surfaces when Cloudflare wants one is
+           appearance: 'interaction-only'. */
+        appearance: 'interaction-only',
+        action: 'chat-message',
         callback: function (t) { settle(t); },
         'error-callback': function () { settle(''); },
         'timeout-callback': function () { settle(''); }
       });
       if (waiting.length) window.turnstile.execute(widgetId);
-    } catch (e) { settle(''); }
+    } catch (e) {
+      /* Render failed, so nothing will ever call settle() again. Without this
+         flag the first message resolved (the catch settles it) and every
+         message after it sat in `waiting` with no one to resolve it, waiting
+         out the full 20s timeout before the request was even sent. */
+      unavailable = true;
+      settle('');
+    }
   }
 
   // Resolves with a fresh token, or '' if Turnstile can't produce one.
   // An empty token is not treated as permission — the server rejects it.
   function getToken() {
     return new Promise(function (resolve) {
-      if (!SITE_KEY) return resolve('');
+      if (!SITE_KEY || unavailable) return resolve('');
       var done = false;
       // 10s was too tight. Turnstile on a cold cache over hotel wifi can take
       // longer than that, and timing out silently downgraded a real person to
