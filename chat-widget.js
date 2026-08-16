@@ -223,7 +223,10 @@
        fast close-then-open from hiding a panel that is open again. */
     var reduceMotion = window.matchMedia &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var EXIT_MS = reduceMotion ? 0 : 180;
+    // Must match the odcPanelOut duration in chat-widget.css. If this is the
+    // shorter of the two the panel is hidden mid-flight and the close reads as
+    // a snap; if it is longer, the panel sits there finished but still present.
+    var EXIT_MS = reduceMotion ? 0 : 200;
     var closeTimer = null;
 
     function open(v) {

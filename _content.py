@@ -15,6 +15,26 @@ import _legal
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 
+def img_size(slug):
+    """Real pixel dimensions, read from the file.
+
+    These were hardcoded, and hardcoded wrong — every strip tile claimed
+    1024x1024 and every trade tile 1600x1067, when the photos range from
+    680x1024 to 1600x1200. The containers use aspect-ratio and object-fit so
+    nothing rendered badly, but width/height on an <img> is a statement about
+    the file, and a wrong one is worse than none.
+    """
+    path = os.path.join(HERE, 'img', slug + '.webp')
+    try:
+        from PIL import Image
+        with Image.open(path) as im:
+            return ' width="%d" height="%d"' % im.size
+    except Exception:
+        # No Pillow, or no file. Omit rather than guess — the CSS reserves the
+        # box either way.
+        return ''
+
+
 def _frag(name):
     """Demo's body, page styles and stepper script still live in their own
     files. They are page-specific and long, and inlining them here would bury
@@ -97,6 +117,24 @@ def deck_grid(link=True):
             f'        <{tag} class="dcard"{href} data-reveal>{icon(path)}'
             f'<span class="dcard__name" data-t>{name}</span>'
             f'<span class="dcard__line" data-t>{line}</span></{tag}>')
+    return '\n'.join(out)
+
+
+# Six of the nine trades, for the home page. Recognition beats completeness
+# here — the full set lives on /who-its-for.
+STRIP = ['car', 'boat', 'villa-pool', 'hotel', 'clinic', 'salon']
+
+
+def strip_grid():
+    by_slug = {t[0]: t for t in TRADES}
+    out = []
+    for slug in STRIP:
+        _s, name, alt, _line = by_slug[slug]
+        out.append(
+            f'        <li data-reveal><figure>'
+            f'<div class="strip__img"><img src="/img/{slug}.webp"{img_size(slug)} '
+            f'loading="lazy" decoding="async" alt="{alt}"></div>'
+            f'<figcaption data-t>{name}</figcaption></figure></li>')
     return '\n'.join(out)
 
 
@@ -214,6 +252,22 @@ def pages(WA, ARROW, EMAIL):
 
   <section class="section section--sunk section--edge">
     <div class="wrap">
+      <div class="section__head">
+        <p class="eyebrow" data-t>Who we build for</p>
+        <h2 data-t>You have answered these questions a thousand times.</h2>
+        <p class="lede" data-t>Different trades, the same four questions all day. What does it cost. Is it free on Saturday. Do you deliver. Can I pay a deposit now.</p>
+      </div>
+      <ul class="strip">
+{strip_grid()}
+      </ul>
+      <div class="btn-row" style="margin-top:2.5rem">
+        <a class="btn btn--ghost" href="/who-its-for"><span data-t>Every trade we build for</span>{ARROW}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--edge">
+    <div class="wrap">
       <div class="split">
         <div data-reveal>
           <p class="eyebrow" data-t>Proof &middot; Limassol</p>
@@ -228,6 +282,62 @@ def pages(WA, ARROW, EMAIL):
           <div class="ledger__row"><span data-t>Enquiries answered</span><b>212</b></div>
           <div class="ledger__row"><span data-t>Answered after hours</span><b>14</b></div>
           <div class="ledger__row"><span data-t>Average reply time</span><b data-t>under a minute</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sunk section--edge">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="eyebrow" data-t>No lock-in</p>
+        <h2 data-t>You own all of it.</h2>
+        <p class="lede" data-t>The usual worry about handing your online side to someone else is that you never get it back. So here is the deal in plain words, and it is the same deal written into the terms.</p>
+      </div>
+      <div class="grid grid--4">
+        <div class="tile" data-reveal>
+          <h3 class="t-h4" data-t>Your site, your data, your number</h3>
+          <p data-t>The website, the database and the WhatsApp number stay yours throughout. We never hold them.</p>
+        </div>
+        <div class="tile" data-reveal>
+          <h3 class="t-h4" data-t>Leave with thirty days&rsquo; notice</h3>
+          <p data-t>No twelve month tie-in. We hand over the site files and an export of your database, free.</p>
+        </div>
+        <div class="tile" data-reveal>
+          <h3 class="t-h4" data-t>We never touch your money</h3>
+          <p data-t>Deposits run through your own account and your own payment provider. We take no cut of a booking.</p>
+        </div>
+        <div class="tile" data-reveal>
+          <h3 class="t-h4" data-t>The price is the price</h3>
+          <p data-t>No VAT, no setup surprises. If a job falls outside your plan we quote it before starting.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--edge">
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <p class="eyebrow" data-t>Who you are dealing with</p>
+          <h2 data-t>One person builds it. The same person answers you.</h2>
+          <p class="lede" data-t>Ownerdeck is not an agency with account managers and a ticket queue. You get the person who wrote the thing, on WhatsApp, usually the same day. That is the whole reason a small operator can get work at this standard at this price.</p>
+          <div class="btn-row" style="margin-top:2rem">
+            <a class="btn btn--ghost" href="{WA}" rel="noopener"><span data-t>Ask me anything</span>{ARROW}</a>
+          </div>
+        </div>
+        <div class="namecard" data-reveal="120">
+          <div class="namecard__top">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5.5" width="12" height="15" rx="2.2" fill="currentColor" opacity=".22"/><rect x="7.5" y="3.5" width="12" height="15" rx="2.2" fill="currentColor"/></svg>
+            <span class="mock__meta">Larnaca &middot; Cyprus</span>
+          </div>
+          <p class="namecard__name">Mark Saade</p>
+          <p class="namecard__role" data-t>Builds it, runs it, and answers the messages.</p>
+          <ul class="namecard__facts">
+            <li data-t>Sole trader, established in Cyprus</li>
+            <li data-t>Not registered for VAT, so no VAT on any fee</li>
+            <li data-t>Works remotely, so where you are does not matter</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -383,24 +493,27 @@ def pages(WA, ARROW, EMAIL):
 
     # ------------------------------------------------------------ pricing
     plans = [
-        dict(id='answer', name='Answer', flag=None, lead=False,
-             desc='The AI assistant, plus a basic website of your own. Everything a small business needs to be found and to reply.',
-             build='&euro;950', month='&euro;150',
-             on=['Answer', 'Site'],
-             inc=['AI assistant on WhatsApp, Instagram DMs and website chat',
-                  'A basic website — your services, prices and contact details',
+        dict(id='site', name='Site', flag=None, lead=False,
+             desc='A proper website with an AI chat on it. The chat answers on your site — WhatsApp and Instagram start at the Deck.',
+             build='&euro;600', month='&euro;99',
+             on=['Site'],
+             inc=['A fast website — your services, prices and contact details',
+                  'An AI chat on the site, answering from your prices',
                   'Hosting, domain and certificate',
-                  'Answers in any language your customers write in',
-                  'Handover to you whenever it is unsure',
-                  'Changes when you need them'],
-             out=['Live database and admin screen', 'Bookings, deposits and calendar',
-                  'Google listing', 'Follow-up campaigns'],
-             cta='Start with Answer'),
+                  'Works properly on a phone, and on Google',
+                  'Changes when you need them — you message, we change it',
+                  'Backups and security updates'],
+             out=['The assistant on WhatsApp and Instagram',
+                  'Live database and admin screen',
+                  'Bookings, deposits and calendar', 'Google listing',
+                  'Follow-up campaigns'],
+             cta='Start with Site'),
         dict(id='deck', name='Deck', flag='Common choice', lead=True,
              desc='The website, the database behind it, the assistant answering, and the bookings landing on your phone.',
              build='&euro;1,900', month='&euro;249',
              on=['Answer', 'Site', 'Book'],
-             inc=['Everything in Answer',
+             inc=['Everything in Site',
+                  'The AI assistant on WhatsApp, Instagram DMs and website chat',
                   'A website that reads live from your prices',
                   'The database and an admin screen you control',
                   'Real availability, confirmations and deposits',
@@ -448,7 +561,7 @@ def pages(WA, ARROW, EMAIL):
     P.append(dict(
         slug='pricing', in_flow=True, nav='Pricing',
         title='Pricing — Ownerdeck',
-        desc='Three hands: Answer at €950 to build and €150 a month, Deck at '
+        desc='Three hands: Site at €400 to build and €79 a month, Deck at '
              '€1,900 and €249, Full Deck at €2,400 and €299. No VAT.',
         body=f'''  <section class="section">
     <div class="wrap">
@@ -464,11 +577,11 @@ def pages(WA, ARROW, EMAIL):
       <div class="panel" style="margin-top:2rem" data-reveal>
         <div class="split" style="gap:2.5rem;align-items:center">
           <div>
-            <p class="eyebrow" data-t>Starting from nothing</p>
-            <h3 data-t>New business? Everything from zero in a week.</h3>
-            <p data-t>Nothing upfront. &euro;249 a month on a twelve month term, and you get the Deck — the site, the database, the assistant and the bookings — built from scratch.</p>
+            <p class="eyebrow" data-t>Custom</p>
+            <h3 data-t>Need something that is not on this list?</h3>
+            <p data-t>A bigger site, several locations, a system you already use that has to connect to it, or a job that does not fit a card. Tell us what you need and we will send a written quote — a fixed price, no obligation.</p>
           </div>
-          <div><a class="btn btn--primary" href="{WA}" rel="noopener"><span data-t>Start from zero</span>{ARROW}</a></div>
+          <div><a class="btn btn--primary" href="{WA}" rel="noopener"><span data-t>Ask for a quote</span>{ARROW}</a></div>
         </div>
       </div>
     </div>
@@ -497,9 +610,9 @@ def pages(WA, ARROW, EMAIL):
       <div class="faq" style="margin-top:2.5rem">
         <details><summary data-t>Why is there a build fee now?</summary><div><p data-t>Because building a website, a database and a working assistant takes real days, and a monthly-only price means every new client starts deeply underwater. The build fee covers the build at cost. The monthly is what keeps it running.</p></div></details>
         <details><summary data-t>Is there VAT on top?</summary><div><p data-t>No. Ownerdeck is not registered for VAT, so the prices shown are the prices you pay.</p></div></details>
-        <details><summary data-t>Can I stop paying?</summary><div><p data-t>Yes, with a month&rsquo;s notice, except on the new-business option which runs for twelve months. If you stop, you keep the site files and an export of your database.</p></div></details>
+        <details><summary data-t>Can I stop paying?</summary><div><p data-t>Yes, with a month&rsquo;s notice, on any plan. There is no minimum term. If you stop, you keep the site files and an export of your database, and we hand both over free.</p></div></details>
         <details><summary data-t>Do you take a cut of my bookings?</summary><div><p data-t>No. Deposits and payments run through your own account and your own payment provider. We never handle your customers&rsquo; money.</p></div></details>
-        <details><summary data-t>What if I only want the assistant?</summary><div><p data-t>That is the Answer plan, and it now comes with a basic website of its own. If you already have a website you are happy with, we will point the assistant at it and price accordingly — just ask.</p></div></details>
+        <details><summary data-t>What if I only want the assistant?</summary><div><p data-t>The assistant starts at the Deck, because it is only as good as the database behind it. Pointing it at a website with no live prices is how you get an assistant that confidently quotes last year&rsquo;s rates. If you already have a website you are happy with and want the assistant bolted onto it, we will quote for that separately — just ask.</p></div></details>
       </div>
     </div>
   </section>
@@ -510,7 +623,7 @@ def pages(WA, ARROW, EMAIL):
     trade_html = []
     for slug, name, alt, line in TRADES:
         trade_html.append(f'''        <li class="trade" data-reveal>
-          <div class="trade__img"><img src="/img/{slug}.webp" width="1600" height="1067" loading="lazy" decoding="async" alt="{alt}"></div>
+          <div class="trade__img"><img src="/img/{slug}.webp"{img_size(slug)} loading="lazy" decoding="async" alt="{alt}"></div>
           <div class="trade__body"><h2 data-t>{name}</h2><p data-t>{line}</p></div>
         </li>''')
 
@@ -581,7 +694,7 @@ def pages(WA, ARROW, EMAIL):
         ('Is my customers&rsquo; data safe?',
          'Conversations are processed to answer them and stored so you can read your own history. We do not sell data or use it to advertise. The privacy notice sets out exactly who processes what.'),
         ('Can I start small and add later?',
-         'That is the point of the deck. Start with Answer, add Book when the bookings get heavy, add Reach and Return when you want the quiet months filled.'),
+         'That is the point of the deck. Start with Site to get online properly, move to the Deck when you want the messages answered and the bookings taken, add Reach and Return when you want the quiet months filled.'),
     ]
     qa_html = '\n'.join(
         f'        <details><summary data-t>{q}</summary><div><p data-t>{a}</p></div></details>'

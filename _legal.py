@@ -12,6 +12,7 @@
 #
 # This is a careful draft by a non-lawyer. Have it reviewed before relying on
 # it commercially.
+import re
 
 UPDATED = '15 August 2026'
 
@@ -24,7 +25,22 @@ def todo(what):
     return '<span class="todo">%s</span>' % what
 
 
+def no_obfuscate(html):
+    """Fence every mailto link against Cloudflare's email obfuscation.
+
+    Cloudflare rewrites mailto links at the edge into a JavaScript-decoded
+    placeholder. On a marketing page that is a fair anti-spam trade. On these
+    pages it is not: the e-Commerce Directive requires the provider's email
+    address to be directly and permanently accessible, and with scripting off
+    the rewritten version reads "[email protected]". The email_off comment
+    pair is Cloudflare's documented opt-out and is inert everywhere else.
+    """
+    return re.sub(r'(<a href="mailto:[^"]+">.*?</a>)',
+                  r'<!--email_off-->\1<!--email_on-->', html, flags=re.S)
+
+
 def wrap(slug, nav, title, desc, h1, body):
+    body = no_obfuscate(body)
     return dict(
         slug=slug, in_flow=False, legal=True, no_cta=True, nav=nav,
         title=title, desc=desc,
@@ -246,7 +262,7 @@ def pages(EMAIL, WA):
     <p>We may change the monthly fee once in any twelve month period, with at least 30 days&rsquo; written notice. If you do not want the new price, you may end the service before it takes effect and owe nothing further.</p>
 
     <h2>9. Ending it</h2>
-    <p>You may end the monthly service with 30 days&rsquo; written notice, except on the new-business option, which runs for a minimum of twelve months from go-live and then continues on the same 30 days&rsquo; notice.</p>
+    <p>You may end the monthly service at any time with 30 days&rsquo; written notice. There is no minimum term on any plan. Work quoted separately outside a plan is governed by whatever that written quote says.</p>
     <p>The build fee is not refundable once the build has been delivered. If we have started but not delivered, we refund the part not yet worked.</p>
     <p>Either of us may end the contract immediately if the other commits a serious breach and does not fix it within 14 days of being told, or becomes insolvent. On termination we hand over your files and a data export, and your licence to the underlying tools ends.</p>
 

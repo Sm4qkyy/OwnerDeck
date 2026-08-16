@@ -56,8 +56,8 @@ T = {
     'The cards': ('Οι κάρτες', 'Карты'),
     'Legal': ('Νομικά', 'Правовое'),
     'WhatsApp': ('WhatsApp', 'WhatsApp'),
-    'Built and run in Cyprus.': ('Φτιαγμένο και συντηρημένο στην Κύπρο.',
-                                 'Создано и обслуживается на Кипре.'),
+    'Built and run by Ownerdeck.': ('Φτιάχτηκε και συντηρείται από το Ownerdeck.',
+                                    'Создано и обслуживается Ownerdeck.'),
     'We build and run the online side of small owner-operated businesses. One set of facts drives the website, the messages, the bookings and the follow-up.':
         ('Φτιάχνουμε και τρέχουμε την ψηφιακή πλευρά μικρών επιχειρήσεων. Ένα σύνολο δεδομένων τροφοδοτεί την ιστοσελίδα, τα μηνύματα, τις κρατήσεις και την επικοινωνία μετά.',
          'Мы создаём и обслуживаем онлайн-часть небольших бизнесов. Один набор данных управляет сайтом, сообщениями, бронированиями и последующей связью.'),
@@ -360,9 +360,9 @@ T = {
         ('Όχι. Το Ownerdeck δεν είναι εγγεγραμμένο στο ΦΠΑ, οπότε οι τιμές που βλέπετε είναι οι τιμές που πληρώνετε.',
          'Нет. Ownerdeck не зарегистрирован плательщиком НДС, поэтому указанные цены — это то, что вы платите.'),
     'Can I stop paying?': ('Μπορώ να σταματήσω να πληρώνω;', 'Могу ли я перестать платить?'),
-    'Yes, with a month&rsquo;s notice, except on the new-business option which runs for twelve months. If you stop, you keep the site files and an export of your database.':
-        ('Ναι, με προειδοποίηση ενός μήνα, εκτός από την επιλογή για νέες επιχειρήσεις που τρέχει δώδεκα μήνες. Αν σταματήσετε, κρατάτε τα αρχεία της ιστοσελίδας και εξαγωγή της βάσης δεδομένων σας.',
-         'Да, с уведомлением за месяц, кроме варианта для новых бизнесов, который действует двенадцать месяцев. При остановке вы сохраняете файлы сайта и выгрузку базы данных.'),
+    'Yes, with a month&rsquo;s notice, on any plan. There is no minimum term. If you stop, you keep the site files and an export of your database, and we hand both over free.':
+        ('Ναι, με προειδοποίηση ενός μήνα, σε οποιοδήποτε πακέτο. Δεν υπάρχει ελάχιστη διάρκεια. Αν σταματήσετε, κρατάτε τα αρχεία της ιστοσελίδας και εξαγωγή της βάσης δεδομένων σας, και σας τα παραδίδουμε δωρεάν.',
+         'Да, с уведомлением за месяц, на любом тарифе. Минимального срока нет. Если вы остановитесь, вы сохраняете файлы сайта и выгрузку базы данных, и мы передаём их бесплатно.'),
     'Do you take a cut of my bookings?': ('Παίρνετε ποσοστό από τις κρατήσεις μου;',
                                           'Вы берёте процент с моих броней?'),
     'No. Deposits and payments run through your own account and your own payment provider. We never handle your customers&rsquo; money.':
@@ -373,6 +373,106 @@ T = {
     'That is the Answer plan, and it now comes with a basic website of its own. If you already have a website you are happy with, we will point the assistant at it and price accordingly — just ask.':
         ('Αυτό είναι το πακέτο Answer, και τώρα περιλαμβάνει και μια δική του βασική ιστοσελίδα. Αν έχετε ήδη ιστοσελίδα που σας ικανοποιεί, θα στρέψουμε τον βοηθό σε αυτήν και θα τιμολογήσουμε ανάλογα — απλώς ρωτήστε.',
          'Это тариф Answer, и теперь в него входит собственный базовый сайт. Если у вас уже есть сайт, который вас устраивает, мы направим ассистента на него и пересчитаем цену — просто спросите.'),
+
+    # ---- entry tier: Site (website only, no assistant) ----
+    'A proper website, built and run for you. No assistant, no bookings — just somewhere real to send people that never goes out of date.':
+        ('Μια σωστή ιστοσελίδα, φτιαγμένη και συντηρημένη για εσάς. Χωρίς βοηθό, χωρίς κρατήσεις — απλώς κάτι πραγματικό όπου να στέλνετε κόσμο, που δεν παλιώνει ποτέ.',
+         'Нормальный сайт, созданный и обслуживаемый для вас. Без ассистента и бронирований — просто место, куда можно направлять людей, и которое не устаревает.'),
+    'A fast website — your services, prices and contact details':
+        ('Μια γρήγορη ιστοσελίδα — υπηρεσίες, τιμές και στοιχεία επικοινωνίας',
+         'Быстрый сайт — услуги, цены и контакты'),
+    'Works properly on a phone, and on Google':
+        ('Λειτουργεί σωστά στο κινητό και στο Google',
+         'Корректно работает на телефоне и в Google'),
+    'Changes when you need them — you message, we change it':
+        ('Αλλαγές όποτε τις χρειάζεστε — στέλνετε μήνυμα, το αλλάζουμε',
+         'Изменения по запросу — вы пишете, мы меняем'),
+    'Backups and security updates':
+        ('Αντίγραφα ασφαλείας και ενημερώσεις ασφαλείας',
+         'Резервные копии и обновления безопасности'),
+    'AI assistant': ('Βοηθός AI', 'ИИ-ассистент'),
+    'Start with Site': ('Ξεκινήστε με το Site', 'Начать с Site'),
+    'Everything in Site': ('Όλα του Site', 'Всё из Site'),
+    'The AI assistant on WhatsApp, Instagram DMs and website chat':
+        ('Ο βοηθός AI σε WhatsApp, Instagram DMs και chat ιστοσελίδας',
+         'ИИ-ассистент в WhatsApp, Instagram DM и чате сайта'),
+    'The assistant starts at the Deck, because it is only as good as the database behind it. Pointing it at a website with no live prices is how you get an assistant that confidently quotes last year&rsquo;s rates. If you already have a website you are happy with and want the assistant bolted onto it, we will quote for that separately — just ask.':
+        ('Ο βοηθός ξεκινά από το Deck, γιατί είναι τόσο καλός όσο η βάση δεδομένων πίσω του. Αν τον στρέψετε σε μια ιστοσελίδα χωρίς ζωντανές τιμές, θα έχετε έναν βοηθό που δίνει με σιγουριά τις περσινές τιμές. Αν έχετε ήδη ιστοσελίδα που σας ικανοποιεί και θέλετε τον βοηθό πάνω της, θα δώσουμε ξεχωριστή προσφορά — απλώς ρωτήστε.',
+         'Ассистент начинается с Deck, потому что он хорош ровно настолько, насколько хороша база данных за ним. Если направить его на сайт без актуальных цен, вы получите ассистента, уверенно называющего прошлогодние тарифы. Если у вас уже есть сайт, который вас устраивает, и вы хотите добавить к нему ассистента, мы посчитаем это отдельно — просто спросите.'),
+    'That is the point of the deck. Start with Site to get online properly, move to the Deck when you want the messages answered and the bookings taken, add Reach and Return when you want the quiet months filled.':
+        ('Αυτό ακριβώς είναι το νόημα της τράπουλας. Ξεκινήστε με το Site για να βγείτε online σωστά, περάστε στο Deck όταν θέλετε να απαντιούνται τα μηνύματα και να κλείνονται οι κρατήσεις, προσθέστε Reach και Return όταν θέλετε να γεμίσουν οι ήσυχοι μήνες.',
+         'В этом и смысл колоды. Начните с Site, чтобы нормально выйти в онлайн, перейдите на Deck, когда захотите, чтобы отвечали на сообщения и принимали брони, добавьте Reach и Return, когда захотите заполнить тихие месяцы.'),
+
+    # ---- home page: trades strip, ownership, the person behind it ----
+    'Who we build for': ('Για ποιους φτιάχνουμε', 'Для кого мы работаем'),
+    'You have answered these questions a thousand times.':
+        ('Έχετε απαντήσει σε αυτές τις ερωτήσεις χίλιες φορές.',
+         'Вы отвечали на эти вопросы тысячу раз.'),
+    'Different trades, the same four questions all day. What does it cost. Is it free on Saturday. Do you deliver. Can I pay a deposit now.':
+        ('Διαφορετικά επαγγέλματα, οι ίδιες τέσσερις ερωτήσεις όλη μέρα. Πόσο κοστίζει. Είναι ελεύθερο το Σάββατο. Κάνετε παράδοση. Μπορώ να πληρώσω προκαταβολή τώρα.',
+         'Разные сферы, одни и те же четыре вопроса весь день. Сколько стоит. Свободно ли в субботу. Есть ли доставка. Могу ли я внести депозит сейчас.'),
+    'Every trade we build for': ('Κάθε επάγγελμα για το οποίο φτιάχνουμε',
+                                 'Все сферы, для которых мы работаем'),
+    'No lock-in': ('Χωρίς δέσμευση', 'Без привязки'),
+    'You own all of it.': ('Όλα ανήκουν σε εσάς.', 'Всё принадлежит вам.'),
+    'The usual worry about handing your online side to someone else is that you never get it back. So here is the deal in plain words, and it is the same deal written into the terms.':
+        ('Η συνηθισμένη ανησυχία όταν παραδίδετε την ψηφιακή σας πλευρά σε κάποιον άλλον είναι ότι δεν την ξαναπαίρνετε ποτέ. Να λοιπόν η συμφωνία με απλά λόγια, και είναι η ίδια συμφωνία που είναι γραμμένη στους όρους.',
+         'Обычный страх при передаче онлайн-части бизнеса другому — что вы её больше не вернёте. Поэтому вот условия простыми словами, и это те же условия, что записаны в договоре.'),
+    'Your site, your data, your number': ('Η ιστοσελίδα σας, τα δεδομένα σας, ο αριθμός σας',
+                                          'Ваш сайт, ваши данные, ваш номер'),
+    'The website, the database and the WhatsApp number stay yours throughout. We never hold them.':
+        ('Η ιστοσελίδα, η βάση δεδομένων και ο αριθμός WhatsApp παραμένουν δικά σας από την αρχή ως το τέλος. Δεν τα κρατάμε ποτέ εμείς.',
+         'Сайт, база данных и номер WhatsApp всё время остаются вашими. Мы их никогда не удерживаем.'),
+    'Leave with thirty days&rsquo; notice': ('Φύγετε με προειδοποίηση τριάντα ημερών',
+                                             'Уйти с уведомлением за тридцать дней'),
+    'No twelve month tie-in. We hand over the site files and an export of your database, free.':
+        ('Χωρίς δωδεκάμηνη δέσμευση. Παραδίδουμε τα αρχεία της ιστοσελίδας και εξαγωγή της βάσης δεδομένων σας, δωρεάν.',
+         'Без привязки на двенадцать месяцев. Мы бесплатно передаём файлы сайта и выгрузку вашей базы данных.'),
+    'We never touch your money': ('Δεν αγγίζουμε ποτέ τα χρήματά σας',
+                                  'Мы никогда не касаемся ваших денег'),
+    'Deposits run through your own account and your own payment provider. We take no cut of a booking.':
+        ('Οι προκαταβολές περνούν από τον δικό σας λογαριασμό και τον δικό σας πάροχο πληρωμών. Δεν παίρνουμε ποσοστό από καμία κράτηση.',
+         'Депозиты проходят через ваш собственный счёт и вашего платёжного провайдера. Мы не берём процент с бронирований.'),
+    'The price is the price': ('Η τιμή είναι η τιμή', 'Цена есть цена'),
+    'No VAT, no setup surprises. If a job falls outside your plan we quote it before starting.':
+        ('Χωρίς ΦΠΑ, χωρίς εκπλήξεις στη ρύθμιση. Αν μια δουλειά πέφτει εκτός του πακέτου σας, δίνουμε προσφορά πριν ξεκινήσουμε.',
+         'Без НДС и сюрпризов при запуске. Если работа выходит за рамки вашего тарифа, мы дадим смету до начала.'),
+    'Who you are dealing with': ('Με ποιον έχετε να κάνετε', 'С кем вы имеете дело'),
+    'One person builds it. The same person answers you.':
+        ('Ένα άτομο το φτιάχνει. Το ίδιο άτομο σας απαντά.',
+         'Один человек создаёт это. Тот же человек вам отвечает.'),
+    'Ownerdeck is not an agency with account managers and a ticket queue. You get the person who wrote the thing, on WhatsApp, usually the same day. That is the whole reason a small operator can get work at this standard at this price.':
+        ('Το Ownerdeck δεν είναι πρακτορείο με υπεύθυνους πελατών και ουρά αιτημάτων. Μιλάτε με το άτομο που το έγραψε, στο WhatsApp, συνήθως την ίδια μέρα. Αυτός ακριβώς είναι ο λόγος που μια μικρή επιχείρηση μπορεί να έχει δουλειά αυτού του επιπέδου σε αυτή την τιμή.',
+         'Ownerdeck — не агентство с аккаунт-менеджерами и очередью заявок. Вы общаетесь с человеком, который всё это написал, в WhatsApp, обычно в тот же день. Именно поэтому небольшой бизнес может получить работу такого уровня по такой цене.'),
+    'Ask me anything': ('Ρωτήστε με ό,τι θέλετε', 'Спросите меня о чём угодно'),
+    'Builds it, runs it, and answers the messages.':
+        ('Το φτιάχνει, το τρέχει και απαντά στα μηνύματα.',
+         'Создаёт, обслуживает и отвечает на сообщения.'),
+    'Sole trader, established in Cyprus': ('Ατομική επιχείρηση, με έδρα την Κύπρο',
+                                           'Индивидуальный предприниматель, зарегистрирован на Кипре'),
+    'Not registered for VAT, so no VAT on any fee':
+        ('Μη εγγεγραμμένος στο ΦΠΑ, οπότε καμία χρέωση δεν έχει ΦΠΑ',
+         'Не зарегистрирован плательщиком НДС, поэтому НДС ни на что не начисляется'),
+    'Works remotely, so where you are does not matter':
+        ('Δουλεύει εξ αποστάσεως, οπότε δεν έχει σημασία πού βρίσκεστε',
+         'Работает удалённо, поэтому ваше местоположение не имеет значения'),
+
+    # ---- entry tier with website chat, and the custom quote ----
+    'A proper website with an AI chat on it. The chat answers on your site — WhatsApp and Instagram start at the Deck.':
+        ('Μια σωστή ιστοσελίδα με AI chat πάνω της. Το chat απαντά στη σελίδα σας — το WhatsApp και το Instagram ξεκινούν από το Deck.',
+         'Нормальный сайт с ИИ-чатом на нём. Чат отвечает на вашем сайте — WhatsApp и Instagram начинаются с Deck.'),
+    'An AI chat on the site, answering from your prices':
+        ('Ένα AI chat στη σελίδα, που απαντά από τις τιμές σας',
+         'ИИ-чат на сайте, отвечающий по вашим ценам'),
+    'The assistant on WhatsApp and Instagram': ('Ο βοηθός σε WhatsApp και Instagram',
+                                                'Ассистент в WhatsApp и Instagram'),
+    'Custom': ('Κατά παραγγελία', 'Индивидуально'),
+    'Need something that is not on this list?': ('Χρειάζεστε κάτι που δεν είναι σε αυτή τη λίστα;',
+                                                 'Нужно что-то, чего нет в списке?'),
+    'A bigger site, several locations, a system you already use that has to connect to it, or a job that does not fit a card. Tell us what you need and we will send a written quote — a fixed price, no obligation.':
+        ('Μια μεγαλύτερη ιστοσελίδα, πολλές τοποθεσίες, ένα σύστημα που ήδη χρησιμοποιείτε και πρέπει να συνδεθεί, ή μια δουλειά που δεν ταιριάζει σε καμία κάρτα. Πείτε μας τι χρειάζεστε και θα στείλουμε γραπτή προσφορά — σταθερή τιμή, χωρίς δέσμευση.',
+         'Более крупный сайт, несколько локаций, система, которую вы уже используете и которую нужно подключить, или работа, не подходящая ни под одну карту. Расскажите, что нужно, и мы пришлём письменное предложение — фиксированная цена, без обязательств.'),
+    'Ask for a quote': ('Ζητήστε προσφορά', 'Запросить предложение'),
 
     # ---- who it's for ----
     'Built for businesses that run on bookings.':

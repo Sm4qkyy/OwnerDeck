@@ -19,7 +19,11 @@
 <meta name="twitter:description" content="The questions owners actually ask: numbers, ownership, languages, what happens when the assistant does not know.">
 <meta name="twitter:image" content="https://www.ownerdeck.com/og-image.png">
 
-<link rel="icon" type="image/png" href="/favicon.png">
+<!-- Both marks are transparent PNGs, so each needs the tab colour it was drawn
+     against. Browsers that ignore media on a favicon take the first, which is
+     the dark-on-light one — the safe default. -->
+<link rel="icon" type="image/png" href="/favicon.png" media="(prefers-color-scheme: light)">
+<link rel="icon" type="image/png" href="/favicon-dark.png" media="(prefers-color-scheme: dark)">
 <link rel="apple-touch-icon" href="/favicon.png">
 <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0A0A0B" media="(prefers-color-scheme: dark)">
@@ -114,7 +118,7 @@
         <details><summary data-i18n="k3aa8e699">Do you work outside Cyprus?</summary><div><p data-i18n="kc6cb6dfa">Yes. Everything is remote and the assistant does not care where it runs. Most clients are in Cyprus because that is where we are.</p></div></details>
         <details><summary data-i18n="k12593ee5">What if the assistant gets something wrong?</summary><div><p data-i18n="ke2f8bf3d">Tell us and we fix the facts it read from, so it cannot get the same thing wrong twice. It answers from your database, so a wrong answer is almost always a wrong entry.</p></div></details>
         <details><summary data-i18n="ke08b8c3e">Is my customers&rsquo; data safe?</summary><div><p data-i18n="k9035f60b">Conversations are processed to answer them and stored so you can read your own history. We do not sell data or use it to advertise. The privacy notice sets out exactly who processes what.</p></div></details>
-        <details><summary data-i18n="k5df23dbc">Can I start small and add later?</summary><div><p data-i18n="kc418de7b">That is the point of the deck. Start with Answer, add Book when the bookings get heavy, add Reach and Return when you want the quiet months filled.</p></div></details>
+        <details><summary data-i18n="k5df23dbc">Can I start small and add later?</summary><div><p data-i18n="ka15dfc3e">That is the point of the deck. Start with Site to get online properly, move to the Deck when you want the messages answered and the bookings taken, add Reach and Return when you want the quiet months filled.</p></div></details>
       </div>
     </div>
   </section>
@@ -178,7 +182,7 @@
     </div>
     <div class="foot__base">
       <span>&copy; 2026 Ownerdeck</span>
-      <span data-i18n="k3a427f0a">Built and run in Cyprus.</span>
+      <span data-i18n="k82173914">Built and run by Ownerdeck.</span>
     </div>
   </div>
 </footer>

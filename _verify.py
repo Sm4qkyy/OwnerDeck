@@ -8,6 +8,7 @@
 # that collide, and headings that skip a level.
 #
 # Run:  python _verify.py
+import fnmatch
 import io
 import os
 import re
@@ -214,6 +215,52 @@ def check_page(slug, html):
     return len(re.findall(r'data-i18n="', html))
 
 
+def check_deployable():
+    """Does any served page ask for a file that .vercelignore keeps out of the
+    deployment?
+
+    This is the check that was missing. The four SEO guides linked brand.css
+    for weeks while .vercelignore excluded it, so in production the stylesheet
+    404'd and the pages rendered as raw text — and nothing caught it, because
+    the old check only looked at the pages the generator produces and only
+    asked whether files existed *locally*. They did. They just never shipped.
+    """
+    ignore_path = os.path.join(HERE, '.vercelignore')
+    if not os.path.exists(ignore_path):
+        return
+    patterns = []
+    for line in read('.vercelignore').splitlines():
+        line = line.strip()
+        if line and not line.startswith('#'):
+            patterns.append(line.rstrip('/'))
+
+    def excluded(rel):
+        rel = rel.lstrip('/')
+        for pat in patterns:
+            if fnmatch.fnmatch(rel, pat) or fnmatch.fnmatch(os.path.basename(rel), pat):
+                return pat
+            # Directory patterns exclude everything beneath them.
+            if rel.startswith(pat + '/'):
+                return pat
+        return None
+
+    for name in sorted(os.listdir(HERE)):
+        if not name.endswith('.html') or name.startswith('_'):
+            continue
+        html = read(name)
+        for m in re.finditer(r'(?:href|src)="([^"]+)"', html):
+            ref = m.group(1).split('?')[0].split('#')[0]
+            if not ref or ref.startswith(('http', 'mailto:', 'tel:', 'data:', '//')):
+                continue
+            if ref.startswith(RUNTIME_PREFIXES):
+                continue
+            if not os.path.splitext(ref)[1]:
+                continue          # a clean URL, not a file
+            pat = excluded(ref)
+            if pat:
+                fail(name, 'references %s, which .vercelignore excludes (%s)' % (ref, pat))
+
+
 def check_i18n():
     """Keys are a hash of the English, so two different sentences must never
     share one, and every key in the source map must be reachable."""
@@ -261,6 +308,7 @@ def main():
             continue
         total_keys += check_page(slug, read(name))
 
+    check_deployable()
     langs = check_i18n()
 
     print('=' * 74)

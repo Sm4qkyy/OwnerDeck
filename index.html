@@ -19,7 +19,11 @@
 <meta name="twitter:description" content="We build and run the online side of your business: the website, the database behind it, an AI assistant answering your messages, the bookings and the follow-up. Set your prices once.">
 <meta name="twitter:image" content="https://www.ownerdeck.com/og-image.png">
 
-<link rel="icon" type="image/png" href="/favicon.png">
+<!-- Both marks are transparent PNGs, so each needs the tab colour it was drawn
+     against. Browsers that ignore media on a favicon take the first, which is
+     the dark-on-light one — the safe default. -->
+<link rel="icon" type="image/png" href="/favicon.png" media="(prefers-color-scheme: light)">
+<link rel="icon" type="image/png" href="/favicon-dark.png" media="(prefers-color-scheme: dark)">
 <link rel="apple-touch-icon" href="/favicon.png">
 <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0A0A0B" media="(prefers-color-scheme: dark)">
@@ -200,6 +204,27 @@
 
   <section class="section section--sunk section--edge">
     <div class="wrap">
+      <div class="section__head">
+        <p class="eyebrow" data-i18n="k706f137b">Who we build for</p>
+        <h2 data-i18n="kce57e459">You have answered these questions a thousand times.</h2>
+        <p class="lede" data-i18n="k72bcebc3">Different trades, the same four questions all day. What does it cost. Is it free on Saturday. Do you deliver. Can I pay a deposit now.</p>
+      </div>
+      <ul class="strip">
+        <li data-reveal><figure><div class="strip__img"><img src="/img/car.webp" width="960" height="637" loading="lazy" decoding="async" alt="A red car parked on a quiet street"></div><figcaption data-i18n="kb598c8c0">Car and 4x4 rental</figcaption></figure></li>
+        <li data-reveal><figure><div class="strip__img"><img src="/img/boat.webp" width="680" height="1024" loading="lazy" decoding="async" alt="Small boats moored in a harbour"></div><figcaption data-i18n="k5a352e9a">Boat and jetski charter</figcaption></figure></li>
+        <li data-reveal><figure><div class="strip__img"><img src="/img/villa-pool.webp" width="1023" height="685" loading="lazy" decoding="async" alt="A swimming pool beside a villa terrace"></div><figcaption data-i18n="k4f447482">Villas and short-term rentals</figcaption></figure></li>
+        <li data-reveal><figure><div class="strip__img"><img src="/img/hotel.webp" width="1600" height="1200" loading="lazy" decoding="async" alt="A made bed in a quiet hotel room"></div><figcaption data-i18n="k2dde7966">Guesthouses and small hotels</figcaption></figure></li>
+        <li data-reveal><figure><div class="strip__img"><img src="/img/clinic.webp" width="1024" height="682" loading="lazy" decoding="async" alt="A calm, empty treatment room"></div><figcaption data-i18n="ka89c9fee">Private clinics</figcaption></figure></li>
+        <li data-reveal><figure><div class="strip__img"><img src="/img/salon.webp" width="1024" height="683" loading="lazy" decoding="async" alt="Hairdressing tools laid out on a counter"></div><figcaption data-i18n="k569fdbf0">Salons and spas</figcaption></figure></li>
+      </ul>
+      <div class="btn-row" style="margin-top:2.5rem">
+        <a class="btn btn--ghost" href="/who-its-for"><span data-i18n="k437d32d4">Every trade we build for</span><svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--edge">
+    <div class="wrap">
       <div class="split">
         <div data-reveal>
           <p class="eyebrow" data-i18n="k85e758a8">Proof &middot; Limassol</p>
@@ -214,6 +239,62 @@
           <div class="ledger__row"><span data-i18n="k551460a1">Enquiries answered</span><b>212</b></div>
           <div class="ledger__row"><span data-i18n="kcec48f6f">Answered after hours</span><b>14</b></div>
           <div class="ledger__row"><span data-i18n="k67895136">Average reply time</span><b data-i18n="k064d81a9">under a minute</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sunk section--edge">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="eyebrow" data-i18n="k5457b8c4">No lock-in</p>
+        <h2 data-i18n="kb846282e">You own all of it.</h2>
+        <p class="lede" data-i18n="kf49a2fd6">The usual worry about handing your online side to someone else is that you never get it back. So here is the deal in plain words, and it is the same deal written into the terms.</p>
+      </div>
+      <div class="grid grid--4">
+        <div class="tile" data-reveal>
+          <h3 class="t-h4" data-i18n="k760b6e63">Your site, your data, your number</h3>
+          <p data-i18n="k5f7df1f9">The website, the database and the WhatsApp number stay yours throughout. We never hold them.</p>
+        </div>
+        <div class="tile" data-reveal>
+          <h3 class="t-h4" data-i18n="k8b088090">Leave with thirty days&rsquo; notice</h3>
+          <p data-i18n="keeff499f">No twelve month tie-in. We hand over the site files and an export of your database, free.</p>
+        </div>
+        <div class="tile" data-reveal>
+          <h3 class="t-h4" data-i18n="k95cc1c91">We never touch your money</h3>
+          <p data-i18n="k486511e5">Deposits run through your own account and your own payment provider. We take no cut of a booking.</p>
+        </div>
+        <div class="tile" data-reveal>
+          <h3 class="t-h4" data-i18n="kcfc3f59e">The price is the price</h3>
+          <p data-i18n="k49682e04">No VAT, no setup surprises. If a job falls outside your plan we quote it before starting.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--edge">
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <p class="eyebrow" data-i18n="ka273f948">Who you are dealing with</p>
+          <h2 data-i18n="kd7244718">One person builds it. The same person answers you.</h2>
+          <p class="lede" data-i18n="k46bc0959">Ownerdeck is not an agency with account managers and a ticket queue. You get the person who wrote the thing, on WhatsApp, usually the same day. That is the whole reason a small operator can get work at this standard at this price.</p>
+          <div class="btn-row" style="margin-top:2rem">
+            <a class="btn btn--ghost" href="https://wa.me/447520689685?text=Hi%20Mark%20%E2%80%94%20I%20saw%20Ownerdeck%20and%20I%27d%20like%20to%20know%20more." rel="noopener"><span data-i18n="k30e4f2f5">Ask me anything</span><svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+          </div>
+        </div>
+        <div class="namecard" data-reveal="120">
+          <div class="namecard__top">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5.5" width="12" height="15" rx="2.2" fill="currentColor" opacity=".22"/><rect x="7.5" y="3.5" width="12" height="15" rx="2.2" fill="currentColor"/></svg>
+            <span class="mock__meta">Larnaca &middot; Cyprus</span>
+          </div>
+          <p class="namecard__name">Mark Saade</p>
+          <p class="namecard__role" data-i18n="k7c1137c5">Builds it, runs it, and answers the messages.</p>
+          <ul class="namecard__facts">
+            <li data-i18n="kb921c22a">Sole trader, established in Cyprus</li>
+            <li data-i18n="k376e19bb">Not registered for VAT, so no VAT on any fee</li>
+            <li data-i18n="ka0f59897">Works remotely, so where you are does not matter</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -274,7 +355,7 @@
     </div>
     <div class="foot__base">
       <span>&copy; 2026 Ownerdeck</span>
-      <span data-i18n="k3a427f0a">Built and run in Cyprus.</span>
+      <span data-i18n="k82173914">Built and run by Ownerdeck.</span>
     </div>
   </div>
 </footer>

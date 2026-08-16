@@ -25,12 +25,19 @@ HOURS = {
                       # the hours for one; the saving over Site is the data
                       # wiring and the admin views, not the design work.
     'Data':     10,   # schema, admin views, import of what they already have
+    'Chat':      4,   # ASSUMED - website chat widget only. Same prompt work as
+                      # Answer minus the WhatsApp and Instagram channel setup,
+                      # which is where most of Answer's 12 hours actually go.
     'Answer':   12,   # prompt, business config, availability wiring, testing
     'Book':      8,   # calendar, confirmations, deposits
     'Reach':     3,   # Google listing, review flow
     'Return':    5,   # ASSUMED - campaign templates, segments, scheduling
 }
-SUPPORT_HRS_MONTH = 1.5            # ASSUMED - per client, per month, ongoing
+# Support is per tier, not a single global. A brochure site generates a
+# handful of "change this price" messages a year; a tier running an assistant
+# and taking deposits generates questions every week. Using one number for
+# both was what made a website-only tier look unviable.
+SUPPORT_HRS = {'Site': 0.75, 'Deck': 1.5, 'Full Deck': 2.0}  # ASSUMED
 TARGET_HOURLY     = 45             # ASSUMED - EUR/hour Mark wants to clear
 
 # Monthly cash costs, per client
@@ -40,6 +47,11 @@ DOMAIN    = 1.20                   # ASSUMED - EUR, ~15/yr
 STRIPE_PCT, STRIPE_FIX = 0.015, 0.25
 
 CONVOS   = int(sys.argv[1]) if len(sys.argv) > 1 else 250   # ASSUMED
+# A chat widget on a brochure site sees a fraction of what a WhatsApp number
+# sees: the visitor has to be on the site already, and most of them are not.
+# Modelling it at the full rate would price the entry tier for traffic it will
+# never get.
+CONVOS_WEB = 40                    # ASSUMED - website-chat-only volume
 MSGS     = 8                       # ASSUMED - messages per conversation
 IN_TOK, OUT_TOK = 5000, 300        # ASSUMED - per message, system prompt resent
 CACHING  = True                    # prompt caching on the system prefix
@@ -47,11 +59,13 @@ STABLE   = 0.70                    # ASSUMED - share of input that is stable
 BOOK_RATE = 0.25                   # ASSUMED - conversations that become bookings
 TPL_UTIL, TPL_MKT = 0.03, 0.06     # ASSUMED - EUR per WhatsApp template message
 
-# The entry tier used to be the assistant bolted onto whatever site the client
-# already had. It now ships a basic website of its own, which moves 9 hours and
-# a hosting share into a tier that was priced without either.
+# The entry tier is a website with a chat widget on it, and nothing else. The
+# assistant's cost is driven by the channels it opens, not by its existence:
+# a widget on a brochure site is a fraction of a WhatsApp number's traffic.
+# That is what lets this tier sit at 99 rather than 249, and it makes the
+# ladder legible — get online, then get answered everywhere, then get found.
 TIERS = {
-    'Answer':    (['Answer', 'Site-Lite'],                                     150),
+    'Site':      (['Site-Lite', 'Chat'],                                        99),
     'Deck':      (['Answer', 'Site', 'Data', 'Book'],                          249),
     'Full Deck': (['Answer', 'Site', 'Data', 'Book', 'Reach', 'Return'],       299),
 }
@@ -72,18 +86,27 @@ def templates_eur(convos, cards):
     return n
 
 
+def tier_convos(cards, convos):
+    """How many conversations this tier's assistant actually handles."""
+    if 'Answer' in cards: return convos       # WhatsApp, Instagram and the site
+    if 'Chat' in cards:   return CONVOS_WEB   # the site only
+    return 0
+
+
 def monthly_cash(cards, convos):
-    c = HOSTING + DOMAIN + claude_eur(convos) + templates_eur(convos, cards)
+    c = HOSTING + DOMAIN + templates_eur(convos, cards)
+    # The model is the biggest line here, and it scales with the channels the
+    # tier actually opens — not with the fact that it has an assistant at all.
+    n = tier_convos(cards, convos)
+    if n: c += claude_eur(n)
     if 'Data' in cards: c += DATABASE
-    # Every tier now hosts a site of some kind, so the old "no site to host"
-    # discount no longer applies to any of them.
     return c
 
 
 def report(convos):
     print('=' * 78)
-    print('  %d conversations/client/month · target %d EUR/hour · %.1f h/mo support'
-          % (convos, TARGET_HOURLY, SUPPORT_HRS_MONTH))
+    print('  %d conversations/client/month · target %d EUR/hour · from %.1f h/mo support'
+          % (convos, TARGET_HOURLY, min(SUPPORT_HRS.values())))
     print('=' * 78)
     print('%-11s %6s %7s %8s %9s %10s %9s' %
           ('TIER', 'PRICE', 'CASH/mo', 'BUILD h', 'BUILD @cost', 'BREAK-EVEN', 'YR1 €/h'))
@@ -95,10 +118,11 @@ def report(convos):
         build  = hours * TARGET_HOURLY
         stripe = price * STRIPE_PCT + STRIPE_FIX
         # Monthly contribution after cash costs and ongoing support time.
-        contrib = price - cash - stripe - (SUPPORT_HRS_MONTH * TARGET_HOURLY)
+        support = SUPPORT_HRS[tier]
+        contrib = price - cash - stripe - (support * TARGET_HOURLY)
         months  = (build / contrib) if contrib > 0 else None
         # Effective hourly across year one: what the work actually paid.
-        yr1_hours = hours + SUPPORT_HRS_MONTH * 12
+        yr1_hours = hours + support * 12
         yr1_cash  = price * 12 - (cash + stripe) * 12
         yr1_rate  = yr1_cash / yr1_hours
         rows.append((tier, price, cash, hours, build, months, yr1_rate, contrib))
@@ -138,7 +162,7 @@ def with_build_fee():
         fee   = round(hours * TARGET_HOURLY / 50) * 50          # to the nearest 50
         cash  = monthly_cash(cards, CONVOS)
         stripe = price * STRIPE_PCT + STRIPE_FIX
-        yr1_hours = hours + SUPPORT_HRS_MONTH * 12
+        yr1_hours = hours + SUPPORT_HRS[tier] * 12
         yr1_cash  = fee + price * 12 - (cash + stripe) * 12
         print('%-11s %9.0f %8.0f %10.0f %9.0f'
               % (tier, fee, price, fee + price * 12, yr1_cash / yr1_hours))
@@ -152,7 +176,7 @@ if __name__ == '__main__':
     print('ASSUMED inputs — confirm before quoting any of this')
     print('-' * 78)
     for k, v in [('build hours per service', HOURS),
-                 ('support hours/client/month', SUPPORT_HRS_MONTH),
+                 ('support hours/client/month', SUPPORT_HRS),
                  ('target hourly (EUR)', TARGET_HOURLY),
                  ('conversations/client/month', CONVOS),
                  ('managed Postgres share (EUR/mo)', DATABASE),

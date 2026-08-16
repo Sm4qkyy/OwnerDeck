@@ -19,7 +19,11 @@
 <meta name="twitter:description" content="The terms covering an Ownerdeck build and the monthly service that runs it. Business to business, governed by Cyprus law.">
 <meta name="twitter:image" content="https://www.ownerdeck.com/og-image.png">
 
-<link rel="icon" type="image/png" href="/favicon.png">
+<!-- Both marks are transparent PNGs, so each needs the tab colour it was drawn
+     against. Browsers that ignore media on a favicon take the first, which is
+     the dark-on-light one — the safe default. -->
+<link rel="icon" type="image/png" href="/favicon.png" media="(prefers-color-scheme: light)">
+<link rel="icon" type="image/png" href="/favicon-dark.png" media="(prefers-color-scheme: dark)">
 <link rel="apple-touch-icon" href="/favicon.png">
 <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0A0A0B" media="(prefers-color-scheme: dark)">
@@ -133,7 +137,7 @@
     <p>We may change the monthly fee once in any twelve month period, with at least 30 days&rsquo; written notice. If you do not want the new price, you may end the service before it takes effect and owe nothing further.</p>
 
     <h2>9. Ending it</h2>
-    <p>You may end the monthly service with 30 days&rsquo; written notice, except on the new-business option, which runs for a minimum of twelve months from go-live and then continues on the same 30 days&rsquo; notice.</p>
+    <p>You may end the monthly service at any time with 30 days&rsquo; written notice. There is no minimum term on any plan. Work quoted separately outside a plan is governed by whatever that written quote says.</p>
     <p>The build fee is not refundable once the build has been delivered. If we have started but not delivered, we refund the part not yet worked.</p>
     <p>Either of us may end the contract immediately if the other commits a serious breach and does not fix it within 14 days of being told, or becomes insolvent. On termination we hand over your files and a data export, and your licence to the underlying tools ends.</p>
 
@@ -162,7 +166,7 @@
     <p>These terms and any dispute arising out of them, including non-contractual ones, are governed by the law of the Republic of Cyprus. The courts of the Republic of Cyprus have exclusive jurisdiction.</p>
 
     <h2>17. Getting in touch</h2>
-    <p>Questions about these terms go to <a href="mailto:mark@ownerdeck.com">mark@ownerdeck.com</a> or over <a href="https://wa.me/447520689685?text=Hi%20Mark%20%E2%80%94%20I%20saw%20Ownerdeck%20and%20I%27d%20like%20to%20know%20more." rel="noopener">WhatsApp</a>.</p>
+    <p>Questions about these terms go to <!--email_off--><a href="mailto:mark@ownerdeck.com">mark@ownerdeck.com</a><!--email_on--> or over <a href="https://wa.me/447520689685?text=Hi%20Mark%20%E2%80%94%20I%20saw%20Ownerdeck%20and%20I%27d%20like%20to%20know%20more." rel="noopener">WhatsApp</a>.</p>
 
   </div>
 
@@ -207,7 +211,7 @@
     </div>
     <div class="foot__base">
       <span>&copy; 2026 Ownerdeck</span>
-      <span data-i18n="k3a427f0a">Built and run in Cyprus.</span>
+      <span data-i18n="k82173914">Built and run by Ownerdeck.</span>
     </div>
   </div>
 </footer>

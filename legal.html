@@ -19,7 +19,11 @@
 <meta name="twitter:description" content="Who operates Ownerdeck, where we are established, and how to reach us.">
 <meta name="twitter:image" content="https://www.ownerdeck.com/og-image.png">
 
-<link rel="icon" type="image/png" href="/favicon.png">
+<!-- Both marks are transparent PNGs, so each needs the tab colour it was drawn
+     against. Browsers that ignore media on a favicon take the first, which is
+     the dark-on-light one — the safe default. -->
+<link rel="icon" type="image/png" href="/favicon.png" media="(prefers-color-scheme: light)">
+<link rel="icon" type="image/png" href="/favicon-dark.png" media="(prefers-color-scheme: dark)">
 <link rel="apple-touch-icon" href="/favicon.png">
 <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0A0A0B" media="(prefers-color-scheme: dark)">
@@ -110,8 +114,8 @@
       <dt>Legal form</dt><dd>Sole trader</dd>
       <dt>Registered address</dt><dd>Livadia, Larnaca, Cyprus</dd>
       <dt>Country</dt><dd>Republic of Cyprus</dd>
-      <dt>Email</dt><dd><a href="mailto:mark@ownerdeck.com">mark@ownerdeck.com</a></dd>
-      <dt>Privacy contact</dt><dd><a href="mailto:privacy@ownerdeck.com">privacy@ownerdeck.com</a></dd>
+      <dt>Email</dt><dd><!--email_off--><a href="mailto:mark@ownerdeck.com">mark@ownerdeck.com</a><!--email_on--></dd>
+      <dt>Privacy contact</dt><dd><!--email_off--><a href="mailto:privacy@ownerdeck.com">privacy@ownerdeck.com</a><!--email_on--></dd>
       <dt>WhatsApp</dt><dd><a href="https://wa.me/447520689685?text=Hi%20Mark%20%E2%80%94%20I%20saw%20Ownerdeck%20and%20I%27d%20like%20to%20know%20more." rel="noopener">Message us</a></dd>
       <dt>VAT</dt><dd>Not registered for VAT. No VAT is charged on any fee.</dd>
     </dl>
@@ -128,14 +132,14 @@
     <p>We do not hold or process your customers&rsquo; money. Deposits and payments taken through a system we build run through your own merchant account with your own payment provider.</p>
 
     <h2>Complaints</h2>
-    <p>Write to <a href="mailto:mark@ownerdeck.com">mark@ownerdeck.com</a> and we will reply within five working days. If a dispute cannot be resolved between us, it is subject to the courts of the Republic of Cyprus as set out in our <a href="/terms">terms</a>.</p>
+    <p>Write to <!--email_off--><a href="mailto:mark@ownerdeck.com">mark@ownerdeck.com</a><!--email_on--> and we will reply within five working days. If a dispute cannot be resolved between us, it is subject to the courts of the Republic of Cyprus as set out in our <a href="/terms">terms</a>.</p>
     <p>The European Commission&rsquo;s online dispute resolution platform closed on 20 July 2025 and is no longer available. In any case, it covered consumer contracts, and Ownerdeck contracts with businesses.</p>
 
     <h2>Responsibility for content</h2>
     <p>We take care that everything on this site is accurate, but prices and descriptions may change. Nothing here is a binding offer until it is confirmed in writing between us. Links to other sites are provided for convenience; we are not responsible for their content.</p>
 
     <h2>Accessibility</h2>
-    <p>This site is built to meet WCAG 2.2 Level AA. It works without JavaScript, without colour alone carrying meaning, and with a keyboard alone. If you hit something you cannot use, email <a href="mailto:mark@ownerdeck.com">mark@ownerdeck.com</a> and we will fix it.</p>
+    <p>This site is built to meet WCAG 2.2 Level AA. It works without JavaScript, without colour alone carrying meaning, and with a keyboard alone. If you hit something you cannot use, email <!--email_off--><a href="mailto:mark@ownerdeck.com">mark@ownerdeck.com</a><!--email_on--> and we will fix it.</p>
 
   </div>
 
@@ -180,7 +184,7 @@
     </div>
     <div class="foot__base">
       <span>&copy; 2026 Ownerdeck</span>
-      <span data-i18n="k3a427f0a">Built and run in Cyprus.</span>
+      <span data-i18n="k82173914">Built and run by Ownerdeck.</span>
     </div>
   </div>
 </footer>

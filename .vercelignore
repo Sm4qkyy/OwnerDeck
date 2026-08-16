@@ -21,3 +21,12 @@ brand.css
 motion.js
 Logo-old-teal.png.bak
 Adobe Express - file (1).png
+
+# Intermediates from _make_logo_assets.py. The favicons it produces are served;
+# the alpha masks they were cut from are not.
+ownerdeck-mark-mask.png
+ownerdeck-wordmark-mask.png
+
+# The retired typefaces. Nothing has asked for them since the guides moved to
+# od.css, and they are 119 KB of dead weight on every deploy.
+fonts/

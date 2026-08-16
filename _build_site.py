@@ -118,7 +118,11 @@ def head(page):
 <meta name="twitter:description" content="%(desc)s">
 <meta name="twitter:image" content="%(origin)s/og-image.png">
 
-<link rel="icon" type="image/png" href="/favicon.png">
+<!-- Both marks are transparent PNGs, so each needs the tab colour it was drawn
+     against. Browsers that ignore media on a favicon take the first, which is
+     the dark-on-light one — the safe default. -->
+<link rel="icon" type="image/png" href="/favicon.png" media="(prefers-color-scheme: light)">
+<link rel="icon" type="image/png" href="/favicon-dark.png" media="(prefers-color-scheme: dark)">
 <link rel="apple-touch-icon" href="/favicon.png">
 <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0A0A0B" media="(prefers-color-scheme: dark)">
@@ -264,7 +268,7 @@ def footer(page=None):
     </div>
     <div class="foot__base">
       <span>&copy; 2026 Ownerdeck</span>
-      <span data-t>Built and run in Cyprus.</span>
+      <span data-t>Built and run by Ownerdeck.</span>
     </div>
   </div>
 </footer>

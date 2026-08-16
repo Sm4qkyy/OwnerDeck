@@ -30,6 +30,14 @@
   --ink:      #09090B;   /* 19.9:1 */
   --invert:   #FFFFFF;   /* text on an --ink surface */
   --live:     #16803C;   /* 5.02:1 — the only non-neutral, for live/confirmed */
+
+  /* Glass. Eight-digit hex so the alpha travels with the token — the header
+     capsule needs a fill that lets the page through, an edge that catches
+     light, and a top highlight that reads as a bevel. */
+  --glass:      #FFFFFFB3;
+  --glass-lift: #FFFFFFDB;
+  --glass-edge: #09090B17;
+  --glass-top:  #FFFFFFA6;
   --shadow:   16 16 20;  /* rgb triplet, alpha applied at use */
 
   --wrap:     72rem;
@@ -74,6 +82,10 @@
     --ink:     #FAFAFA;   /* 18.1:1 */
     --invert:  #09090B;
     --live:    #4ADE80;   /* 11.4:1 */
+    --glass:      #0A0A0BB3;
+    --glass-lift: #0A0A0BDB;
+    --glass-edge: #FFFFFF1F;
+    --glass-top:  #FFFFFF14;
     --shadow:  0 0 0;
     color-scheme: dark;
   }
@@ -94,6 +106,10 @@
   --ink:     #FAFAFA;
   --invert:  #09090B;
   --live:    #4ADE80;
+  --glass:      #0A0A0BB3;
+  --glass-lift: #0A0A0BDB;
+  --glass-edge: #FFFFFF1F;
+  --glass-top:  #FFFFFF14;
   --shadow:  0 0 0;
   color-scheme: dark;
 }
@@ -126,7 +142,7 @@
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
-  scroll-padding-top: 5.5rem;   /* the sticky header */
+  scroll-padding-top: 6.5rem;   /* the floating header capsule */
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -260,23 +276,54 @@ p:last-child { margin-bottom: 0; }
 /* --------------------------------------------------------------------------
    6. Header
    -------------------------------------------------------------------------- */
+/* A floating capsule, not a full-width bar. The sticky element itself is
+   transparent and ignores the pointer, so the page scrolls past on either
+   side of the pill; the glass is the bar inside it. */
 .masthead {
-  position: sticky; top: 0; z-index: 50;
-  background: color-mix(in srgb, var(--paper) 82%, transparent);
-  backdrop-filter: saturate(180%) blur(14px);
-  -webkit-backdrop-filter: saturate(180%) blur(14px);
-  border-bottom: 1px solid transparent;
-  transition: border-color var(--t) var(--ease), background var(--t) var(--ease);
-}
-.masthead.is-stuck {
-  border-bottom-color: var(--rule);
-  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  position: sticky; top: .75rem; z-index: 50;
+  padding-block: .75rem;
+  pointer-events: none;
 }
 
 .masthead__bar {
+  pointer-events: auto;
   display: flex; align-items: center; gap: var(--s5);
-  height: 4.25rem;
+  height: 3.5rem;
+  padding-inline: .5rem .5rem;
+  border-radius: 999px;
+  background: var(--glass);
+  backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  border: 1px solid var(--glass-edge);
+  /* Three layers make it read as glass rather than as a grey box: a hairline
+     contact shadow, a wide soft one for lift, and an inset top highlight that
+     stands in for a bevel catching the light. */
+  box-shadow:
+    0 1px 2px rgb(var(--shadow) / .05),
+    0 10px 30px rgb(var(--shadow) / .08),
+    inset 0 1px 0 var(--glass-top);
+  transition: background var(--t) var(--ease),
+              box-shadow var(--t) var(--ease),
+              border-color var(--t) var(--ease);
 }
+
+/* Once the page has moved under it, the glass thickens slightly and the lift
+   deepens. Subtle on purpose — it should register without being noticed. */
+.masthead.is-stuck .masthead__bar {
+  background: var(--glass-lift);
+  box-shadow:
+    0 1px 2px rgb(var(--shadow) / .06),
+    0 14px 40px rgb(var(--shadow) / .12),
+    inset 0 1px 0 var(--glass-top);
+}
+
+/* Safari and Firefox without backdrop-filter would show text over a
+   half-transparent panel, so those get an opaque fill instead. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .masthead__bar { background: var(--paper); border-color: var(--rule); }
+}
+
+.masthead__mark { padding-inline-start: .65rem; }
 
 .masthead__mark {
   display: inline-flex; align-items: center; gap: .55rem;
@@ -299,8 +346,14 @@ p:last-child { margin-bottom: 0; }
   white-space: nowrap;
   transition: color var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
 }
-.masthead__nav a:hover { color: var(--ink); background: var(--paper-3); }
-.masthead__nav a[aria-current="page"] { color: var(--ink); font-weight: 550; }
+.masthead__nav a:hover { color: var(--ink); background: color-mix(in srgb, var(--ink) 6%, transparent); }
+/* The active item gets its own filled pill inside the capsule, the way the
+   selected tab does on a native bar. A tint rather than a solid, so the glass
+   still shows through it. */
+.masthead__nav a[aria-current="page"] {
+  color: var(--ink); font-weight: 550;
+  background: color-mix(in srgb, var(--ink) 8%, transparent);
+}
 
 .masthead__tools { display: flex; align-items: center; gap: var(--s2); flex: 0 0 auto; }
 
@@ -313,7 +366,7 @@ p:last-child { margin-bottom: 0; }
               border-color var(--t-fast) var(--ease),
               background var(--t-fast) var(--ease);
 }
-.icon-btn:hover { color: var(--ink); border-color: var(--rule-2); background: var(--paper-3); }
+.icon-btn:hover { color: var(--ink); border-color: var(--rule-2); background: color-mix(in srgb, var(--ink) 6%, transparent); }
 .icon-btn svg { width: 17px; height: 17px; }
 
 /* Theme toggle shows the icon of the theme you would switch *to*. */
@@ -343,7 +396,7 @@ p:last-child { margin-bottom: 0; }
               border-color var(--t-fast) var(--ease),
               background var(--t-fast) var(--ease);
 }
-.od-lang-btn:hover { color: var(--ink); border-color: var(--rule-2); background: var(--paper-3); }
+.od-lang-btn:hover { color: var(--ink); border-color: var(--rule-2); background: color-mix(in srgb, var(--ink) 6%, transparent); }
 .od-lang-btn svg { width: 15px; height: 15px; }
 .od-lang-code {
   font-family: var(--mono); font-size: .6875rem; font-weight: 500;
@@ -387,7 +440,7 @@ p:last-child { margin-bottom: 0; }
   transition: border-color var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
 }
 .mmenu > summary::-webkit-details-marker { display: none; }
-.mmenu > summary:hover { border-color: var(--rule-2); background: var(--paper-3); }
+.mmenu > summary:hover { border-color: var(--rule-2); background: color-mix(in srgb, var(--ink) 6%, transparent); }
 
 .mmenu__bars { display: block; width: 15px; height: 11px; position: relative; }
 .mmenu__bars i,
@@ -674,6 +727,67 @@ a.dcard:hover { border-color: var(--rule-2); background: var(--paper-3); transfo
 .trade__body p { font-size: .875rem; color: var(--muted); margin: 0; }
 
 /* --------------------------------------------------------------------------
+   15b. Trade strip — the compact photo row on the home page
+   Smaller and denser than .trades, because on the home page its job is
+   recognition, not description. Six tiles, caption under the crop.
+   -------------------------------------------------------------------------- */
+.strip {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; gap: var(--s4);
+  grid-template-columns: repeat(6, 1fr);
+}
+@media (max-width: 68rem) { .strip { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 34rem) { .strip { grid-template-columns: repeat(2, 1fr); } }
+
+.strip li { display: flex; flex-direction: column; gap: var(--s3); }
+.strip figure { margin: 0; }
+.strip__img {
+  aspect-ratio: 1 / 1; overflow: hidden;
+  border: 1px solid var(--rule); border-radius: var(--r-lg);
+  background: var(--paper-3);
+}
+.strip__img img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: grayscale(1) contrast(1.03);
+  transition: filter var(--t-slow) var(--ease), transform var(--t-slow) var(--ease);
+}
+.strip li:hover .strip__img img { filter: grayscale(0); transform: scale(1.05); }
+.strip figcaption {
+  font-size: .875rem; color: var(--muted); text-wrap: balance;
+}
+
+/* --------------------------------------------------------------------------
+   15c. Name card — who you are dealing with
+   Literally a card, because the whole brand is a deck of them.
+   -------------------------------------------------------------------------- */
+.namecard {
+  border: 1px solid var(--rule); border-radius: var(--r-xl);
+  background: var(--paper); padding: var(--s6);
+  box-shadow: 0 22px 60px rgb(var(--shadow) / .10);
+  max-width: 24rem;
+}
+.namecard__top {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--s4); padding-bottom: var(--s5);
+  border-bottom: 1px solid var(--rule);
+}
+.namecard__top svg { width: 22px; height: 22px; color: var(--ink); }
+.namecard__name {
+  font-family: var(--display); font-weight: 600; font-size: 1.5rem;
+  letter-spacing: -0.03em; margin: var(--s5) 0 var(--s1);
+}
+.namecard__role { color: var(--muted); font-size: .9375rem; margin: 0 0 var(--s5); }
+.namecard__facts { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s3); }
+.namecard__facts li {
+  display: grid; grid-template-columns: 1rem 1fr; gap: .6rem;
+  font-size: .9375rem; align-items: start;
+}
+.namecard__facts li::before {
+  content: ""; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--faint); margin-top: .6rem;
+}
+
+/* --------------------------------------------------------------------------
    16. Pricing
    -------------------------------------------------------------------------- */
 .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s4); align-items: start; }
@@ -770,6 +884,35 @@ a.dcard:hover { border-color: var(--rule-2); background: var(--paper-3); transfo
 }
 .back:hover { color: var(--ink); }
 .back svg { width: 15px; height: 15px; }
+
+/* --------------------------------------------------------------------------
+   18b. Long-form guide pages
+   The four SEO guides. Same reading measure as the legal pages, but headings
+   sit closer to the text because these are read straight through rather than
+   navigated by section.
+   -------------------------------------------------------------------------- */
+.longform { padding-block: var(--s8) var(--s9); }
+.longform h1 { margin-bottom: var(--s5); }
+.longform > .lede { margin-bottom: var(--s7); }
+.longform h2 {
+  font-size: 1.5rem; letter-spacing: -0.025em;
+  margin-top: var(--s7); margin-bottom: var(--s3);
+}
+.longform h3 { font-size: 1.125rem; margin-top: var(--s5); margin-bottom: var(--s2); }
+.longform p, .longform li { color: var(--ink-2); }
+.longform ul, .longform ol { padding-inline-start: 1.25rem; margin: 0 0 var(--s4); }
+.longform li { margin-bottom: var(--s2); }
+.longform strong { font-weight: 600; color: var(--ink); }
+
+/* The guides' end-of-article box. Named .callout, not .note: od.css already
+   uses .note for small muted text, and the guides were using the same class
+   for a bordered panel. Two meanings, one name, so one of them had to move. */
+.callout {
+  border: 1px solid var(--rule); border-radius: var(--r-lg);
+  background: var(--paper-2); padding: var(--s5);
+  margin-top: var(--s7); font-size: .9375rem;
+}
+.callout p { margin: 0; }
 
 /* --------------------------------------------------------------------------
    19. Page navigation footer (prev / next between sub-pages)
