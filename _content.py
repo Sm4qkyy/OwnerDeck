@@ -206,8 +206,8 @@ def pages(WA, ARROW, EMAIL):
           <h1 data-t>Run the online side of your business.</h1>
           <p class="lede" data-reveal="80" data-t>Ownerdeck runs the online side of your business — your website, your enquiries, your bookings and the follow-up after. Set your prices once and everything says the same thing.</p>
           <div class="btn-row" data-reveal="160" style="margin-top:2rem">
-            <a class="btn btn--primary" href="{WA}" rel="noopener"><span data-t>Message us on WhatsApp</span>{ARROW}</a>
-            <a class="btn btn--ghost" href="/how-it-works" data-t>See how it works</a>
+            <a class="btn btn--primary" href="/start"><span data-t>Get started</span>{ARROW}</a>
+            <a class="btn btn--ghost" href="{WA}" rel="noopener" data-t>Or message us on WhatsApp</a>
           </div>
           <p class="note" data-reveal="220" style="margin-top:1.25rem" data-t>No VAT. No long contract on the entry plan.</p>
         </div>
@@ -355,7 +355,7 @@ def pages(WA, ARROW, EMAIL):
           <h2 data-t>One person builds it. The same person answers you.</h2>
           <p class="lede" data-t>Ownerdeck is not an agency with account managers and a ticket queue. You get the person who wrote the thing, on WhatsApp, usually the same day. That is the whole reason a small operator can get work at this standard at this price.</p>
           <div class="btn-row" style="margin-top:2rem">
-            <a class="btn btn--ghost" href="{WA}" rel="noopener"><span data-t>Ask me anything</span>{ARROW}</a>
+            <a class="btn btn--ghost" href="{WA}" rel="noopener"><span data-t>Message me directly</span>{ARROW}</a>
           </div>
         </div>
         <div class="namecard" data-reveal="120">
@@ -587,7 +587,7 @@ def pages(WA, ARROW, EMAIL):
           <ul class="chips">{chips}</ul>
           <ul>{inc}</ul>
           {out}
-          <a class="btn btn--primary" href="{WA}" rel="noopener" data-t>{p['cta']}</a>
+          <a class="btn btn--primary" href="/start?plan={p['name'].replace(' ', '+')}" data-t>{p['cta']}</a>
         </div>''')
 
     P.append(dict(
@@ -613,7 +613,7 @@ def pages(WA, ARROW, EMAIL):
             <h3 data-t>Need something that is not on this list?</h3>
             <p data-t>A bigger site, several locations, a system you already use that has to connect to it, or a job that does not fit a card. Tell us what you need and we will send a written quote — a fixed price, no obligation.</p>
           </div>
-          <div><a class="btn btn--primary" href="{WA}" rel="noopener"><span data-t>Ask for a quote</span>{ARROW}</a></div>
+          <div><a class="btn btn--primary" href="/start?plan=Custom"><span data-t>Ask for a quote</span>{ARROW}</a></div>
         </div>
       </div>
     </div>
@@ -744,6 +744,80 @@ def pages(WA, ARROW, EMAIL):
       <p class="lede" data-t>If yours is not here, message us — it probably belongs on this page.</p>
       <div class="faq" style="margin-top:3rem">
 {qa_html}
+      </div>
+    </div>
+  </section>
+
+'''))
+
+    # ---------------------------------------------------------- get started
+    trade_picks = '\n'.join(
+        f'          <button class="pick" type="button" data-pick="trade" '
+        f'aria-pressed="false" data-value="{name}"><b>{name}</b></button>'
+        for _s, name, _alt, _l in TRADES)
+
+    plan_picks = '\n'.join(
+        f'''          <button class="pick" type="button" data-pick="plan" aria-pressed="false"
+                  data-value="{p['name']}" data-price="{p['build']} + {p['month']}/mo">
+            <b>{p['name']}</b><span>{p['build'].replace('&euro;', '€')} to build, then {p['month'].replace('&euro;', '€')} a month</span>
+          </button>''' for p in plans)
+
+    P.append(dict(
+        slug='start', in_flow=False, no_cta=True, nav='Get started',
+        title='Get started — Ownerdeck',
+        desc='Three questions and we will know exactly what you need before you '
+             'send a single message.',
+        scripts='<script src="/start.js?v=20260815a" defer></script>\n',
+        body=f'''  <section class="section">
+    <div class="wrap">
+      <div class="flow" id="start">
+        <div class="flow__dots" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+
+        <section class="flow__step" data-step="1">
+          <p class="eyebrow" data-t>Step one</p>
+          <h2 tabindex="-1" data-focus data-t>What kind of business is it?</h2>
+          <p class="lede" style="margin-bottom:2rem" data-t>So the quote is about your trade rather than a generic package.</p>
+          <div class="flow__grid">
+{trade_picks}
+            <button class="pick" type="button" data-pick="trade" aria-pressed="false" data-value="Something else"><b data-t>Something else</b></button>
+          </div>
+        </section>
+
+        <section class="flow__step" data-step="2">
+          <p class="eyebrow" data-t>Step two</p>
+          <h2 tabindex="-1" data-focus data-t>How much of it do you want run for you?</h2>
+          <p class="lede" style="margin-bottom:2rem" data-t>Not sure? Pick the middle one — we will tell you honestly if you need less.</p>
+          <div class="flow__grid">
+{plan_picks}
+            <button class="pick" type="button" data-pick="plan" aria-pressed="false" data-value="Not sure yet"><b data-t>Not sure yet</b><span data-t>Talk it through first</span></button>
+          </div>
+          <button class="flow__back" type="button" data-go="back" data-t>Back</button>
+        </section>
+
+        <section class="flow__step" data-step="3">
+          <p class="eyebrow" data-t>Step three</p>
+          <h2 tabindex="-1" data-focus data-t>Anything we should know?</h2>
+          <p class="lede" style="margin-bottom:2rem" data-t>Optional. A sentence about what is not working now is usually enough.</p>
+          <label class="visually-hidden" for="flow-note" data-t>Anything we should know</label>
+          <textarea id="flow-note" maxlength="400" placeholder="We get most enquiries on Instagram at night and lose half of them…"></textarea>
+          <div class="btn-row" style="margin-top:1.5rem">
+            <a class="btn btn--primary" href="#" data-go="next"><span data-t>See what happens next</span>{ARROW}</a>
+          </div>
+          <button class="flow__back" type="button" data-go="back" data-t>Back</button>
+        </section>
+
+        <section class="flow__step" data-step="4">
+          <p class="eyebrow" data-t>Last step</p>
+          <h2 tabindex="-1" data-focus data-t>That is everything we need.</h2>
+          <p class="lede" data-t>Open the chat and it will already say all of this, so you are not repeating yourself. You will get a straight answer, usually the same day.</p>
+          <dl class="flow__summary" id="flow-summary"></dl>
+          <div class="btn-row">
+            <a class="btn btn--primary" id="flow-wa" href="{WA}" rel="noopener"><span data-t>Open WhatsApp</span>{ARROW}</a>
+            <a class="btn btn--ghost" id="flow-mail" href="mailto:{EMAIL}" data-t>Email instead</a>
+          </div>
+          <p class="note" style="margin-top:1.5rem" data-t>Nothing here has been sent anywhere. It is filled into a message you choose to open.</p>
+          <button class="flow__back" type="button" data-go="back" data-t>Back</button>
+        </section>
       </div>
     </div>
   </section>

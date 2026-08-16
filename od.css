@@ -895,6 +895,86 @@ a.dcard:hover { border-color: var(--rule-2); background: var(--paper-3); transfo
 }
 
 /* --------------------------------------------------------------------------
+   15d. The get-started flow
+   Every step is in the markup and visible by default. start.js adds
+   .is-stepped once it runs, and only then does one question at a time appear —
+   so with scripting off this is a long readable page, not a dead end.
+   -------------------------------------------------------------------------- */
+.flow { max-width: 46rem; margin-inline: auto; }
+.flow__step { padding-block: var(--s6); }
+.flow.is-stepped .flow__step { padding-block: 0; }
+.flow.is-stepped .flow__step[hidden] { display: none; }
+
+.js .flow.is-stepped .flow__step {
+  opacity: 0; transform: translateY(10px);
+  transition: opacity var(--t) var(--ease-out), transform var(--t) var(--ease-out);
+}
+.js .flow.is-stepped .flow__step.is-in { opacity: 1; transform: none; }
+
+.flow__step h2 { font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.25rem); }
+.flow__step h2:focus { outline: none; }
+
+.flow__dots { display: flex; gap: .4rem; justify-content: center; margin-bottom: var(--s7); }
+.flow__dots span {
+  width: 2rem; height: 3px; border-radius: 2px; background: var(--rule);
+  transition: background var(--t) var(--ease);
+}
+.flow__dots span.is-done { background: var(--rule-2); }
+.flow__dots span[aria-current="step"] { background: var(--ink); }
+
+.flow__grid { display: grid; gap: var(--s3); grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 48rem) { .flow__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 30rem) { .flow__grid { grid-template-columns: 1fr; } }
+
+.pick {
+  text-align: start; cursor: pointer;
+  padding: var(--s4) var(--s5);
+  border: 1px solid var(--rule); border-radius: var(--r-lg);
+  background: var(--paper-2); color: var(--ink);
+  font-size: .9375rem; line-height: 1.4;
+  transition: border-color var(--t-fast) var(--ease),
+              background var(--t-fast) var(--ease),
+              transform var(--t-fast) var(--ease);
+}
+.pick:hover { border-color: var(--rule-2); background: var(--paper-3); transform: translateY(-2px); }
+.pick:active { transform: translateY(0); }
+.pick[aria-pressed="true"] {
+  border-color: var(--ink); background: var(--paper);
+  box-shadow: inset 0 0 0 1px var(--ink);
+}
+.pick b { display: block; font-weight: 600; letter-spacing: -0.015em; }
+.pick span { display: block; color: var(--muted); font-size: .875rem; margin-top: .15rem; }
+
+.flow textarea {
+  width: 100%; min-height: 7rem; resize: vertical;
+  padding: var(--s4); border: 1px solid var(--rule); border-radius: var(--r);
+  background: var(--paper-2); color: var(--ink); font-family: inherit; font-size: 1rem;
+  transition: border-color var(--t-fast) var(--ease);
+}
+.flow textarea:focus-visible { border-color: var(--ink); outline: none; box-shadow: 0 0 0 1px var(--ink); }
+
+.flow__summary {
+  display: grid; grid-template-columns: 8rem 1fr; gap: var(--s3) var(--s4);
+  padding: var(--s5); margin-block: var(--s5);
+  border: 1px solid var(--rule); border-radius: var(--r-lg); background: var(--paper-2);
+}
+.flow__summary dt { color: var(--muted); font-size: .9375rem; }
+.flow__summary dd { margin: 0; font-weight: 500; }
+.flow__summary:empty { display: none; }
+@media (max-width: 34rem) {
+  .flow__summary { grid-template-columns: 1fr; gap: 0; }
+  .flow__summary dt { margin-top: var(--s3); }
+}
+
+.flow__back {
+  background: none; border: 0; cursor: pointer; padding: 0;
+  color: var(--muted); font-size: .875rem; margin-top: var(--s5);
+  display: inline-flex; align-items: center; gap: .35rem;
+  transition: color var(--t-fast) var(--ease);
+}
+.flow__back:hover { color: var(--ink); }
+
+/* --------------------------------------------------------------------------
    16. Pricing
    -------------------------------------------------------------------------- */
 .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s4); align-items: start; }

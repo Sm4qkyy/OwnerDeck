@@ -184,7 +184,7 @@ def header():
         <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
       </button>
 
-      <a class="btn btn--primary btn--sm masthead__cta" href="%(wa)s" rel="noopener" data-t>Talk to us</a>
+      <a class="btn btn--primary btn--sm masthead__cta" href="/start" data-t>Get started</a>
 
       <!-- <details> rather than a scripted panel: it opens, closes and takes
            keyboard focus with no JavaScript at all. -->
@@ -211,8 +211,8 @@ def cta_band():
         <h2 data-t>Set it once. Let it run.</h2>
         <p data-t>Tell us about your business and we will show you exactly how Ownerdeck would handle your website, your messages and your bookings.</p>
         <div class="btn-row">
-          <a class="btn btn--primary" href="%(wa)s" rel="noopener"><span data-t>Message us on WhatsApp</span>%(arrow)s</a>
-          <a class="btn btn--ghost" href="/pricing" data-t>See pricing</a>
+          <a class="btn btn--primary" href="/start"><span data-t>Get started</span>%(arrow)s</a>
+          <a class="btn btn--ghost" href="%(wa)s" rel="noopener" data-t>Or message us on WhatsApp</a>
         </div>
         <p class="note" data-t>No VAT. No long contract on the entry plan.</p>
       </div>
