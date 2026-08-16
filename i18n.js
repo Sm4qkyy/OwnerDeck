@@ -39,10 +39,15 @@
     return LANGS[0];
   }
 
-  /* Snapshot the English in the markup once, before anything is replaced. */
+  /* Snapshot the English in the markup, before anything is replaced. Safe to
+     call more than once: a key is captured the first time its node is seen and
+     never overwritten, so nodes that appear later — the chat widget builds its
+     panel after this file runs — get their English recorded too, while a key
+     already captured is left untouched even if its node now shows a
+     translation. Without this, dynamically added nodes had no English to
+     revert to and stayed stuck in the last language on the switch back. */
   function captureEnglish() {
-    if (english) return;
-    english = {};
+    if (!english) english = {};
     var nodes = document.querySelectorAll('[data-i18n]');
     for (var i = 0; i < nodes.length; i++) {
       var k = nodes[i].getAttribute('data-i18n');
@@ -181,6 +186,19 @@
     refresh: function () {
       captureEnglish();
       paint(current === 'en' ? null : packs[current]);
+    },
+    /* Record the English source for a key whose text is built in JavaScript
+       rather than written in the markup — a chat greeting, an error reply.
+       captureEnglish() only sees the DOM, so text that is created already
+       translated (opening the chat while on Greek) would otherwise be missing
+       its English and could not revert. Register it at build time, from the
+       English fallback the caller already holds, and the switch back to
+       English has something to paint. First writer wins, so a later Greek
+       render never overwrites it. */
+    note: function (key, en) {
+      if (key == null || en == null) return;
+      if (!english) english = {};
+      if (!(key in english)) english[key] = en;
     },
     onChange: function (fn) { listeners.push(fn); }
   };
