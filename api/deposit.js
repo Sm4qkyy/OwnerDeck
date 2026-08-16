@@ -47,17 +47,41 @@ function clean(s, max) {
 module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'no-store');
 
+  /* A GET reports whether the key is wired, and which Stripe-ish variable
+     names this function can actually see. Names only — never values, never a
+     prefix of a value. It exists because "I added the key" and "the function
+     can read the key" are different claims, and guessing at the difference
+     wastes a deploy cycle each time. */
+  if (req.method === 'GET') {
+    return res.status(200).json({
+      configured: !!secretKey(),
+      stripeVarsVisible: Object.keys(process.env).filter(function (n) {
+        return /stripe/i.test(n);
+      }).sort(),
+    });
+  }
+
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return res.status(405).json({ error: 'method' });
   }
 
-  // Same-origin only. This endpoint spends money on Stripe's side by creating
-  // sessions, so it should not be callable from anywhere else.
-  const allowed = process.env.ALLOWED_ORIGIN || 'https://www.ownerdeck.com';
+  // Same-origin only. This endpoint creates Stripe sessions, so it should not
+  // be callable from anywhere else.
+  //
+  // Compared against the host the request actually arrived on rather than a
+  // hardcoded domain: ALLOWED_ORIGIN is shared with the chat endpoint and was
+  // set to a value that matched neither the apex nor the www host, so a real
+  // browser request from the site's own pages was being refused. Deriving it
+  // from the request cannot drift when a domain is added or changed.
+  const host = req.headers['x-forwarded-host'] || req.headers.host || '';
   const origin = req.headers.origin || '';
-  if (origin && origin !== allowed && !/^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
-    return res.status(403).json({ error: 'origin' });
+  if (origin) {
+    let oh = '';
+    try { oh = new URL(origin).host; } catch (e) { oh = ''; }
+    const same = oh && (oh === host || /^(localhost|127\.0\.0\.1)(:\d+)?$/.test(oh));
+    const listed = process.env.ALLOWED_ORIGIN && origin === process.env.ALLOWED_ORIGIN;
+    if (!same && !listed) return res.status(403).json({ error: 'origin' });
   }
 
   const key = secretKey();
