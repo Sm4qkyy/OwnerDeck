@@ -85,10 +85,16 @@
 
   /* Hero backdrop (acid-bg.js). Pale to accent, and kept quiet: this sits
      under the headline and the one button that matters. */
-  --acid-1: #D7DFEC;
-  --acid-2: #93AEDC;
-  --acid-3: #1D4ED8;
-  --acid-opacity: 0.30;
+  /* Multi-hue and deliberately loud, anchored on colours the palette already
+     owns: --f-site violet in the middle, cyan at the dim end, magenta at the
+     hot one. The hot end has to be the dark colour on paper — the shader
+     writes brightness into alpha, so pale highlights would simply vanish
+     into a white page. Measured at full brightness under the headline:
+     8.90:1, so the type is safe even where the lattice is densest. */
+  --acid-1: #7FD4E8;
+  --acid-2: #6D4AFF;
+  --acid-3: #C2185B;
+  --acid-opacity: 0.42;
 
   --f-answer: #7C5CFF;
   --f-site:   #6D4AFF;
@@ -167,9 +173,9 @@
     --se-img:   url("/img/hero-lot-night.webp");
     --se-title: #FAFAFA;
     --se-scrim: 0 0 0;
-    --acid-1: #161B2E;
-    --acid-2: #3A5DBF;
-    --acid-3: #8FB3FF;
+    --acid-1: #241A5C;
+    --acid-2: #7C5CFF;
+    --acid-3: #F5A524;
     --acid-opacity: 0.52;   /* 9.39:1 on the dark ground */
     --accent-ink: #0B0B12;
     --shadow:  0 0 0;
@@ -213,9 +219,9 @@
   --se-img:   url("/img/hero-lot-night.webp");
   --se-title: #FAFAFA;
   --se-scrim: 0 0 0;
-  --acid-1: #161B2E;
-  --acid-2: #3A5DBF;
-  --acid-3: #8FB3FF;
+  --acid-1: #241A5C;
+  --acid-2: #7C5CFF;
+  --acid-3: #F5A524;
   --acid-opacity: 0.52;   /* 9.39:1 on the dark ground */
   --accent-ink: #0B0B12;
   --shadow:  0 0 0;
@@ -411,148 +417,6 @@ p:last-child { margin-bottom: 0; }
           mask-image: linear-gradient(to bottom, currentColor 45%, transparent 92%);
 }
 
-.hero__field {
-  position: absolute; inset: 0; z-index: 0;
-  pointer-events: none;
-  /* Gives the cards somewhere to tilt into. Without it rotateX/rotateY are
-     flat shears rather than perspective. */
-  perspective: 900px;
-  /* Clipped by the section, but masked at the edges too so a card never ends
-     on a hard straight cut. currentColor rather than a literal: a gradient mask
-     is read for its alpha, so which colour it is makes no difference, and this
-     keeps the no-hex-outside-the-palette rule intact. */
-  -webkit-mask-image: radial-gradient(120% 90% at 50% 40%, currentColor 55%, transparent 100%);
-          mask-image: radial-gradient(120% 90% at 50% 40%, currentColor 55%, transparent 100%);
-}
-
-.floater {
-  position: absolute;
-  /* top/left come from custom properties rather than inline top/left, because
-     an inline declaration cannot be overridden by a media query and these have
-     to move for a narrow screen. A custom property can. */
-  top: var(--top);
-  inset-inline-start: var(--left);
-  /* Both come from the nth-child rules below rather than from inline styles.
-     An inline declaration beats every selector including one inside a media
-     query, custom properties included — so positions set in the markup simply
-     could not be moved for a narrow screen. */
-  /* Scroll parallax only. od.js writes --shift; nothing else touches this
-     element's transform, which is what keeps the animation below from
-     fighting it. */
-  transform: translate3d(0, var(--shift, 0px), 0);
-  will-change: transform;
-}
-
-.floater__card {
-  position: relative;
-  display: grid; place-items: center;
-  width: calc(5.5rem * var(--scale, 1));
-  aspect-ratio: 5 / 7;
-  border-radius: calc(var(--r) * var(--scale, 1));
-  border: 1px solid var(--rule);
-  /* A lit face: brighter at the top-left where the light is coming from,
-     falling away to the bottom-right. This is what stops it reading as a flat
-     rectangle once it tilts. */
-  background:
-    linear-gradient(150deg,
-      color-mix(in srgb, var(--paper) 92%, var(--f-c)) 0%,
-      var(--paper-2) 46%,
-      color-mix(in srgb, var(--paper-3) 88%, var(--f-c)) 100%);
-  color: var(--f-c, var(--faint));
-  box-shadow:
-    0 14px 40px -14px var(--f-c, transparent),   /* coloured bloom beneath */
-    0 2px 6px rgb(var(--shadow) / .16),          /* contact shadow */
-    inset 0 1px 0 var(--f-shine);                /* bevel along the top edge */
-  overflow: hidden;   /* on the card, where it belongs */
-  transform-style: preserve-3d;
-  animation: od-drift var(--dur, 9s) var(--delay, 0s) ease-in-out infinite alternate;
-}
-
-/* A fixed specular, not a travelling band.
-   The sweep that was here flew straight off the card: overflow:hidden was on
-   this pseudo-element, which clips its own children and it has none, so
-   translateX(130%) simply left the card behind. In light mode it was also a
-   90%-opaque white bar peaking at 0.9 opacity — a strip light crossing the
-   hero every sixteen seconds.
-   A real render has a highlight fixed relative to the light source, and the
-   card already tilts, so the highlight moves across it for free. */
-.floater__card::after {
-  content: ""; position: absolute; inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(115% 75% at 20% 6%, var(--f-gloss), transparent 60%);
-  pointer-events: none;
-}
-
-/* Drift and tilt together, so the card looks like it is turning as it rises
-   rather than sliding on a plane. rotate() carries the card's own resting
-   angle through the whole animation. */
-@keyframes od-drift {
-  from {
-    transform: rotate(var(--rot, 0deg)) translateY(-7px)
-               rotateX(7deg) rotateY(-11deg);
-  }
-  to {
-    transform: rotate(var(--rot, 0deg)) translateY(7px)
-               rotateX(-5deg) rotateY(9deg);
-  }
-}
-
-}
-
-/* The bloom, behind everything. */
-.floater::before {
-  content: ""; position: absolute; inset: -25%; z-index: -1;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--f-c, transparent), transparent 70%);
-  opacity: .2;
-  filter: blur(14px);
-}
-
-.floater__card svg { width: calc(1.6rem * var(--scale, 1)); height: auto; opacity: .95; }
-
-/* Desktop placement. Kept here, not in the markup, so the media queries below
-   can actually override it. */
-.floater:nth-child(1) { --top: 14%; --left: 3%;  }
-.floater:nth-child(2) { --top: 64%; --left: 9%;  }
-.floater:nth-child(3) { --top: 6%;  --left: 44%; }
-.floater:nth-child(4) { --top: 78%; --left: 38%; }
-.floater:nth-child(5) { --top: 30%; --left: 92%; }
-
-/* Narrow screens: the cards stay, but they move out of the way.
-   They were hidden below 62rem because at their desktop positions they land
-   behind the headline. The answer is to reposition them, not to drop them —
-   three of the five, pushed to the edges so they bleed off rather than crowd,
-   and smaller. The section clips, so a half-visible card reads as depth
-   rather than as a mistake. */
-@media (max-width: 62rem) {
-  /* Measured, not guessed. The hero content runs from 8% to 94% of the section
-     and spans the full width at every point, so there is no lateral gap to
-     tuck a card into — only the top and bottom bands are genuinely free.
-     The previous positions pushed them so far off the edge that eleven pixels
-     of a forty-five pixel card were visible, which is why they read as absent.
-     They now sit fully on screen and behind the content: the card surface is
-     within a few percent of the ground, so text over one still measures 17:1. */
-  .floater__card { width: calc(3.8rem * var(--scale, 1)); }
-  .floater::before { opacity: .22; }
-
-  .floater:nth-child(3),
-  .floater:nth-child(5) { display: none; }
-
-  .floater:nth-child(1) { --top: 2%;  --left: 62%; }
-  .floater:nth-child(2) { --top: 41%; --left: 74%; }
-  .floater:nth-child(4) { --top: 94%; --left: 6%;  }
-}
-@media (max-width: 34rem) {
-  .floater__card { width: calc(3.2rem * var(--scale, 1)); }
-  .floater:nth-child(1) { --top: 2%;  --left: 63%; }
-  .floater:nth-child(2) { --top: 42%; --left: 72%; }
-  .floater:nth-child(4) { --top: 95%; --left: 5%;  }
-}
-@media (prefers-reduced-motion: reduce) {
-  /* Still there, still tilted, simply not moving. */
-  .floater { transform: none; will-change: auto; }
-  .floater__card { animation: none; transform: rotate(var(--rot, 0deg)); }
-}
 .section--tight { padding-block: var(--s8); }
 .section--edge { border-top: 1px solid var(--rule); }
 .section--sunk { background: var(--paper-2); }
@@ -1793,7 +1657,7 @@ main { animation: od-enter 460ms var(--ease-out) both; }
    still correct if the script never runs. Scroll distance 1.1 plus hold 0.3
    plus the stage itself is 2.4 screens; the no-JS case needs only one. */
 .se__track { position: relative; width: 100%; height: 100vh; }
-.js .se__track { height: 240vh; }
+.js .se__track { height: 185vh; }
 .se__stage {
   position: sticky; top: 0;
   width: 100%; height: 100vh;
@@ -1822,7 +1686,7 @@ main { animation: od-enter 460ms var(--ease-out) both; }
   position: absolute; inset: 0; pointer-events: none;
   background: linear-gradient(to top,
     rgb(var(--se-scrim) / .75), rgb(var(--se-scrim) / .10) 45%, rgb(var(--se-scrim) / .35));
-  opacity: .28;
+  opacity: .34;
 }
 .se__title {
   position: absolute; inset: 0;
@@ -1832,6 +1696,9 @@ main { animation: od-enter 460ms var(--ease-out) both; }
   font-size: var(--se-title-size);
   font-weight: 600; letter-spacing: -0.035em; line-height: 1;
   color: var(--se-title);
+  /* The scrim averages the plate down; this handles the outliers — the car's
+     dark glass under the headline, the bright roof under the body copy. */
+  text-shadow: 0 1px 2px rgb(var(--se-scrim) / .55), 0 0 18px rgb(var(--se-scrim) / .45);
   pointer-events: none;
 }
 .js .se__title { will-change: opacity, transform; }
@@ -1849,6 +1716,7 @@ main { animation: od-enter 460ms var(--ease-out) both; }
   align-items: center; justify-content: center;
   gap: var(--s3); text-align: center; padding: 8%;
   color: var(--se-title);
+  text-shadow: 0 1px 2px rgb(var(--se-scrim) / .55), 0 0 18px rgb(var(--se-scrim) / .45);
 }
 .js .se__overlay { opacity: 0; will-change: opacity, transform; }
 .se__overlay h2 {

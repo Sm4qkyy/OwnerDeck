@@ -167,47 +167,6 @@ def strip_grid():
 # Each carries a depth: od.js multiplies the scroll offset by it, so they drift
 # at different rates and the hero gains a little parallax. Negative depths move
 # against the scroll. They are decorative and aria-hidden.
-FLOATERS = [
-    # (icon slug, top%, left%, rotation deg, depth, scale)
-    ('answer', 14,  3, -12, 0.22, 1.0),
-    ('book',   64,  9,   8, -0.16, 0.8),
-    ('site',    6, 44,  14, 0.30, 0.7),
-    ('return', 78, 38, -6, 0.12, 0.85),
-    ('reach',  30, 92,  10, -0.24, 0.75),
-]
-
-
-def hero_floaters():
-    """Two nested elements on purpose.
-
-    The outer .floater is the only thing od.js touches: it writes --shift on
-    scroll and the transform on that element consumes it. The inner card owns
-    the idle drift and the 3D tilt, as a keyframe animation.
-
-    They cannot share an element. An animation takes ownership of transform for
-    as long as it runs and outranks an ordinary declaration, so a float
-    keyframe on .floater would silently kill the scroll parallax — the same
-    trap that killed the hover tilt on the old deck.
-    """
-    paths = {c[0]: c[4] for c in CARDS}
-    out = []
-    for i, (slug, _top, _left, rot, depth, scale) in enumerate(FLOATERS):
-        # Negative delays start every card at a different point in its cycle,
-        # so they are already spread out on the first frame instead of rising
-        # together and drifting apart over the first half minute.
-        # Rounded, because 7.5 + 3 * 1.4 in binary floating point is
-        # 11.700000000000001 and that lands verbatim in the shipped markup.
-        dur = round(7.5 + i * 1.4, 2)
-        delay = round(-(i * 2.3), 2)
-        out.append(
-            f'        <span class="floater" data-depth="{depth}" aria-hidden="true" '
-            f'style="--f-c:var(--f-{slug})">'
-            f'<span class="floater__card" style="--rot:{rot}deg;--scale:{scale};'
-            f'--dur:{dur}s;--delay:{delay}s">'
-            f'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" '
-            f'stroke-linecap="round" stroke-linejoin="round">{paths[slug]}</svg>'
-            f'</span></span>')
-    return '\n'.join(out)
 
 
 def chat_mock():
@@ -243,9 +202,6 @@ def pages(WA, ARROW, EMAIL):
              'the database behind it, an AI assistant answering your messages, '
              'the bookings and the follow-up. Set your prices once.',
         body=f'''  <section class="section section--hero" id="hero" data-acid-bg>
-    <div class="hero__field" aria-hidden="true">
-{hero_floaters()}
-    </div>
     <div class="wrap">
       <div class="hero-copy">
         <div>
@@ -291,7 +247,7 @@ def pages(WA, ARROW, EMAIL):
   </section>
 
   <section class="section section--flush" data-scroll-expand
-           data-scroll-distance="1.1" data-hold-distance="0.3">
+           data-scroll-distance="0.7" data-hold-distance="0.15" data-overlay-scrim="0.62" data-rest-scrim="0.34">
     <div class="se__track">
       <div class="se__stage">
         <div class="se__frame" role="img" aria-label="An empty car park photographed from above, with a single white hire car in one bay">

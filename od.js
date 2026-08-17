@@ -69,34 +69,12 @@
      class inside a rAF callback. */
   (function header() {
     var bar = document.querySelector('.masthead');
-    // The hero's ambient cards ride the same loop. One scroll listener for the
-    // page, one rAF, one place where anything reads scrollY — adding a second
-    // listener for the parallax is how you end up with two handlers fighting
-    // over the same frame.
-    // Desktop only, and deliberately so now that the cards are visible on
-    // narrow screens too. Their drift is a CSS animation and runs everywhere;
-    // this adds the scroll-linked parallax on top. Mobile scrolling is
-    // frequently handled off the main thread, so a JS handler writing
-    // transforms per frame is exactly where it shows up as stutter — and the
-    // cards already move without it.
-    var floaters = [];
-    if (!reduce && window.matchMedia('(min-width: 62rem)').matches) {
-      floaters = Array.prototype.map.call(
-        document.querySelectorAll('.floater'),
-        function (el) { return { el: el, depth: parseFloat(el.getAttribute('data-depth')) || 0 }; });
-    }
-    if (!bar && !floaters.length) return;
+    if (!bar) return;
     var ticking = false;
 
     function update() {
       ticking = false;
-      var y = window.scrollY || window.pageYOffset;
-      if (bar) bar.classList.toggle('is-stuck', y > 6);
-      for (var i = 0; i < floaters.length; i++) {
-        // Capped so a long scroll cannot drag a card halfway down the page.
-        var shift = Math.max(-160, Math.min(160, y * floaters[i].depth));
-        floaters[i].el.style.setProperty('--shift', shift.toFixed(1) + 'px');
-      }
+      bar.classList.toggle('is-stuck', (window.scrollY || window.pageYOffset) > 6);
     }
     window.addEventListener('scroll', function () {
       if (!ticking) { ticking = true; requestAnimationFrame(update); }
