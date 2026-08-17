@@ -191,17 +191,36 @@ def header():
       <details class="mmenu">
         <summary aria-label="Open the menu"><span class="mmenu__bars" aria-hidden="true"><i></i></span></summary>
         <div class="mmenu__panel">
+          <!-- The one action first. It used to sit last, under four legal
+               links carrying the same weight as the product pages; those
+               live in the footer, which is where people look for them. -->
+          <a class="btn btn--primary mmenu__cta" href="/start" data-t>Get started</a>
 %(mob)s
           <span class="mmenu__sep"></span>
-%(legal)s
-          <a class="btn btn--primary" href="%(wa)s" rel="noopener" data-t>Message us on WhatsApp</a>
+          <a class="mmenu__quiet" href="%(wa)s" rel="noopener" data-t>Or message us on WhatsApp</a>
         </div>
       </details>
     </div>
   </div>
 </header>
 
-''' % dict(mark=MARK, nav=nav, mob=mob, legal=legal, wa=WA_LINK)
+''' % dict(mark=MARK, nav=nav, mob=mob, wa=WA_LINK)
+
+
+def sticky_cta(page):
+    """A single action that follows the reader on a phone.
+
+    The homepage is thirteen screens tall on a 375px device and the hero's
+    buttons leave the viewport almost immediately, so someone convinced
+    two-thirds of the way down had nothing to press without scrolling back.
+    Hidden on the funnel itself, where it would compete with the step the
+    visitor is already in the middle of.
+    """
+    if page.get('slug') in ('start', 'demo') or page.get('no_cta'):
+        return ''
+    return ('  <div class="sticky-cta" id="sticky-cta" hidden>\n'
+            '    <a class="btn btn--primary" href="/start" data-t>Get started</a>\n'
+            '  </div>\n')
 
 
 def cta_band():
@@ -307,7 +326,7 @@ def build():
         html = (head(page) + header() +
                 '<main id="main">\n\n' + page['body'] +
                 ('' if page.get('no_cta') else cta_band()) +
-                '</main>\n\n' + pagenav(prev, nxt) + footer(page))
+                '</main>\n\n' + pagenav(prev, nxt) + sticky_cta(page) + footer(page))
 
         html = tag_i18n(html, page['slug'])
 

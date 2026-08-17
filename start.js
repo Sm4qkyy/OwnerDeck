@@ -37,6 +37,11 @@
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function paintDots() {
+    /* The bars are aria-hidden, so this says the same thing out loud. Without
+       it a screen-reader user hears the question but never learns whether
+       they are one question in or nearly finished. */
+    var say = document.getElementById('flow-progress');
+    if (say) say.textContent = 'Step ' + (at + 1) + ' of ' + steps.length;
     if (!dots) return;
     Array.prototype.forEach.call(dots.children, function (d, i) {
       d.setAttribute('aria-current', i === at ? 'step' : 'false');

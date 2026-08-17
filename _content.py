@@ -153,6 +153,8 @@ def strip_grid():
         out.append(
             f'        <li data-reveal><figure>'
             f'<div class="strip__img"><img src="/img/{slug}.webp"{img_size(slug)} '
+            f'srcset="/img/{slug}-400.webp 400w, /img/{slug}.webp 800w" '
+            f'sizes="(max-width: 48rem) 30vw, 180px" '
             f'loading="lazy" decoding="async" alt="{alt}"></div>'
             f'<figcaption data-t>{name}</figcaption></figure></li>')
     return '\n'.join(out)
@@ -247,6 +249,11 @@ def pages(WA, ARROW, EMAIL):
           <h1 data-t>Run the online side of your rental business.</h1>
           <p class="lede" data-reveal="80" data-t>Car, scooter and boat hire, answered at 2am. Ownerdeck runs the website, the enquiries, the bookings and the follow-up after — so the questions that arrive while you are asleep are already dealt with by morning.</p>
 
+          <div class="btn-row" data-reveal="200" style="margin-top:2rem">
+            <a class="btn btn--primary" href="/start"><span data-t>Get started</span>{ARROW}</a>
+            <a class="btn btn--ghost" href="/demo" data-t>See it work</a>
+          </div>
+
           <div class="proof-strip" role="group" aria-labelledby="proof-live proof-span" data-reveal="140">
             <p class="proof-strip__live" id="proof-live"><span class="proof-strip__dot" aria-hidden="true"></span><span data-t>Live &middot; Limassol</span></p>
             <div class="proof-strip__head">
@@ -274,10 +281,6 @@ def pages(WA, ARROW, EMAIL):
             </div>
           </div>
 
-          <div class="btn-row" data-reveal="200" style="margin-top:2rem">
-            <a class="btn btn--primary" href="/demo"><span data-t>See it work</span>{ARROW}</a>
-            <a class="btn btn--ghost" href="/start" data-t>Get started</a>
-          </div>
           <p class="note" data-reveal="240" style="margin-top:1.25rem" data-t>No VAT. No long contract on the entry plan. Works the same way for villas, clinics and salons — see who it is for.</p>
         </div>
       </div>
@@ -764,7 +767,7 @@ def pages(WA, ARROW, EMAIL):
     trade_html = []
     for slug, name, alt, line in TRADES:
         trade_html.append(f'''        <li class="trade" data-reveal>
-          <div class="trade__img"><img src="/img/{slug}.webp"{img_size(slug)} loading="lazy" decoding="async" alt="{alt}"></div>
+          <div class="trade__img"><img src="/img/{slug}.webp"{img_size(slug)} srcset="/img/{slug}-400.webp 400w, /img/{slug}.webp 800w" sizes="(max-width: 48rem) 92vw, 373px" loading="lazy" decoding="async" alt="{alt}"></div>
           <div class="trade__body"><h2 data-t>{name}</h2><p data-t>{line}</p></div>
         </li>''')
 
@@ -888,6 +891,7 @@ def pages(WA, ARROW, EMAIL):
     <div class="wrap">
       <div class="flow" id="start">
         <div class="flow__dots" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+        <p class="visually-hidden" id="flow-progress" aria-live="polite"></p>
 
         <section class="flow__step" data-step="1">
           <p class="eyebrow" data-t>Step one</p>
@@ -933,17 +937,21 @@ def pages(WA, ARROW, EMAIL):
             <p data-t>Deposit received. Your slot is held — open the chat and we will pick it up from here.</p>
           </div>
 
-          <div class="btn-row">
-            <a class="btn btn--primary" id="flow-wa" href="{WA}" rel="noopener"><span data-t>Open WhatsApp</span>{ARROW}</a>
-            <a class="btn btn--ghost" id="flow-mail" href="mailto:{EMAIL}" data-t>Email instead</a>
-          </div>
-
+          <!-- The deposit leads. Three steps of qualification used to end by
+               sending people to WhatsApp, which put them back in the channel
+               this flow exists to replace and left nothing behind if they
+               closed the tab. The message routes stay, one line down. -->
           <div class="deposit deposit--offer" id="flow-pay-wrap">
             <div>
               <p class="deposit__head" data-t>Want the slot held while we talk?</p>
               <p class="note" data-t>&euro;75, refundable in full until work starts, and credited against your build fee. It is a way to hold your place in the queue, not a commitment.</p>
             </div>
-            <a class="btn btn--ghost btn--sm" id="flow-pay" href="#"><span data-t>Hold my slot &mdash; &euro;75</span></a>
+            <a class="btn btn--primary" id="flow-pay" href="#"><span data-t>Hold my slot &mdash; &euro;75</span>{ARROW}</a>
+          </div>
+
+          <div class="btn-row">
+            <a class="btn btn--ghost" id="flow-wa" href="{WA}" rel="noopener" data-t>Open WhatsApp</a>
+            <a class="btn btn--ghost" id="flow-mail" href="mailto:{EMAIL}" data-t>Email instead</a>
           </div>
 
           <p class="note" style="margin-top:1.5rem" data-t>Your answers are not sent anywhere. They are filled into a message you choose to open. Card details are handled entirely by Stripe and never touch this site.</p>

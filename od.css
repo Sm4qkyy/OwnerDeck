@@ -347,6 +347,12 @@ p:last-child { margin-bottom: 0; }
    Ambient only. They sit under the content, never take the pointer, and carry
    no meaning — the hero reads identically with this whole block deleted. */
 .section--hero { position: relative; overflow: hidden; }
+/* Trimmed from the section default: every 16px here is 16px of the first
+   screen that is not showing the visitor anything they can act on. */
+.section--hero { padding-block: var(--s7) var(--s8); }
+@media (max-width: 48rem) {
+  .section--hero { padding-block: var(--s6) var(--s7); }
+}
 /* A single soft wash behind the hero. Large, very low opacity, and sitting
    under everything — enough to stop the top of the page reading as flat black
    without becoming a colour in its own right. */
@@ -528,10 +534,17 @@ p:last-child { margin-bottom: 0; }
 }
 
 .hero-copy {
-  max-width: var(--measure);
+  /* Wider than --measure (38rem). At 38rem the h1 set to three lines and
+     pushed the button row off a 720px laptop; 46rem takes it to two. */
+  max-width: 46rem;
   margin-inline: auto;
   text-align: center;
 }
+/* The hero headline is the only one on the site that has to share a viewport
+   with a call to action, so it is sized for the fold rather than for impact.
+   4.25rem looked better in isolation and cost the button its place. */
+.hero-copy h1 { font-size: clamp(2.15rem, 1.5rem + 2.6vw, 3.35rem); }
+.hero-copy .lede { max-width: 40rem; margin-inline: auto; }
 .hero-copy .btn-row,
 .hero-copy .proof-strip {
   justify-content: center;
@@ -672,7 +685,8 @@ p:last-child { margin-bottom: 0; }
 .masthead__tools { display: flex; align-items: center; gap: var(--s2); flex: 0 0 auto; }
 
 .icon-btn {
-  width: 2.25rem; height: 2.25rem;
+  /* 2.25rem is 36px, under the 44px floor for a touch target. */
+  width: 2.75rem; height: 2.75rem;
   display: grid; place-items: center;
   background: none; border: 1px solid var(--rule);
   border-radius: 999px; color: var(--on-glass); cursor: pointer;
@@ -703,7 +717,7 @@ p:last-child { margin-bottom: 0; }
 
 .od-lang-btn {
   display: inline-flex; align-items: center; gap: .35rem;
-  height: 2.25rem; padding-inline: .65rem;
+  height: 2.75rem; padding-inline: .8rem;
   background: none; border: 1px solid var(--rule); border-radius: 999px;
   color: var(--on-glass); cursor: pointer;
   transition: color var(--t-fast) var(--ease),
@@ -1008,7 +1022,7 @@ a.dcard:hover { border-color: var(--rule-2); background: var(--paper-3); transfo
   position: relative;
   width: 100%;
   max-width: 38rem;
-  margin-top: var(--s7);
+  margin-top: var(--s6);
   border: 1px solid var(--blueprint);
   border-radius: var(--r);
   background: var(--paper);
@@ -1088,6 +1102,14 @@ a.dcard:hover { border-color: var(--rule-2); background: var(--paper-3); transfo
 .proof-strip__v { display: block; margin-top: .2rem; font-weight: 600; color: var(--ink); }
 
 @media (max-width: 34rem) {
+  /* Three columns gave the labels 114px of width at 10px: it passed contrast
+     and still had to be squinted at. Two columns buys the room to raise them;
+     the third metric sits underneath, divided by a rule rather than a gap. */
+  .proof-strip__grid { grid-template-columns: repeat(2, 1fr); }
+  .proof-metric__l { font-size: .6875rem; letter-spacing: .1em; }
+  .proof-strip__k  { font-size: .6875rem; letter-spacing: .1em; }
+  .proof-metric:nth-child(odd) { border-inline-start: 0; }
+  .proof-metric:nth-child(n+3) { border-top: 1px solid var(--blueprint); }
   .proof-metric { padding: var(--s4) var(--s3); }
   .proof-strip__foot > div { padding: var(--s3); }
   .proof-strip__head { padding: var(--s5) var(--s4) var(--s3); }
@@ -1672,3 +1694,39 @@ main { animation: od-enter 460ms var(--ease-out) both; }
 [dir="rtl"] .pagenav a:last-child { text-align: start; }
 [dir="rtl"] .faq summary::after { transform: rotate(135deg) translate(-2px, 2px); }
 [dir="rtl"] .faq details[open] summary::after { transform: rotate(-45deg) translate(2px, -2px); }
+
+/* --------------------------------------------------------------------------
+   24. Mobile menu CTA and the sticky action bar
+   -------------------------------------------------------------------------- */
+.mmenu__cta { width: 100%; justify-content: center; margin-bottom: var(--s3); }
+.mmenu__quiet {
+  display: block; text-align: center; padding: var(--s2) 0;
+  font-size: .875rem; color: var(--muted); text-decoration-color: var(--rule-2);
+}
+
+/* The homepage is thirteen screens on a phone. Someone convinced on screen
+   nine had to scroll to fourteen, or back to one, to act on it. This appears
+   once the hero's own buttons have left the viewport and not before, so it
+   never competes with them. */
+.sticky-cta {
+  position: fixed; inset-inline: 0; bottom: 0; z-index: 60;
+  display: none;
+  padding: .6rem .9rem calc(.6rem + env(safe-area-inset-bottom, 0px));
+  background: color-mix(in srgb, var(--paper) 86%, transparent);
+  backdrop-filter: saturate(140%) blur(12px);
+  -webkit-backdrop-filter: saturate(140%) blur(12px);
+  border-top: 1px solid var(--rule);
+  transform: translateY(110%);
+  transition: transform var(--t) var(--ease);
+}
+.sticky-cta.is-up { transform: none; }
+.sticky-cta .btn { width: 100%; justify-content: center; }
+@media (max-width: 48rem) {
+  .js .sticky-cta { display: block; }
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .sticky-cta { background: var(--paper); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sticky-cta { transition: none; }
+}

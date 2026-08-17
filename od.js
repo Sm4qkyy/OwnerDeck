@@ -214,4 +214,26 @@
       if (path === here) a.setAttribute('aria-current', 'page');
     });
   })();
+
+  /* ---------------------------------------------------------------------
+     Sticky action bar (mobile)
+     Appears only after the hero's own buttons have left the viewport, so it
+     never competes with them, and hides again if the reader scrolls back up
+     to where the real ones are. Watching the buttons rather than a scroll
+     offset means it stays correct when the hero changes height.
+     --------------------------------------------------------------------- */
+  (function stickyCta() {
+    var bar = document.getElementById('sticky-cta');
+    if (!bar) return;
+    var hero = document.querySelector('.section--hero .btn-row');
+    if (!hero || !('IntersectionObserver' in window)) return;
+
+    bar.hidden = false;
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        bar.classList.toggle('is-up', !e.isIntersecting && e.boundingClientRect.top < 0);
+      });
+    }, { threshold: 0 }).observe(hero);
+  })();
+
 })();
