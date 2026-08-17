@@ -173,6 +173,10 @@
         (inline ? '' : '<button class="odc-x" type="button" aria-label="' + T('k726da9c1', 'Close chat') + '">&times;</button>') +
       '</div>' +
       '<div class="odc-log" id="odc-log' + (inline ? '-i' : '') + '" role="log" aria-live="polite"></div>' +
+      /* The Turnstile host lives in the panel, in normal flow. It renders
+         nothing at all until Cloudflare wants a challenge; when it does, the
+         visitor can actually see and complete it. */
+      '<div id="od-turnstile" class="odc-ts cf-turnstile" data-action="chat-message"></div>' +
       '<form class="odc-form" autocomplete="off">' +
         '<input class="odc-input" type="text" maxlength="' + MAX_CHARS + '" ' +
           'placeholder="' + T('k309d1a72', 'Ask about price, setup, languages…') + '" ' +
@@ -338,8 +342,7 @@
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.9 8.9 0 0 1-3.8-.8L3 21l1.9-5a8.4 8.4 0 0 1 3.7-11.3 8.6 8.6 0 0 1 12.4 6.3Z"/></svg>' +
         '<span data-i18n="k69d9a05e">Ask a question</span>' +
       '</button>' +
-      '<div class="odc-panel" role="dialog" aria-label="Ownerdeck chat" hidden>' + panelHTML(false) + '</div>' +
-      '<div id="od-turnstile" class="cf-turnstile" data-action="turnstile-spin-v2" style="display:none"></div>';
+      '<div class="odc-panel" role="dialog" aria-label="Ownerdeck chat" hidden>' + panelHTML(false) + '</div>';
     document.body.appendChild(wrap);
 
     var launch = wrap.querySelector('.odc-launch');
@@ -399,15 +402,7 @@
     var host = document.getElementById('od-live-chat');
     if (!host) return;
     host.className = 'odc-inline';
-    host.innerHTML = panelHTML(true);
-    if (!document.getElementById('od-turnstile')) {
-      var t = document.createElement('div');
-      t.id = 'od-turnstile';
-      t.className = 'cf-turnstile';
-      t.setAttribute('data-action', 'turnstile-spin-v2');
-      t.style.display = 'none';
-      document.body.appendChild(t);
-    }
+    host.innerHTML = panelHTML(true);   // panelHTML carries the Turnstile host
     var log = host.querySelector('#odc-log-i');
     greet(log);
     loadTurnstile();

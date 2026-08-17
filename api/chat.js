@@ -39,7 +39,13 @@ const MAX_TURNS          = 12;    // per conversation
 const MAX_HISTORY        = 8;     // messages replayed to the model
 const RATE_LIMIT_MAX     = 15;    // messages per IP…
 const RATE_LIMIT_WINDOW  = 3600;  // …per hour (seconds)
-const UNVERIFIED_RATE_LIMIT = 3;  // …when Turnstile never ran (see verifyTurnstile)
+/* …when Turnstile never ran (see verifyTurnstile). Three was too mean: it is
+   one exchange and a follow-up, and any visitor Cloudflare cannot silently
+   clear — a privacy browser, a VPN, a corporate proxy — hits it mid-sentence
+   and is told to go away. DAILY_MAX is what actually bounds the bill, so this
+   number only decides how badly a legitimate person is treated on the way
+   there. */
+const UNVERIFIED_RATE_LIMIT = 8;
 /* Whole-site ceiling. Per-IP limits are defeated by having more IPs; this is
    the only number that bounds the bill no matter where traffic comes from.
    200 exchanges is far more than genuine demo traffic and costs under 10c. */
@@ -305,7 +311,7 @@ module.exports = async (req, res) => {
     return res.status(429).json({
       error: 'rate_limited',
       reply: unverified
-        ? "I can't take more questions from this browser right now — its privacy settings block the check that tells me you're a person. Email mark@ownerdeck.com and he'll answer properly."
+        ? "That's as many as I can take in one go. Email mark@ownerdeck.com and Mark will answer properly — usually the same day."
         : "You've hit the demo limit for now. Email mark@ownerdeck.com and he'll pick it up personally."
     });
   }
