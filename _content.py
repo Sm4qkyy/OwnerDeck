@@ -247,9 +247,26 @@ def pages(WA, ARROW, EMAIL):
           <h1 data-t>Run the online side of your rental business.</h1>
           <p class="lede" data-reveal="80" data-t>Car, scooter and boat hire, answered at 2am. Ownerdeck runs the website, the enquiries, the bookings and the follow-up after — so the questions that arrive while you are asleep are already dealt with by morning.</p>
 
-          <div class="cred" data-reveal="140">
-            <span class="cred__n">14</span>
-            <span class="cred__l" data-t>enquiries booked between 9pm and 8am last month, for one car rental operator in Limassol</span>
+          <div class="proof-strip" data-reveal="140" aria-label="Last 30 days proof from a Limassol car rental operator">
+            <p class="proof-strip__eyebrow" data-t>Last 30 days &middot; Limassol car rental</p>
+            <div class="proof-strip__grid">
+              <div class="proof-metric">
+                <span class="proof-metric__n">212</span>
+                <span class="proof-metric__l" data-t>enquiries answered</span>
+              </div>
+              <div class="proof-metric">
+                <span class="proof-metric__n">14</span>
+                <span class="proof-metric__l" data-t>after-hours bookings</span>
+              </div>
+              <div class="proof-metric">
+                <span class="proof-metric__n">&lt;1 min</span>
+                <span class="proof-metric__l" data-t>average reply time</span>
+              </div>
+              <div class="proof-metric">
+                <span class="proof-metric__n">live</span>
+                <span class="proof-metric__l" data-t>with one local operator</span>
+              </div>
+            </div>
           </div>
 
           <div class="btn-row" data-reveal="200" style="margin-top:2rem">

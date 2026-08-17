@@ -486,10 +486,10 @@ p:last-child { margin-bottom: 0; }
   text-align: center;
 }
 .hero-copy .btn-row,
-.hero-copy .cred {
+.hero-copy .proof-strip {
   justify-content: center;
 }
-.hero-copy .cred {
+.hero-copy .proof-strip {
   margin-inline: auto;
 }
 .hero-copy .note {
@@ -953,26 +953,52 @@ a.dcard:hover { border-color: var(--rule-2); background: var(--paper-3); transfo
 /* --------------------------------------------------------------------------
    14. Stats and proof
    -------------------------------------------------------------------------- */
-/* The one real number, in the hero rather than seven sections down. It was
-   below the deck, the trades strip and the whole feature list — the single
-   most checkable claim on the site, buried under the parts inventory. */
-.cred {
-  display: flex; align-items: center; gap: var(--s4);
+/* The most checkable claims, pulled into the hero before the visitor has to
+   decide whether the rest of the page is worth reading. */
+.proof-strip {
+  width: 100%;
+  max-width: 38rem;
   margin-top: var(--s6);
   padding: var(--s4) var(--s5);
+  border: 1px solid var(--rule);
   border-inline-start: 2px solid var(--ink);
   background: var(--paper-2);
-  border-radius: 0 var(--r) var(--r) 0;
-  max-width: 34rem;
+  border-radius: var(--r);
+  text-align: start;
 }
-.cred__n {
-  font-size: clamp(2.25rem, 1.8rem + 1.8vw, 3rem);
+.proof-strip__eyebrow {
+  margin: 0 0 var(--s3);
+  font-family: var(--mono);
+  font-size: .6875rem;
+  letter-spacing: .12em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.proof-strip__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--s4);
+}
+.proof-metric {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s1);
+}
+.proof-metric__n {
+  font-size: clamp(1.35rem, 1rem + 1.2vw, 2rem);
   font-weight: 600; letter-spacing: -0.045em; line-height: 1;
-  font-variant-numeric: tabular-nums; flex: 0 0 auto;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  text-transform: none;
 }
-.cred__l { font-size: .9375rem; color: var(--muted); line-height: 1.45; }
-@media (max-width: 34rem) {
-  .cred { flex-direction: column; align-items: flex-start; gap: var(--s2); }
+.proof-metric__l {
+  font-size: .8125rem;
+  color: var(--muted);
+  line-height: 1.35;
+}
+@media (max-width: 40rem) {
+  .proof-strip__grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 .stat { display: flex; flex-direction: column; gap: var(--s1); }
