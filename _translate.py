@@ -582,6 +582,13 @@ T = {
         ('Περαστικοί, τακτικοί πελάτες και ένα ημερολόγιο που γεμίζει μόνο του.',
          'Клиенты с улицы, постоянные посетители и расписание, которое заполняется само.'),
 
+    # ---- the reply-time metric ----
+    # "~2 sec" carries a unit, so it is translated rather than left as a
+    # numeral like 212 and 14.
+    '~2 sec': ('~2 \u03b4\u03b5\u03c5\u03c4.', '~2 \u0441\u0435\u043a'),
+    'assistant reply time': ('\u03c7\u03c1\u03cc\u03bd\u03bf\u03c2 \u03b1\u03c0\u03ac\u03bd\u03c4\u03b7\u03c3\u03b7\u03c2 \u03b2\u03bf\u03b7\u03b8\u03bf\u03cd',
+                             '\u0432\u0440\u0435\u043c\u044f \u043e\u0442\u0432\u0435\u0442\u0430 \u0430\u0441\u0441\u0438\u0441\u0442\u0435\u043d\u0442\u0430'),
+
     # ---- the live operator card ----
     'Live &middot; Limassol': ('Ζωντανά &middot; Λεμεσός',
                               'Онлайн &middot; Лимассол'),

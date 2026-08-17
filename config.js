@@ -24,7 +24,7 @@ window.OD_CONFIG = {
        routinely ignores Cache-Control: no-store, so re-cutting the file is not
        enough to make a browser fetch it — the URL has to change. Bump this
        whenever demo.mp4 is replaced. */
-    src: "demo.mp4?v=2",
+    src: "demo.mp4?v=3",
     poster: "demo-poster.jpg?v=2"
   },
 

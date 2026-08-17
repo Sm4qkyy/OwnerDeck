@@ -263,8 +263,8 @@ def pages(WA, ARROW, EMAIL):
                 <span class="proof-metric__l" data-t>after-hours bookings</span>
               </div>
               <div class="proof-metric">
-                <span class="proof-metric__n">&lt;1 min</span>
-                <span class="proof-metric__l" data-t>average reply time</span>
+                <span class="proof-metric__n" data-t>~2 sec</span>
+                <span class="proof-metric__l" data-t>assistant reply time</span>
               </div>
             </div>
             <div class="proof-strip__foot">
