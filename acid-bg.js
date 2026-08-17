@@ -174,10 +174,18 @@
     gl.uniform1f(U.uGrainIntensity, 0.04);
   }
 
+  var sized = false;
+
   function size() {
     var r = host.getBoundingClientRect();
+    /* A host measuring zero — a hidden tab, a display:none ancestor, some
+       load states — would give a 1px canvas that renders nothing and never
+       corrects itself, because nothing fires a resize afterwards. Wait for
+       a real box instead, and let the load event try again. */
+    if (r.width < 2 || r.height < 2) { sized = false; return; }
     var w = Math.max(1, Math.floor(r.width * DPR));
     var h = Math.max(1, Math.floor(r.height * DPR));
+    sized = true;
     if (canvas.width === w && canvas.height === h) return;
     canvas.width = w;
     canvas.height = h;
@@ -199,7 +207,10 @@
     gl.drawArrays(gl.TRIANGLES, 0, 3);
     raf = requestAnimationFrame(frame);
   }
-  function start() { if (onScreen && pageOn && !raf) raf = requestAnimationFrame(frame); }
+  function start() {
+    if (!sized) size();                       // nothing to draw into yet
+    if (sized && onScreen && pageOn && !raf) raf = requestAnimationFrame(frame);
+  }
   function stop() { if (raf) { cancelAnimationFrame(raf); raf = 0; } }
 
   // Nothing is gained by shading pixels nobody is looking at.
@@ -214,8 +225,9 @@
     pageOn ? start() : stop();
   });
 
-  window.addEventListener('resize', size);
-  if ('ResizeObserver' in window) new ResizeObserver(size).observe(host);
+  if (!sized) window.addEventListener('load', function () { size(); start(); }, { once: true });
+  window.addEventListener('resize', function () { size(); start(); });
+  if ('ResizeObserver' in window) new ResizeObserver(function () { size(); start(); }).observe(host);
 
   // The theme toggle rewrites the custom properties this reads.
   if (window.OD_theme && window.OD_theme.onChange) {
