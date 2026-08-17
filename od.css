@@ -377,6 +377,15 @@ p:last-child { margin-bottom: 0; }
 @media (max-width: 48rem) {
   :root { --s7: 2rem; --s8: 2.75rem; --s9: 3.5rem; }
   .wrap { width: min(100% - 2.5rem, var(--wrap)); }
+
+  /* 24px between four children is 72px of gap in a 350px pill. With the tap
+     targets at their proper 44px that pushed the menu button 15px outside
+     the capsule. The spacer exists to hold the desktop nav apart and has
+     nothing to separate once the nav is hidden. */
+  .masthead__bar { gap: var(--s2); padding-inline: .4rem; }
+  .masthead__nav-spacer { display: none; }
+  .masthead__tools { gap: var(--s1); }
+  .masthead__mark { padding-inline-start: .35rem; }
 }
 
 .section { padding-block: var(--s9); }
@@ -1751,18 +1760,10 @@ main { animation: od-enter 460ms var(--ease-out) both; }
   .se__hint { display: none; }
 }
 
-/* On a phone neither effect runs, so the section stops being a tall track
-   with a pinned stage and becomes what it always was underneath: a picture
-   with a line of copy on it. Nothing is hidden — the same words, at a
-   height that does not cost two screens of scrolling to pass. */
+/* Gone on a phone. Neither effect runs there, and what was left was a wide
+   landscape plate forced into a tall box — the car small in the middle with
+   the parking bays doing most of the work — carrying a line that restates
+   what the hero already said two screens above. */
 @media (max-width: 48rem) {
-  .js .se__track { height: auto; }
-  .se__stage { position: static; height: auto; aspect-ratio: 4 / 5; }
-  .js .se__frame { clip-path: none; }
-  .js .se__media { transform: none; }
-  .se__scrim { opacity: .46; }
-  .js .se__title { display: none; }        /* the overlay says it better */
-  .se__hint { display: none; }
-  .js .se__overlay { opacity: 1; transform: none; }
-  .se__overlay { padding: var(--s6) var(--s5); gap: var(--s4); }
+  .section--flush[data-scroll-expand] { display: none; }
 }
