@@ -242,7 +242,7 @@ def pages(WA, ARROW, EMAIL):
 {hero_floaters()}
     </div>
     <div class="wrap">
-      <div class="split">
+      <div class="hero-copy">
         <div>
           <h1 data-t>Run the online side of your rental business.</h1>
           <p class="lede" data-reveal="80" data-t>Car, scooter and boat hire, answered at 2am. Ownerdeck runs the website, the enquiries, the bookings and the follow-up after — so the questions that arrive while you are asleep are already dealt with by morning.</p>
@@ -257,9 +257,6 @@ def pages(WA, ARROW, EMAIL):
             <a class="btn btn--ghost" href="/start" data-t>Get started</a>
           </div>
           <p class="note" data-reveal="240" style="margin-top:1.25rem" data-t>No VAT. No long contract on the entry plan. Works the same way for villas, clinics and salons — see who it is for.</p>
-        </div>
-        <div class="emblem-wrap">
-          <div class="emblem" role="img" aria-label="The Ownerdeck monogram"></div>
         </div>
       </div>
     </div>
@@ -872,7 +869,7 @@ def pages(WA, ARROW, EMAIL):
 
         <section class="flow__step" data-step="1">
           <p class="eyebrow" data-t>Step one</p>
-          <h2 tabindex="-1" data-focus data-t>What kind of business is it?</h2>
+          <h1 tabindex="-1" data-focus data-t>What kind of business is it?</h1>
           <p class="lede" style="margin-bottom:2rem" data-t>So the quote is about your trade rather than a generic package.</p>
           <div class="flow__grid">
 {trade_picks}

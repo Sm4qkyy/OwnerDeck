@@ -18,7 +18,7 @@ from collections import defaultdict
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PAGES = ['index', 'what-we-build', 'how-it-works', 'pricing', 'who-its-for',
-         'questions', 'demo', 'legal', 'privacy', 'cookies', 'terms']
+         'questions', 'start', 'demo', 'legal', 'privacy', 'cookies', 'terms']
 
 # Served by the platform at request time, not present in the repo. Checking
 # these as files is the same false positive the previous verifier hit.

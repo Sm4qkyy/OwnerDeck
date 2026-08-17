@@ -40,7 +40,7 @@
   r.classList.add('js');
   try {
     var t = localStorage.getItem('od_theme');
-    if (t === 'light' || t === 'dark') r.setAttribute('data-theme', t);
+    r.setAttribute('data-theme', (t === 'dark' || t === 'light') ? t : 'light');
   } catch (e) {}
 })();
 </script>
@@ -110,7 +110,7 @@
         <span class="floater" data-depth="-0.24" aria-hidden="true" style="--f-c:var(--f-reach)"><span class="floater__card" style="--rot:10deg;--scale:0.75;--dur:13.1s;--delay:-9.2s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10.5" r="3"/><path d="M20 10.5c0 6-8 11.5-8 11.5S4 16.5 4 10.5a8 8 0 1 1 16 0Z"/></svg></span></span>
     </div>
     <div class="wrap">
-      <div class="split">
+      <div class="hero-copy">
         <div>
           <h1 data-i18n="kec5f1350">Run the online side of your rental business.</h1>
           <p class="lede" data-reveal="80" data-i18n="k51548cb1">Car, scooter and boat hire, answered at 2am. Ownerdeck runs the website, the enquiries, the bookings and the follow-up after — so the questions that arrive while you are asleep are already dealt with by morning.</p>
@@ -125,9 +125,6 @@
             <a class="btn btn--ghost" href="/start" data-i18n="kbe11c74c">Get started</a>
           </div>
           <p class="note" data-reveal="240" style="margin-top:1.25rem" data-i18n="k41bbd115">No VAT. No long contract on the entry plan. Works the same way for villas, clinics and salons — see who it is for.</p>
-        </div>
-        <div class="emblem-wrap">
-          <div class="emblem" role="img" aria-label="The Ownerdeck monogram"></div>
         </div>
       </div>
     </div>

@@ -141,7 +141,7 @@ def head(page):
   r.classList.add('js');
   try {
     var t = localStorage.getItem('od_theme');
-    if (t === 'light' || t === 'dark') r.setAttribute('data-theme', t);
+    r.setAttribute('data-theme', (t === 'dark' || t === 'light') ? t : 'light');
   } catch (e) {}
 })();
 </script>

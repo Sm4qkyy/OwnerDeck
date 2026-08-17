@@ -25,7 +25,7 @@
 
     function current() {
       return root.getAttribute('data-theme') ||
-        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        'light';
     }
 
     btn.addEventListener('click', function () {

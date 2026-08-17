@@ -480,6 +480,23 @@ p:last-child { margin-bottom: 0; }
   .split { grid-template-columns: 1fr; gap: var(--s7); }
 }
 
+.hero-copy {
+  max-width: var(--measure);
+  margin-inline: auto;
+  text-align: center;
+}
+.hero-copy .btn-row,
+.hero-copy .cred {
+  justify-content: center;
+}
+.hero-copy .cred {
+  margin-inline: auto;
+}
+.hero-copy .note {
+  max-width: 34rem;
+  margin-inline: auto;
+}
+
 .section__head { max-width: 44rem; margin-bottom: var(--s7); }
 
 /* --------------------------------------------------------------------------
@@ -577,10 +594,6 @@ p:last-child { margin-bottom: 0; }
    than no mark at all. */
 @supports not ((-webkit-mask: url("")) or (mask: url(""))) {
   .od-mark { display: none; }
-  /* Same reasoning: unmasked, the plaque holds a solid ink rectangle where
-     the mark should be. An empty plaque would be no better, so the whole
-     thing goes. */
-  .emblem-wrap { display: none; }
 }
 
 .masthead__nav {
@@ -1008,47 +1021,7 @@ a.dcard:hover { border-color: var(--rule-2); background: var(--paper-3); transfo
 .trade__body p { font-size: .875rem; color: var(--muted); margin: 0; }
 
 /* --------------------------------------------------------------------------
-   15a. Hero emblem
-   The mark on a plaque cut from the same material as .namecard — same rule,
-   same radius, same shadow — so it reads as part of the set rather than as
-   an image dropped into the page. Monochrome on purpose: the mark is the
-   only thing in the hero that is allowed to be a logo, so it does not also
-   need to be shiny.
-   -------------------------------------------------------------------------- */
-.emblem-wrap { display: grid; place-items: center; padding-block: var(--s5); }
-
-.emblem {
-  width: min(100%, 21rem);
-  aspect-ratio: 4 / 3;
-  display: grid;
-  place-items: center;
-  border: 1px solid var(--rule);
-  border-radius: var(--r-xl);
-  /* One soft light from the upper left, in the surface tokens rather than a
-     grey — it has to survive both themes without being redefined. */
-  background:
-    radial-gradient(120% 95% at 24% 12%, var(--paper-2) 0%, transparent 64%),
-    var(--paper);
-  box-shadow: 0 22px 60px rgb(var(--shadow) / .10);
-}
-
-/* The mark itself, through the alpha mask the header already uses. */
-.emblem::before {
-  content: "";
-  width: 56%;
-  aspect-ratio: 506 / 284;
-  background: var(--ink);
-  -webkit-mask: url("/ownerdeck-mark-mask.png") no-repeat center / contain;
-          mask: url("/ownerdeck-mark-mask.png") no-repeat center / contain;
-}
-
-@media (max-width: 62rem) {
-  .emblem { width: min(74%, 15rem); }
-  .emblem-wrap { padding-block: var(--s6) var(--s2); }
-}
-
-/* --------------------------------------------------------------------------
-   15b. Trade strip — the compact photo row on the home page
+   15a. Trade strip — the compact photo row on the home page
    Smaller and denser than .trades, because on the home page its job is
    recognition, not description. Six tiles, caption under the crop.
    -------------------------------------------------------------------------- */

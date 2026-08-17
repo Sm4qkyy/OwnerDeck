@@ -1,7 +1,7 @@
 
   /* Demo-only components. Every value here is a brand.css token — no literals. */
-  .stepper { display:flex; align-items:flex-start; justify-content:center;
-             gap:var(--s2); max-width:38rem; margin:0 auto var(--s7); }
+  .stepper { list-style:none; display:flex; align-items:flex-start; justify-content:center;
+             gap:var(--s2); max-width:38rem; margin:0 auto var(--s7); padding:0; }
   .step    { display:flex; flex-direction:column; align-items:center; gap:var(--s2); flex:0 0 auto; }
   .step__n { width:2.25rem; height:2.25rem; border-radius:50%; display:grid; place-items:center;
              border:1px solid var(--rule); color:var(--ink-soft); background:var(--bone);
@@ -13,17 +13,17 @@
   .stepper__bar { flex:1; height:1px; background:var(--rule); margin-top:1.125rem; }
   @media (max-width:40rem) { .step__l { display:none } .stepper { max-width:16rem } }
 
-  .pane { display:none }
+  .pane { display:none; max-width:52rem; margin-inline:auto; text-align:center; }
   .pane.is-on { display:block }
 
   .video-frame { width:100%; max-width:52rem; aspect-ratio:16/9;
-                 border:1px solid var(--rule); border-radius:var(--radius); overflow:hidden; }
+                 border:1px solid var(--rule); border-radius:var(--radius); overflow:hidden; margin-inline:auto; }
   .video-el { width:100%; height:100%; border:0; display:block; background:var(--ink); }
   .video-soon { max-width:52rem; aspect-ratio:16/9; border:1px dashed var(--rule);
                 border-radius:var(--radius); display:grid; place-items:center;
                 text-align:center; padding:var(--s6); background:var(--bone-2); }
 
-  .bot { max-width:34rem; border:1px solid var(--rule); border-radius:var(--radius);
+  .bot { max-width:34rem; margin-inline:auto; text-align:start; border:1px solid var(--rule); border-radius:var(--radius);
          overflow:hidden; background:var(--bone); }
   .bot__head { display:flex; align-items:center; gap:var(--s3);
                padding:var(--s4); background:var(--bone-2); border-bottom:1px solid var(--rule); }
@@ -55,12 +55,12 @@
   .bot__opt:hover { border-color:var(--clay); }
   .bot__done { font-size:.9375rem; color:var(--ink-soft); }
 
-  .channels { display:flex; flex-wrap:wrap; gap:var(--s3); }
+  .channels { display:flex; flex-wrap:wrap; justify-content:center; gap:var(--s3); }
   .channel { display:inline-flex; align-items:center; gap:var(--s2);
              border:1px solid var(--rule); border-radius:var(--radius);
              padding:var(--s3) var(--s5); color:var(--ink); text-decoration:none;
              font-weight:500; font-size:.9375rem; background:var(--bone); }
   .channel:hover { border-color:var(--clay); color:var(--ink); }
 
-  .nav-row { display:flex; flex-wrap:wrap; gap:var(--s3); margin-top:var(--s7); }
+  .nav-row { display:flex; flex-wrap:wrap; justify-content:center; gap:var(--s3); margin-top:var(--s7); }
   .pane .lede + div { margin-top:var(--s6) }
