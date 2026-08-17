@@ -67,6 +67,15 @@
   --f-return: #F5A524;
   --f-shine:  #FFFFFF8C;   /* 1px bevel along the card's top edge */
   --f-gloss:  #FFFFFF3D;   /* the fixed specular on the card face */
+
+  /* Chrome ramp for the hero emblem. Metal is not a colour, it is a sequence
+     of light and dark bands reflecting a room — so this is six stops, not a
+     gradient between two greys. */
+  --metal-1: #F4F6FB;   /* off-white: pure white would vanish into --paper */
+  --metal-2: #C9CBD6;
+  --metal-3: #6B6E80;
+  --metal-4: #EDEEF4;
+  --metal-5: #8A8DA0;
   --shadow:   16 16 20;  /* rgb triplet, alpha applied at use */
 
   --wrap:     72rem;
@@ -127,6 +136,11 @@
     --img-filter:  grayscale(1) contrast(1.04);
     --f-shine:  #FFFFFF33;
     --f-gloss:  #FFFFFF1F;
+    --metal-1: #FFFFFF;
+    --metal-2: #B9BCCB;
+    --metal-3: #4E5163;
+    --metal-4: #E4E6EF;
+    --metal-5: #6E7186;
     --shadow:  0 0 0;
     color-scheme: dark;
   }
@@ -158,6 +172,11 @@
   --img-filter:  grayscale(1) contrast(1.04);
   --f-shine:  #FFFFFF33;
   --f-gloss:  #FFFFFF1F;
+  --metal-1: #FFFFFF;
+  --metal-2: #B9BCCB;
+  --metal-3: #4E5163;
+  --metal-4: #E4E6EF;
+  --metal-5: #6E7186;
   --shadow:  0 0 0;
   color-scheme: dark;
 }
@@ -576,6 +595,9 @@ p:last-child { margin-bottom: 0; }
    than no mark at all. */
 @supports not ((-webkit-mask: url("")) or (mask: url(""))) {
   .od-mark { display: none; }
+  /* Same reasoning, louder: unmasked, the hero emblem is a 24rem gradient
+     slab sitting where the logo should be. */
+  .emblem-wrap { display: none; }
 }
 
 .masthead__nav {
@@ -1001,6 +1023,51 @@ a.dcard:hover { border-color: var(--rule-2); background: var(--paper-3); transfo
 .trade__body { padding: var(--s4) var(--s5) var(--s5); }
 .trade__body h2 { font-size: 1.0625rem; margin: 0 0 var(--s1); letter-spacing: -0.015em; }
 .trade__body p { font-size: .875rem; color: var(--muted); margin: 0; }
+
+/* --------------------------------------------------------------------------
+   15a. Hero emblem
+   The monogram at size, filled with a chrome ramp through the same alpha mask
+   the header uses. This is a stand-in: CSS can fake the banding of brushed
+   metal but not refraction, contact occlusion or a real environment
+   reflection, so a rendered emblem will beat it. The file swaps in without
+   touching anything else.
+   -------------------------------------------------------------------------- */
+.emblem-wrap { display: grid; place-items: center; padding-block: var(--s5); }
+
+.emblem {
+  width: min(100%, 24rem);
+  aspect-ratio: 506 / 284;
+  -webkit-mask: url("/ownerdeck-mark-mask.png") no-repeat center / contain;
+          mask: url("/ownerdeck-mark-mask.png") no-repeat center / contain;
+  /* Six stops, angled across the form. The tight dark band at 40-46% is what
+     sells it — polished metal has a horizon line where the reflection flips
+     from sky to ground, and a smooth two-stop gradient reads as grey plastic
+     precisely because it has none. */
+  background: linear-gradient(148deg,
+    var(--metal-1) 0%,
+    var(--metal-4) 16%,
+    var(--metal-2) 34%,
+    var(--metal-3) 43%,
+    var(--metal-2) 52%,
+    var(--metal-4) 70%,
+    var(--metal-5) 88%,
+    var(--metal-2) 100%);
+  filter:
+    drop-shadow(0 1px 0 var(--metal-1))
+    drop-shadow(0 24px 44px rgb(var(--shadow) / .45));
+}
+
+@media (max-width: 62rem) {
+  .emblem { width: min(72%, 17rem); }
+  .emblem-wrap { padding-block: var(--s6) var(--s2); }
+}
+@media (prefers-color-scheme: dark) {
+  /* On a near-black ground the emblem needs a little separation beneath it,
+     the way the render has contact shadow. */
+  :root:not([data-theme="light"]) .emblem { filter:
+    drop-shadow(0 1px 0 var(--metal-1))
+    drop-shadow(0 26px 50px rgb(var(--shadow) / .7)); }
+}
 
 /* --------------------------------------------------------------------------
    15b. Trade strip — the compact photo row on the home page

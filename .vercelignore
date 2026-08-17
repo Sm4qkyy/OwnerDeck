@@ -30,3 +30,4 @@ ownerdeck-wordmark-mask.png
 # The retired typefaces. Nothing has asked for them since the guides moved to
 # od.css, and they are 119 KB of dead weight on every deploy.
 fonts/
+.claude/

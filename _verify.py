@@ -77,6 +77,16 @@ def check_palette(css):
     if stray:
         fail('od.css', 'hex outside the palette blocks: %s' % ', '.join(sorted(set(stray))[:8]))
 
+    # Hex is not the only way to write a colour, and this check only knew about
+    # hex. A literal rgb(0 0 0 / .7) went straight through it in a drop-shadow
+    # — both a hardcoded colour and the pure black the palette rules out.
+    # Anything wrapping var() passes; that is the token pattern used elsewhere.
+    for m in re.finditer(r'\b(rgba?|hsla?)\(([^()]*)\)', outside):
+        if 'var(' in m.group(2):
+            continue
+        fail('od.css', 'literal %s outside the palette blocks: %s'
+             % (m.group(1), m.group(0)[:44]))
+
     def tokens(block):
         return dict(re.findall(r'(--[a-z0-9-]+)\s*:\s*(#[0-9a-fA-F]{6})', block))
 

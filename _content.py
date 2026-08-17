@@ -258,8 +258,8 @@ def pages(WA, ARROW, EMAIL):
           </div>
           <p class="note" data-reveal="240" style="margin-top:1.25rem" data-t>No VAT. No long contract on the entry plan. Works the same way for villas, clinics and salons — see who it is for.</p>
         </div>
-        <div>
-          {chat_mock()}
+        <div class="emblem-wrap">
+          <div class="emblem" role="img" aria-label="The Ownerdeck monogram"></div>
         </div>
       </div>
     </div>
@@ -454,6 +454,16 @@ def pages(WA, ARROW, EMAIL):
         <p class="lede" data-t>Start with the card you need and add the rest as you grow. Every card reads from the same set of facts, so nothing you own can contradict anything else you own.</p>
       </div>
 {chr(10).join(cards_long)}
+
+      <article class="panel" data-reveal style="margin-bottom:1.25rem">
+        <p class="eyebrow" data-t>Answer, in practice</p>
+        <div class="split" style="gap:3rem;align-items:center">
+          <div>
+            <p class="lede" data-t>Two in the morning, a question about a jeep, and a held booking by the time you wake up. No template and no menu of options — it read the question and answered from your prices.</p>
+          </div>
+          <div>{chat_mock()}</div>
+        </div>
+      </article>
 
       <article class="panel panel--plain" id="data" data-reveal>
         <div class="split" style="gap:3rem;align-items:start">

@@ -7,3 +7,6 @@ __pycache__/
 _en_source.json
 
 .vercel
+
+# local dev server config, machine-specific paths
+.claude/
