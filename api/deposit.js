@@ -47,25 +47,13 @@ function clean(s, max) {
 module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'no-store');
 
-  /* A GET reports whether the key is wired, and which Stripe-ish variable
-     names this function can actually see. Names only — never values, never a
-     prefix of a value. It exists because "I added the key" and "the function
-     can read the key" are different claims, and guessing at the difference
-     wastes a deploy cycle each time. */
+  /* A GET reports only whether a key is wired. It used to also list the
+     Stripe-ish environment variable names this function could see, and the
+     Node version, which is how the two setup problems were found — but that
+     was debugging scaffolding and there is no reason to leave environment
+     detail on a public endpoint once it has served its purpose. */
   if (req.method === 'GET') {
-    return res.status(200).json({
-      configured: !!secretKey(),
-      stripeVarsVisible: Object.keys(process.env).filter(function (n) {
-        return /stripe/i.test(n);
-      }).sort(),
-      // The POST path died with FUNCTION_INVOCATION_FAILED while GET was fine,
-      // which points at something only POST touches. fetch is the prime
-      // suspect: it is only global from Node 18, and this project pins no
-      // engine, so an older default would throw a ReferenceError here and
-      // nowhere else.
-      node: process.version,
-      hasFetch: typeof fetch,
-    });
+    return res.status(200).json({ configured: !!secretKey() });
   }
 
   if (req.method !== 'POST') {
