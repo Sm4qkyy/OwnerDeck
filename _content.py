@@ -173,8 +173,10 @@ def hero_floaters():
         # Negative delays start every card at a different point in its cycle,
         # so they are already spread out on the first frame instead of rising
         # together and drifting apart over the first half minute.
-        dur = 7.5 + i * 1.4
-        delay = -(i * 2.3)
+        # Rounded, because 7.5 + 3 * 1.4 in binary floating point is
+        # 11.700000000000001 and that lands verbatim in the shipped markup.
+        dur = round(7.5 + i * 1.4, 2)
+        delay = round(-(i * 2.3), 2)
         out.append(
             f'        <span class="floater" data-depth="{depth}" aria-hidden="true" '
             f'style="top:{top}%;left:{left}%;--f-c:var(--f-{slug})">'
