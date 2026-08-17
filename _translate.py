@@ -582,6 +582,19 @@ T = {
         ('Περαστικοί, τακτικοί πελάτες και ένα ημερολόγιο που γεμίζει μόνο του.',
          'Клиенты с улицы, постоянные посетители и расписание, которое заполняется само.'),
 
+    # ---- the hero proof strip ----
+    # These were written straight into lang/*.json, which _translate.py
+    # regenerates, so they vanished on the next run. Kept here instead.
+    'enquiries answered': ('ερωτήματα απαντήθηκαν',
+                           'запросов обработано'),
+    'after-hours bookings': ('κρατήσεις εκτός ωραρίου',
+                             'броней после рабочего времени'),
+    'average reply time': ('μέσος χρόνος απάντησης',
+                           'среднее время ответа'),
+    'Last 30 days &middot; one live car rental operator in Limassol':
+        ('Τελευταίες 30 μέρες &middot; μία εν λειτουργία εταιρεία ενοικίασης αυτοκινήτων στη Λεμεσό',
+         'Последние 30 дней &middot; один действующий прокат автомобилей в Лимассоле'),
+
     # ---- the chat mock, now on what-we-build ----
     'Answer, in practice': ('Η απάντηση, στην πράξη',
                             'Ответ на практике'),

@@ -247,8 +247,8 @@ def pages(WA, ARROW, EMAIL):
           <h1 data-t>Run the online side of your rental business.</h1>
           <p class="lede" data-reveal="80" data-t>Car, scooter and boat hire, answered at 2am. Ownerdeck runs the website, the enquiries, the bookings and the follow-up after — so the questions that arrive while you are asleep are already dealt with by morning.</p>
 
-          <div class="proof-strip" data-reveal="140" aria-label="Last 30 days proof from a Limassol car rental operator">
-            <p class="proof-strip__eyebrow" data-t>Last 30 days &middot; Limassol car rental</p>
+          <div class="proof-strip" role="group" aria-labelledby="proof-lede" data-reveal="140">
+            <p class="proof-strip__eyebrow" id="proof-lede" data-t>Last 30 days &middot; one live car rental operator in Limassol</p>
             <div class="proof-strip__grid">
               <div class="proof-metric">
                 <span class="proof-metric__n">212</span>
@@ -261,10 +261,6 @@ def pages(WA, ARROW, EMAIL):
               <div class="proof-metric">
                 <span class="proof-metric__n">&lt;1 min</span>
                 <span class="proof-metric__l" data-t>average reply time</span>
-              </div>
-              <div class="proof-metric">
-                <span class="proof-metric__n">live</span>
-                <span class="proof-metric__l" data-t>with one local operator</span>
               </div>
             </div>
           </div>

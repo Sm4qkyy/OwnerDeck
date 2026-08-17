@@ -976,8 +976,10 @@ a.dcard:hover { border-color: var(--rule-2); background: var(--paper-3); transfo
 }
 .proof-strip__grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--s4);
+  /* Sized from the content rather than a fixed count, so the number of
+     metrics can change without a second rule chasing it. */
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  gap: var(--s4) var(--s5);
 }
 .proof-metric {
   min-width: 0;
@@ -997,7 +999,9 @@ a.dcard:hover { border-color: var(--rule-2); background: var(--paper-3); transfo
   color: var(--muted);
   line-height: 1.35;
 }
-@media (max-width: 40rem) {
+/* auto-fit reflows on its own down to here; below it the labels are the
+   constraint rather than the numbers, so force a pair per row. */
+@media (max-width: 26rem) {
   .proof-strip__grid { grid-template-columns: repeat(2, 1fr); }
 }
 
