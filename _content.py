@@ -233,7 +233,9 @@ def pages(WA, ARROW, EMAIL):
 
     # ------------------------------------------------------------- index
     P.append(dict(
-        slug='index', in_flow=False,
+        slug='index',
+        scripts='<script src="/scroll-expand.js?v=20260815a" defer></script>\n',
+        in_flow=False,
         nav='Home',
         title='Ownerdeck — run the online side of your business',
         desc='We build and run the online side of your business: the website, '
@@ -283,6 +285,24 @@ def pages(WA, ARROW, EMAIL):
 
           <p class="note" data-reveal="240" style="margin-top:1.25rem" data-t>No VAT. Stop any plan with a month’s notice. Works the same way for villas, clinics and salons — see who it is for.</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--flush" data-scroll-expand
+           data-scroll-distance="1.1" data-hold-distance="0.3">
+    <div class="se__track">
+      <div class="se__stage">
+        <div class="se__frame" role="img" aria-label="An empty car park photographed from above, with a single white hire car in one bay">
+          <div class="se__media"></div>
+          <div class="se__scrim"></div>
+          <div class="se__overlay">
+            <h2 data-t>The website answered. You found out later.</h2>
+            <p data-t>It quoted from your real prices, checked what was free, and held the car — while the person who owns it was asleep.</p>
+          </div>
+        </div>
+        <p class="se__title" data-t>While you were asleep.</p>
+        <p class="se__hint" data-t>Scroll</p>
       </div>
     </div>
   </section>

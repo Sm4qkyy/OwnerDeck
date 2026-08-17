@@ -42,6 +42,11 @@ def main():
     for name in sorted(os.listdir(IMG)):
         if not name.endswith('.webp') or name.endswith('-400.webp'):
             continue
+        # The scroll-expand hero goes full bleed, so 800px would be visibly
+        # soft on a wide screen. It ships at its native width with its own
+        # 900w companion, and must survive re-runs of this script untouched.
+        if name.startswith('hero-lot'):
+            continue
         path = os.path.join(IMG, name)
         slug = name[:-5]
         was = os.path.getsize(path)

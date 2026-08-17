@@ -589,6 +589,17 @@ T = {
     'assistant reply time': ('\u03c7\u03c1\u03cc\u03bd\u03bf\u03c2 \u03b1\u03c0\u03ac\u03bd\u03c4\u03b7\u03c3\u03b7\u03c2 \u03b2\u03bf\u03b7\u03b8\u03bf\u03cd',
                              '\u0432\u0440\u0435\u043c\u044f \u043e\u0442\u0432\u0435\u0442\u0430 \u0430\u0441\u0441\u0438\u0441\u0442\u0435\u043d\u0442\u0430'),
 
+    # ---- the scroll-expand hero ----
+    'While you were asleep.': ('Ενώ κοιμόσασταν.',
+                               'Пока вы спали.'),
+    'Scroll': ('Κύλιση', 'Прокрутите'),
+    'The website answered. You found out later.':
+        ('Ο ιστότοπος απάντησε. Το μάθατε αργότερα.',
+         'Сайт ответил. Вы узнали позже.'),
+    'It quoted from your real prices, checked what was free, and held the car — while the person who owns it was asleep.':
+        ('Έδωσε τιμή από τον πραγματικό σας τιμοκατάλογο, έλεγξε τι ήταν ελεύθερο και κράτησε το αυτοκίνητο — ενώ ο ιδιοκτήτης κοιμόταν.',
+         'Он назвал цену по вашему реальному прайсу, проверил, что свободно, и закрепил машину — пока владелец спал.'),
+
     # ---- corrected: the live client's plan, and the notice term ----
     # These two sentences outlived the repricing. The first told a prospect
     # the live client pays 150 a month, on the home page, before they reach
