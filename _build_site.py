@@ -127,7 +127,7 @@ def head(page):
 <link rel="icon" type="image/png" href="/favicon-dark.png" media="(prefers-color-scheme: dark)">
 <link rel="apple-touch-icon" href="/favicon.png">
 <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0A0A0B" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#0B0B12" media="(prefers-color-scheme: dark)">
 
 <!-- Runs before first paint and does two things.
      .js marks that scripting is available: every rule in od.css that hides

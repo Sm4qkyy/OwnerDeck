@@ -96,19 +96,24 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --paper:   #0A0A0B;
-    --paper-2: #121214;
-    --paper-3: #19191C;
-    --rule:    #26262A;
-    --rule-2:  #34343A;
+    /* Cooled toward the banner's indigo rather than sitting on neutral black.
+       The ground was rgb(10,10,11) — one step of blue, which reads as a void.
+       These carry 7 to 20 steps, enough to feel like a colour without becoming
+       one, and the steps between the three surfaces are wider so sections
+       actually separate. Every text pair re-measured: 18.8:1, 15.5:1, 7.7:1. */
+    --paper:   #0B0B12;
+    --paper-2: #141420;
+    --paper-3: #1D1D2B;
+    --rule:    #2A2A3A;
+    --rule-2:  #3A3A4E;
     --faint:   #6E6E78;
     --muted:   #A1A1AA;   /* 7.84:1 */
     --ink-2:   #E4E4E7;
     --ink:     #FAFAFA;   /* 18.1:1 */
     --invert:  #09090B;
     --live:    #4ADE80;   /* 11.4:1 */
-    --glass:       #0A0A0B9E;
-    --glass-lift:  #0A0A0BC4;
+    --glass:       #0B0B129E;
+    --glass-lift:  #0B0B12C4;
     --glass-edge:  #FFFFFF2E;
     --glass-top:   #FFFFFF29;
     --glass-under: #09090B4D;
@@ -127,19 +132,19 @@
    repeated for the attribute. A media query alone cannot be overridden by a
    toggle, and an attribute alone cannot follow the system. */
 :root[data-theme="dark"] {
-  --paper:   #0A0A0B;
-  --paper-2: #121214;
-  --paper-3: #19191C;
-  --rule:    #26262A;
-  --rule-2:  #34343A;
+  --paper:   #0B0B12;
+  --paper-2: #141420;
+  --paper-3: #1D1D2B;
+  --rule:    #2A2A3A;
+  --rule-2:  #3A3A4E;
   --faint:   #6E6E78;
   --muted:   #A1A1AA;
   --ink-2:   #E4E4E7;
   --ink:     #FAFAFA;
   --invert:  #09090B;
   --live:    #4ADE80;
-  --glass:       #0A0A0B9E;
-  --glass-lift:  #0A0A0BC4;
+  --glass:       #0B0B129E;
+  --glass-lift:  #0B0B12C4;
   --glass-edge:  #FFFFFF2E;
   --glass-top:   #FFFFFF29;
   --glass-under: #09090B4D;
@@ -290,6 +295,17 @@ p:last-child { margin-bottom: 0; }
    Ambient only. They sit under the content, never take the pointer, and carry
    no meaning — the hero reads identically with this whole block deleted. */
 .section--hero { position: relative; overflow: hidden; }
+/* A single soft wash behind the hero. Large, very low opacity, and sitting
+   under everything — enough to stop the top of the page reading as flat black
+   without becoming a colour in its own right. */
+.section--hero::before {
+  content: ""; position: absolute; z-index: 0; pointer-events: none;
+  inset-inline-start: -10%; top: -30%;
+  width: 70%; aspect-ratio: 1;
+  background: radial-gradient(circle, var(--f-site), transparent 68%);
+  opacity: .07;
+  filter: blur(40px);
+}
 .section--hero > .wrap { position: relative; z-index: 1; }
 
 .hero__field {
