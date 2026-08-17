@@ -113,12 +113,12 @@ def head(page):
 <meta property="og:site_name" content="Ownerdeck">
 <meta property="og:title" content="%(title)s">
 <meta property="og:description" content="%(desc)s">
-<meta property="og:image" content="%(origin)s/og-image.png">
+<meta property="og:image" content="%(origin)s/og-image.jpg">
 <meta property="og:locale" content="en_GB">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="%(title)s">
 <meta name="twitter:description" content="%(desc)s">
-<meta name="twitter:image" content="%(origin)s/og-image.png">
+<meta name="twitter:image" content="%(origin)s/og-image.jpg">
 
 <!-- Both marks are transparent PNGs, so each needs the tab colour it was drawn
      against. Browsers that ignore media on a favicon take the first, which is

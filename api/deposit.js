@@ -106,8 +106,13 @@ module.exports = async (req, res) => {
   const plan = clean(body.plan, 60);
   const note = clean(body.note, 400);
 
-  const base = (origin && /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin))
-    ? origin : allowed;
+  // Built from the host the request arrived on, for the same reason the origin
+  // check is. This line used to read `allowed`, a constant that was deleted
+  // when the origin check was rewritten — a ReferenceError that GET never
+  // reached and POST hit every time, which is what FUNCTION_INVOCATION_FAILED
+  // was. Node 24 and fetch were never the problem.
+  const proto = String(req.headers['x-forwarded-proto'] || 'https').split(',')[0].trim();
+  const base = `${proto}://${host}`;
 
   const payload = form({
     mode: 'payment',
