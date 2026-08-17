@@ -233,7 +233,7 @@ def cta_band():
           <a class="btn btn--primary" href="/start"><span data-t>Get started</span>%(arrow)s</a>
           <a class="btn btn--ghost" href="%(wa)s" rel="noopener" data-t>Or message us on WhatsApp</a>
         </div>
-        <p class="note" data-t>No VAT. No long contract on the entry plan.</p>
+        <p class="note" data-t>No VAT. Stop any plan with a month’s notice.</p>
       </div>
     </div>
   </section>
@@ -259,7 +259,10 @@ def pagenav(prev, nxt):
 
 def footer(page=None):
     build = '\n'.join('<li><a href="/what-we-build#%s" data-t>%s</a></li>' % (s.lower(), s)
-                      for s in ['Answer', 'Site', 'Data', 'Book', 'Reach', 'Return'])
+                      # Five, matching "Five cards. One system." on the home page. Data is
+                          # the system — the layer the five read from — and listing it
+                          # here under a heading that says "The cards" made six.
+                          for s in ['Answer', 'Site', 'Book', 'Reach', 'Return'])
     read = '\n'.join('<li><a href="%s" data-t>%s</a></li>' % (h, l) for h, l in NAV)
     legal = '\n'.join('<li><a href="%s" data-t>%s</a></li>' % (h, l) for h, l in LEGAL_NAV)
     return '''<footer class="foot">

@@ -224,6 +224,21 @@ def check_page(slug, html):
                    'unlock the power', 'supercharge']:
         if banned in html.lower():
             fail(page, 'banned phrase: %s' % banned)
+
+    # Claims from the retired model. The 150/month subscription and the
+    # "entry plan" notice term have both come back three times now — once in
+    # the chat prompt, once in four guides, and once on the home page, each
+    # time because a sentence was written before the repricing and nothing
+    # was looking for it. The prices that exist are 600/99, 1,900/249 and
+    # 2,400/299; a month's notice applies to all of them.
+    for dead, why in [
+            (r'&euro;150|€150|EUR ?150', 'the retired 150/month price'),
+            (r'&euro;79|€79\b', 'the superseded 79/month price'),
+            (r'&euro;400 to build|€400 to build', 'the superseded 400 build fee'),
+            (r'entry plan', 'scopes the notice term to one tier; it applies to all'),
+            (r'no minimum term, no notice period', 'contradicts the stated month’s notice')]:
+        if re.search(dead, html, re.I):
+            fail(page, 'retired claim (%s): %s' % (why, dead))
     body = html.split('<body>')[-1]
     if re.search(r'[\U0001F300-\U0001FAFF✀-➿]', body):
         fail(page, 'emoji in the markup')

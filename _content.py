@@ -281,7 +281,7 @@ def pages(WA, ARROW, EMAIL):
             </div>
           </div>
 
-          <p class="note" data-reveal="240" style="margin-top:1.25rem" data-t>No VAT. No long contract on the entry plan. Works the same way for villas, clinics and salons — see who it is for.</p>
+          <p class="note" data-reveal="240" style="margin-top:1.25rem" data-t>No VAT. Stop any plan with a month’s notice. Works the same way for villas, clinics and salons — see who it is for.</p>
         </div>
       </div>
     </div>
@@ -376,7 +376,7 @@ def pages(WA, ARROW, EMAIL):
             <span class="stat__n">14</span>
             <span class="stat__l" data-t>enquiries booked between 9pm and 8am last month</span>
           </div>
-          <p class="lede" style="margin-top:2rem" data-t>A car rental operator in Limassol, live at &euro;150 a month. The after-hours coverage booked those 14 enquiries automatically — ones the owner would otherwise have picked up the next morning, if they were still waiting.</p>
+          <p class="lede" style="margin-top:2rem" data-t>A car rental operator in Limassol, running on Deck. The after-hours coverage booked those 14 enquiries automatically — ones the owner would otherwise have picked up the next morning, if they were still waiting.</p>
         </div>
         <div class="ledger" data-reveal="120">
           <div class="ledger__row"><span class="mono">LAST 30 DAYS</span><b data-t>Car rental, Limassol</b></div>
@@ -799,7 +799,7 @@ def pages(WA, ARROW, EMAIL):
             <span class="stat__n">14</span>
             <span class="stat__l" data-t>enquiries booked between 9pm and 8am last month</span>
           </div>
-          <p class="lede" style="margin-top:2rem" data-t>A car rental operator in Limassol, live at &euro;150 a month. Those 14 were booked while the owner was asleep.</p>
+          <p class="lede" style="margin-top:2rem" data-t>A car rental operator in Limassol, running on Deck. Those 14 were booked while the owner was asleep.</p>
         </div>
         <div class="ledger" data-reveal="120">
           <div class="ledger__row"><span class="mono">LAST 30 DAYS</span><b data-t>Car rental, Limassol</b></div>
