@@ -70,6 +70,12 @@
   --pill-ink:  #FFFFFF;
   --gold:      #C5A059;   /* 7.8:1 inside the pill. Never used on paper. */
 
+  /* The third accent. Legible as small text, which is the whole point —
+     an accent that only survives at display sizes cannot mark a link or an
+     eyebrow. 6.70:1 on paper. --accent-ink is for text sitting on it. */
+  --accent:     #1D4ED8;
+  --accent-ink: #FFFFFF;
+
   --f-answer: #7C5CFF;
   --f-site:   #6D4AFF;
   --f-book:   #4A7CFF;
@@ -143,6 +149,8 @@
     --pill:      #404C66;
     --pill-ink:  #FFFFFF;
     --gold:      #D9B36B;
+    --accent:     #8FB3FF;   /* 9.39:1 on the dark ground */
+    --accent-ink: #0B0B12;
     --shadow:  0 0 0;
     color-scheme: dark;
   }
@@ -180,6 +188,8 @@
   --pill:      #404C66;
   --pill-ink:  #FFFFFF;
   --gold:      #D9B36B;
+  --accent:     #8FB3FF;   /* 9.39:1 on the dark ground */
+  --accent-ink: #0B0B12;
   --shadow:  0 0 0;
   color-scheme: dark;
 }
@@ -236,6 +246,20 @@ button, input, select, textarea { font: inherit; color: inherit; }
 
 a { color: inherit; text-decoration-color: var(--rule-2); text-underline-offset: 3px; }
 a:hover { text-decoration-color: currentColor; }
+
+/* Links written into sentences, which until now inherited the body colour and
+   were findable only by a faint underline. Scoped to <main> so the footer's
+   list of links stays chrome, and to unclassed anchors so buttons, tiles and
+   cards keep their own treatment — there are no classed anchors inside a <p>
+   or <li> anywhere on the site, so this cannot catch one by accident. */
+main p a:not([class]),
+main li a:not([class]) {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 1px;
+}
+main p a:not([class]):hover,
+main li a:not([class]):hover { text-decoration-thickness: 2px; }
 
 :focus-visible {
   outline: 2px solid var(--ink);
@@ -297,7 +321,9 @@ p:last-child { margin-bottom: 0; }
   font-size: .75rem;          /* was .6875 — mono uppercase needs the size */
   letter-spacing: .14em;      /* and less tracking, which was hurting it */
   text-transform: uppercase;
-  color: var(--muted);
+  /* Was --muted, which made the section markers recede exactly where a
+     reader is deciding whether to keep going. */
+  color: var(--accent);
   margin: 0 0 var(--s4);
   font-weight: 550;
 }
@@ -1346,6 +1372,7 @@ a.dcard:hover { border-color: var(--rule-2); background: var(--paper-3); transfo
   letter-spacing: -0.02em;
 }
 .calc__answer b {
+  color: var(--accent);
   font-size: clamp(2.5rem, 1.9rem + 2.4vw, 3.5rem);
   font-weight: 600; letter-spacing: -0.045em;
   font-variant-numeric: tabular-nums;
@@ -1371,7 +1398,7 @@ a.dcard:hover { border-color: var(--rule-2); background: var(--paper-3); transfo
 .plan__name { font-size: 1.25rem; font-weight: 600; letter-spacing: -0.02em; margin: 0; }
 .plan__flag {
   font-family: var(--mono); font-size: .625rem; letter-spacing: .12em;
-  text-transform: uppercase; color: var(--invert); background: var(--ink);
+  text-transform: uppercase; color: var(--accent-ink); background: var(--accent);
   padding: .2rem .5rem; border-radius: 999px;
 }
 .plan__desc { color: var(--muted); font-size: .9375rem; margin: 0; }
@@ -1544,6 +1571,9 @@ a.dcard:hover { border-color: var(--rule-2); background: var(--paper-3); transfo
 .cta {
   border-radius: var(--r-xl);
   background: var(--ink); color: var(--invert);
+  /* Nothing on the site puts an eyebrow or a prose link on this band today,
+     but the accent is a paper colour and would be poor against it, so the
+     band keeps its own contrast if one ever lands here. */
   padding: clamp(2.5rem, 1.5rem + 4vw, 4.5rem);
   text-align: center;
 }
