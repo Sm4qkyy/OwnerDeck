@@ -58,6 +58,13 @@ module.exports = async (req, res) => {
       stripeVarsVisible: Object.keys(process.env).filter(function (n) {
         return /stripe/i.test(n);
       }).sort(),
+      // The POST path died with FUNCTION_INVOCATION_FAILED while GET was fine,
+      // which points at something only POST touches. fetch is the prime
+      // suspect: it is only global from Node 18, and this project pins no
+      // engine, so an older default would throw a ReferenceError here and
+      // nowhere else.
+      node: process.version,
+      hasFetch: typeof fetch,
     });
   }
 
