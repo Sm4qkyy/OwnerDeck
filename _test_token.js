@@ -25,6 +25,7 @@ const PREAMBLE = `
   var waiting = [];
   var tokenCache = '', tokenAt = 0, inflight = null;
   var TOKEN_TTL = 240000;
+  var pass = '';
   var minted = 0;
   var window = { turnstile: {
     reset: function () {},
@@ -39,6 +40,7 @@ const EXPORTS = `
   return { getToken: getToken, prime: prime, tokenFresh: tokenFresh,
            stats: function () { return { minted: minted, cache: tokenCache, inflight: !!inflight }; },
            expire: function () { tokenAt = Date.now() - TOKEN_TTL - 1; },
+           setPass: function (v) { pass = v; },
            setUnavailable: function (v) { unavailable = v; } };
 `;
 const build = (delay) => new Function('delay', PREAMBLE + body + EXPORTS)(delay);
@@ -92,7 +94,17 @@ function check(name, cond, extra) {
   const none = await m.getToken();
   check('unavailable resolves empty at once', none === '' && Date.now() - t1 < 10, `${none} ${Date.now() - t1}ms`);
 
-  // 6. a Turnstile that never answers gives up, and well short of the old 20s
+  /* 6. Holding a pass must stop Turnstile being touched at all. This is what
+     keeps the checkbox from reappearing before every message — if either of
+     these regresses, the visitor is challenged again and again. */
+  m = build(30);
+  m.setPass('exp.tag.sig');
+  m.prime(); await wait(60);
+  check('a held pass suppresses priming', m.stats().minted === 0, JSON.stringify(m.stats()));
+  const withPass = await m.getToken();
+  check('a held pass sends no token', withPass === '' && m.stats().minted === 0, JSON.stringify(m.stats()));
+
+  // 7. a Turnstile that never answers gives up, and well short of the old 20s
   m = build(999999);
   const t2 = Date.now();
   await m.getToken();

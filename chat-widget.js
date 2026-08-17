@@ -49,6 +49,11 @@
      the server will accept, rather than one that just went stale. */
   var TOKEN_TTL = 240000;
 
+  /* The server's stand-in for a passed check. While one is held, Turnstile is
+     not asked for anything — which is the whole point: the visitor sees the
+     challenge once, not before every message. */
+  var pass = '';
+
   /* ---------- Turnstile (invisible human check) ----------
      A token is redeemed exactly once at siteverify and expires after a few
      minutes, so a fresh one is needed per message. Reusing the token issued
@@ -145,6 +150,7 @@
   // Start one in the background. Safe to call whenever; it no-ops if a usable
   // token is already in hand or one is on its way.
   function prime() {
+    if (pass) return;                 // already cleared; nothing to mint
     if (!SITE_KEY || unavailable || inflight || tokenFresh()) return;
     mint().then(function (t) {
       if (t) { tokenCache = t; tokenAt = Date.now(); }
@@ -154,6 +160,7 @@
   // Resolves with a fresh token, or '' if Turnstile can't produce one.
   // An empty token is not treated as permission — the server rejects it.
   function getToken() {
+    if (pass) return Promise.resolve('');   // the pass speaks for us
     if (!SITE_KEY || unavailable) return Promise.resolve('');
     if (tokenFresh()) {
       var t = tokenCache;
@@ -246,6 +253,7 @@
           var evt;
           try { evt = JSON.parse(line.slice(5)); } catch (e) { continue; }
           if (typeof evt.t === 'string') paint(evt.t);
+          if (typeof evt.pass === 'string' && evt.pass) pass = evt.pass;
         }
         return pump();
       });
@@ -270,6 +278,13 @@
     var form  = root.querySelector('.odc-form');
     var input = root.querySelector('.odc-input');
 
+    // First keystroke is the cue to get a token ready: early enough that the
+    // send path never waits, late enough that opening the panel is quiet.
+    input.addEventListener('input', function once() {
+      input.removeEventListener('input', once);
+      prime();
+    });
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var text = (input.value || '').trim();
@@ -290,7 +305,7 @@
         return fetch(ENDPOINT, {
           method: 'POST',
           headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ message: text, history: history.slice(-8), turnstile: token })
+          body: JSON.stringify({ message: text, history: history.slice(-8), turnstile: token, pass: pass })
         });
       })
       .then(function (r) {
@@ -374,7 +389,10 @@
         panel.classList.remove('odc-panel--in');
         void panel.offsetWidth;
         panel.classList.add('odc-panel--in');
-        greet(log); loadTurnstile(); prime();
+        greet(log); loadTurnstile();
+        /* Deliberately not primed here. If Cloudflare wants an interactive
+           challenge, minting on open drops a checkbox into the panel before
+           the visitor has typed anything. Priming starts when they do. */
         setTimeout(function(){ var i=panel.querySelector('.odc-input'); i && i.focus(); }, 60);
       } else {
         if (panel.hidden) return;
