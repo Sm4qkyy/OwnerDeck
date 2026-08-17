@@ -383,8 +383,11 @@ p:last-child { margin-bottom: 0; }
      the capsule. The spacer exists to hold the desktop nav apart and has
      nothing to separate once the nav is hidden. */
   .masthead__bar { gap: var(--s2); padding-inline: .4rem; }
+  /* The spacer is what pushed the controls to the right edge; hiding it to
+     save gap left them bunched against the wordmark with the rest of the
+     pill empty. An auto margin does the same job and costs nothing. */
   .masthead__nav-spacer { display: none; }
-  .masthead__tools { gap: var(--s1); }
+  .masthead__tools { gap: var(--s1); margin-inline-start: auto; }
   .masthead__mark { padding-inline-start: .35rem; }
 }
 
