@@ -371,8 +371,12 @@ p:last-child { margin-bottom: 0; }
   width: min(100% - 2.5rem, var(--wrap));
   margin-inline: auto;
 }
-@media (max-width: 40rem) {
-  .wrap { width: min(100% - 2rem, var(--wrap)); }
+/* 16px of gutter had the content pressed against both edges while the
+   sections floated in 224px of vertical nothing — cramped and stretched at
+   the same time, which is what reads as squished. */
+@media (max-width: 48rem) {
+  :root { --s7: 2rem; --s8: 2.75rem; --s9: 3.5rem; }
+  .wrap { width: min(100% - 2.5rem, var(--wrap)); }
 }
 
 .section { padding-block: var(--s9); }
@@ -1745,4 +1749,20 @@ main { animation: od-enter 460ms var(--ease-out) both; }
   .js .se__overlay { opacity: 1; }
   .se__track { height: 100vh !important; }
   .se__hint { display: none; }
+}
+
+/* On a phone neither effect runs, so the section stops being a tall track
+   with a pinned stage and becomes what it always was underneath: a picture
+   with a line of copy on it. Nothing is hidden — the same words, at a
+   height that does not cost two screens of scrolling to pass. */
+@media (max-width: 48rem) {
+  .js .se__track { height: auto; }
+  .se__stage { position: static; height: auto; aspect-ratio: 4 / 5; }
+  .js .se__frame { clip-path: none; }
+  .js .se__media { transform: none; }
+  .se__scrim { opacity: .46; }
+  .js .se__title { display: none; }        /* the overlay says it better */
+  .se__hint { display: none; }
+  .js .se__overlay { opacity: 1; transform: none; }
+  .se__overlay { padding: var(--s6) var(--s5); gap: var(--s4); }
 }

@@ -55,6 +55,12 @@
   var reduce = window.matchMedia &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* Not on a phone. Pinning a stage for nearly two screens is a lot of
+     scrolling to ask for on a device where the whole page is already
+     thirteen screens; the section becomes an ordinary picture instead,
+     which the CSS below 48rem already lays out. */
+  if (window.matchMedia && window.matchMedia('(max-width: 48rem)').matches) return;
+
   function clamp(v, a, b) { return v < a ? a : (v > b ? b : v); }
 
   /* Cubic ease. The original uses this both for the master curve and for

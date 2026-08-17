@@ -30,6 +30,11 @@
   if (window.matchMedia &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
+  /* Not on a phone. A per-pixel raymarch behind the first thing anyone sees
+     costs battery and frame budget on exactly the devices with least of
+     both, and the hero reads perfectly well without it. */
+  if (window.matchMedia && window.matchMedia('(max-width: 48rem)').matches) return;
+
   var canvas = document.createElement('canvas');
   canvas.className = 'acid-bg__canvas';
   canvas.setAttribute('aria-hidden', 'true');
