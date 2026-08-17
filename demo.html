@@ -117,6 +117,92 @@
 
   .nav-row { display:flex; flex-wrap:wrap; justify-content:center; gap:var(--s3); margin-top:var(--s7); }
   .pane .lede + div { margin-top:var(--s6) }
+
+  /* ---- custom video player -------------------------------------------
+     Replaces the browser's own control bar, which was the one part of the
+     page that looked like a different product.
+
+     The controls are the one place on the site that uses literal white and
+     black rather than palette tokens, and deliberately: they sit on top of
+     the video, not on the page. The footage does not change with the theme,
+     so controls painted in --ink would vanish into a dark frame in light
+     mode. This is why every video player on the web does the same. */
+  .vp { position:relative; width:100%; height:100%; background:var(--ink);
+        border-radius:inherit; overflow:hidden; isolation:isolate; }
+  .vp:focus-visible { outline:2px solid var(--clay); outline-offset:2px; }
+  .vp__v { display:block; width:100%; height:100%; object-fit:contain; cursor:pointer; background:var(--ink); }
+
+  /* The centre button is the affordance before the first play; once the
+     video is running the bar is enough. */
+  .vp__big {
+    position:absolute; inset:0; margin:auto; width:4.5rem; height:4.5rem;
+    display:grid; place-items:center; border:0; border-radius:50%; cursor:pointer;
+    background:var(--bone); color:var(--ink);
+    box-shadow:0 10px 34px rgb(0 0 0 / .38);
+    transition:transform .18s ease, opacity .18s ease;
+  }
+  .vp__big svg { width:2rem; height:2rem; fill:currentColor; margin-inline-start:.15rem; }
+  .vp__big:hover { transform:scale(1.06); }
+  .vp[data-state="playing"] .vp__big { opacity:0; pointer-events:none; transform:scale(.9); }
+
+  .vp__bar {
+    position:absolute; inset-inline:0; bottom:0; z-index:2;
+    display:flex; align-items:center; gap:var(--s3);
+    padding:var(--s5) var(--s4) var(--s4);
+    /* A wash rather than a solid bar, so it sits over the picture without
+       cropping it. */
+    background:linear-gradient(to top, rgb(0 0 0 / .78), rgb(0 0 0 / 0));
+    opacity:0; transform:translateY(.4rem);
+    transition:opacity .2s ease, transform .2s ease;
+  }
+  .vp.is-awake .vp__bar,
+  .vp[data-state="idle"] .vp__bar,
+  .vp[data-state="paused"] .vp__bar { opacity:1; transform:none; }
+
+  .vp__btn {
+    flex:0 0 auto; width:2rem; height:2rem; display:grid; place-items:center;
+    padding:0; border:0; background:none; color:#FFF; cursor:pointer; border-radius:var(--radius);
+  }
+  .vp__btn svg { width:1.35rem; height:1.35rem; fill:currentColor; }
+  .vp__btn:hover { background:rgb(255 255 255 / .16); }
+  .vp__btn:focus-visible { outline:2px solid #FFF; outline-offset:2px; }
+
+  .vp__time {
+    flex:0 0 auto; color:#FFF; font-size:.8125rem; font-variant-numeric:tabular-nums;
+    letter-spacing:.01em; opacity:.92;
+  }
+  .vp__sep { opacity:.55; }
+
+  /* Same construction as .calc__range: the fill is a gradient stop written
+     from JS, because a range input has no element for the filled side. */
+  .vp__seek {
+    -webkit-appearance:none; appearance:none;
+    flex:1 1 auto; min-width:4rem; height:4px; margin:0; border-radius:2px; cursor:pointer;
+    background:linear-gradient(to right,
+      #FFF 0 var(--fill,0%), rgb(255 255 255 / .3) var(--fill,0%) 100%);
+  }
+  .vp__seek::-webkit-slider-thumb {
+    -webkit-appearance:none; appearance:none;
+    width:13px; height:13px; border-radius:50%; background:#FFF; border:0; cursor:grab;
+  }
+  .vp__seek::-moz-range-thumb {
+    width:13px; height:13px; border-radius:50%; background:#FFF; border:0; cursor:grab;
+  }
+  .vp__seek:focus-visible { outline:2px solid #FFF; outline-offset:4px; }
+
+  .vp.is-full { border-radius:0; }
+  .vp.is-full .vp__v { object-fit:contain; }
+
+  @media (max-width:32rem) {
+    .vp__big { width:3.5rem; height:3.5rem; }
+    .vp__big svg { width:1.5rem; height:1.5rem; }
+    .vp__time { font-size:.75rem; }
+    .vp__bar { gap:var(--s2); padding:var(--s5) var(--s3) var(--s3); }
+  }
+  @media (prefers-reduced-motion:reduce) {
+    .vp__big, .vp__bar { transition:none; }
+    .vp__big:hover { transform:none; }
+  }
 </style>
 </head>
 <body>

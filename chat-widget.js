@@ -40,11 +40,31 @@
   var widgetId = null;
   var waiting  = [];       // resolvers queued for the next token
   var unavailable = false; // Turnstile could not be rendered; stop waiting on it
+  var tokenCache = '';     // a minted, unused token waiting for the next send
+  var tokenAt    = 0;      // when it was minted
+  var inflight   = null;   // the mint in progress, if any
+
+  /* Cloudflare expires a token at 300s. Retiring ours early means a visitor
+     who opens the panel and then takes a while to type still sends a token
+     the server will accept, rather than one that just went stale. */
+  var TOKEN_TTL = 240000;
 
   /* ---------- Turnstile (invisible human check) ----------
      A token is redeemed exactly once at siteverify and expires after a few
-     minutes, so we mint a fresh one per message. Reusing the token issued at
-     page load would get the second message rejected as timeout-or-duplicate. */
+     minutes, so a fresh one is needed per message. Reusing the token issued
+     at page load would get the second message rejected as
+     timeout-or-duplicate.
+
+     The token used to be minted when the visitor pressed send, which put a
+     round-trip to Cloudflare — and on a cold cache the Turnstile script
+     download too — in front of every single message, before the request to
+     our own endpoint had even started. That was most of the wait people
+     complained about.
+
+     So it is minted ahead of time instead: once when the panel opens, and
+     again immediately after each send. By the time anyone has typed a
+     sentence the next token is already sitting in tokenCache, and the send
+     path takes it without waiting for anything. */
 
   function settle(token) {
     var queued = waiting;
@@ -92,18 +112,26 @@
     }
   }
 
-  // Resolves with a fresh token, or '' if Turnstile can't produce one.
-  // An empty token is not treated as permission — the server rejects it.
-  function getToken() {
-    return new Promise(function (resolve) {
-      if (!SITE_KEY || unavailable) return resolve('');
-      var done = false;
-      // 10s was too tight. Turnstile on a cold cache over hotel wifi can take
-      // longer than that, and timing out silently downgraded a real person to
-      // the unverified allowance for no reason.
-      var timer = setTimeout(function () { finish(''); }, 20000);
-      function finish(t) { if (done) return; done = true; clearTimeout(timer); resolve(t || ''); }
+  function tokenFresh() {
+    return !!tokenCache && (Date.now() - tokenAt) < TOKEN_TTL;
+  }
 
+  /* One mint at a time. Two overlapping execute() calls on the same widget
+     race, and whichever token loses is spent for nothing. */
+  function mint() {
+    if (inflight) return inflight;
+    inflight = new Promise(function (resolve) {
+      if (!SITE_KEY || unavailable) { inflight = null; return resolve(''); }
+      var done = false;
+      /* 20s was the old ceiling, and it was only survivable because nothing
+         else was waiting on it. Now that minting happens in the background,
+         a slow attempt should give up and let the next one try rather than
+         hold a message hostage. */
+      var timer = setTimeout(function () { finish(''); }, 5000);
+      function finish(t) {
+        if (done) return;
+        done = true; clearTimeout(timer); inflight = null; resolve(t || '');
+      }
       waiting.push(finish);
       loadTurnstile();
       if (widgetId !== null && window.turnstile) {
@@ -111,6 +139,29 @@
         catch (e) { finish(''); }
       }
     });
+    return inflight;
+  }
+
+  // Start one in the background. Safe to call whenever; it no-ops if a usable
+  // token is already in hand or one is on its way.
+  function prime() {
+    if (!SITE_KEY || unavailable || inflight || tokenFresh()) return;
+    mint().then(function (t) {
+      if (t) { tokenCache = t; tokenAt = Date.now(); }
+    });
+  }
+
+  // Resolves with a fresh token, or '' if Turnstile can't produce one.
+  // An empty token is not treated as permission — the server rejects it.
+  function getToken() {
+    if (!SITE_KEY || unavailable) return Promise.resolve('');
+    if (tokenFresh()) {
+      var t = tokenCache;
+      tokenCache = '';               // single use
+      setTimeout(prime, 0);          // line up the next one straight away
+      return Promise.resolve(t);
+    }
+    return mint().then(function (t) { setTimeout(prime, 0); return t; });
   }
 
   /* ---------- markup ---------- */
@@ -235,7 +286,7 @@
         return fetch(ENDPOINT, {
           method: 'POST',
           headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ message: text, history: history.slice(-12), turnstile: token })
+          body: JSON.stringify({ message: text, history: history.slice(-8), turnstile: token })
         });
       })
       .then(function (r) {
@@ -264,7 +315,7 @@
         t.remove();
         bubble(log, 'bot', T('k85721b54', 'Could not reach the assistant. Email mark@ownerdeck.com and he will answer directly.'), 'k85721b54');
       })
-      .finally(function () { busy = false; });
+      .finally(function () { busy = false; prime(); });
 
       try { window.va && window.va('event', { name: 'chat_message' }); } catch (e) {}
     });
@@ -320,7 +371,7 @@
         panel.classList.remove('odc-panel--in');
         void panel.offsetWidth;
         panel.classList.add('odc-panel--in');
-        greet(log); loadTurnstile();
+        greet(log); loadTurnstile(); prime();
         setTimeout(function(){ var i=panel.querySelector('.odc-input'); i && i.focus(); }, 60);
       } else {
         if (panel.hidden) return;
@@ -360,6 +411,7 @@
     var log = host.querySelector('#odc-log-i');
     greet(log);
     loadTurnstile();
+    prime();
     wire(host, log);
   }
 

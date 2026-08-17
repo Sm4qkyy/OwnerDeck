@@ -26,10 +26,17 @@
 ============================================================ */
 
 const MODEL              = 'claude-haiku-4-5-20251001';
-const MAX_OUTPUT_TOKENS  = 300;   // bounds cost per call
+/* The prompt caps answers at 40 words, or 70 when it lays out all three
+   plans — roughly 100 tokens. 160 leaves headroom without leaving room for
+   the model to wander, and a shorter ceiling is also a shorter wait, since
+   generation time scales with what actually gets produced. */
+const MAX_OUTPUT_TOKENS  = 160;   // bounds cost per call
 const MAX_INPUT_CHARS    = 500;   // per message
 const MAX_TURNS          = 12;    // per conversation
-const MAX_HISTORY        = 12;    // messages replayed to the model
+/* Four exchanges is plenty of context for a demo that caps at twelve turns,
+   and every message replayed is input the model has to read before it can
+   start answering. */
+const MAX_HISTORY        = 8;     // messages replayed to the model
 const RATE_LIMIT_MAX     = 15;    // messages per IP…
 const RATE_LIMIT_WINDOW  = 3600;  // …per hour (seconds)
 const UNVERIFIED_RATE_LIMIT = 3;  // …when Turnstile never ran (see verifyTurnstile)
