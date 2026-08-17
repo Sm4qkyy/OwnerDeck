@@ -234,14 +234,15 @@ def pages(WA, ARROW, EMAIL):
     # ------------------------------------------------------------- index
     P.append(dict(
         slug='index',
-        scripts='<script src="/scroll-expand.js?v=20260815a" defer></script>\n',
+        scripts=('<script src="/scroll-expand.js?v=20260815a" defer></script>\n'
+                 '<script src="/acid-bg.js?v=20260815a" defer></script>\n'),
         in_flow=False,
         nav='Home',
         title='Ownerdeck — run the online side of your business',
         desc='We build and run the online side of your business: the website, '
              'the database behind it, an AI assistant answering your messages, '
              'the bookings and the follow-up. Set your prices once.',
-        body=f'''  <section class="section section--hero" id="hero">
+        body=f'''  <section class="section section--hero" id="hero" data-acid-bg>
     <div class="hero__field" aria-hidden="true">
 {hero_floaters()}
     </div>
