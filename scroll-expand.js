@@ -46,6 +46,11 @@
   var holdDistance   = num('hold-distance', 0.35);
   var smoothing      = num('smoothing', 0.1);
   var overlayScrim   = num('overlay-scrim', 0.45);
+  /* The component fades the scrim in from nothing, which leaves the title on
+     bare photograph at rest. The day plate is near-white and cannot carry
+     type that way, so the scrim starts here and deepens rather than
+     appearing. Matches the resting value in od.css. */
+  var restScrim      = num('rest-scrim', 0.28);
 
   var reduce = window.matchMedia &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -73,7 +78,7 @@
 
     media.style.transform = 'scale(' + (mediaZoom + (1 - mediaZoom) * e) + ')';
 
-    if (scrim) scrim.style.opacity = String(overlayScrim * e);
+    if (scrim) scrim.style.opacity = String(restScrim + (overlayScrim - restScrim) * e);
 
     if (title) {
       var out = smoothstep(0.4, 0.88, p);
@@ -93,7 +98,11 @@
   }
 
   function measure() {
-    stageH = window.innerHeight;
+    stageH = window.innerHeight || document.documentElement.clientHeight;
+    /* A zero viewport is real: hidden tabs and some load states report it.
+       Bailing here used to leave the track at zero height and the whole
+       section invisible, so the CSS keeps a vh-based fallback and this just
+       waits for a viewport worth measuring. */
     if (stageH <= 0) return;
     stage.style.height = stageH + 'px';
     track.style.height = (stageH * (1 + Math.max(0, scrollDistance) + Math.max(0, holdDistance))) + 'px';
@@ -102,6 +111,9 @@
   }
 
   function readProgress() {
+    // Unmeasured: span would be zero and the division would clamp to a full
+    // expansion for no reason. Sit at rest until there is a viewport.
+    if (stageH <= 0) return 0;
     var span = stageH * Math.max(0.01, scrollDistance);
     return clamp(-track.getBoundingClientRect().top / span, 0, 1);
   }
@@ -142,13 +154,12 @@
   target = current = readProgress();
   apply(current);
 
+  // If the first measure found no viewport, try again once the page is fully
+  // up rather than leaving the section on its CSS fallback for the session.
+  if (stageH <= 0) window.addEventListener('load', onResize, { once: true });
+
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onResize);
   if ('ResizeObserver' in window) new ResizeObserver(onResize).observe(root);
 
-  /* A late-decoding image changes nothing about layout here (the box is
-     fixed) but the first paint can land before the file is ready. */
-  if (media.tagName === 'IMG' && !media.complete) {
-    media.addEventListener('load', onResize, { once: true });
-  }
 })();

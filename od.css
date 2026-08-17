@@ -1761,7 +1761,11 @@ main { animation: od-enter 460ms var(--ease-out) both; }
    Without scripting the frame is already open and the copy is already
    visible, so the section degrades to a photograph with a caption on it.
    -------------------------------------------------------------------------- */
-.se__track { position: relative; width: 100%; }
+/* Height in vh so the section is correct before the script measures it, and
+   still correct if the script never runs. Scroll distance 1.1 plus hold 0.3
+   plus the stage itself is 2.4 screens; the no-JS case needs only one. */
+.se__track { position: relative; width: 100%; height: 100vh; }
+.js .se__track { height: 240vh; }
 .se__stage {
   position: sticky; top: 0;
   width: 100%; height: 100vh;
