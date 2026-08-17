@@ -24,8 +24,12 @@
   --paper-3:  #F4F4F5;
   --rule:     #E4E4E7;
   --rule-2:   #D4D4D8;
-  --faint:    #A1A1AA;   /* 2.5:1 — rules, icons, dividers. Never body text. */
-  --muted:    #71717A;   /* 4.84:1 — secondary text, passes AA */
+  --faint:    #A1A1AA;   /* 2.5:1 — rules, dividers, list dots, chevrons.
+                            NEVER text. It was text in five places and every
+                            one of them failed; see the rules below. */
+  --muted:    #52525B;   /* 7.73:1 — carries every lede, caption and
+                            answer on the site, so it is set for reading
+                            rather than for the minimum that passes */
   --ink-2:    #27272A;
   --ink:      #09090B;   /* 19.9:1 */
   --invert:   #FFFFFF;   /* text on an --ink surface */
@@ -268,12 +272,12 @@ p:last-child { margin-bottom: 0; }
 
 .eyebrow {
   font-family: var(--mono);
-  font-size: .6875rem;
-  letter-spacing: .16em;
+  font-size: .75rem;          /* was .6875 — mono uppercase needs the size */
+  letter-spacing: .14em;      /* and less tracking, which was hurting it */
   text-transform: uppercase;
   color: var(--muted);
   margin: 0 0 var(--s4);
-  font-weight: 500;
+  font-weight: 550;
 }
 
 .measure { max-width: var(--measure); }
@@ -422,22 +426,28 @@ p:last-child { margin-bottom: 0; }
    and smaller. The section clips, so a half-visible card reads as depth
    rather than as a mistake. */
 @media (max-width: 62rem) {
-  .floater__card { width: calc(3.4rem * var(--scale, 1)); }
-  .floater::before { opacity: .16; }
+  /* Measured, not guessed. The hero content runs from 8% to 94% of the section
+     and spans the full width at every point, so there is no lateral gap to
+     tuck a card into — only the top and bottom bands are genuinely free.
+     The previous positions pushed them so far off the edge that eleven pixels
+     of a forty-five pixel card were visible, which is why they read as absent.
+     They now sit fully on screen and behind the content: the card surface is
+     within a few percent of the ground, so text over one still measures 17:1. */
+  .floater__card { width: calc(3.8rem * var(--scale, 1)); }
+  .floater::before { opacity: .22; }
 
-  /* These two land in the middle of the text at any narrow size. */
   .floater:nth-child(3),
   .floater:nth-child(5) { display: none; }
 
-  .floater:nth-child(1) { --top: 4%;  --left: -7%; }
-  .floater:nth-child(2) { --top: 33%; --left: 88%; }
-  .floater:nth-child(4) { --top: 68%; --left: -5%; }
+  .floater:nth-child(1) { --top: 2%;  --left: 62%; }
+  .floater:nth-child(2) { --top: 41%; --left: 74%; }
+  .floater:nth-child(4) { --top: 94%; --left: 6%;  }
 }
 @media (max-width: 34rem) {
-  .floater__card { width: calc(2.8rem * var(--scale, 1)); }
-  .floater:nth-child(1) { --top: 3%;  --left: -9%; }
-  .floater:nth-child(2) { --top: 30%; --left: 90%; }
-  .floater:nth-child(4) { --top: 72%; --left: -7%; }
+  .floater__card { width: calc(3.2rem * var(--scale, 1)); }
+  .floater:nth-child(1) { --top: 2%;  --left: 63%; }
+  .floater:nth-child(2) { --top: 42%; --left: 72%; }
+  .floater:nth-child(4) { --top: 95%; --left: 5%;  }
 }
 @media (prefers-reduced-motion: reduce) {
   /* Still there, still tilted, simply not moving. */
@@ -823,7 +833,7 @@ a.tile:hover {
 }
 .tile__n {
   font-family: var(--mono); font-size: .6875rem; letter-spacing: .1em;
-  color: var(--faint);
+  color: var(--muted);
 }
 .tile h2, .tile h3 { margin: 0; }
 .tile p { color: var(--muted); font-size: .9375rem; margin: 0; }
@@ -847,7 +857,7 @@ a.tile:hover {
 .numbered li:last-child { border-bottom: 1px solid var(--rule); }
 .numbered b {
   font-family: var(--mono); font-size: .75rem; font-weight: 500;
-  color: var(--faint); letter-spacing: .08em;
+  color: var(--muted); letter-spacing: .08em;
 }
 .numbered span { font-size: clamp(1.0625rem, 1rem + .4vw, 1.3125rem); letter-spacing: -0.015em; }
 
@@ -882,7 +892,7 @@ a.dcard:hover { border-color: var(--rule-2); background: var(--paper-3); transfo
 .chips { display: flex; flex-wrap: wrap; gap: .35rem; list-style: none; margin: 0; padding: 0; }
 .chip {
   font-size: .75rem; padding: .22rem .55rem; border-radius: 999px;
-  border: 1px solid var(--rule); color: var(--faint); background: var(--paper);
+  border: 1px solid var(--rule); color: var(--muted); background: var(--paper);
 }
 .chip[data-on="1"] { color: var(--ink); border-color: var(--rule-2); background: var(--paper-3); font-weight: 500; }
 
@@ -901,7 +911,7 @@ a.dcard:hover { border-color: var(--rule-2); background: var(--paper-3); transfo
 .mock__title { font-weight: 600; letter-spacing: -0.02em; }
 .mock__meta {
   font-family: var(--mono); font-size: .625rem; letter-spacing: .14em;
-  color: var(--faint); text-transform: uppercase;
+  color: var(--muted); text-transform: uppercase;
 }
 .mock__body { padding: var(--s5); display: flex; flex-direction: column; gap: var(--s3); }
 .bub {
@@ -1342,7 +1352,7 @@ a.dcard:hover { border-color: var(--rule-2); background: var(--paper-3); transfo
 .pagenav a:last-child { text-align: end; }
 .pagenav small {
   font-family: var(--mono); font-size: .625rem; letter-spacing: .14em;
-  text-transform: uppercase; color: var(--faint);
+  text-transform: uppercase; color: var(--muted);
 }
 .pagenav b { font-weight: 600; letter-spacing: -0.02em; font-size: 1.0625rem; }
 
@@ -1372,8 +1382,8 @@ a.dcard:hover { border-color: var(--rule-2); background: var(--paper-3); transfo
 @media (max-width: 62rem) { .foot__grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 40rem) { .foot__grid { grid-template-columns: 1fr; gap: var(--s5); } }
 .foot h2 {
-  font-family: var(--mono); font-size: .6875rem; letter-spacing: .14em;
-  text-transform: uppercase; color: var(--faint); font-weight: 500;
+  font-family: var(--mono); font-size: .75rem; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--muted); font-weight: 550;
   margin-bottom: var(--s3);
 }
 .foot ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s2); }
@@ -1384,7 +1394,7 @@ a.dcard:hover { border-color: var(--rule-2); background: var(--paper-3); transfo
 .foot__base {
   display: flex; flex-wrap: wrap; gap: var(--s4); justify-content: space-between;
   margin-top: var(--s7); padding-top: var(--s5); border-top: 1px solid var(--rule);
-  color: var(--faint); font-size: .8125rem;
+  color: var(--muted); font-size: .8125rem;
 }
 
 /* --------------------------------------------------------------------------
