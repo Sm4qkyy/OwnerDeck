@@ -189,7 +189,7 @@ def hero_floaters():
     """
     paths = {c[0]: c[4] for c in CARDS}
     out = []
-    for i, (slug, top, left, rot, depth, scale) in enumerate(FLOATERS):
+    for i, (slug, _top, _left, rot, depth, scale) in enumerate(FLOATERS):
         # Negative delays start every card at a different point in its cycle,
         # so they are already spread out on the first frame instead of rising
         # together and drifting apart over the first half minute.
@@ -199,7 +199,7 @@ def hero_floaters():
         delay = round(-(i * 2.3), 2)
         out.append(
             f'        <span class="floater" data-depth="{depth}" aria-hidden="true" '
-            f'style="top:{top}%;left:{left}%;--f-c:var(--f-{slug})">'
+            f'style="--f-c:var(--f-{slug})">'
             f'<span class="floater__card" style="--rot:{rot}deg;--scale:{scale};'
             f'--dur:{dur}s;--delay:{delay}s">'
             f'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" '

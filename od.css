@@ -308,6 +308,15 @@ p:last-child { margin-bottom: 0; }
 
 .floater {
   position: absolute;
+  /* top/left come from custom properties rather than inline top/left, because
+     an inline declaration cannot be overridden by a media query and these have
+     to move for a narrow screen. A custom property can. */
+  top: var(--top);
+  inset-inline-start: var(--left);
+  /* Both come from the nth-child rules below rather than from inline styles.
+     An inline declaration beats every selector including one inside a media
+     query, custom properties included — so positions set in the markup simply
+     could not be moved for a narrow screen. */
   /* Scroll parallax only. od.js writes --shift; nothing else touches this
      element's transform, which is what keeps the animation below from
      fighting it. */
@@ -382,10 +391,37 @@ p:last-child { margin-bottom: 0; }
 
 .floater__card svg { width: calc(1.6rem * var(--scale, 1)); height: auto; opacity: .95; }
 
+/* Desktop placement. Kept here, not in the markup, so the media queries below
+   can actually override it. */
+.floater:nth-child(1) { --top: 14%; --left: 3%;  }
+.floater:nth-child(2) { --top: 64%; --left: 9%;  }
+.floater:nth-child(3) { --top: 6%;  --left: 44%; }
+.floater:nth-child(4) { --top: 78%; --left: 38%; }
+.floater:nth-child(5) { --top: 30%; --left: 92%; }
+
+/* Narrow screens: the cards stay, but they move out of the way.
+   They were hidden below 62rem because at their desktop positions they land
+   behind the headline. The answer is to reposition them, not to drop them —
+   three of the five, pushed to the edges so they bleed off rather than crowd,
+   and smaller. The section clips, so a half-visible card reads as depth
+   rather than as a mistake. */
 @media (max-width: 62rem) {
-  /* Below the split breakpoint the hero is already tight; ambient cards just
-     crowd the headline. */
-  .hero__field { display: none; }
+  .floater__card { width: calc(3.4rem * var(--scale, 1)); }
+  .floater::before { opacity: .16; }
+
+  /* These two land in the middle of the text at any narrow size. */
+  .floater:nth-child(3),
+  .floater:nth-child(5) { display: none; }
+
+  .floater:nth-child(1) { --top: 4%;  --left: -7%; }
+  .floater:nth-child(2) { --top: 33%; --left: 88%; }
+  .floater:nth-child(4) { --top: 68%; --left: -5%; }
+}
+@media (max-width: 34rem) {
+  .floater__card { width: calc(2.8rem * var(--scale, 1)); }
+  .floater:nth-child(1) { --top: 3%;  --left: -9%; }
+  .floater:nth-child(2) { --top: 30%; --left: 90%; }
+  .floater:nth-child(4) { --top: 72%; --left: -7%; }
 }
 @media (prefers-reduced-motion: reduce) {
   /* Still there, still tilted, simply not moving. */

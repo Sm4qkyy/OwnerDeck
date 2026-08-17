@@ -73,6 +73,12 @@
     // page, one rAF, one place where anything reads scrollY — adding a second
     // listener for the parallax is how you end up with two handlers fighting
     // over the same frame.
+    // Desktop only, and deliberately so now that the cards are visible on
+    // narrow screens too. Their drift is a CSS animation and runs everywhere;
+    // this adds the scroll-linked parallax on top. Mobile scrolling is
+    // frequently handled off the main thread, so a JS handler writing
+    // transforms per frame is exactly where it shows up as stutter — and the
+    // cards already move without it.
     var floaters = [];
     if (!reduce && window.matchMedia('(min-width: 62rem)').matches) {
       floaters = Array.prototype.map.call(
