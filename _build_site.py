@@ -169,7 +169,7 @@ def header():
 
 <header class="masthead">
   <div class="wrap masthead__bar">
-    <a class="masthead__mark" href="/" aria-label="Ownerdeck home">%(mark)s Ownerdeck</a>
+    <a class="masthead__mark" href="/" aria-label="Ownerdeck home">%(mark)s <span class="masthead__word">Ownerdeck</span></a>
 
     <nav class="masthead__nav" aria-label="Primary">
 %(nav)s
@@ -269,7 +269,7 @@ def footer(page=None):
   <div class="wrap">
     <div class="foot__grid">
       <div>
-        <a class="masthead__mark" href="/" aria-label="Ownerdeck home">%(mark)s Ownerdeck</a>
+        <a class="masthead__mark" href="/" aria-label="Ownerdeck home">%(mark)s <span class="masthead__word">Ownerdeck</span></a>
         <p class="foot__blurb" data-t>We build and run the online side of small owner-operated businesses. One set of facts drives the website, the messages, the bookings and the follow-up.</p>
       </div>
       <div>

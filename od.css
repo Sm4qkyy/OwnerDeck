@@ -388,6 +388,20 @@ p:last-child { margin-bottom: 0; }
   .masthead__mark { padding-inline-start: .35rem; }
 }
 
+/* Below this the wordmark cannot share the pill with three 44px controls.
+   Measured: at 390px it fitted with 1px to spare, and at 360 — an ordinary
+   Android width — it hung 29px outside. The monogram carries it alone; the
+   link keeps its aria-label, so nothing is lost to a screen reader, and the
+   name is in the title, the footer and the copy. */
+@media (max-width: 27rem) {
+  .masthead__word { display: none; }
+  .masthead__mark { padding-inline-start: .5rem; }
+  /* The globe is decoration next to a two-letter code that says the same
+     thing, and it is 22px of a pill that has none to spare. */
+  .od-lang-btn svg { display: none; }
+  .od-lang-btn { padding-inline: .7rem; }
+}
+
 .section { padding-block: var(--s9); }
 /* A section that runs to the edges and supplies its own height. The scroll
    expand is a sticky stage inside a tall track, so the usual block padding
