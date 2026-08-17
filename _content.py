@@ -246,12 +246,12 @@ def pages(WA, ARROW, EMAIL):
     <div class="wrap">
       <div class="hero-copy">
         <div>
-          <h1 data-t>Run the online side of your rental business.</h1>
-          <p class="lede" data-reveal="80" data-t>Car, scooter and boat hire, answered at 2am. Ownerdeck runs the website, the enquiries, the bookings and the follow-up after — so the questions that arrive while you are asleep are already dealt with by morning.</p>
+          <h1 data-t>Answered at 2am, booked by morning.</h1>
+          <p class="lede" data-reveal="80" data-t>Car, scooter and boat hire. Ownerdeck runs the online side of your rental business — the website, the enquiries, the bookings and the follow-up after — so the questions that arrive while you are asleep are already dealt with.</p>
 
           <div class="btn-row" data-reveal="200" style="margin-top:2rem">
             <a class="btn btn--primary" href="/start"><span data-t>Get started</span>{ARROW}</a>
-            <a class="btn btn--ghost" href="/demo" data-t>See it work</a>
+            <a class="btn btn--ghost" href="/demo" data-t>Watch it take a booking</a>
           </div>
 
           <div class="proof-strip" role="group" aria-labelledby="proof-live proof-span" data-reveal="140">
@@ -275,7 +275,7 @@ def pages(WA, ARROW, EMAIL):
               </div>
             </div>
             <div class="proof-strip__foot">
-              <div><span class="proof-strip__k" data-t>Operators live</span><span class="proof-strip__v">1</span></div>
+              <div><span class="proof-strip__k" data-t>Now live</span><span class="proof-strip__v">1</span></div>
               <div><span class="proof-strip__k" data-t>Channel</span><span class="proof-strip__v">WhatsApp</span></div>
               <div><span class="proof-strip__k" data-t>Status</span><span class="proof-strip__v" data-t>Running</span></div>
             </div>
@@ -906,7 +906,7 @@ def pages(WA, ARROW, EMAIL):
         <section class="flow__step" data-step="2">
           <p class="eyebrow" data-t>Step two</p>
           <h2 tabindex="-1" data-focus data-t>How much of it do you want run for you?</h2>
-          <p class="lede" style="margin-bottom:2rem" data-t>Not sure? Pick the middle one — we will tell you honestly if you need less.</p>
+          <p class="lede" style="margin-bottom:2rem" data-t>Not sure? Pick the middle one — we will tell you honestly if you need less. Nothing is charged here; at the end you can hold your slot with a €75 deposit if you want to, refundable until work starts.</p>
           <div class="flow__grid">
 {plan_picks}
             <button class="pick" type="button" data-pick="plan" aria-pressed="false" data-value="Not sure yet"><b data-t>Not sure yet</b><span data-t>Talk it through first</span></button>
