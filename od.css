@@ -60,6 +60,16 @@
      of the page and the link preview agree with each other. Decorative only —
      nothing legible is ever painted in these, so they carry no contrast duty
      and are identical in both themes. */
+  /* The operator card. A cooler cast than the rest of the palette, on
+     purpose — it is the one panel claiming to be a live readout, and the
+     blue-grey rules and gold make it read as instrumentation rather than
+     as more page. */
+  --blueprint: #E1E7EF;   /* rules inside the card */
+  --label:     #55637A;   /* its uppercase labels, 6.08:1 on white */
+  --pill:      #0A0F1A;   /* the LIVE badge */
+  --pill-ink:  #FFFFFF;
+  --gold:      #C5A059;   /* 7.8:1 inside the pill. Never used on paper. */
+
   --f-answer: #7C5CFF;
   --f-site:   #6D4AFF;
   --f-book:   #4A7CFF;
@@ -128,6 +138,11 @@
     --img-filter:  grayscale(1) contrast(1.04);
     --f-shine:  #FFFFFF33;
     --f-gloss:  #FFFFFF1F;
+    --blueprint: #262E40;
+    --label:     #98A6BC;
+    --pill:      #404C66;
+    --pill-ink:  #FFFFFF;
+    --gold:      #D9B36B;
     --shadow:  0 0 0;
     color-scheme: dark;
   }
@@ -159,6 +174,12 @@
   --img-filter:  grayscale(1) contrast(1.04);
   --f-shine:  #FFFFFF33;
   --f-gloss:  #FFFFFF1F;
+  --shadow:
+  --blueprint: #262E40;
+  --label:     #98A6BC;
+  --pill:      #404C66;
+  --pill-ink:  #FFFFFF;
+  --gold:      #D9B36B;
   --shadow:  0 0 0;
   color-scheme: dark;
 }
@@ -954,55 +975,105 @@ a.dcard:hover { border-color: var(--rule-2); background: var(--paper-3); transfo
    14. Stats and proof
    -------------------------------------------------------------------------- */
 /* The most checkable claims, pulled into the hero before the visitor has to
-   decide whether the rest of the page is worth reading. */
+   decide whether the rest of the page is worth reading. Built as a readout
+   rather than a banner: the badge straddles the top edge, and the three
+   bands underneath are header, numbers, standing facts. */
 .proof-strip {
+  position: relative;
   width: 100%;
   max-width: 38rem;
-  margin-top: var(--s6);
-  padding: var(--s4) var(--s5);
-  border: 1px solid var(--rule);
-  border-inline-start: 2px solid var(--ink);
-  background: var(--paper-2);
+  margin-top: var(--s7);
+  border: 1px solid var(--blueprint);
   border-radius: var(--r);
+  background: var(--paper);
+  /* Long, shallow and barely there — the card should lift off the page
+     without announcing a drop shadow. */
+  box-shadow: 0 30px 80px -40px rgb(var(--shadow) / .28);
   text-align: start;
 }
-.proof-strip__eyebrow {
-  margin: 0 0 var(--s3);
+
+/* The badge sits across the border rather than inside the padding, which is
+   what makes the card read as a device with a light on it. */
+.proof-strip__live {
+  position: absolute;
+  top: -0.72rem; inset-inline-start: 1.25rem;
+  display: inline-flex; align-items: center; gap: .5rem;
+  margin: 0; padding: .32rem .7rem;
+  border-radius: var(--r-sm);
+  background: var(--pill); color: var(--pill-ink);
   font-family: var(--mono);
-  font-size: .6875rem;
-  letter-spacing: .12em;
-  color: var(--muted);
-  text-transform: uppercase;
+  font-size: .625rem; letter-spacing: .16em; text-transform: uppercase;
 }
+.proof-strip__dot {
+  width: .375rem; height: .375rem; border-radius: 50%;
+  background: var(--gold);
+  animation: proofPulse 2.4s ease-in-out infinite;
+}
+@keyframes proofPulse { 0%, 100% { opacity: 1 } 50% { opacity: .35 } }
+@media (prefers-reduced-motion: reduce) {
+  .proof-strip__dot { animation: none; }
+}
+
+.proof-strip__head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--s4);
+  padding: var(--s5) var(--s5) var(--s4);
+  border-bottom: 1px solid var(--blueprint);
+}
+.proof-strip__who  { margin: 0; font-size: .8125rem; font-weight: 500; color: var(--ink); }
+.proof-strip__span {
+  margin: 0; font-family: var(--mono);
+  font-size: .625rem; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--label); white-space: nowrap;
+}
+
 .proof-strip__grid {
   display: grid;
-  /* Sized from the content rather than a fixed count, so the number of
-     metrics can change without a second rule chasing it. */
-  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
-  gap: var(--s4) var(--s5);
+  grid-template-columns: repeat(3, 1fr);
+  border-bottom: 1px solid var(--blueprint);
 }
-.proof-metric {
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--s1);
-}
+.proof-metric { min-width: 0; padding: var(--s5); }
+.proof-metric + .proof-metric { border-inline-start: 1px solid var(--blueprint); }
 .proof-metric__n {
-  font-size: clamp(1.35rem, 1rem + 1.2vw, 2rem);
+  display: block;
+  font-size: clamp(1.5rem, 1rem + 1.6vw, 2.25rem);
   font-weight: 600; letter-spacing: -0.045em; line-height: 1;
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-  text-transform: none;
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+  color: var(--ink);
 }
 .proof-metric__l {
-  font-size: .8125rem;
-  color: var(--muted);
-  line-height: 1.35;
+  display: block; margin-top: .55rem;
+  font-family: var(--mono);
+  font-size: .625rem; letter-spacing: .13em; text-transform: uppercase;
+  line-height: 1.45; color: var(--label);
 }
-/* auto-fit reflows on its own down to here; below it the labels are the
-   constraint rather than the numbers, so force a pair per row. */
-@media (max-width: 26rem) {
-  .proof-strip__grid { grid-template-columns: repeat(2, 1fr); }
+
+.proof-strip__foot {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  font-size: .75rem;
+}
+.proof-strip__foot > div { padding: var(--s4) var(--s5); min-width: 0; }
+.proof-strip__foot > div + div { border-inline-start: 1px solid var(--blueprint); }
+.proof-strip__k {
+  display: block; color: var(--label);
+  font-family: var(--mono); font-size: .5875rem;
+  letter-spacing: .13em; text-transform: uppercase;
+}
+.proof-strip__v { display: block; margin-top: .2rem; font-weight: 600; color: var(--ink); }
+
+@media (max-width: 34rem) {
+  .proof-metric { padding: var(--s4) var(--s3); }
+  .proof-strip__foot > div { padding: var(--s3); }
+  .proof-strip__head { padding: var(--s5) var(--s4) var(--s3); }
+  .proof-strip__who { font-size: .75rem; }
+}
+/* Below this the three columns of prose stop fitting, so the standing facts
+   go under each other while the numbers keep their row. */
+@media (max-width: 25rem) {
+  .proof-strip__foot { grid-template-columns: 1fr; }
+  .proof-strip__foot > div + div {
+    border-inline-start: 0; border-top: 1px solid var(--blueprint);
+  }
 }
 
 .stat { display: flex; flex-direction: column; gap: var(--s1); }

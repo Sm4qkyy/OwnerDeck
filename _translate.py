@@ -582,6 +582,17 @@ T = {
         ('Περαστικοί, τακτικοί πελάτες και ένα ημερολόγιο που γεμίζει μόνο του.',
          'Клиенты с улицы, постоянные посетители и расписание, которое заполняется само.'),
 
+    # ---- the live operator card ----
+    'Live &middot; Limassol': ('Ζωντανά &middot; Λεμεσός',
+                              'Онлайн &middot; Лимассол'),
+    'Last 30 days': ('Τελευταίες 30 μέρες',
+                     'Последние 30 дней'),
+    'Operators live': ('Ενεργοί πελάτες',
+                       'Активных клиентов'),
+    'Channel': ('Κανάλι', 'Канал'),
+    'Status': ('Κατάσταση', 'Статус'),
+    'Running': ('Ενεργό', 'Работает'),
+
     # ---- the hero proof strip ----
     # These were written straight into lang/*.json, which _translate.py
     # regenerates, so they vanished on the next run. Kept here instead.

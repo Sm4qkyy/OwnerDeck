@@ -247,8 +247,12 @@ def pages(WA, ARROW, EMAIL):
           <h1 data-t>Run the online side of your rental business.</h1>
           <p class="lede" data-reveal="80" data-t>Car, scooter and boat hire, answered at 2am. Ownerdeck runs the website, the enquiries, the bookings and the follow-up after — so the questions that arrive while you are asleep are already dealt with by morning.</p>
 
-          <div class="proof-strip" role="group" aria-labelledby="proof-lede" data-reveal="140">
-            <p class="proof-strip__eyebrow" id="proof-lede" data-t>Last 30 days &middot; one live car rental operator in Limassol</p>
+          <div class="proof-strip" role="group" aria-labelledby="proof-live proof-span" data-reveal="140">
+            <p class="proof-strip__live" id="proof-live"><span class="proof-strip__dot" aria-hidden="true"></span><span data-t>Live &middot; Limassol</span></p>
+            <div class="proof-strip__head">
+              <p class="proof-strip__who" data-t>Car rental, Limassol</p>
+              <p class="proof-strip__span" id="proof-span" data-t>Last 30 days</p>
+            </div>
             <div class="proof-strip__grid">
               <div class="proof-metric">
                 <span class="proof-metric__n">212</span>
@@ -262,6 +266,11 @@ def pages(WA, ARROW, EMAIL):
                 <span class="proof-metric__n">&lt;1 min</span>
                 <span class="proof-metric__l" data-t>average reply time</span>
               </div>
+            </div>
+            <div class="proof-strip__foot">
+              <div><span class="proof-strip__k" data-t>Operators live</span><span class="proof-strip__v">1</span></div>
+              <div><span class="proof-strip__k" data-t>Channel</span><span class="proof-strip__v">WhatsApp</span></div>
+              <div><span class="proof-strip__k" data-t>Status</span><span class="proof-strip__v" data-t>Running</span></div>
             </div>
           </div>
 
