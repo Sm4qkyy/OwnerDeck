@@ -22,25 +22,33 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 IMG = os.path.join(HERE, 'img')
 MAX_EDGE = 1600
 
-# Position in the sorted folder -> slug. This is the order the prompts are
-# written in IMAGE-PROMPT.md and must stay in step with it.
-ORDER = [
-    ('car',          'Car and 4x4 rental'),
-    ('scooter',      'Scooter and bike hire'),
-    ('boat',         'Boat and jetski charter'),
-    ('diving',       'Tours, excursions and diving'),
-    ('villa-pool',   'Villas and short-term rentals'),
-    ('hotel',        'Guesthouses and small hotels'),
-    ('estate',       'Estate agencies'),
-    ('clinic',       'Private clinics'),
-    ('salon',        'Salons and spas'),
-    ('restaurant',   'Restaurants and tavernas'),
-    ('watersports',  'Watersports rental'),
-    ('fitness',      'Fitness and yoga studios'),
-    ('photographer', 'Photographers and studios'),
-    ('dentist',      'Dentists'),
-    ('barber',       'Barbers'),
-]
+# Filename -> slug, established by opening each image and looking at it.
+#
+# This was position-in-sorted-order until the files arrived named with UUIDs,
+# which sort arbitrarily. Mapping by position would have put the barber's chair
+# under "car and 4x4 rental". An explicit map is the only safe way when the
+# filenames carry no meaning.
+MAP = {
+    '00ca81a7-50a2-4663-8337-9da70bf70030.png': ('barber',       'Barbers'),
+    '12576359-a94a-40cb-be17-1549d22b9ead.png': ('watersports',  'Watersports rental'),
+    '1cb64074-a1da-4fa5-add5-35cfb2d2c3a8.png': ('estate',       'Estate agencies'),
+    '3727c1b3-f964-424f-a77b-66a86d4900bb.png': ('salon',        'Salons and spas'),
+    '4aba5925-1a01-4e18-a1af-7dbf364c9b76.png': ('photographer', 'Photographers and studios'),
+    '5121766a-fb5b-4e52-8686-d657e6f43597.png': ('boat',         'Boat and jetski charter'),
+    '91c43e29-289c-49e0-b2ae-0544d632a36c.png': ('scooter',      'Scooter and bike hire'),
+    'c81e90bd-4896-45b3-86b5-d4f10d177ffc.png': ('fitness',      'Fitness and yoga studios'),
+    'd4ed197e-9942-465d-a995-a36dc1c50b88.png': ('car',          'Car and 4x4 rental'),
+    'd5585879-e67c-4b44-9de1-cf0e7de90fd4.png': ('dentist',      'Dentists'),
+    'e111c97a-8bcb-4cab-b7a8-481cbc4b5934.png': ('clinic',       'Private clinics'),
+    'f8bcad15-7260-49f7-b5d3-280e8bb4bb87.png': ('restaurant',   'Restaurants and tavernas'),
+    '28575c78-ff98-415f-aa6b-056a57b1e88c.png': ('hotel',        'Guesthouses and small hotels'),
+    'b255e6c5-a8ea-407c-9207-6a98764523e6.png': ('villa-pool',   'Villas and short-term rentals'),
+    'df596832-7598-407b-80f2-5a75f2d76e9f.png': ('diving',       'Tours, excursions and diving'),
+}
+
+# Every trade now has commissioned imagery. Kept as an empty list so the
+# reporting below still works if one is ever pulled.
+MISSING = []
 
 EXTS = ('.png', '.jpg', '.jpeg', '.webp')
 
@@ -52,22 +60,21 @@ def main():
 
     files = sorted(f for f in os.listdir(src) if f.lower().endswith(EXTS))
     print('  source : %s' % src)
-    print('  found  : %d image(s)\n' % len(files))
+    print('  found  : %d image(s), %d in the map\n' % (len(files), len(MAP)))
 
-    if len(files) != len(ORDER):
-        print('  Expected %d, found %d. Refusing to guess which is which —' %
-              (len(ORDER), len(files)))
-        print('  a boat labelled "private clinics" is worse than no image.\n')
-        for i, f in enumerate(files, 1):
-            print('    %2d  %s' % (i, f))
-        print('\n  Expected order:')
-        for i, (slug, name) in enumerate(ORDER, 1):
-            print('    %2d  %-14s %s' % (i, slug, name))
+    unknown = [f for f in files if f not in MAP]
+    if unknown:
+        print('  Not in the map. Open each one, identify the trade, and add it')
+        print('  before running — guessing is how a barber chair ends up under')
+        print('  "car and 4x4 rental".\n')
+        for f in unknown:
+            print('    %s' % f)
         sys.exit(1)
 
     os.makedirs(IMG, exist_ok=True)
-    print('  %-3s %-26s %-14s %-13s %s' % ('#', 'FILE', 'SLUG', 'SIZE', 'WEBP'))
-    for i, (fname, (slug, label)) in enumerate(zip(files, ORDER), 1):
+    print('  %-3s %-14s %-28s %-13s %s' % ('#', 'SLUG', 'TRADE', 'SIZE', 'WEBP'))
+    for i, fname in enumerate(files, 1):
+        slug, label = MAP[fname]
         im = Image.open(os.path.join(src, fname))
         if im.mode in ('P', 'RGBA', 'LA'):
             im = im.convert('RGB')
@@ -84,8 +91,8 @@ def main():
         im.save(webp, 'WEBP', quality=82, method=6)
         im.save(jpg, 'JPEG', quality=84, optimize=True, progressive=True)
 
-        print('  %-3d %-26s %-14s %-13s %.0f KB'
-              % (i, fname[:26], slug, '%dx%d' % im.size, os.path.getsize(webp) / 1024))
+        print('  %-3d %-14s %-28s %-13s %.0f KB'
+              % (i, slug, label, '%dx%d' % im.size, os.path.getsize(webp) / 1024))
 
     # These are owned images, so the credits file records provenance rather
     # than licence obligations. Saying "CC0 from Openverse" here would now be
@@ -101,11 +108,15 @@ def main():
                 'page.\n\n'
                 'The brief they were generated from is `IMAGE-PROMPT.md`. Regenerate from\n'
                 'source files with `python _ingest_trades.py <folder>`.\n\n'
-                '| File | Trade |\n|---|---|\n')
-        for slug, label in ORDER:
-            f.write('| `img/%s.webp` | %s |\n' % (slug, label))
+                '| File | Trade | Provenance |\n|---|---|---|\n')
+        for _fn, (slug, label) in sorted(MAP.items(), key=lambda kv: kv[1][0]):
+            f.write('| `img/%s.webp` | %s | Generated to brief, owned |\n' % (slug, label))
+        for slug, label in MISSING:
+            f.write('| `img/%s.webp` | %s | **Retired CC0 stock, awaiting replacement** |\n'
+                    % (slug, label))
 
-    print('\n  %d images written, CREDITS.md rewritten.' % len(ORDER))
+    print('\n  %d images written, CREDITS.md rewritten.' % len(MAP))
+    print('  Still on retired stock: %s' % ', '.join(s for s, _ in MISSING))
     print('  Next: python _build_site.py && python _verify.py')
 
 

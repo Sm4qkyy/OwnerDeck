@@ -61,7 +61,8 @@
   --f-book:   #4A7CFF;
   --f-reach:  #25D366;
   --f-return: #F5A524;
-  --f-shine:  #FFFFFFE6;   /* specular sweep across a card face */
+  --f-shine:  #FFFFFF8C;   /* 1px bevel along the card's top edge */
+  --f-gloss:  #FFFFFF3D;   /* the fixed specular on the card face */
   --shadow:   16 16 20;  /* rgb triplet, alpha applied at use */
 
   --wrap:     72rem;
@@ -116,6 +117,7 @@
     --on-glass:    #E4E4E7;   /* 4.6:1 at worst, over the light CTA band */
     --img-filter:  grayscale(1) contrast(1.04);
     --f-shine:  #FFFFFF33;
+    --f-gloss:  #FFFFFF1F;
     --shadow:  0 0 0;
     color-scheme: dark;
   }
@@ -146,6 +148,7 @@
   --on-glass:    #E4E4E7;
   --img-filter:  grayscale(1) contrast(1.04);
   --f-shine:  #FFFFFF33;
+  --f-gloss:  #FFFFFF1F;
   --shadow:  0 0 0;
   color-scheme: dark;
 }
@@ -332,19 +335,23 @@ p:last-child { margin-bottom: 0; }
     0 14px 40px -14px var(--f-c, transparent),   /* coloured bloom beneath */
     0 2px 6px rgb(var(--shadow) / .16),          /* contact shadow */
     inset 0 1px 0 var(--f-shine);                /* bevel along the top edge */
+  overflow: hidden;   /* on the card, where it belongs */
   transform-style: preserve-3d;
   animation: od-drift var(--dur, 9s) var(--delay, 0s) ease-in-out infinite alternate;
 }
 
-/* The specular sweep. Its own layer so the mask and the blur never touch the
-   icon, and clipped to the card so it cannot bleed onto the headline. */
+/* A fixed specular, not a travelling band.
+   The sweep that was here flew straight off the card: overflow:hidden was on
+   this pseudo-element, which clips its own children and it has none, so
+   translateX(130%) simply left the card behind. In light mode it was also a
+   90%-opaque white bar peaking at 0.9 opacity — a strip light crossing the
+   hero every sixteen seconds.
+   A real render has a highlight fixed relative to the light source, and the
+   card already tilts, so the highlight moves across it for free. */
 .floater__card::after {
   content: ""; position: absolute; inset: 0;
-  border-radius: inherit; overflow: hidden;
-  background: linear-gradient(115deg,
-    transparent 34%, var(--f-shine) 47%, transparent 58%);
-  opacity: 0;
-  animation: od-shine calc(var(--dur, 9s) * 2.2) var(--delay, 0s) ease-in-out infinite;
+  border-radius: inherit;
+  background: radial-gradient(115% 75% at 20% 6%, var(--f-gloss), transparent 60%);
   pointer-events: none;
 }
 
@@ -362,12 +369,6 @@ p:last-child { margin-bottom: 0; }
   }
 }
 
-/* A long dark stretch, one quick glint. A sweep that runs continuously reads
-   as cheap; one that arrives occasionally reads as light catching an edge. */
-@keyframes od-shine {
-  0%, 62%   { opacity: 0; transform: translateX(-130%); }
-  72%       { opacity: .9; }
-  86%, 100% { opacity: 0; transform: translateX(130%); }
 }
 
 /* The bloom, behind everything. */
@@ -390,7 +391,6 @@ p:last-child { margin-bottom: 0; }
   /* Still there, still tilted, simply not moving. */
   .floater { transform: none; will-change: auto; }
   .floater__card { animation: none; transform: rotate(var(--rot, 0deg)); }
-  .floater__card::after { animation: none; opacity: 0; }
 }
 .section--tight { padding-block: var(--s8); }
 .section--edge { border-top: 1px solid var(--rule); }
@@ -822,7 +822,12 @@ a.dcard:hover { border-color: var(--rule-2); background: var(--paper-3); transfo
 .dcard__i { width: 22px; height: 22px; color: var(--ink); margin-bottom: var(--s2); }
 
 /* The little card chips used inside pricing plans */
-.chips { display: flex; flex-wrap: wrap; gap: .35rem; }
+/* .chips is a <ul> and every .chip is an <li>, so it needs the markers turned
+   off here and not only inside .plan. Without this the home page tiles kept
+   the browser's default discs — one down the left of every wrapped row, plus
+   a stray marker rendering inside the pill itself, because a list item set to
+   inline-flex still generates one. */
+.chips { display: flex; flex-wrap: wrap; gap: .35rem; list-style: none; margin: 0; padding: 0; }
 .chip {
   font-size: .75rem; padding: .22rem .55rem; border-radius: 999px;
   border: 1px solid var(--rule); color: var(--faint); background: var(--paper);
@@ -1181,8 +1186,26 @@ a.dcard:hover { border-color: var(--rule-2); background: var(--paper-3); transfo
 }
 .legal h3 { font-size: 1.0625rem; margin-top: var(--s5); margin-bottom: var(--s2); }
 .legal p, .legal li { color: var(--ink-2); }
-.legal ul, .legal ol { padding-inline-start: 1.25rem; margin: 0 0 var(--s4); }
+.legal ul, .legal ol { margin: 0 0 var(--s4); }
 .legal li { margin-bottom: var(--s2); }
+
+/* The browser's default disc was the only stock list marker left on the site —
+   every other list is list-style:none with a marker drawn to match. These
+   pages carry the longest prose, so an unstyled bullet stood out most exactly
+   where it mattered. The dot is the one from the name card, at 5px in --faint.
+   Logical properties throughout, so it flips with dir="rtl". */
+.legal ul { list-style: none; padding-inline-start: 0; }
+.legal ul > li { position: relative; padding-inline-start: 1.35rem; }
+.legal ul > li::before {
+  content: ""; position: absolute;
+  inset-inline-start: .1rem; top: .62em;
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--faint);
+}
+/* Numbered lists keep their numbers; only the colour and figure spacing
+   change, so they line up with the dots above them. */
+.legal ol { padding-inline-start: 1.6rem; }
+.legal ol > li::marker { color: var(--faint); font-variant-numeric: tabular-nums; }
 .legal dl { margin: 0 0 var(--s4); display: grid; grid-template-columns: 11rem 1fr; gap: var(--s2) var(--s4); }
 .legal dt { color: var(--muted); font-size: .9375rem; }
 .legal dd { margin: 0; }
@@ -1216,8 +1239,26 @@ a.dcard:hover { border-color: var(--rule-2); background: var(--paper-3); transfo
 }
 .longform h3 { font-size: 1.125rem; margin-top: var(--s5); margin-bottom: var(--s2); }
 .longform p, .longform li { color: var(--ink-2); }
-.longform ul, .longform ol { padding-inline-start: 1.25rem; margin: 0 0 var(--s4); }
+.longform ul, .longform ol { margin: 0 0 var(--s4); }
 .longform li { margin-bottom: var(--s2); }
+
+/* The browser's default disc was the only stock list marker left on the site —
+   every other list is list-style:none with a marker drawn to match. These
+   pages carry the longest prose, so an unstyled bullet stood out most exactly
+   where it mattered. The dot is the one from the name card, at 5px in --faint.
+   Logical properties throughout, so it flips with dir="rtl". */
+.longform ul { list-style: none; padding-inline-start: 0; }
+.longform ul > li { position: relative; padding-inline-start: 1.35rem; }
+.longform ul > li::before {
+  content: ""; position: absolute;
+  inset-inline-start: .1rem; top: .62em;
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--faint);
+}
+/* Numbered lists keep their numbers; only the colour and figure spacing
+   change, so they line up with the dots above them. */
+.longform ol { padding-inline-start: 1.6rem; }
+.longform ol > li::marker { color: var(--faint); font-variant-numeric: tabular-nums; }
 .longform strong { font-weight: 600; color: var(--ink); }
 
 /* The guides' end-of-article box. Named .callout, not .note: od.css already

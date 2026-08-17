@@ -79,32 +79,50 @@ CARDS = [
 
 TRADES = [
     ('car',        'Car and 4x4 rental',
-     'A red car parked on a quiet street',
+     'A grey SUV parked side-on against a concrete wall',
      'Fleet, day rates, insurance and delivery, all answered from one price list.'),
     ('scooter',    'Scooter and bike hire',
-     'A classic scooter parked against a wall',
+     'Four electric scooters in a row against a concrete wall',
      'Walk-ups and day hires without the phone ringing all afternoon.'),
     ('boat',       'Boat and jetski charter',
-     'Small boats moored in a harbour',
+     'A white rigid inflatable boat moored at a concrete pontoon',
      'Half-day and full-day slots, weather holds, deposits taken up front.'),
     ('diving',     'Tours, excursions and diving',
-     'A sea turtle swimming over a reef',
+     'Dive gear on a quay — tank, buoyancy jacket, regulator and fins',
      'Group sizes, pick-up points and departure times that stay in step.'),
     ('villa-pool', 'Villas and short-term rentals',
-     'A swimming pool beside a villa terrace',
+     'Loungers beside an infinity pool looking out to sea',
      'Nightly rates by season, minimum stays and availability that is actually true.'),
     ('hotel',      'Guesthouses and small hotels',
-     'A made bed in a quiet hotel room',
+     'A made bed by a floor-to-ceiling window with a sea view',
      'Room types, breakfast, late check-out — asked and answered at 2am.'),
     ('estate',     'Estate agencies',
-     'A hillside town of stone houses',
+     'Modern flat-roofed houses stepping up a slope',
      'Listings that stay current and viewings booked without the back and forth.'),
     ('clinic',     'Private clinics',
-     'A calm, empty treatment room',
+     'A treatment couch and stool in a bright, empty room',
      'Appointment slots, first-visit questions and reminders that cut no-shows.'),
     ('salon',      'Salons and spas',
-     "Hairdressing tools laid out on a counter",
+     'Black scissors, comb and clips laid on a stone counter',
      'Treatments, durations and prices, with the diary kept full.'),
+    ('restaurant', 'Restaurants and tavernas',
+     'A table for two on a terrace, laid before service',
+     'Covers, sittings and the same three questions every evening.'),
+    ('watersports', 'Watersports rental',
+     'Paddleboards stacked upright on pale sand',
+     'Hourly hires, weather calls and kit back before sunset.'),
+    ('fitness',    'Fitness and yoga studios',
+     'Rolled exercise mats against a concrete wall',
+     'Class times, drop-ins and memberships without a spreadsheet.'),
+    ('photographer', 'Photographers and studios',
+     'A camera on a tripod facing a large window',
+     'Shoot dates, packages and deposits agreed before the call.'),
+    ('dentist',    'Dentists',
+     'A modern dental chair beside a window',
+     'Appointments, first-visit questions and reminders that cut no-shows.'),
+    ('barber',     'Barbers',
+     'A black barber chair facing a frameless mirror',
+     'Walk-ins, regulars and a diary that fills itself.'),
 ]
 
 
@@ -122,7 +140,9 @@ def deck_grid(link=True):
 
 # Six of the nine trades, for the home page. Recognition beats completeness
 # here — the full set lives on /who-its-for.
-STRIP = ['car', 'boat', 'villa-pool', 'hotel', 'clinic', 'salon']
+# Six of the fifteen, for the home page. Rental first, because that is what the
+# headline now leads with, then enough breadth to show it is not only rental.
+STRIP = ['car', 'scooter', 'boat', 'villa-pool', 'clinic', 'salon']
 
 
 def strip_grid():
