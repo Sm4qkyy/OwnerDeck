@@ -1709,20 +1709,21 @@ main { animation: od-enter 460ms var(--ease-out) both; }
    once the hero's own buttons have left the viewport and not before, so it
    never competes with them. */
 .sticky-cta {
-  position: fixed; inset-inline: 0; bottom: 0; z-index: 60;
+  position: fixed; inset-inline: 0; z-index: 60;
   display: none;
   padding: .6rem .9rem calc(.6rem + env(safe-area-inset-bottom, 0px));
   background: color-mix(in srgb, var(--paper) 86%, transparent);
   backdrop-filter: saturate(140%) blur(12px);
   -webkit-backdrop-filter: saturate(140%) blur(12px);
   border-top: 1px solid var(--rule);
-  transform: translateY(110%);
-  transition: transform var(--t) var(--ease);
+  /* Offset rather than transform. The transform version would not come up: the
+     rule matched, the class was on the element, and even an inline !important
+     translateY(0) still computed as translateY(110%). Animating `bottom` on a
+     fixed bar this small costs nothing measurable and is unambiguous. */
+  bottom: -7rem;
+  transition: bottom var(--t) var(--ease);
 }
-/* translateY(0), not `none`. Transitioning a percentage translate to `none`
-   is not reliably interpolated — the bar kept its computed translateY(110%)
-   with the class applied and never came up. */
-.sticky-cta.is-up { transform: translateY(0); }
+.sticky-cta.is-up { bottom: 0; }
 .sticky-cta .btn { width: 100%; justify-content: center; }
 @media (max-width: 48rem) {
   .js .sticky-cta { display: block; }
