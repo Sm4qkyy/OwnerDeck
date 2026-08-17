@@ -154,6 +154,62 @@
     return d;
   }
 
+  /* ---------- streaming reply ----------
+     The endpoint answers errors as JSON and successes as SSE, so the caller
+     picks by content type. Tokens are appended to one bubble as they land,
+     which is the whole point: the first words show up in about half a second
+     instead of the visitor watching a typing dot until the model has finished
+     composing the entire answer. */
+  function readStream(r, dots, log) {
+    var reader = r.body.getReader();
+    var dec = new TextDecoder();
+    var buf = '', full = '', node = null;
+
+    function paint(chunk) {
+      // Work out whether to follow the text down BEFORE it grows, otherwise
+      // every measurement says "not at the bottom" and someone who scrolled
+      // up to re-read gets yanked back on each token.
+      var follow = log.scrollHeight - log.scrollTop - log.clientHeight < 60;
+      if (!node) { dots.remove(); node = bubble(log, 'bot', ''); }
+      full += chunk;
+      node.textContent = full;
+      if (follow) log.scrollTop = log.scrollHeight;
+    }
+
+    function pump() {
+      return reader.read().then(function (res) {
+        if (res.done) return done();
+        buf += dec.decode(res.value, { stream: true });
+        var frames = buf.split('\n\n');
+        buf = frames.pop();          // trailing partial frame waits for more
+        for (var i = 0; i < frames.length; i++) {
+          var parts = frames[i].split('\n'), line = null;
+          for (var k = 0; k < parts.length; k++) {
+            if (parts[k].indexOf('data:') === 0) { line = parts[k]; break; }
+          }
+          if (!line) continue;
+          var evt;
+          try { evt = JSON.parse(line.slice(5)); } catch (e) { continue; }
+          if (typeof evt.t === 'string') paint(evt.t);
+        }
+        return pump();
+      });
+    }
+
+    function done() {
+      if (!node) {
+        // Stream closed without a single token.
+        dots.remove();
+        full = T('k7e647227', 'Something went wrong. Email mark@ownerdeck.com and he will answer directly.');
+        bubble(log, 'bot', full);
+        return { ok: false, reply: full };
+      }
+      return { ok: true, reply: full };
+    }
+
+    return pump();
+  }
+
   /* ---------- send ---------- */
   function wire(root, log) {
     var form  = root.querySelector('.odc-form');
@@ -182,14 +238,25 @@
           body: JSON.stringify({ message: text, history: history.slice(-12), turnstile: token })
         });
       })
-      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (r) {
+        var ct = r.headers.get('content-type') || '';
+        // Errors still come back as JSON with a real status code; so does any
+        // browser too old for streaming bodies, because the server only
+        // streams when it has something to stream.
+        if (ct.indexOf('text/event-stream') === -1 || !r.body || !r.body.getReader) {
+          return r.json().then(function (j) {
+            t.remove();
+            var reply = (j && j.reply) || T('k7e647227', 'Something went wrong. Email mark@ownerdeck.com and he will answer directly.');
+            bubble(log, 'bot', reply);
+            return { ok: r.ok, reply: reply };
+          });
+        }
+        return readStream(r, t, log);
+      })
       .then(function (out) {
-        t.remove();
-        var reply = (out.j && out.j.reply) || T('k7e647227', 'Something went wrong. Email mark@ownerdeck.com and he will answer directly.');
-        bubble(log, 'bot', reply);
-        if (out.ok) {
+        if (out && out.ok && out.reply) {
           history.push({ role: 'user', content: text });
-          history.push({ role: 'assistant', content: reply });
+          history.push({ role: 'assistant', content: out.reply });
           turns++;
         }
       })

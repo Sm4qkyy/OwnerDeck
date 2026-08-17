@@ -45,7 +45,7 @@ PAGES = [
 
 <h2>Setup</h2>
 <p>Live in 48 hours. You tell me your fleet, rates, locations and policies once — that is your part. I build it, test it, and switch it on. It runs on the number already printed on your cards and listings, so nothing changes for your customers and there is no app for anyone to install.</p>
-<p>Answer is €150 per month, no VAT. No minimum term, no notice period. Cancel by email and it stops. It is one of five cards — the website, the bookings, the Google listing and the follow-up are the other four. <a href="/#pricing">See the plans</a>.</p>
+<p>The assistant on WhatsApp comes with Deck: €1,900 to build, then €249 a month, no VAT. Stop with a month’s notice, no minimum term. Site is €600 and €99 a month if you only want the website and a chat on it. <a href="/pricing">See the plans</a>.</p>
 """,
  'faq':[
   ('Do I need a new phone number for a WhatsApp bot?',
@@ -86,7 +86,7 @@ PAGES = [
 
 <h2>What you get</h2>
 <p>A message the moment a booking lands, with dates, times, meeting point, group size and contact details, confirmed back to the customer with a reference. Every conversation written to a log only you and I can open. And the ability to take over any chat yourself — you reply, it steps back.</p>
-<p>Answer is €150 per month, no VAT, on the number you already use. Cancel any time. Bundled with the website and bookings it is €249. <a href="/#pricing">See the plans</a>.</p>
+<p>It runs on the number you already use. Deck is €1,900 to build, then €249 a month, no VAT, and includes the website, the bookings and the assistant together. Stop with a month’s notice. <a href="/pricing">See the plans</a>.</p>
 """,
  'faq':[
   ('Does this only work for car rental?',
@@ -123,7 +123,7 @@ PAGES = [
 <p>Most owners find the overnight reply rate is where the money is going, and that it is worse in exactly the month they can least afford it.</p>
 
 <h2>What this costs</h2>
-<p>Ownerdeck answers on your own WhatsApp number in about two seconds, in the customer's language, with your real prices and live availability, then captures the booking and messages you. Answer is €150 per month, no VAT, cancel any time.</p>
+<p>Ownerdeck answers on your own WhatsApp number in about two seconds, in the customer's language, with your real prices and live availability, then captures the booking and messages you. That is Deck: €1,900 to build, then €249 a month, no VAT, stop with a month’s notice.</p>
 <p>If it is not earning that back, one lost booking a month in most rental businesses, you say so and it stops.</p>
 """,
  'faq':[
@@ -192,7 +192,7 @@ PAGES = [
   <li><strong>Uses your live prices and availability:</strong> auto-reply no, assistant yes.</li>
   <li><strong>Replies in the customer's language:</strong> auto-reply no, assistant yes.</li>
   <li><strong>Captures the booking:</strong> auto-reply no, assistant yes.</li>
-  <li><strong>Cost:</strong> auto-reply free, Answer €150 per month.</li>
+  <li><strong>Cost:</strong> auto-reply free; the Ownerdeck assistant comes with Deck, €1,900 to build then €249 a month.</li>
 </ul>
 
 <h2>When an auto-reply is genuinely enough</h2>

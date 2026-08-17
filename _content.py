@@ -651,7 +651,7 @@ def pages(WA, ARROW, EMAIL):
         slug='pricing', in_flow=True, nav='Pricing',
         scripts='<script src="/calc.js?v=20260815a" defer></script>\n',
         title='Pricing — Ownerdeck',
-        desc='Three hands: Site at €400 to build and €79 a month, Deck at '
+        desc='Three hands: Site at €600 to build and €99 a month, Deck at '
              '€1,900 and €249, Full Deck at €2,400 and €299. No VAT.',
         body=f'''  <section class="section">
     <div class="wrap">
