@@ -5,6 +5,7 @@ __pycache__/
 
 # Build scripts, prompts and local verification helpers are not public site files.
 *.py
+_*.js
 _*.html
 _*.css
 *.md
