@@ -156,15 +156,33 @@ FLOATERS = [
 
 
 def hero_floaters():
+    """Two nested elements on purpose.
+
+    The outer .floater is the only thing od.js touches: it writes --shift on
+    scroll and the transform on that element consumes it. The inner card owns
+    the idle drift and the 3D tilt, as a keyframe animation.
+
+    They cannot share an element. An animation takes ownership of transform for
+    as long as it runs and outranks an ordinary declaration, so a float
+    keyframe on .floater would silently kill the scroll parallax — the same
+    trap that killed the hover tilt on the old deck.
+    """
     paths = {c[0]: c[4] for c in CARDS}
     out = []
-    for slug, top, left, rot, depth, scale in FLOATERS:
+    for i, (slug, top, left, rot, depth, scale) in enumerate(FLOATERS):
+        # Negative delays start every card at a different point in its cycle,
+        # so they are already spread out on the first frame instead of rising
+        # together and drifting apart over the first half minute.
+        dur = 7.5 + i * 1.4
+        delay = -(i * 2.3)
         out.append(
             f'        <span class="floater" data-depth="{depth}" aria-hidden="true" '
-            f'style="top:{top}%;left:{left}%;--rot:{rot}deg;--scale:{scale};'
-            f'--f-c:var(--f-{slug})">'
+            f'style="top:{top}%;left:{left}%;--f-c:var(--f-{slug})">'
+            f'<span class="floater__card" style="--rot:{rot}deg;--scale:{scale};'
+            f'--dur:{dur}s;--delay:{delay}s">'
             f'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" '
-            f'stroke-linecap="round" stroke-linejoin="round">{paths[slug]}</svg></span>')
+            f'stroke-linecap="round" stroke-linejoin="round">{paths[slug]}</svg>'
+            f'</span></span>')
     return '\n'.join(out)
 
 

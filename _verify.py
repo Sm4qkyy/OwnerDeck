@@ -109,11 +109,17 @@ def check_palette(css):
     # Selectors that may sit at opacity 0 without a .js guard, because what
     # they hide is not content. Keep this list short and justified.
     DECORATIVE = (
-        '.mmenu__bars',   # the middle hamburger bar, which becomes an X
+        '.mmenu__bars',          # the middle hamburger bar, which becomes an X
+        '.floater__card::after', # the specular sweep, which animates in
     )
+    # A keyframe step is a stage in an animation, not a rule that hides
+    # something. `from`/`to` were already skipped; percentages are the same
+    # thing written differently.
+    KEYFRAME_STEP = re.compile(r'^(from|to|\d+%)(\s*,\s*(from|to|\d+%))*$')
+
     for m in re.finditer(r'([^{}]+)\{([^{}]*opacity\s*:\s*0\s*;[^{}]*)\}', stripped):
         sel = m.group(1).strip().splitlines()[-1].strip()
-        if 'is-leaving' in sel or sel in ('from', 'to'):
+        if 'is-leaving' in sel or KEYFRAME_STEP.match(sel):
             continue
         if any(d in sel for d in DECORATIVE):
             continue

@@ -61,6 +61,7 @@
   --f-book:   #4A7CFF;
   --f-reach:  #25D366;
   --f-return: #F5A524;
+  --f-shine:  #FFFFFFE6;   /* specular sweep across a card face */
   --shadow:   16 16 20;  /* rgb triplet, alpha applied at use */
 
   --wrap:     72rem;
@@ -114,6 +115,7 @@
     --glass-shade: #09090B26;
     --on-glass:    #E4E4E7;   /* 4.6:1 at worst, over the light CTA band */
     --img-filter:  grayscale(1) contrast(1.04);
+    --f-shine:  #FFFFFF33;
     --shadow:  0 0 0;
     color-scheme: dark;
   }
@@ -143,6 +145,7 @@
   --glass-shade: #09090B26;
   --on-glass:    #E4E4E7;
   --img-filter:  grayscale(1) contrast(1.04);
+  --f-shine:  #FFFFFF33;
   --shadow:  0 0 0;
   color-scheme: dark;
 }
@@ -289,6 +292,9 @@ p:last-child { margin-bottom: 0; }
 .hero__field {
   position: absolute; inset: 0; z-index: 0;
   pointer-events: none;
+  /* Gives the cards somewhere to tilt into. Without it rotateX/rotateY are
+     flat shears rather than perspective. */
+  perspective: 900px;
   /* Clipped by the section, but masked at the edges too so a card never ends
      on a hard straight cut. currentColor rather than a literal: a gradient mask
      is read for its alpha, so which colour it is makes no difference, and this
@@ -299,31 +305,81 @@ p:last-child { margin-bottom: 0; }
 
 .floater {
   position: absolute;
-  display: grid; place-items: center;
-  width: calc(5.5rem * var(--scale, 1));
-  aspect-ratio: 5 / 7;                       /* a playing card */
-  border: 1px solid var(--rule);
-  border-radius: calc(var(--r) * var(--scale, 1));
-  background: var(--paper-2);
-  /* The icon carries the colour, not the card. A tinted card would compete
-     with the headline; a lit icon on a neutral card reads as a glow. */
-  color: var(--f-c, var(--faint));
-  box-shadow: 0 10px 34px -12px var(--f-c, transparent);
-  /* --shift is written by od.js on scroll; the rest is static. Kept in one
-     transform so the whole thing stays on the compositor. */
-  transform: translate3d(0, var(--shift, 0px), 0) rotate(var(--rot, 0deg));
+  /* Scroll parallax only. od.js writes --shift; nothing else touches this
+     element's transform, which is what keeps the animation below from
+     fighting it. */
+  transform: translate3d(0, var(--shift, 0px), 0);
   will-change: transform;
 }
-/* The bloom behind the card. Sits on its own layer so the blur never touches
-   the icon's edges, and stays well under the headline in weight. */
+
+.floater__card {
+  position: relative;
+  display: grid; place-items: center;
+  width: calc(5.5rem * var(--scale, 1));
+  aspect-ratio: 5 / 7;
+  border-radius: calc(var(--r) * var(--scale, 1));
+  border: 1px solid var(--rule);
+  /* A lit face: brighter at the top-left where the light is coming from,
+     falling away to the bottom-right. This is what stops it reading as a flat
+     rectangle once it tilts. */
+  background:
+    linear-gradient(150deg,
+      color-mix(in srgb, var(--paper) 92%, var(--f-c)) 0%,
+      var(--paper-2) 46%,
+      color-mix(in srgb, var(--paper-3) 88%, var(--f-c)) 100%);
+  color: var(--f-c, var(--faint));
+  box-shadow:
+    0 14px 40px -14px var(--f-c, transparent),   /* coloured bloom beneath */
+    0 2px 6px rgb(var(--shadow) / .16),          /* contact shadow */
+    inset 0 1px 0 var(--f-shine);                /* bevel along the top edge */
+  transform-style: preserve-3d;
+  animation: od-drift var(--dur, 9s) var(--delay, 0s) ease-in-out infinite alternate;
+}
+
+/* The specular sweep. Its own layer so the mask and the blur never touch the
+   icon, and clipped to the card so it cannot bleed onto the headline. */
+.floater__card::after {
+  content: ""; position: absolute; inset: 0;
+  border-radius: inherit; overflow: hidden;
+  background: linear-gradient(115deg,
+    transparent 34%, var(--f-shine) 47%, transparent 58%);
+  opacity: 0;
+  animation: od-shine calc(var(--dur, 9s) * 2.2) var(--delay, 0s) ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Drift and tilt together, so the card looks like it is turning as it rises
+   rather than sliding on a plane. rotate() carries the card's own resting
+   angle through the whole animation. */
+@keyframes od-drift {
+  from {
+    transform: rotate(var(--rot, 0deg)) translateY(-7px)
+               rotateX(7deg) rotateY(-11deg);
+  }
+  to {
+    transform: rotate(var(--rot, 0deg)) translateY(7px)
+               rotateX(-5deg) rotateY(9deg);
+  }
+}
+
+/* A long dark stretch, one quick glint. A sweep that runs continuously reads
+   as cheap; one that arrives occasionally reads as light catching an edge. */
+@keyframes od-shine {
+  0%, 62%   { opacity: 0; transform: translateX(-130%); }
+  72%       { opacity: .9; }
+  86%, 100% { opacity: 0; transform: translateX(130%); }
+}
+
+/* The bloom, behind everything. */
 .floater::before {
   content: ""; position: absolute; inset: -25%; z-index: -1;
   border-radius: 50%;
   background: radial-gradient(circle, var(--f-c, transparent), transparent 70%);
-  opacity: .22;
-  filter: blur(12px);
+  opacity: .2;
+  filter: blur(14px);
 }
-.floater svg { width: calc(1.6rem * var(--scale, 1)); height: auto; opacity: .9; }
+
+.floater__card svg { width: calc(1.6rem * var(--scale, 1)); height: auto; opacity: .95; }
 
 @media (max-width: 62rem) {
   /* Below the split breakpoint the hero is already tight; ambient cards just
@@ -331,7 +387,10 @@ p:last-child { margin-bottom: 0; }
   .hero__field { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .floater { transform: rotate(var(--rot, 0deg)); will-change: auto; }
+  /* Still there, still tilted, simply not moving. */
+  .floater { transform: none; will-change: auto; }
+  .floater__card { animation: none; transform: rotate(var(--rot, 0deg)); }
+  .floater__card::after { animation: none; opacity: 0; }
 }
 .section--tight { padding-block: var(--s8); }
 .section--edge { border-top: 1px solid var(--rule); }
