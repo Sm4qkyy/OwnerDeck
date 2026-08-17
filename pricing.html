@@ -163,6 +163,38 @@
     </div>
   </section>
 
+  <section class="section section--edge">
+    <div class="wrap measure">
+      <p class="eyebrow" data-i18n="ka6b53df3">The only number that matters</p>
+      <h2 data-i18n="kde7c702b">How many bookings pay for it?</h2>
+      <p class="lede" data-i18n="k963cfb75">Not what it costs. What it has to earn back. Drag your average booking and see.</p>
+
+      <div class="calc" data-reveal>
+        <label class="calc__row" for="calc-value">
+          <span class="calc__label" data-i18n="k5f5d7665">Your average booking</span>
+          <output class="calc__out" id="calc-value-out">&euro;180</output>
+        </label>
+        <input class="calc__range" id="calc-value" type="range"
+               min="30" max="600" step="10" value="180"
+               aria-describedby="calc-answer">
+
+        <label class="calc__row" for="calc-plan">
+          <span class="calc__label" data-i18n="k0b6cbdf7">Plan</span>
+        </label>
+        <select class="calc__select" id="calc-plan">
+          <option value="99">Site &mdash; &euro;99 / month</option>
+          <option value="249" selected>Deck &mdash; &euro;249 / month</option>
+          <option value="299">Full Deck &mdash; &euro;299 / month</option>
+        </select>
+
+        <p class="calc__answer" id="calc-answer" aria-live="polite">
+          <b id="calc-n">1.4</b> <span data-i18n="k8d4951d4">bookings a month covers it.</span>
+        </p>
+        <p class="note" data-i18n="kec611c0b">Your own average, your own plan. It does not count the enquiries you were already going to answer yourself &mdash; only the ones that would otherwise have waited until morning.</p>
+      </div>
+    </div>
+  </section>
+
   <section class="section section--sunk section--edge">
     <div class="wrap">
       <div class="section__head">
@@ -260,6 +292,7 @@
 
 <script src="/config.js?v=20260815a"></script>
 <script src="/chat-widget.js?v=20260815a"></script>
+<script src="/calc.js?v=20260815a" defer></script>
 <script src="/i18n.js?v=20260815a" defer></script>
 <script src="/od.js?v=20260815a" defer></script>
 <script src="/analytics-events.js?v=20260815a" defer></script>

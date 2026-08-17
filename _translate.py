@@ -582,6 +582,29 @@ T = {
         ('Περαστικοί, τακτικοί πελάτες και ένα ημερολόγιο που γεμίζει μόνο του.',
          'Клиенты с улицы, постоянные посетители и расписание, которое заполняется само.'),
 
+    # ---- the payback calculator ----
+    'The only number that matters': ('Ο μόνος αριθμός που μετράει',
+                                     'Единственное число, которое имеет значение'),
+    'How many bookings pay for it?': ('Πόσες κρατήσεις το πληρώνουν;',
+                                      'Сколько бронирований его окупают?'),
+    'Not what it costs. What it has to earn back. Drag your average booking and see.':
+        ('Όχι πόσο κοστίζει. Πόσα πρέπει να επιστρέψει. Σύρετε τη μέση κράτησή σας και δείτε.',
+         'Не сколько это стоит, а сколько должно вернуть. Подвиньте среднюю бронь и посмотрите.'),
+    'Your average booking': ('Η μέση κράτησή σας', 'Ваша средняя бронь'),
+    'Plan': ('Πακέτο', 'Тариф'),
+    'bookings a month covers it.': ('κρατήσεις τον μήνα το καλύπτουν.',
+                                    'бронирования в месяц покрывают это.'),
+    'Your own average, your own plan. It does not count the enquiries you were already going to answer yourself &mdash; only the ones that would otherwise have waited until morning.':
+        ('Ο δικός σας μέσος όρος, το δικό σας πακέτο. Δεν μετρά τα ερωτήματα που θα απαντούσατε ούτως ή άλλως μόνοι σας — μόνο εκείνα που αλλιώς θα περίμεναν ως το πρωί.',
+         'Ваш собственный средний чек и ваш тариф. Здесь не учтены запросы, на которые вы и так ответили бы сами, — только те, что иначе ждали бы до утра.'),
+
+    # ---- the objection everyone thinks and nobody answers ----
+    'Why not just use ChatGPT?': ('Γιατί όχι απλώς ChatGPT;', 'Почему не просто ChatGPT?'),
+    'Because ChatGPT does not know whether the Jimny is free on Saturday. It writes a convincing sentence about your prices without having seen them. Ownerdeck answers from your database — the actual fleet, the actual rates, the actual calendar — and when it does not know, it says so and passes the conversation to you. The writing is the easy part. Being right is the product.':
+        ('Επειδή το ChatGPT δεν ξέρει αν το Jimny είναι ελεύθερο το Σάββατο. Γράφει μια πειστική πρόταση για τις τιμές σας χωρίς να τις έχει δει ποτέ. Το Ownerdeck απαντά από τη βάση δεδομένων σας — τον πραγματικό στόλο, τις πραγματικές τιμές, το πραγματικό ημερολόγιο — και όταν δεν ξέρει, το λέει και σας παραδίδει τη συνομιλία. Το γράψιμο είναι το εύκολο μέρος. Το προϊόν είναι να έχει δίκιο.',
+         'Потому что ChatGPT не знает, свободен ли Jimny в субботу. Он напишет убедительное предложение о ваших ценах, ни разу их не увидев. Ownerdeck отвечает из вашей базы данных — реальный автопарк, реальные тарифы, реальный календарь, — а когда не знает, говорит об этом и передаёт разговор вам. Написать текст — простая часть. Продукт в том, чтобы быть правым.'),
+    'See it work': ('Δείτε το να δουλεύει', 'Посмотреть в работе'),
+
     # ---- who it's for ----
     'Built for businesses that run on bookings.':
         ('Φτιαγμένο για επιχειρήσεις που ζουν από κρατήσεις.',

@@ -253,8 +253,8 @@ def pages(WA, ARROW, EMAIL):
           </div>
 
           <div class="btn-row" data-reveal="200" style="margin-top:2rem">
-            <a class="btn btn--primary" href="/start"><span data-t>Get started</span>{ARROW}</a>
-            <a class="btn btn--ghost" href="{WA}" rel="noopener" data-t>Or message us on WhatsApp</a>
+            <a class="btn btn--primary" href="/demo"><span data-t>See it work</span>{ARROW}</a>
+            <a class="btn btn--ghost" href="/start" data-t>Get started</a>
           </div>
           <p class="note" data-reveal="240" style="margin-top:1.25rem" data-t>No VAT. No long contract on the entry plan. Works the same way for villas, clinics and salons — see who it is for.</p>
         </div>
@@ -639,6 +639,7 @@ def pages(WA, ARROW, EMAIL):
 
     P.append(dict(
         slug='pricing', in_flow=True, nav='Pricing',
+        scripts='<script src="/calc.js?v=20260815a" defer></script>\n',
         title='Pricing — Ownerdeck',
         desc='Three hands: Site at €400 to build and €79 a month, Deck at '
              '€1,900 and €249, Full Deck at €2,400 and €299. No VAT.',
@@ -662,6 +663,38 @@ def pages(WA, ARROW, EMAIL):
           </div>
           <div><a class="btn btn--primary" href="/start?plan=Custom"><span data-t>Ask for a quote</span>{ARROW}</a></div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--edge">
+    <div class="wrap measure">
+      <p class="eyebrow" data-t>The only number that matters</p>
+      <h2 data-t>How many bookings pay for it?</h2>
+      <p class="lede" data-t>Not what it costs. What it has to earn back. Drag your average booking and see.</p>
+
+      <div class="calc" data-reveal>
+        <label class="calc__row" for="calc-value">
+          <span class="calc__label" data-t>Your average booking</span>
+          <output class="calc__out" id="calc-value-out">&euro;180</output>
+        </label>
+        <input class="calc__range" id="calc-value" type="range"
+               min="30" max="600" step="10" value="180"
+               aria-describedby="calc-answer">
+
+        <label class="calc__row" for="calc-plan">
+          <span class="calc__label" data-t>Plan</span>
+        </label>
+        <select class="calc__select" id="calc-plan">
+          <option value="99">Site &mdash; &euro;99 / month</option>
+          <option value="249" selected>Deck &mdash; &euro;249 / month</option>
+          <option value="299">Full Deck &mdash; &euro;299 / month</option>
+        </select>
+
+        <p class="calc__answer" id="calc-answer" aria-live="polite">
+          <b id="calc-n">1.4</b> <span data-t>bookings a month covers it.</span>
+        </p>
+        <p class="note" data-t>Your own average, your own plan. It does not count the enquiries you were already going to answer yourself &mdash; only the ones that would otherwise have waited until morning.</p>
       </div>
     </div>
   </section>
@@ -772,6 +805,8 @@ def pages(WA, ARROW, EMAIL):
          'Tell us and we fix the facts it read from, so it cannot get the same thing wrong twice. It answers from your database, so a wrong answer is almost always a wrong entry.'),
         ('Is my customers&rsquo; data safe?',
          'Conversations are processed to answer them and stored so you can read your own history. We do not sell data or use it to advertise. The privacy notice sets out exactly who processes what.'),
+        ('Why not just use ChatGPT?',
+         'Because ChatGPT does not know whether the Jimny is free on Saturday. It writes a convincing sentence about your prices without having seen them. Ownerdeck answers from your database — the actual fleet, the actual rates, the actual calendar — and when it does not know, it says so and passes the conversation to you. The writing is the easy part. Being right is the product.'),
         ('Can I start small and add later?',
          'That is the point of the deck. Start with Site to get online properly, move to the Deck when you want the messages answered and the bookings taken, add Reach and Return when you want the quiet months filled.'),
     ]
