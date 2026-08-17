@@ -704,13 +704,18 @@ p:last-child { margin-bottom: 0; }
 }
 .mmenu:not([open]) .mmenu__panel { display: none; }
 
-.mmenu__panel a {
+/* Unclassed links only. This rule is (0,2,1) and .btn--primary is (0,1,0),
+   so before the :not() it was painting the Get started button's label in
+   --ink on its --ink background — a solid block with no text in it — and
+   overriding .mmenu__quiet's muted colour at the same time. Anything in
+   here that carries a class brings its own styling. */
+.mmenu__panel a:not([class]) {
   padding: .6rem .7rem; border-radius: var(--r-sm);
   text-decoration: none; font-size: .9375rem; color: var(--ink);
   transition: background var(--t-fast) var(--ease);
 }
-.mmenu__panel a:hover { background: var(--paper-3); }
-.mmenu__panel a[aria-current="page"] { font-weight: 600; }
+.mmenu__panel a:not([class]):hover { background: var(--paper-3); }
+.mmenu__panel a:not([class])[aria-current="page"] { font-weight: 600; }
 .mmenu__sep { height: 1px; background: var(--rule); margin: var(--s2) .3rem; }
 .mmenu__panel .btn { margin-top: var(--s2); justify-content: center; }
 
