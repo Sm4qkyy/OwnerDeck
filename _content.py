@@ -224,13 +224,19 @@ def pages(WA, ARROW, EMAIL):
     <div class="wrap">
       <div class="split">
         <div>
-          <h1 data-t>Run the online side of your business.</h1>
-          <p class="lede" data-reveal="80" data-t>Ownerdeck runs the online side of your business — your website, your enquiries, your bookings and the follow-up after. Set your prices once and everything says the same thing.</p>
-          <div class="btn-row" data-reveal="160" style="margin-top:2rem">
+          <h1 data-t>Run the online side of your rental business.</h1>
+          <p class="lede" data-reveal="80" data-t>Car, scooter and boat hire, answered at 2am. Ownerdeck runs the website, the enquiries, the bookings and the follow-up after — so the questions that arrive while you are asleep are already dealt with by morning.</p>
+
+          <div class="cred" data-reveal="140">
+            <span class="cred__n">14</span>
+            <span class="cred__l" data-t>enquiries booked between 9pm and 8am last month, for one car rental operator in Limassol</span>
+          </div>
+
+          <div class="btn-row" data-reveal="200" style="margin-top:2rem">
             <a class="btn btn--primary" href="/start"><span data-t>Get started</span>{ARROW}</a>
             <a class="btn btn--ghost" href="{WA}" rel="noopener" data-t>Or message us on WhatsApp</a>
           </div>
-          <p class="note" data-reveal="220" style="margin-top:1.25rem" data-t>No VAT. No long contract on the entry plan.</p>
+          <p class="note" data-reveal="240" style="margin-top:1.25rem" data-t>No VAT. No long contract on the entry plan. Works the same way for villas, clinics and salons — see who it is for.</p>
         </div>
         <div>
           {chat_mock()}

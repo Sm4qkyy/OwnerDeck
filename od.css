@@ -868,6 +868,28 @@ a.dcard:hover { border-color: var(--rule-2); background: var(--paper-3); transfo
 /* --------------------------------------------------------------------------
    14. Stats and proof
    -------------------------------------------------------------------------- */
+/* The one real number, in the hero rather than seven sections down. It was
+   below the deck, the trades strip and the whole feature list — the single
+   most checkable claim on the site, buried under the parts inventory. */
+.cred {
+  display: flex; align-items: center; gap: var(--s4);
+  margin-top: var(--s6);
+  padding: var(--s4) var(--s5);
+  border-inline-start: 2px solid var(--ink);
+  background: var(--paper-2);
+  border-radius: 0 var(--r) var(--r) 0;
+  max-width: 34rem;
+}
+.cred__n {
+  font-size: clamp(2.25rem, 1.8rem + 1.8vw, 3rem);
+  font-weight: 600; letter-spacing: -0.045em; line-height: 1;
+  font-variant-numeric: tabular-nums; flex: 0 0 auto;
+}
+.cred__l { font-size: .9375rem; color: var(--muted); line-height: 1.45; }
+@media (max-width: 34rem) {
+  .cred { flex-direction: column; align-items: flex-start; gap: var(--s2); }
+}
+
 .stat { display: flex; flex-direction: column; gap: var(--s1); }
 .stat__n {
   font-size: clamp(3rem, 2rem + 4.5vw, 5.5rem);
