@@ -1719,7 +1719,10 @@ main { animation: od-enter 460ms var(--ease-out) both; }
   transform: translateY(110%);
   transition: transform var(--t) var(--ease);
 }
-.sticky-cta.is-up { transform: none; }
+/* translateY(0), not `none`. Transitioning a percentage translate to `none`
+   is not reliably interpolated — the bar kept its computed translateY(110%)
+   with the class applied and never came up. */
+.sticky-cta.is-up { transform: translateY(0); }
 .sticky-cta .btn { width: 100%; justify-content: center; }
 @media (max-width: 48rem) {
   .js .sticky-cta { display: block; }
