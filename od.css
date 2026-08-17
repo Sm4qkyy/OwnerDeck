@@ -1583,6 +1583,12 @@ a.dcard:hover { border-color: var(--rule-2); background: var(--paper-3); transfo
 .cta .btn--primary:hover { background: var(--paper-3); }
 .cta .btn-row { justify-content: center; margin-top: var(--s5); }
 .cta .note { color: color-mix(in srgb, var(--invert) 55%, transparent); margin-top: var(--s5); }
+/* The accent is a paper colour: 1.7:1 against this band in light mode. Nothing
+   puts an eyebrow or an inline link here today, but both would be close to
+   unreadable if they ever did, so the band keeps its own contrast. */
+.cta .eyebrow { color: var(--invert); opacity: .78; }
+.cta p a:not([class]),
+.cta li a:not([class]) { color: var(--invert); text-decoration-color: var(--invert); }
 
 /* --------------------------------------------------------------------------
    21. Footer
