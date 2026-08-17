@@ -253,7 +253,15 @@
           var evt;
           try { evt = JSON.parse(line.slice(5)); } catch (e) { continue; }
           if (typeof evt.t === 'string') paint(evt.t);
-          if (typeof evt.pass === 'string' && evt.pass) pass = evt.pass;
+          if (evt.done) {
+            /* A verified exchange always grants a fresh pass. None coming
+               back means ours was not accepted — almost always because it
+               lapsed after a long pause — so drop it. Holding on to a dead
+               pass would keep getToken() returning empty and slide the
+               visitor onto the unverified allowance without ever showing
+               them the check that would have cleared it. */
+            pass = (typeof evt.pass === 'string' && evt.pass) ? evt.pass : '';
+          }
         }
         return pump();
       });
