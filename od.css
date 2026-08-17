@@ -51,6 +51,16 @@
   /* Photographs run in colour by default and are desaturated only in dark
      mode, where full-colour images glare against the ground. */
   --img-filter:  none;
+
+  /* Accents for the hero's floating cards, sampled from the banner so the top
+     of the page and the link preview agree with each other. Decorative only —
+     nothing legible is ever painted in these, so they carry no contrast duty
+     and are identical in both themes. */
+  --f-answer: #7C5CFF;
+  --f-site:   #6D4AFF;
+  --f-book:   #4A7CFF;
+  --f-reach:  #25D366;
+  --f-return: #F5A524;
   --shadow:   16 16 20;  /* rgb triplet, alpha applied at use */
 
   --wrap:     72rem;
@@ -295,14 +305,25 @@ p:last-child { margin-bottom: 0; }
   border: 1px solid var(--rule);
   border-radius: calc(var(--r) * var(--scale, 1));
   background: var(--paper-2);
-  color: var(--faint);
-  opacity: .55;
+  /* The icon carries the colour, not the card. A tinted card would compete
+     with the headline; a lit icon on a neutral card reads as a glow. */
+  color: var(--f-c, var(--faint));
+  box-shadow: 0 10px 34px -12px var(--f-c, transparent);
   /* --shift is written by od.js on scroll; the rest is static. Kept in one
      transform so the whole thing stays on the compositor. */
   transform: translate3d(0, var(--shift, 0px), 0) rotate(var(--rot, 0deg));
   will-change: transform;
 }
-.floater svg { width: calc(1.5rem * var(--scale, 1)); height: auto; }
+/* The bloom behind the card. Sits on its own layer so the blur never touches
+   the icon's edges, and stays well under the headline in weight. */
+.floater::before {
+  content: ""; position: absolute; inset: -25%; z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--f-c, transparent), transparent 70%);
+  opacity: .22;
+  filter: blur(12px);
+}
+.floater svg { width: calc(1.6rem * var(--scale, 1)); height: auto; opacity: .9; }
 
 @media (max-width: 62rem) {
   /* Below the split breakpoint the hero is already tight; ambient cards just

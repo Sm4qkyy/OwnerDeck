@@ -161,7 +161,8 @@ def hero_floaters():
     for slug, top, left, rot, depth, scale in FLOATERS:
         out.append(
             f'        <span class="floater" data-depth="{depth}" aria-hidden="true" '
-            f'style="top:{top}%;left:{left}%;--rot:{rot}deg;--scale:{scale}">'
+            f'style="top:{top}%;left:{left}%;--rot:{rot}deg;--scale:{scale};'
+            f'--f-c:var(--f-{slug})">'
             f'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" '
             f'stroke-linecap="round" stroke-linejoin="round">{paths[slug]}</svg></span>')
     return '\n'.join(out)
@@ -751,15 +752,20 @@ def pages(WA, ARROW, EMAIL):
 '''))
 
     # ---------------------------------------------------------- get started
+    # data-t goes on the visible label only. data-value stays English on
+    # purpose: it is what ends up in the WhatsApp message and the Stripe
+    # metadata, and those are read by us, not by the visitor. Without the
+    # data-t these twelve buttons were the only text on the site that never
+    # changed when the language did.
     trade_picks = '\n'.join(
         f'          <button class="pick" type="button" data-pick="trade" '
-        f'aria-pressed="false" data-value="{name}"><b>{name}</b></button>'
+        f'aria-pressed="false" data-value="{name}"><b data-t>{name}</b></button>'
         for _s, name, _alt, _l in TRADES)
 
     plan_picks = '\n'.join(
         f'''          <button class="pick" type="button" data-pick="plan" aria-pressed="false"
                   data-value="{p['name']}" data-price="{p['build']} + {p['month']}/mo">
-            <b>{p['name']}</b><span>{p['build'].replace('&euro;', '€')} to build, then {p['month'].replace('&euro;', '€')} a month</span>
+            <b data-t>{p['name']}</b><span data-t>{p['build'].replace('&euro;', '€')} to build, then {p['month'].replace('&euro;', '€')} a month</span>
           </button>''' for p in plans)
 
     P.append(dict(
