@@ -3,196 +3,241 @@
 Fifteen standalone prompts, one per image. Each carries the full style spec, so
 you can paste any one on its own and get something that matches the others.
 
+## The look, in one line
+
+**Modern, crisp, high-contrast, minimal.** Contemporary equipment and
+architecture, clean directional daylight, deep blacks, generous negative space.
+
+The site is near-black with Geist type and a glossy high-contrast banner, so
+the photography has to belong to that world. Nothing vintage, rustic, weathered
+or film-emulated — no warm nostalgia, no sun-bleached fade, no golden hour.
+Everything in frame should look new and well maintained.
+
+## Three constraints that are easy to miss
+
+**They must hold up in black and white.** Dark mode applies
+`grayscale(1) contrast(1.04)`, so an image carried by its colour dies there.
+That is why the brief asks for contrast and light shaping rather than colour —
+check every one in greyscale before accepting it.
+
+**No recognisable faces.** These stand in for real businesses, and a face
+implies a customer who never agreed to appear.
+
 **Generate all fifteen in one session.** The style block is identical in every
-prompt, but models still drift between sessions, and these sit side by side in
-a grid where consistency matters more than any single image.
+prompt, but models drift between sessions, and these sit side by side in a grid
+where matching each other matters more than any one being striking.
 
-**Two constraints that are easy to miss.** In dark mode the site applies
-`grayscale(1) contrast(1.04)`, so an image that only works because of its
-colour dies there — check each one in black and white before accepting it. And
-no recognisable faces: these stand in for real businesses, and a face implies a
-customer who never agreed to appear.
-
-Send them to me at 2000px+ on the long edge and I will resize, convert to WebP,
-wire them in and write the credits file.
+Send them at 2000px+ on the long edge and I will resize, convert to WebP, wire
+them in and write the credits file.
 
 ---
 
 ## 1 · Car and 4x4 rental
 
-> Photorealistic editorial photograph of a clean compact 4x4 parked side-on
-> against a low limestone wall on a quiet dusty street in Cyprus. Late afternoon
-> Mediterranean sun, low and warm, long soft shadows, natural light only. Muted
-> sun-bleached colour like film stock one stop under. Shot on a 50mm lens at
-> f/2, standing eye level, slightly off-axis, shallow depth of field with the
-> background falling softly away. Vehicle centred with space around it. 4:3
-> landscape.
-> No people, no faces, no text, no signage, no logos, no number plates, no
-> screens or phones, no lens flare, no HDR, no plastic sheen, no
-> over-sharpening. Not a travel advert, not a car advert.
+> Contemporary editorial photograph of a new matte-grey compact SUV parked
+> side-on against a clean poured-concrete wall. Bright directional daylight,
+> neutral to slightly cool colour, crisp and sharp with high clarity. Deep
+> clean shadows and controlled highlights, strong contrast that holds up in
+> black and white. Modern minimal composition, vehicle centred with generous
+> negative space. Shot on a full-frame camera, 50mm at f/2.8, eye level,
+> slightly off-axis, shallow depth of field. 4:3 landscape.
+> No people, no faces, no text, no signage, no logos, no badges, no number
+> plates, no screens, no lens flare, no HDR halo, no plastic sheen, no
+> over-sharpening. Nothing vintage, retro, rustic or weathered. Not film-look,
+> not sun-bleached, not golden hour.
 
 ## 2 · Scooter and bike hire
 
-> Photorealistic editorial photograph of three scooters parked in a neat row
-> against a whitewashed wall in Cyprus. Late afternoon Mediterranean sun, low
-> and warm, long soft shadows, natural light only. Muted sun-bleached colour
-> like film stock one stop under. Shot on a 50mm lens at f/2, standing eye
-> level, slightly off-axis, shallow depth of field with the far end of the row
-> falling softly out of focus. Centred with space around it. 4:3 landscape.
+> Contemporary editorial photograph of four modern electric scooters in a
+> precise row against a smooth grey concrete wall, matte finishes, clean lines.
+> Bright directional daylight, neutral to slightly cool colour, crisp and sharp
+> with high clarity. Deep clean shadows, strong contrast that holds up in black
+> and white. Modern minimal composition with generous negative space. Shot on a
+> full-frame camera, 50mm at f/2.8, eye level, slightly off-axis, shallow depth
+> of field falling off along the row. 4:3 landscape.
 > No people, no faces, no text, no signage, no logos, no number plates, no
-> screens, no lens flare, no HDR, no plastic sheen. Not a travel advert.
+> screens, no lens flare, no HDR halo, no plastic sheen. Nothing vintage,
+> retro or weathered. No Vespas, no classic scooters. Not film-look, not golden
+> hour.
 
 ## 3 · Boat and jetski charter
 
-> Photorealistic editorial photograph of a small open motorboat tied up at a
-> weathered stone quay, flat calm water, eastern Mediterranean harbour in
-> Cyprus. Late afternoon sun, low and warm, long soft shadows, natural light
-> only. Muted sun-bleached colour like film stock one stop under. Shot on a
-> 50mm lens at f/2, standing eye level, slightly off-axis, shallow depth of
-> field. Boat centred with space around it. 4:3 landscape.
+> Contemporary editorial photograph of a modern white rigid inflatable
+> speedboat moored at a clean concrete pontoon, still dark water, minimal
+> modern marina. Bright directional daylight, neutral to slightly cool colour,
+> crisp and sharp with high clarity. Deep clean shadows, strong contrast that
+> holds up in black and white. Modern minimal composition, boat centred with
+> generous negative space. Shot on a full-frame camera, 50mm at f/2.8, eye
+> level, slightly off-axis, shallow depth of field. 4:3 landscape.
 > No people, no faces, no text, no boat names, no logos, no screens, no lens
-> flare, no HDR, no plastic sheen. A working harbour, not a marina of
-> superyachts. Not a travel advert.
+> flare, no HDR halo, no plastic sheen. Nothing vintage, wooden, rustic or
+> weathered. No fishing boats, no superyachts. Not film-look, not golden hour.
 
 ## 4 · Tours, excursions and diving
 
-> Photorealistic editorial photograph of diving equipment laid out on a wooden
-> boat deck — air tanks, fins, a mask, coiled hose — with flat sea beyond. Late
-> afternoon Mediterranean sun, low and warm, long soft shadows, natural light
-> only. Muted sun-bleached colour like film stock one stop under. Shot on a
-> 50mm lens at f/2, standing eye level looking slightly down, shallow depth of
-> field. Gear centred with space around it. 4:3 landscape.
-> No people, no faces, no text, no branding on the equipment, no logos, no
-> screens, no lens flare, no HDR, no plastic sheen. Not underwater, not a
-> travel advert.
+> Contemporary editorial photograph of current-generation scuba equipment laid
+> out precisely on a clean deck — a matte black BCD, a modern regulator, an
+> aluminium tank, fins. Bright directional daylight, neutral to slightly cool
+> colour, crisp and sharp with high clarity. Deep clean shadows, strong
+> contrast that holds up in black and white. Modern minimal composition,
+> generous negative space around the gear. Shot on a full-frame camera, 50mm at
+> f/2.8, eye level looking slightly down, shallow depth of field. 4:3
+> landscape.
+> No people, no faces, no hands, no text, no branding, no logos, no screens, no
+> lens flare, no HDR halo, no plastic sheen. Nothing vintage or worn — the kit
+> is new. Not underwater. Not film-look, not golden hour.
 
 ## 5 · Villas and short-term rentals
 
-> Photorealistic editorial photograph of a private villa pool terrace — still
-> water, two simple loungers, a low limestone wall, dry hills beyond — in
-> Cyprus. Late afternoon sun, low and warm, long soft shadows, natural light
-> only. Muted sun-bleached colour like film stock one stop under. Shot on a
-> 35mm lens at f/2.8, standing eye level, slightly off-axis, shallow depth of
-> field. Composed with space around the pool. 4:3 landscape.
+> Contemporary editorial photograph of a minimalist architectural villa pool —
+> a sharp rectangular infinity edge, still dark water, smooth pale stone
+> terrace, two low modern loungers, clean geometry. Bright directional
+> daylight, neutral to slightly cool colour, crisp and sharp with high clarity.
+> Deep clean shadows, strong contrast that holds up in black and white.
+> Generous negative space. Shot on a full-frame camera, 35mm at f/2.8, eye
+> level, slightly off-axis, shallow depth of field. 4:3 landscape.
 > No people, no faces, no text, no signage, no logos, no screens, no lens
-> flare, no HDR, no plastic sheen. A private villa, not a resort. Not Santorini
-> blue-and-white, not the Caribbean.
+> flare, no HDR halo, no plastic sheen. Nothing rustic, whitewashed, vintage or
+> Mediterranean-traditional. Not Santorini, not a resort. Not film-look, not
+> golden hour.
 
 ## 6 · Guesthouses and small hotels
 
-> Photorealistic editorial photograph of a neatly made bed beside a shuttered
-> window in a small Cypriot guesthouse, morning light falling in a soft band
-> across the linen. Natural light only, warm and low. Muted sun-bleached colour
-> like film stock one stop under. Shot on a 35mm lens at f/2, standing eye
-> level, slightly off-axis, shallow depth of field. Composed with space around
-> the bed. 4:3 landscape.
-> No people, no faces, no text, no signage, no logos, no screens or
-> televisions, no lens flare, no HDR, no plastic sheen. Small and personal, not
-> a hotel chain. Not a real estate listing.
+> Contemporary editorial photograph of a modern minimal hotel room — a crisply
+> made bed with white linen, a plain headboard, a floor-to-ceiling window with
+> clean daylight raking across the bed. Neutral to slightly cool colour, crisp
+> and sharp with high clarity. Deep clean shadows, strong contrast that holds
+> up in black and white. Architectural composition with generous negative
+> space. Shot on a full-frame camera, 35mm at f/2.8, eye level, slightly
+> off-axis, shallow depth of field. 4:3 landscape.
+> No people, no faces, no text, no signage, no logos, no televisions or
+> screens, no lens flare, no HDR halo, no plastic sheen. Nothing rustic,
+> shuttered, wooden or vintage. Not film-look, not golden hour.
 
 ## 7 · Estate agencies
 
-> Photorealistic editorial photograph of a hillside of stone and render houses
-> with flat roofs, stacked up a dry slope in Cyprus, late sun raking across
-> them. Natural light only, low and warm, long shadows. Muted sun-bleached
-> colour like film stock one stop under. Shot on a 50mm lens, standing eye
-> level from a facing slope, gentle depth compression. Composed with sky above
-> and space around. 4:3 landscape.
+> Contemporary editorial photograph of modern flat-roofed white and grey houses
+> stepping up a slope, sharp rectilinear geometry, large glazed openings,
+> clean daylight raking across the facades. Neutral to slightly cool colour,
+> crisp and sharp with high clarity. Deep clean shadows, strong contrast that
+> holds up in black and white. Architectural composition with generous negative
+> space. Shot on a full-frame camera, 50mm, eye level from a facing slope. 4:3
+> landscape.
 > No people, no faces, no text, no signage, no for-sale boards, no logos, no
-> screens, no lens flare, no HDR, no plastic sheen. Not a drone shot, not the
-> Amalfi coast, not Santorini.
+> screens, no lens flare, no HDR halo, no plastic sheen. Nothing old-town,
+> stone-built, rustic or vintage. Not a drone shot. Not film-look, not golden
+> hour.
 
 ## 8 · Private clinics
 
-> Photorealistic editorial photograph of an empty, spotlessly clean treatment
-> room — a padded couch, a small stool, plain walls — with daylight coming
-> through a half-closed blind. Natural light only, soft and warm. Muted
-> desaturated colour like film stock one stop under. Shot on a 35mm lens at
-> f/2.8, standing eye level, slightly off-axis, shallow depth of field.
-> Composed with space around the couch. 4:3 landscape.
+> Contemporary editorial photograph of a modern empty treatment room — a clean
+> white examination couch, a minimal stool, smooth pale walls, soft daylight
+> from a large window. Neutral to slightly cool colour, crisp and sharp with
+> high clarity. Deep clean shadows, strong contrast that holds up in black and
+> white. Architectural composition with generous negative space. Shot on a
+> full-frame camera, 35mm at f/2.8, eye level, slightly off-axis, shallow depth
+> of field. 4:3 landscape.
 > No people, no faces, no text, no signage, no logos, no screens or monitors,
-> no visible instruments, no lens flare, no HDR, no plastic sheen. Calm and
-> quiet, not clinical-cold, not a hospital.
+> no visible instruments, no lens flare, no HDR halo, no plastic sheen. Calm
+> and contemporary, not clinical-cold, not a hospital. Nothing vintage or worn.
+> Not film-look, not golden hour.
 
 ## 9 · Salons and spas
 
-> Photorealistic editorial photograph of hairdressing tools resting on a folded
-> towel — scissors, a comb, two clips — on a salon counter. Late afternoon
-> daylight from a window to one side, natural light only, soft and warm. Muted
-> desaturated colour like film stock one stop under. Shot on a 50mm lens at
-> f/2, standing eye level looking slightly down, shallow depth of field, close
-> but not macro. Tools centred with space around them. 4:3 landscape.
+> Contemporary editorial photograph of modern salon tools arranged precisely on
+> a smooth matte surface — matte black scissors, a black comb, two clips.
+> Directional daylight from one side, neutral to slightly cool colour, crisp
+> and sharp with high clarity. Deep clean shadows, strong contrast that holds
+> up in black and white. Minimal composition, close but not macro, generous
+> negative space. Shot on a full-frame camera, 50mm at f/2.8, eye level looking
+> slightly down, shallow depth of field. 4:3 landscape.
 > No people, no faces, no hands, no text, no branding on the tools, no logos,
-> no screens, no mirrors showing anyone, no lens flare, no HDR, no plastic
-> sheen.
+> no screens, no mirrors showing anyone, no lens flare, no HDR halo, no plastic
+> sheen. Nothing vintage, chrome-and-leather barbershop, rustic or worn. Not
+> film-look, not golden hour.
 
 ## 10 · Restaurants and tavernas
 
-> Photorealistic editorial photograph of an outdoor taverna table laid for two
-> under a vine canopy, empty, set before service, dappled light through the
-> leaves. Late afternoon Mediterranean sun in Cyprus, natural light only, low
-> and warm. Muted sun-bleached colour like film stock one stop under. Shot on a
-> 50mm lens at f/2, standing eye level, slightly off-axis, shallow depth of
-> field. Table centred with space around it. 4:3 landscape.
+> Contemporary editorial photograph of a modern restaurant terrace laid for
+> two, empty before service — clean minimal furniture, plain settings, a smooth
+> table, contemporary architecture behind. Bright directional daylight, neutral
+> to slightly cool colour, crisp and sharp with high clarity. Deep clean
+> shadows, strong contrast that holds up in black and white. Generous negative
+> space. Shot on a full-frame camera, 50mm at f/2.8, eye level, slightly
+> off-axis, shallow depth of field. 4:3 landscape.
 > No people, no faces, no text, no menus, no signage, no logos, no screens, no
-> lens flare, no HDR, no plastic sheen. Not a food advert, no close-up plated
-> food.
+> lens flare, no HDR halo, no plastic sheen. Nothing rustic, vine-covered,
+> taverna-traditional or vintage. No close-up plated food. Not film-look, not
+> golden hour.
 
 ## 11 · Watersports rental
 
-> Photorealistic editorial photograph of four paddleboards stacked upright on
-> dry sand, flat sea and low horizon behind, on a quiet Cypriot beach. Late
-> afternoon sun, low and warm, long soft shadows on the sand, natural light
-> only. Muted sun-bleached colour like film stock one stop under. Shot on a
-> 50mm lens at f/2.8, standing eye level, slightly off-axis, shallow depth of
-> field. Boards centred with space around them. 4:3 landscape.
+> Contemporary editorial photograph of four modern paddleboards stacked
+> upright on clean pale sand, matte finishes, flat dark sea and a low horizon
+> behind. Bright directional daylight, neutral to slightly cool colour, crisp
+> and sharp with high clarity. Deep clean shadows on the sand, strong contrast
+> that holds up in black and white. Minimal composition with generous negative
+> space. Shot on a full-frame camera, 50mm at f/2.8, eye level, slightly
+> off-axis, shallow depth of field. 4:3 landscape.
 > No people, no faces, no text, no branding on the boards, no logos, no
-> screens, no lens flare, no HDR, no plastic sheen. Not a tropical beach, not a
-> travel advert.
+> screens, no lens flare, no HDR halo, no plastic sheen. Nothing vintage,
+> wooden or weathered. Not tropical, not a travel advert. Not film-look, not
+> golden hour.
 
 ## 12 · Fitness and yoga studios
 
-> Photorealistic editorial photograph of five rolled exercise mats standing
-> against a bare plaster wall in a small studio, morning light across the floor
-> from a window out of frame. Natural light only, soft and warm. Muted
-> desaturated colour like film stock one stop under. Shot on a 35mm lens at
-> f/2.8, standing eye level, slightly off-axis, shallow depth of field.
-> Composed with space around the mats. 4:3 landscape.
+> Contemporary editorial photograph of a modern studio — five rolled mats
+> standing precisely against a smooth polished concrete wall, clean daylight
+> across a wide floor from a large window out of frame. Neutral to slightly
+> cool colour, crisp and sharp with high clarity. Deep clean shadows, strong
+> contrast that holds up in black and white. Architectural composition with
+> generous negative space. Shot on a full-frame camera, 35mm at f/2.8, eye
+> level, slightly off-axis, shallow depth of field. 4:3 landscape.
 > No people, no faces, no text, no signage, no logos, no screens or mirrors, no
-> lens flare, no HDR, no plastic sheen. Quiet and plain, not a commercial gym.
+> lens flare, no HDR halo, no plastic sheen. Nothing rustic, wooden, vintage or
+> distressed. Not film-look, not golden hour.
 
 ## 13 · Photographers and studios
 
-> Photorealistic editorial photograph of a camera on a wooden tripod facing a
-> large window, seen from behind and to one side, soft daylight filling the
-> room. Natural light only, warm and low. Muted desaturated colour like film
-> stock one stop under. Shot on a 50mm lens at f/2, standing eye level,
-> slightly off-axis, shallow depth of field with the window blown gently soft.
-> Composed with space around the tripod. 4:3 landscape.
+> Contemporary editorial photograph of a modern mirrorless camera on a slim
+> carbon-fibre tripod facing a large window, seen from behind and to one side,
+> clean daylight filling a minimal room. Neutral to slightly cool colour, crisp
+> and sharp with high clarity. Deep clean shadows, strong contrast that holds
+> up in black and white. Minimal composition with generous negative space. Shot
+> on a full-frame camera, 50mm at f/2.8, eye level, slightly off-axis, shallow
+> depth of field. 4:3 landscape.
 > No people, no faces, no text, no camera brand marks, no logos, no visible
-> screens, no lens flare, no HDR, no plastic sheen.
+> screens, no lens flare, no HDR halo, no plastic sheen. Nothing vintage — no
+> film cameras, no wooden tripods, no retro gear. Not film-look, not golden
+> hour.
 
 ## 14 · Dentists
 
-> Photorealistic editorial photograph of an empty dental chair beside a window,
-> reclined and clean, daylight falling across it, plain walls. Natural light
-> only, soft and warm. Muted desaturated colour like film stock one stop under.
-> Shot on a 35mm lens at f/2.8, standing eye level, slightly off-axis, shallow
-> depth of field. Chair centred with space around it. 4:3 landscape.
+> Contemporary editorial photograph of a modern empty dental chair beside a
+> large window — clean white and matte grey, contemporary design, reclined,
+> smooth pale walls, clean daylight across it. Neutral to slightly cool colour,
+> crisp and sharp with high clarity. Deep clean shadows, strong contrast that
+> holds up in black and white. Architectural composition with generous negative
+> space. Shot on a full-frame camera, 35mm at f/2.8, eye level, slightly
+> off-axis, shallow depth of field. 4:3 landscape.
 > No people, no faces, no text, no signage, no logos, no screens or monitors,
-> no instruments, drills or trays in shot, no lens flare, no HDR, no plastic
-> sheen. Calm and reassuring, not clinical-cold.
+> no instruments, drills or trays in shot, no lens flare, no HDR halo, no
+> plastic sheen. Calm and contemporary, not clinical-cold. Nothing vintage or
+> worn. Not film-look, not golden hour.
 
 ## 15 · Barbers
 
-> Photorealistic editorial photograph of a single barber's chair facing a
-> mirror, warm wood and worn chrome, empty shop, late afternoon light through a
-> window to one side. Natural light only, low and warm. Muted sun-bleached
-> colour like film stock one stop under. Shot on a 50mm lens at f/2, standing
-> eye level, slightly off-axis, shallow depth of field. Chair centred with
-> space around it. 4:3 landscape.
+> Contemporary editorial photograph of a single modern barber's chair facing a
+> frameless mirror — matte black metal and dark leather, clean lines, an empty
+> minimal shop, directional daylight from a window to one side. Neutral to
+> slightly cool colour, crisp and sharp with high clarity. Deep clean shadows,
+> strong contrast that holds up in black and white. Minimal composition with
+> generous negative space. Shot on a full-frame camera, 50mm at f/2.8, eye
+> level, slightly off-axis, shallow depth of field. 4:3 landscape.
 > No people, no faces, no reflection of anyone in the mirror, no text, no
-> signage, no logos, no screens, no lens flare, no HDR, no plastic sheen.
+> signage, no logos, no screens, no lens flare, no HDR halo, no plastic sheen.
+> Nothing vintage — no red-and-white poles, no worn chrome, no distressed wood,
+> no traditional barbershop nostalgia. Not film-look, not golden hour.
 
 ---
 
@@ -201,11 +246,12 @@ wire them in and write the credits file.
 Lay all fifteen out as thumbnails together.
 
 1. Do they look like one set, or fifteen stock photos?
-2. Is the light the same time of day in every one?
-3. Does any single image jump out as brighter, more saturated or more
-   contrasty? Regenerate it toward the middle rather than keeping it.
-4. Convert the whole set to greyscale. Does it still hold together?
-5. Any faces, text, screens or number plates that slipped through?
+2. Does anything read as old, rustic, weathered or nostalgic? Regenerate it.
+3. Does any single image jump out as brighter, warmer or flatter than the rest?
+   Pull it toward the middle.
+4. Convert the whole set to greyscale. Does it still hold together, and does
+   each one still have a clear subject?
+5. Any faces, text, screens, logos or number plates that slipped through?
 
 Images 1–9 replace the current set. 10–15 are trades to grow into — generating
 them now while the style holds is far cheaper than matching this look again in
