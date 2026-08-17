@@ -684,7 +684,10 @@ p:last-child { margin-bottom: 0; }
 .mmenu { display: none; position: relative; }
 .mmenu > summary {
   list-style: none; cursor: pointer;
-  width: 2.25rem; height: 2.25rem;
+  /* 2.25rem is 36px. The other two header controls were taken to 44 for the
+     tap-target floor and this one was missed — it is a <summary>, not a
+     .icon-btn, so the rule that fixed them never reached it. */
+  width: 2.75rem; height: 2.75rem;
   display: grid; place-items: center;
   border: 1px solid var(--rule); border-radius: 999px;
   transition: border-color var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
