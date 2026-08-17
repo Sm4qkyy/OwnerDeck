@@ -388,18 +388,16 @@ p:last-child { margin-bottom: 0; }
   .masthead__mark { padding-inline-start: .35rem; }
 }
 
-/* Below this the wordmark cannot share the pill with three 44px controls.
-   Measured: at 390px it fitted with 1px to spare, and at 360 — an ordinary
-   Android width — it hung 29px outside. The monogram carries it alone; the
-   link keeps its aria-label, so nothing is lost to a screen reader, and the
-   name is in the title, the footer and the copy. */
-@media (max-width: 27rem) {
-  .masthead__word { display: none; }
-  .masthead__mark { padding-inline-start: .5rem; }
-  /* The globe is decoration next to a two-letter code that says the same
-     thing, and it is 22px of a pill that has none to spare. */
-  .od-lang-btn svg { display: none; }
-  .od-lang-btn { padding-inline: .7rem; }
+/* The switcher moves into the menu below 48rem (i18n.js), which frees the
+   63px the wordmark needs. Trading the brand name for a control most people
+   touch once was the wrong way round. */
+.od-lang--in-menu { position: static; width: 100%; margin-top: var(--s2); }
+.od-lang--in-menu .od-lang-btn {
+  width: 100%; justify-content: center; height: 2.75rem;
+}
+.od-lang--in-menu .od-lang-menu {
+  position: static; min-width: 0; margin-top: var(--s2);
+  box-shadow: none; background: var(--paper-2);
 }
 
 .section { padding-block: var(--s9); }

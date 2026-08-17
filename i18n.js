@@ -130,7 +130,27 @@
     html += '</div>';
     wrap.innerHTML = html;
 
-    anchor.parentNode.insertBefore(wrap, anchor);
+    /* Where this lives depends on the width. On a phone the header pill has
+       to hold the wordmark and three 44px controls, and it cannot; the
+       language control is the one anybody touches least, so it goes into
+       the menu with the navigation. Above 48rem it sits in the header as
+       before. Moved rather than duplicated — two switchers would be two
+       things to keep in sync. */
+    var narrow = window.matchMedia('(max-width: 48rem)');
+
+    function place() {
+      var panel = document.querySelector('.mmenu__panel');
+      if (narrow.matches && panel) {
+        if (wrap.parentNode !== panel) panel.appendChild(wrap);
+        wrap.classList.add('od-lang--in-menu');
+      } else {
+        if (wrap.parentNode !== anchor.parentNode) anchor.parentNode.insertBefore(wrap, anchor);
+        wrap.classList.remove('od-lang--in-menu');
+      }
+    }
+    place();
+    if (narrow.addEventListener) narrow.addEventListener('change', place);
+    else if (narrow.addListener) narrow.addListener(place);
     menu = wrap.querySelector('.od-lang-menu');
     btnLabel = wrap.querySelector('.od-lang-code');
 
