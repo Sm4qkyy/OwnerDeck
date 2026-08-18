@@ -126,6 +126,25 @@ TRADES = [
 ]
 
 
+# The funnel's own list. TRADES stays as it is — those are worked examples
+# with a photograph each, and specific is right for "here is who we build
+# for". This answers a different question, "which of these are you?", where
+# anything narrower than a sector turns readers away for no reason.
+SECTORS = [
+    'Vehicle and equipment rental',
+    'Boats and watersports',
+    'Tours and activities',
+    'Places to stay',
+    'Property and lettings',
+    'Clinics and health',
+    'Salons and grooming',
+    'Fitness and wellbeing',
+    'Food and drink',
+    'Trades and home services',
+    'Professional services',
+]
+
+
 def deck_grid(link=True):
     out = []
     for slug, name, line, _for, path in CARDS:
@@ -850,7 +869,7 @@ def pages(WA, ARROW, EMAIL):
     trade_picks = '\n'.join(
         f'          <button class="pick" type="button" data-pick="trade" '
         f'aria-pressed="false" data-value="{name}"><b data-t>{name}</b></button>'
-        for _s, name, _alt, _l in TRADES)
+        for name in SECTORS)
 
     plan_picks = '\n'.join(
         f'''          <button class="pick" type="button" data-pick="plan" aria-pressed="false"
@@ -873,7 +892,7 @@ def pages(WA, ARROW, EMAIL):
         <section class="flow__step" data-step="1">
           <p class="eyebrow" data-t>Step one</p>
           <h1 tabindex="-1" data-focus data-t>What kind of business is it?</h1>
-          <p class="lede" style="margin-bottom:2rem" data-t>So the quote is about your trade rather than a generic package.</p>
+          <p class="lede" style="margin-bottom:2rem" data-t>So the quote is about your work rather than a generic package. If none of these is quite it, pick the closest and tell us at the end.</p>
           <div class="flow__grid">
 {trade_picks}
             <button class="pick" type="button" data-pick="trade" aria-pressed="false" data-value="Something else"><b data-t>Something else</b></button>

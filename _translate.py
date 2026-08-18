@@ -618,6 +618,44 @@ T = {
         ('\u03a7\u03c9\u03c1\u03af\u03c2 \u03a6\u03a0\u0391. \u0394\u03b9\u03b1\u03ba\u03cc\u03c8\u03c4\u03b5 \u03bf\u03c0\u03bf\u03b9\u03bf\u03b4\u03ae\u03c0\u03bf\u03c4\u03b5 \u03c0\u03b1\u03ba\u03ad\u03c4\u03bf \u03bc\u03b5 \u03c0\u03c1\u03bf\u03b5\u03b9\u03b4\u03bf\u03c0\u03bf\u03af\u03b7\u03c3\u03b7 \u03b5\u03bd\u03cc\u03c2 \u03bc\u03ae\u03bd\u03b1. \u039b\u03b5\u03b9\u03c4\u03bf\u03c5\u03c1\u03b3\u03b5\u03af \u03b1\u03ba\u03c1\u03b9\u03b2\u03ce\u03c2 \u03ad\u03c4\u03c3\u03b9 \u03ba\u03b1\u03b9 \u03b3\u03b9\u03b1 \u03b2\u03af\u03bb\u03b5\u03c2, \u03ba\u03bb\u03b9\u03bd\u03b9\u03ba\u03ad\u03c2 \u03ba\u03b1\u03b9 \u03ba\u03bf\u03bc\u03bc\u03c9\u03c4\u03ae\u03c1\u03b9\u03b1 \u2014 \u03b4\u03b5\u03af\u03c4\u03b5 \u03b3\u03b9\u03b1 \u03c0\u03bf\u03b9\u03bf\u03cd\u03c2 \u03b5\u03af\u03bd\u03b1\u03b9.',
          '\u0411\u0435\u0437 \u041d\u0414\u0421. \u041e\u0442\u043a\u0430\u0437\u0430\u0442\u044c\u0441\u044f \u043e\u0442 \u043b\u044e\u0431\u043e\u0433\u043e \u0442\u0430\u0440\u0438\u0444\u0430 \u043c\u043e\u0436\u043d\u043e, \u043f\u0440\u0435\u0434\u0443\u043f\u0440\u0435\u0434\u0438\u0432 \u0437\u0430 \u043c\u0435\u0441\u044f\u0446. \u0422\u0430\u043a \u0436\u0435 \u0440\u0430\u0431\u043e\u0442\u0430\u0435\u0442 \u0434\u043b\u044f \u0432\u0438\u043b\u043b, \u043a\u043b\u0438\u043d\u0438\u043a \u0438 \u0441\u0430\u043b\u043e\u043d\u043e\u0432 \u2014 \u0441\u043c\u043e\u0442\u0440\u0438\u0442\u0435, \u0434\u043b\u044f \u043a\u043e\u0433\u043e \u044d\u0442\u043e.'),
 
+    # ---- the funnel's sectors ----
+    'Vehicle and equipment rental':
+        ('Ενοικιάσεις οχημάτων και εξοπλισμού',
+         'Аренда транспорта и оборудования'),
+    'Boats and watersports':
+        ('Σκάφη και θαλάσσια σπορ',
+         'Лодки и водный спорт'),
+    'Tours and activities':
+        ('Εκδρομές και δραστηριότητες',
+         'Экскурсии и активности'),
+    'Places to stay':
+        ('Καταλύματα',
+         'Жильё для гостей'),
+    'Property and lettings':
+        ('Ακίνητα και ενοικιάσεις',
+         'Недвижимость и аренда'),
+    'Clinics and health':
+        ('Κλινικές και υγεία',
+         'Клиники и здоровье'),
+    'Salons and grooming':
+        ('Κομμωτήρια και περιποίηση',
+         'Салоны и уход'),
+    'Fitness and wellbeing':
+        ('Γυμναστήρια και ευεξία',
+         'Фитнес и здоровый образ жизни'),
+    'Food and drink':
+        ('Φαγητό και ποτό',
+         'Еда и напитки'),
+    'Trades and home services':
+        ('Τεχνίτες και υπηρεσίες σπιτιού',
+         'Мастера и услуги для дома'),
+    'Professional services':
+        ('Επαγγελματικές υπηρεσίες',
+         'Профессиональные услуги'),
+    'So the quote is about your work rather than a generic package. If none of these is quite it, pick the closest and tell us at the end.':
+        ('Ώστε η προσφορά να αφορά τη δουλειά σας και όχι ένα γενικό πακέτο. Αν κανένα δεν ταιριάζει ακριβώς, διαλέξτε το πιο κοντινό και πείτε μας στο τέλος.',
+         'Чтобы расчёт был про вашу работу, а не про типовой пакет. Если ничто не подходит точно, выберите ближайшее и скажите нам в конце.'),
+
     # ---- the reworked hero and funnel copy ----
     'Answered at 2am, booked by morning.':
         ('\u0391\u03c0\u03ac\u03bd\u03c4\u03b7\u03c3\u03b7 \u03c3\u03c4\u03b9\u03c2 2 \u03c4\u03b1 \u03be\u03b7\u03bc\u03b5\u03c1\u03ce\u03bc\u03b1\u03c4\u03b1, \u03ba\u03c1\u03ac\u03c4\u03b7\u03c3\u03b7 \u03bc\u03ad\u03c7\u03c1\u03b9 \u03c4\u03bf \u03c0\u03c1\u03c9\u03af.',
