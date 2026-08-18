@@ -254,6 +254,22 @@ def pagenav(prev, nxt):
         out.append('    <a href="%s"><small data-t>Next</small><b data-t>%s</b></a>'
                    % (nxt[0], nxt[1]))
     out.append('  </nav></div>\n\n')
+    # The same two destinations again, pinned to the left and right edges so
+    # nobody has to reach the bottom of a long page to move on. The block
+    # above stays: it carries the page names, it is what a narrow screen
+    # gets, and it is the only version that survives without CSS.
+    CH = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" '
+          'stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" '
+          'aria-hidden="true"><path d="%s"/></svg>')
+    if prev:
+        out.append('  <a class="pagejump pagejump--prev" href="%s" aria-label="Previous: %s">'
+                   '%s<span class="pagejump__name" aria-hidden="true">%s</span></a>'
+                   % (prev[0], prev[1], CH % 'm15 6-6 6 6 6', prev[1]))
+    if nxt:
+        out.append('  <a class="pagejump pagejump--next" href="%s" aria-label="Next: %s">'
+                   '%s<span class="pagejump__name" aria-hidden="true">%s</span></a>'
+                   % (nxt[0], nxt[1], CH % 'm9 6 6 6-6 6', nxt[1]))
+
     return '\n'.join(out)
 
 

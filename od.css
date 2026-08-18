@@ -1785,3 +1785,86 @@ main { animation: od-enter 460ms var(--ease-out) both; }
 @media (max-width: 48rem) {
   .section--flush[data-scroll-expand] { display: none; }
 }
+
+/* --------------------------------------------------------------------------
+   26. Edge page jumps
+   Previous and next pinned to the left and right of the viewport, so moving
+   on does not require reaching the bottom of the page. The bottom .pagenav
+   block stays and carries the page names; this is the shortcut, not the
+   replacement, and it is the copy that disappears first when space is short.
+
+   Not shown below 48rem: a 44px target on each edge of a 360px screen eats a
+   quarter of the width and lands in the thumb path, and the sticky action bar
+   is already occupying the bottom of that viewport.
+   -------------------------------------------------------------------------- */
+.pagejump { display: none; }
+
+@media (min-width: 48rem) {
+  .pagejump {
+    position: fixed; top: 50%; transform: translateY(-50%);
+    z-index: 40;
+    display: inline-flex; align-items: center; gap: var(--s2);
+    height: 2.75rem; padding-inline: .75rem;
+    border: 1px solid var(--rule); border-radius: 999px;
+    background: color-mix(in srgb, var(--paper) 84%, transparent);
+    backdrop-filter: saturate(140%) blur(10px);
+    -webkit-backdrop-filter: saturate(140%) blur(10px);
+    color: var(--muted); text-decoration: none;
+    box-shadow: 0 6px 20px rgb(var(--shadow) / .10);
+    transition: color var(--t-fast) var(--ease),
+                border-color var(--t-fast) var(--ease),
+                background var(--t-fast) var(--ease);
+  }
+  .pagejump--prev { inset-inline-start: var(--s4); }
+  .pagejump--next { inset-inline-end: var(--s4); flex-direction: row-reverse; }
+  .pagejump svg { width: 1.25rem; height: 1.25rem; flex: none; }
+
+  /* The destination name is held at zero width and opens on hover or focus.
+     Collapsing the width rather than hiding the element keeps the name in
+     the accessibility tree and lets the pill grow from the arrow. */
+  .pagejump__name {
+    /* Collapsed by width alone, not opacity. The reveal is a CSS hover, so
+       it needs no script — and an opacity:0 rule without a .js guard is the
+       exact pattern that hides content permanently when scripting fails. */
+    max-width: 0; overflow: hidden; white-space: nowrap;
+    font-size: .875rem; font-weight: 500;
+    transition: max-width var(--t) var(--ease);
+  }
+  .pagejump:hover, .pagejump:focus-visible {
+    color: var(--ink); border-color: var(--rule-2);
+    background: color-mix(in srgb, var(--paper) 96%, transparent);
+  }
+  .pagejump:hover .pagejump__name,
+  .pagejump:focus-visible .pagejump__name { max-width: 12rem; }
+  .pagejump:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+  /* Below this the pills would sit on the text rather than beside it. */
+  @media (max-width: 68rem) {
+    .pagejump__name { display: none; }
+    .pagejump { padding-inline: .55rem; }
+  }
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .pagejump { background: var(--paper); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pagejump, .pagejump__name { transition: none; }
+}
+
+/* The chat launcher sits 1.5rem off the bottom and the sticky bar is about
+   71px tall, so on a phone the two occupied the same corner. They are
+   siblings under <body> — the bar is in the page, the widget is appended
+   after it — so the launcher can lift only while the bar is actually up,
+   and sit back down when it retreats. Scoped to the width where the bar
+   exists at all: above it the bar is display:none but can still carry
+   .is-up, which would otherwise lift the launcher over nothing. */
+@media (max-width: 48rem) {
+  #sticky-cta.is-up ~ .odc {
+    inset-block-end: calc(var(--s5) + 4.5rem + env(safe-area-inset-bottom, 0px));
+  }
+  .odc { transition: inset-block-end var(--t) var(--ease); }
+}
+@media (max-width: 48rem) and (prefers-reduced-motion: reduce) {
+  .odc { transition: none; }
+}
