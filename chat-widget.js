@@ -15,7 +15,6 @@
   if (CHAT.enabled === false) return;
 
   var ENDPOINT   = CHAT.endpoint || '/api/chat';
-  var SITE_KEY   = CHAT.turnstileSiteKey || '';
   var MAX_CHARS  = 500;
   var MAX_TURNS  = 12;
 
@@ -37,139 +36,10 @@
   var history  = [];       // [{role, content}]
   var turns    = 0;
   var busy     = false;
-  var widgetId = null;
-  var waiting  = [];       // resolvers queued for the next token
-  var unavailable = false; // Turnstile could not be rendered; stop waiting on it
-  var tokenCache = '';     // a minted, unused token waiting for the next send
-  var tokenAt    = 0;      // when it was minted
-  var inflight   = null;   // the mint in progress, if any
-
-  /* Cloudflare expires a token at 300s. Retiring ours early means a visitor
-     who opens the panel and then takes a while to type still sends a token
-     the server will accept, rather than one that just went stale. */
-  var TOKEN_TTL = 240000;
-
-  /* The server's stand-in for a passed check. While one is held, Turnstile is
-     not asked for anything — which is the whole point: the visitor sees the
-     challenge once, not before every message. */
-  var pass = '';
-
-  /* ---------- Turnstile (invisible human check) ----------
-     A token is redeemed exactly once at siteverify and expires after a few
-     minutes, so a fresh one is needed per message. Reusing the token issued
-     at page load would get the second message rejected as
-     timeout-or-duplicate.
-
-     The token used to be minted when the visitor pressed send, which put a
-     round-trip to Cloudflare — and on a cold cache the Turnstile script
-     download too — in front of every single message, before the request to
-     our own endpoint had even started. That was most of the wait people
-     complained about.
-
-     So it is minted ahead of time instead: once when the panel opens, and
-     again immediately after each send. By the time anyone has typed a
-     sentence the next token is already sitting in tokenCache, and the send
-     path takes it without waiting for anything. */
-
-  function settle(token) {
-    var queued = waiting;
-    waiting = [];
-    queued.forEach(function (resolve) { resolve(token || ''); });
-  }
-
-  function loadTurnstile() {
-    if (!SITE_KEY || widgetId !== null) return;
-    if (window.turnstile) return renderTurnstile();
-    if (document.getElementById('od-ts-script')) return;   // already in flight
-    var s = document.createElement('script');
-    s.id = 'od-ts-script';
-    s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
-    s.async = true; s.defer = true;
-    s.onload  = renderTurnstile;
-    s.onerror = function () { settle(''); };
-    document.head.appendChild(s);
-  }
-
-  function renderTurnstile() {
-    var host = document.getElementById('od-turnstile');
-    if (!host || !window.turnstile || widgetId !== null || unavailable) return;
-    try {
-      widgetId = window.turnstile.render(host, {
-        sitekey: SITE_KEY,
-        /* `size: 'invisible'` is not a valid value and made render() throw on
-           every load — Turnstile accepts compact, flexible or normal. The way
-           to ask for a check that only surfaces when Cloudflare wants one is
-           appearance: 'interaction-only'. */
-        appearance: 'interaction-only',
-        action: 'chat-message',
-        callback: function (t) { settle(t); },
-        'error-callback': function () { settle(''); },
-        'timeout-callback': function () { settle(''); }
-      });
-      if (waiting.length) window.turnstile.execute(widgetId);
-    } catch (e) {
-      /* Render failed, so nothing will ever call settle() again. Without this
-         flag the first message resolved (the catch settles it) and every
-         message after it sat in `waiting` with no one to resolve it, waiting
-         out the full 20s timeout before the request was even sent. */
-      unavailable = true;
-      settle('');
-    }
-  }
-
-  function tokenFresh() {
-    return !!tokenCache && (Date.now() - tokenAt) < TOKEN_TTL;
-  }
-
-  /* One mint at a time. Two overlapping execute() calls on the same widget
-     race, and whichever token loses is spent for nothing. */
-  function mint() {
-    if (inflight) return inflight;
-    inflight = new Promise(function (resolve) {
-      if (!SITE_KEY || unavailable) { inflight = null; return resolve(''); }
-      var done = false;
-      /* 20s was the old ceiling, and it was only survivable because nothing
-         else was waiting on it. Now that minting happens in the background,
-         a slow attempt should give up and let the next one try rather than
-         hold a message hostage. */
-      var timer = setTimeout(function () { finish(''); }, 5000);
-      function finish(t) {
-        if (done) return;
-        done = true; clearTimeout(timer); inflight = null; resolve(t || '');
-      }
-      waiting.push(finish);
-      loadTurnstile();
-      if (widgetId !== null && window.turnstile) {
-        try { window.turnstile.reset(widgetId); window.turnstile.execute(widgetId); }
-        catch (e) { finish(''); }
-      }
-    });
-    return inflight;
-  }
-
-  // Start one in the background. Safe to call whenever; it no-ops if a usable
-  // token is already in hand or one is on its way.
-  function prime() {
-    if (pass) return;                 // already cleared; nothing to mint
-    if (!SITE_KEY || unavailable || inflight || tokenFresh()) return;
-    mint().then(function (t) {
-      if (t) { tokenCache = t; tokenAt = Date.now(); }
-    });
-  }
-
-  // Resolves with a fresh token, or '' if Turnstile can't produce one.
-  // An empty token is not treated as permission — the server rejects it.
-  function getToken() {
-    if (pass) return Promise.resolve('');   // the pass speaks for us
-    if (!SITE_KEY || unavailable) return Promise.resolve('');
-    if (tokenFresh()) {
-      var t = tokenCache;
-      tokenCache = '';               // single use
-      setTimeout(prime, 0);          // line up the next one straight away
-      return Promise.resolve(t);
-    }
-    return mint().then(function (t) { setTimeout(prime, 0); return t; });
-  }
+  /* Cloudflare Turnstile used to sit here. Removed 2026-08-18: it was
+     challenging people on every single message. The endpoint is still
+     bounded by a per-IP rate limit, a whole-site daily cap and the
+     provider spend cap — see the header of api/chat.js. */
 
   /* ---------- markup ---------- */
   function panelHTML(inline) {
@@ -180,10 +50,6 @@
         (inline ? '' : '<button class="odc-x" type="button" aria-label="' + T('k726da9c1', 'Close chat') + '">&times;</button>') +
       '</div>' +
       '<div class="odc-log" id="odc-log' + (inline ? '-i' : '') + '" role="log" aria-live="polite"></div>' +
-      /* The Turnstile host lives in the panel, in normal flow. It renders
-         nothing at all until Cloudflare wants a challenge; when it does, the
-         visitor can actually see and complete it. */
-      '<div id="od-turnstile" class="odc-ts cf-turnstile" data-action="chat-message"></div>' +
       '<form class="odc-form" autocomplete="off">' +
         '<input class="odc-input" type="text" maxlength="' + MAX_CHARS + '" ' +
           'placeholder="' + T('k309d1a72', 'Ask about price, setup, languages…') + '" ' +
@@ -253,15 +119,6 @@
           var evt;
           try { evt = JSON.parse(line.slice(5)); } catch (e) { continue; }
           if (typeof evt.t === 'string') paint(evt.t);
-          if (evt.done) {
-            /* A verified exchange always grants a fresh pass. None coming
-               back means ours was not accepted — almost always because it
-               lapsed after a long pause — so drop it. Holding on to a dead
-               pass would keep getToken() returning empty and slide the
-               visitor onto the unverified allowance without ever showing
-               them the check that would have cleared it. */
-            pass = (typeof evt.pass === 'string' && evt.pass) ? evt.pass : '';
-          }
         }
         return pump();
       });
@@ -286,13 +143,6 @@
     var form  = root.querySelector('.odc-form');
     var input = root.querySelector('.odc-input');
 
-    // First keystroke is the cue to get a token ready: early enough that the
-    // send path never waits, late enough that opening the panel is quiet.
-    input.addEventListener('input', function once() {
-      input.removeEventListener('input', once);
-      prime();
-    });
-
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var text = (input.value || '').trim();
@@ -308,13 +158,10 @@
       busy = true;
       var t = typing(log);
 
-      getToken()
-      .then(function (token) {
-        return fetch(ENDPOINT, {
-          method: 'POST',
-          headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ message: text, history: history.slice(-8), turnstile: token, pass: pass })
-        });
+      fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ message: text, history: history.slice(-8) })
       })
       .then(function (r) {
         var ct = r.headers.get('content-type') || '';
@@ -342,7 +189,7 @@
         t.remove();
         bubble(log, 'bot', T('k85721b54', 'Could not reach the assistant. Email mark@ownerdeck.com and he will answer directly.'), 'k85721b54');
       })
-      .finally(function () { busy = false; prime(); });
+      .finally(function () { busy = false; });
 
       try { window.va && window.va('event', { name: 'chat_message' }); } catch (e) {}
     });
@@ -397,7 +244,7 @@
         panel.classList.remove('odc-panel--in');
         void panel.offsetWidth;
         panel.classList.add('odc-panel--in');
-        greet(log); loadTurnstile();
+        greet(log);
         /* Deliberately not primed here. If Cloudflare wants an interactive
            challenge, minting on open drops a checkbox into the panel before
            the visitor has typed anything. Priming starts when they do. */
@@ -428,11 +275,9 @@
     var host = document.getElementById('od-live-chat');
     if (!host) return;
     host.className = 'odc-inline';
-    host.innerHTML = panelHTML(true);   // panelHTML carries the Turnstile host
+    host.innerHTML = panelHTML(true);
     var log = host.querySelector('#odc-log-i');
     greet(log);
-    loadTurnstile();
-    prime();
     wire(host, log);
   }
 

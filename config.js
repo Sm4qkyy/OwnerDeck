@@ -54,14 +54,11 @@ window.OD_CONFIG = {
 
        enabled          false to hide the chat everywhere
        floating         false to keep it only inside the demo (step 4)
-       turnstileSiteKey Cloudflare Turnstile SITE key (public — safe here).
-                        The SECRET key goes in Vercel env vars.
   --------------------------------------------------------------- */
   liveChat: {
     enabled: true,
     floating: true,
-    endpoint: "/api/chat",
-    turnstileSiteKey: "0x4AAAAAAD_9xwr6or8BKILz"
+    endpoint: "/api/chat"
   },
 
   /* ---------------------------------------------------------------

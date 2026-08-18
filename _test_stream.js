@@ -23,13 +23,8 @@ function bubble(log, who, text) {
 }
 const dots = { remove() { removed++; } };
 
-/* readStream also stores the session pass, which the widget declares at IIFE
-   scope. Declaring it here too keeps that assignment honest — without it the
-   sloppy-mode Function body would quietly create a global and the test would
-   pass while proving nothing about it. */
 const mod = new Function('T', 'bubble', 'TextDecoder',
-  '"use strict"; let pass = "";' + src.slice(start, end) +
-  '\n return { readStream, peek: () => pass, seed: (v) => { pass = v; } };'
+  '"use strict";' + src.slice(start, end) + '\n return { readStream };'
 )(T, bubble, TextDecoder);
 const readStream = mod.readStream;
 
@@ -78,21 +73,6 @@ async function run(name, chunks, expectText, expectOk) {
   ok &= await run('unicode survives chunk boundary',
     ['data: {"t":"\u20ac6', '00"}\n\n', 'data: {"done":true}\n\n'],
     '\u20ac600', true);
-
-  /* The session pass rides home on the done frame. If it stops being picked
-     up, every message asks Cloudflare again and the checkbox comes back; if a
-     lapsed one is never dropped, the visitor slides onto the unverified
-     allowance without ever being shown the check that would clear it. */
-  mod.seed('');
-  await run('a granted pass is stored',
-    ['data: {"t":"hi"}\n\n', 'data: {"done":true,"pass":"exp.tag.sig"}\n\n'], 'hi', true);
-  ok &= (mod.peek() === 'exp.tag.sig');
-  console.log(`  ${mod.peek() === 'exp.tag.sig' ? 'PASS' : 'FAIL'}  pass captured from the done frame`);
-
-  await run('a refused pass clears the held one',
-    ['data: {"t":"hi"}\n\n', 'data: {"done":true}\n\n'], 'hi', true);
-  ok &= (mod.peek() === '');
-  console.log(`  ${mod.peek() === '' ? 'PASS' : 'FAIL'}  lapsed pass dropped when none is returned`);
 
   console.log(ok ? '\n  all stream tests passed' : '\n  FAILURES');
   process.exit(ok ? 0 : 1);

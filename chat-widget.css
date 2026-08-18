@@ -150,9 +150,4 @@
   .odc-panel--in, .odc-panel--out { animation:none; }
 }
 
-/* The Turnstile host. This was display:none, which meant an interactive
-   challenge — the whole point of the widget — rendered somewhere nobody
-   could reach. appearance:'interaction-only' already renders nothing until
-   a challenge is required, so it needs no hiding of its own. */
-.odc-ts { display: flex; justify-content: center; }
-.odc-ts iframe { max-width: 100%; }
+
