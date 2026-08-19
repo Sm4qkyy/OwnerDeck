@@ -1793,10 +1793,15 @@ main { animation: od-enter 460ms var(--ease-out) both; }
    block stays and carries the page names; this is the shortcut, not the
    replacement, and it is the copy that disappears first when space is short.
 
-   Not shown below 48rem: a 44px target on each edge of a 360px screen eats a
-   quarter of the width and lands in the thumb path, and the sticky action bar
-   is already occupying the bottom of that viewport.
+   Below 48rem the same two links survive, but not on the side edges: a 44px
+   target on each edge of a 360px screen eats a quarter of the width, overlaps
+   the text column and lands in the thumb path. They cluster in the bottom-left
+   corner instead, and lift when the sticky action bar comes up.
    -------------------------------------------------------------------------- */
+/* On a wide screen the wrapper does nothing: the children go back to being
+   direct children of the body flow and fix themselves to opposite edges. It
+   only becomes a box on a phone, where the two are a cluster in one corner. */
+.pagejumps { display: contents; }
 .pagejump { display: none; }
 
 @media (min-width: 48rem) {
@@ -1845,11 +1850,44 @@ main { animation: od-enter 460ms var(--ease-out) both; }
   }
 }
 
+/* The phone arrangement. The side edges are not available here: a 44px target
+   on each edge of a 360px screen overlaps a 320px text column, and the
+   vertical middle is where the thumb scrolls. So the two become icon-only
+   circles clustered in the bottom-left — the chat launcher owns bottom-right —
+   and they ride up with the sticky bar the same way the launcher does. */
+@media (max-width: 47.9375rem) {
+  .pagejumps {
+    display: flex; gap: .5rem;
+    position: fixed; z-index: 40;
+    inset-inline-start: var(--s4);
+    inset-block-end: calc(var(--s5) + env(safe-area-inset-bottom, 0px));
+    transition: inset-block-end var(--t) var(--ease);
+  }
+  #sticky-cta.is-up ~ .pagejumps {
+    inset-block-end: calc(var(--s5) + 4.5rem + env(safe-area-inset-bottom, 0px));
+  }
+  .pagejump {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 2.75rem; height: 2.75rem; padding: 0;
+    border: 1px solid var(--rule); border-radius: 999px;
+    background: color-mix(in srgb, var(--paper) 84%, transparent);
+    backdrop-filter: saturate(140%) blur(10px);
+    -webkit-backdrop-filter: saturate(140%) blur(10px);
+    color: var(--muted); text-decoration: none;
+    box-shadow: 0 6px 20px rgb(var(--shadow) / .10);
+  }
+  .pagejump svg { width: 1.25rem; height: 1.25rem; flex: none; }
+  /* The name is the accessible label's job here; aria-label already carries
+     the destination, so the span would only duplicate it inside a circle. */
+  .pagejump__name { display: none; }
+  .pagejump:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+}
+
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .pagejump { background: var(--paper); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .pagejump, .pagejump__name { transition: none; }
+  .pagejump, .pagejump__name, .pagejumps { transition: none; }
 }
 
 /* The chat launcher sits 1.5rem off the bottom and the sticky bar is about

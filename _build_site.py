@@ -254,22 +254,45 @@ def pagenav(prev, nxt):
         out.append('    <a href="%s"><small data-t>Next</small><b data-t>%s</b></a>'
                    % (nxt[0], nxt[1]))
     out.append('  </nav></div>\n\n')
-    # The same two destinations again, pinned to the left and right edges so
-    # nobody has to reach the bottom of a long page to move on. The block
-    # above stays: it carries the page names, it is what a narrow screen
-    # gets, and it is the only version that survives without CSS.
+    return '\n'.join(out)
+
+
+def pagejumps(prev, nxt):
+    """The same two destinations again, pinned to the edges, so nobody has to
+    reach the bottom of a long page to move on. The .pagenav block above stays:
+    it carries the page names and it is the only version that survives with no
+    CSS at all.
+
+    Two things about the markup are load-bearing.
+
+    The pair is wrapped. Two pages carry only one direction — questions has no
+    next, what-we-build has no previous — and on a phone the pair is a cluster
+    in one corner rather than one button per edge. A wrapper lets that cluster
+    sit flush with either child missing, and `display: contents` hands the
+    children straight back to the viewport on a wide screen, where they are
+    still fixed to opposite edges.
+
+    It is emitted after the sticky bar, not before. On a phone the cluster
+    lands where the bar would cover it, so it lifts with
+    `#sticky-cta.is-up ~ .pagejumps` — a following-sibling selector, which
+    matches only if the bar comes first in the document. This is the same
+    arrangement the chat launcher already uses.
+    """
+    if not prev and not nxt:
+        return ''
     CH = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" '
           'stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" '
           'aria-hidden="true"><path d="%s"/></svg>')
+    out = ['  <div class="pagejumps">']
     if prev:
-        out.append('  <a class="pagejump pagejump--prev" href="%s" aria-label="Previous: %s">'
+        out.append('    <a class="pagejump pagejump--prev" href="%s" aria-label="Previous: %s">'
                    '%s<span class="pagejump__name" aria-hidden="true">%s</span></a>'
                    % (prev[0], prev[1], CH % 'm15 6-6 6 6 6', prev[1]))
     if nxt:
-        out.append('  <a class="pagejump pagejump--next" href="%s" aria-label="Next: %s">'
+        out.append('    <a class="pagejump pagejump--next" href="%s" aria-label="Next: %s">'
                    '%s<span class="pagejump__name" aria-hidden="true">%s</span></a>'
                    % (nxt[0], nxt[1], CH % 'm9 6 6 6-6 6', nxt[1]))
-
+    out.append('  </div>\n')
     return '\n'.join(out)
 
 
@@ -349,7 +372,8 @@ def build():
         html = (head(page) + header() +
                 '<main id="main">\n\n' + page['body'] +
                 ('' if page.get('no_cta') else cta_band()) +
-                '</main>\n\n' + pagenav(prev, nxt) + sticky_cta(page) + footer(page))
+                '</main>\n\n' + pagenav(prev, nxt) + sticky_cta(page)
+                + pagejumps(prev, nxt) + footer(page))
 
         html = tag_i18n(html, page['slug'])
 

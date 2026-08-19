@@ -10,3 +10,9 @@ _en_source.json
 
 # local dev server config, machine-specific paths
 .claude/
+
+# Client conversation analysis. This repo is PUBLIC. These files quote real
+# customer phone numbers and names out of a client's message log, and we are
+# the processor for that data, not its owner. It never goes to GitHub.
+VOYAGE-LOG-ANALYSIS.md
+*-LOG-ANALYSIS.md
