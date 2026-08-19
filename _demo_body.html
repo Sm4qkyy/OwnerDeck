@@ -1,24 +1,28 @@
-
-    <h1 class="visually-hidden">See Ownerdeck work: watch it, try it, then get in touch</h1>
+    <h1 class="visually-hidden">See Ownerdeck work: ask it yourself, then get in touch</h1>
 
     <ol class="stepper" id="stepper">
-      <li class="step" data-step="1" aria-current="step"><span class="step__n">1</span><span class="step__l">Watch</span></li>
+      <li class="step" data-step="1" aria-current="step"><span class="step__n">1</span><span class="step__l">Ask it</span></li>
       <li class="stepper__bar" aria-hidden="true"></li>
-      <li class="step" data-step="2"><span class="step__n">2</span><span class="step__l">Try it</span></li>
+      <li class="step" data-step="2"><span class="step__n">2</span><span class="step__l">Try a script</span></li>
       <li class="stepper__bar" aria-hidden="true"></li>
-      <li class="step" data-step="3"><span class="step__n">3</span><span class="step__l">Ask it anything</span></li>
+      <li class="step" data-step="3"><span class="step__n">3</span><span class="step__l">Watch</span></li>
       <li class="stepper__bar" aria-hidden="true"></li>
       <li class="step" data-step="4"><span class="step__n">4</span><span class="step__l">Get in touch</span></li>
     </ol>
 
+    <!-- The live assistant leads. It used to be step three, behind a recording
+         and a scripted demo, which meant the first thing a sceptical visitor
+         met was a video of the product working rather than the product. The
+         one that answers a question they invent themselves is the only one
+         that proves anything. -->
     <section class="pane is-on" data-pane="1" aria-label="Step 1">
       <p class="eyebrow">Step one</p>
-      <h2>Watch it handle a real enquiry.</h2>
-      <p class="lede">A short recording: it answers, quotes a real price and closes a
-        booking, start to finish, with nobody typing.</p>
-      <div id="od-video"></div>
+      <h2>Ask it anything, right now.</h2>
+      <p class="lede">This is the live assistant, not a recording. Type a real question
+        about pricing, setup, or whether it suits your business, and see what comes back.</p>
+      <div id="od-live-chat"></div>
       <div class="nav-row">
-        <button class="btn btn--primary" type="button" data-go="2">Next: try it yourself</button>
+        <button class="btn btn--primary" type="button" data-go="2">Next: try a preset conversation</button>
       </div>
     </section>
 
@@ -30,16 +34,16 @@
       <div id="od-bot" class="bot"></div>
       <div class="nav-row">
         <button class="btn btn--ghost" type="button" data-go="1">Back</button>
-        <button class="btn btn--primary" type="button" data-go="3">Next: ask it anything</button>
+        <button class="btn btn--primary" type="button" data-go="3">Next: watch a full booking</button>
       </div>
     </section>
 
     <section class="pane" data-pane="3" aria-label="Step 3">
       <p class="eyebrow">Step three</p>
-      <h2>Now ask it yourself.</h2>
-      <p class="lede">This one is live. Type a real question about pricing, setup, or
-        whether it suits your business.</p>
-      <div id="od-live-chat"></div>
+      <h2>Watch it take a booking end to end.</h2>
+      <p class="lede">A short recording: it answers, quotes a real price and closes a
+        booking, start to finish, with nobody typing.</p>
+      <div id="od-video"></div>
       <div class="nav-row">
         <button class="btn btn--ghost" type="button" data-go="2">Back</button>
         <button class="btn btn--primary" type="button" data-go="4">Next: get in touch</button>
@@ -56,4 +60,3 @@
         <button class="btn btn--ghost" type="button" data-go="3">Back</button>
       </div>
     </section>
-  

@@ -308,6 +308,10 @@ def footer(page=None):
     </div>
     <div class="foot__base">
       <span>&copy; 2026 Ownerdeck</span>
+      <!-- Who is actually trading, on every page rather than only on /legal.
+           A sole trader in Cyprus has no HE number, so there is none to
+           print; the legal page states that explicitly. -->
+      <span class="foot__id" data-t>Mark Saade, sole trader &middot; Livadia, Larnaca, Cyprus &middot; not registered for VAT</span>
       <span data-t>Built and run by Ownerdeck.</span>
     </div>
   </div>
