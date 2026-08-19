@@ -676,7 +676,7 @@ def pages(WA, ARROW, EMAIL):
       <div class="section__head">
         <p class="eyebrow" data-t>Pricing</p>
         <h1 data-t>Pick a hand. Add cards as you grow.</h1>
-        <p class="lede" data-t>A one-off fee to build it, then a monthly fee to run it. The monthly covers hosting, the database, the assistant, backups and the changes you ask for. No VAT is charged.</p>
+        <p class="lede" data-t>A one-off fee to build it, then a monthly fee to run it. The build fee can be paid in three stages — 40% to start, 30% when you approve the design, 30% when it goes live — so you are never far ahead of the work. The monthly covers hosting, the database, the assistant, backups and the changes you ask for. No VAT is charged.</p>
       </div>
       <div class="plans">
 {chr(10).join(plan_html)}

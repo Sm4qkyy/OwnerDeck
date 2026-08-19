@@ -32,8 +32,11 @@ agreement, so neither of us is relying on a page that may change later.
 
 ### 3. Paying for the build
 ☐ In full before work starts
-☐ In stages: ..........% to start, ..........% when you approve the design,
-  ..........% when it goes live
+☐ In three stages — **40% to start, 30% when you approve the design, 30% when
+  it goes live** — so you are never far ahead of the work
+
+This split is published on ownerdeck.com/pricing, so it is offered to everyone
+rather than only to people who think to ask.
 
 An optional €75 deposit holds a build slot. It is refundable in full until
 work starts and is credited against the build fee.
@@ -85,11 +88,10 @@ This agreement is governed by the law of the Republic of Cyprus.
 
 ## Notes for Mark, not for the client
 
-- **Section 3 is the only unresolved decision.** The site does not currently
-  offer milestone payments anywhere. Pick a split before this goes out, and
-  put the same split on the pricing page — offering it in the contract but
-  not on the site means it only reaches people who already asked, which is
-  the opposite of the point.
+- **Section 3 is now settled and published.** The 40/30/30 split is on the
+  pricing page as of 19 August 2026, so the contract and the site agree. If
+  you change one, change the other in the same sitting — a contract offering
+  terms the site does not is the kind of mismatch a careful buyer notices.
 - Everything else here is already public on the site, so signing it commits
   you to nothing you were not already promising.
 - The two clauses that need a lawyer rather than a proofread are **6** (the
